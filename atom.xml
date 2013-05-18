@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-18T20:06:27+08:00</updated>
+  <updated>2013-05-18T20:19:45+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Bye world]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/bye-world/"/>
+    <updated>2013-05-18T20:12:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/bye-world</id>
+    <content type="html"><![CDATA[<p>c :</p>
+
+<h1>include&lt;stdio.h></h1>
+
+<p>int main()
+{</p>
+
+<pre><code>printf("bye world!\n");
+
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>c++ :</p>
+
+<h1>include<isotream></h1>
+
+<p>using namespace std;</p>
+
+<p>int main()
+{</p>
+
+<pre><code>cout&lt;&lt;"bye world!"&lt;&lt;endl;
+
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>pascal:</p>
+
+<p>begin:</p>
+
+<pre><code>writeln("bye world!");
+</code></pre>
+
+<p>end;</p>
+
+<p>bash:</p>
+
+<h1>!/bin/bash</h1>
+
+<p>echo &ldquo;bye world!&rdquo;</p>
+
+<p>python :</p>
+
+<h1>!/usr/bin/env python</h1>
+
+<p>print &ldquo;bye world&rdquo;</p>
+
+<p>perl:</p>
+
+<h1>!/usr/bin/perl</h1>
+
+<p>use strict;</p>
+
+<p>use warnings;</p>
+
+<p>print &ldquo;bye world\n&rdquo;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hello World]]></title>
