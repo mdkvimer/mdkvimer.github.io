@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-18T22:35:53+08:00</updated>
+  <updated>2013-05-18T23:02:00+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[新交通规则]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/xin-jiao-tong-gui-ze/"/>
+    <updated>2013-05-18T22:49:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/xin-jiao-tong-gui-ze</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[unix socket server&amp;client]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/unix-socket-server-and-client/"/>
+    <updated>2013-05-18T22:48:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/unix-socket-server-and-client</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[gentoo最小化安装]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang/"/>
+    <updated>2013-05-18T22:48:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[研发与开发]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/yan-fa-yu-kai-fa/"/>
+    <updated>2013-05-18T22:47:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/yan-fa-yu-kai-fa</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[C++虚函数及虚函数表解析]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-xu-han-shu-ji-xu-han-shu-biao-jie-xi/"/>
+    <updated>2013-05-18T22:47:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-xu-han-shu-ji-xu-han-shu-biao-jie-xi</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[C++中的虚函数]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-zhong-de-xu-han-shu/"/>
+    <updated>2013-05-18T22:46:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-zhong-de-xu-han-shu</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[as acoder]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/as-acoder/"/>
+    <updated>2013-05-18T22:46:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/as-acoder</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[20位运算知多少2]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/"/>
+    <updated>2013-05-18T22:46:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[20位运算知多少1]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/"/>
+    <updated>2013-05-18T22:45:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[校赛]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/xiao-sai/"/>
+    <updated>2013-05-18T22:39:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/xiao-sai</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[二分]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/er-fen/"/>
+    <updated>2013-05-18T22:39:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/er-fen</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[长颈鹿OJ]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/chang-jing-lu-oj/"/>
+    <updated>2013-05-18T22:39:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/chang-jing-lu-oj</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[acm与数模]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/acmyu-shu-mo/"/>
+    <updated>2013-05-18T22:38:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/acmyu-shu-mo</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[acm的触动]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong/"/>
+    <updated>2013-05-18T22:38:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Bye world]]></title>
