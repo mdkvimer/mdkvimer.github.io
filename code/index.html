@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>20个位运算知多少1 - mdk Blog home</title>
+  <title>code - mdk Blog home</title>
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="int max1(int a,int b){ return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
-} int max2(int x,int y){ return x ^ ((xy) &amp; &ndash;(x &lt; y));
-} &hellip;">
+  <meta name="description" content=" Code May 19th, 2013 用代码记录生活点滴 May 19th, 2013 Tweet Recent Posts Linux内核启动流程 Linux系统调用列表 Linux内存动态分区管理 Tcp疑难全景解析 Svn ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1">
+  <link rel="canonical" href="http://mdkvimer.github.io/code">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mdk Blog home" type="application/atom+xml">
@@ -71,15 +69,32 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">20个位运算知多少1</h1>
-    
-    
+    <h1 class="entry-title">Code</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T12:10:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time></p>
+  </header>
+  
+  <p>用代码记录生活点滴</p>
+
+  
+    <footer>
       <p class="meta">
         
+        
 
 
 
@@ -91,149 +106,22 @@
   
 
 
-<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
+<time datetime="2013-05-19T12:10:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
         
       </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>int max1(int a,int b){
-  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
-}</p>
-
-<p>int max2(int x,int y){
-  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}</p>
-
-<p>int min1(int a,int b){
-  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
-}</p>
-
-<p>int min2(int x,int y){
-  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}</p>
-
-<p>bool isSampSign(int x,int y){
-  return (x<sup>y</sup>) >= 0;
-}</p>
-
-<p>int getTwo(int n){
- // 2<sup>n</sup>
- return 2 &lt;&lt; (n-1);
-}</p>
-
-<p>bool isTwo(int n){
- return n > 0 ? (n&amp;(n-1)) == 0:false;
-}</p>
-
-<p>int quyu(int m,int n){
-  return m &amp; (n-1);
-}</p>
-
-<p>int getAgv1(int n,int m){
- return (n+m) >> 1;
-}</p>
-
-<p>int getAgv2(int x,int y){
- return ((x<sup>y</sup>) >> 1) + (x&amp;y);
-}</p>
-
-<p>int getBit(int n,int m){  //从低位到高位 取n的第m位
- return (n >> (m-1)) &amp; 1;
-}</p>
-
-<p>int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
- return n | (1 &lt;&lt; (m-1));
-}</p>
-
-<p>int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
- return n &amp; ~(1 &lt;&lt; (m-1));
-}</p>
-
-<p>int getnum1(int n){
-  //get n+1
-  return &ndash;~n;
-}</p>
-
-<p>int getnum2(int n){
- return ~-n;
-}</p>
-
-<p>int getnum3(int n){
- return ~n + 1;
-}</p>
-
-<p>int main(int argc,char *argv[])
-{</p>
-
-<pre><code>int num1 = max1(3,5);
-int num2 = max2(3,5);
-int num3 = min1(3,5);
-int num4 = min2(3,5);
-cout&lt;&lt;getnum3(3)&lt;&lt;endl;
-//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
-//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
-//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
-//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
-//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
-//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
-//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
-//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
-//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
-return 0;
-</code></pre>
-
-<p>}</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
       
+        <div class="sharing">
   
-
-<span class="byline author vcard">Posted by <span class="fn">mdkvimer</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-      
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/code/index.html" data-via="" data-counturl="http://mdkvimer.github.io/code/index.html" >Tweet</a>
   
   
   
 </div>
 
-    
-    <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/05/18/xiao-sai/" title="Previous Post: 校赛">&laquo; 校赛</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/" title="Next Post: 20个位运算知多少2">20个位运算知多少2 &raquo;</a>
-      
-    </p>
-  </footer>
+    </footer>
+  
 </article>
-
 
 </div>
 
@@ -270,8 +158,6 @@ return 0;
 
   
 </aside>
-
-
 
 
     </div>
