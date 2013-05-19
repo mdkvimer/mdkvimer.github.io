@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T13:28:27+08:00</updated>
+  <updated>2013-05-19T13:34:20+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -105,42 +105,63 @@ Boot Loader</p>
 [root@www initrd]# file initrd-2.6.18-92.el5.img
 initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
 
-<p>[root@www initrd]# mv initrd-2.6.18-92.el5.img initrd-2.6.18-92.el5.gz
-[root@www initrd]# gzip -d initrd-2.6.18-92.el5.gz
-[root@www initrd]# file initrd-2.6.18-92.el5
-initrd-2.6.18-92.el5: ASCII cpio archive (SVR4 with no CRC)</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>```
+</span><span class='line'>[root@www initrd]# mv initrd-2.6.18-92.el5.img initrd-2.6.18-92.el5.gz
+</span><span class='line'>[root@www initrd]# gzip -d initrd-2.6.18-92.el5.gz
+</span><span class='line'>[root@www initrd]# file initrd-2.6.18-92.el5
+</span><span class='line'>initrd-2.6.18-92.el5: ASCII cpio archive (SVR4 with no CRC)</span></code></pre></td></tr></table></div></figure>
 
-<p>[root@www initrd]# cpio -ivcdu &lt; initrd-2.6.18-92.el5
-[root@www initrd]# ll
-drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 bin
-drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 dev
-drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 etc
--rwx&mdash;&mdash;&mdash; 1 root root    1888 Apr 10 02:05 init
--rw&mdash;&mdash;&mdash;&ndash; 1 root root 5408768 Apr 10 02:00 initrd-2.6.18-92.el5
-drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 lib
-drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 proc
-lrwxrwxrwx 1 root root       3 Apr 10 02:05 sbin &ndash;> bin
-drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sys
-drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sysroot
+
+<p>
  <code>
+[root@www initrd]# cpio -ivcdu &lt; initrd-2.6.18-92.el5
+[root@www initrd]# ll
+drwx------ 2 root root    4096 Apr 10 02:05 bin
+drwx------ 3 root root    4096 Apr 10 02:05 dev
+drwx------ 2 root root    4096 Apr 10 02:05 etc
+-rwx------ 1 root root    1888 Apr 10 02:05 init
+-rw------- 1 root root 5408768 Apr 10 02:00 initrd-2.6.18-92.el5
+drwx------ 3 root root    4096 Apr 10 02:05 lib
+drwx------ 2 root root    4096 Apr 10 02:05 proc
+lrwxrwxrwx 1 root root       3 Apr 10 02:05 sbin -&gt; bin
+drwx------ 2 root root    4096 Apr 10 02:05 sys
+drwx------ 2 root root    4096 Apr 10 02:05 sysroot
 </code>
+ &#8220;`
 [root@www initrd]# cat init</p>
 
-<h1>!/bin/nash                  &lt;==使用类似 bash 的 shell 来运行</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/nash                 使用类似 bash 的 shell 来运行
+</span><span class='line'>mount -t proc /proc /proc    &lt;==挂载内存的虚拟文件系统
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo Creating initial device nodes
+</span><span class='line'>mknod /dev/null c 1 3        &lt;==创建系统所需要的各项装置！
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo "Loading ehci-hcd.ko module"
+</span><span class='line'>insmod /lib/ehci-hcd.ko      &lt;==加载各项核心模块，就是驱动程序！
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo Creating root device.
+</span><span class='line'>mkrootdev -t ext3 -o defaults,ro hdc2 &lt;==尝试挂载根目录啦！
+</span><span class='line'>....(底下省略)....</span></code></pre></td></tr></table></div></figure>
 
-<p>mount -t proc /proc /proc    &lt;==挂载内存的虚拟文件系统
-&hellip;.(中间省略)&hellip;.
-echo Creating initial device nodes
-mknod /dev/null c 1 3        &lt;==创建系统所需要的各项装置！
-&hellip;.(中间省略)&hellip;.
-echo &ldquo;Loading ehci-hcd.ko module&rdquo;
-insmod /lib/ehci-hcd.ko      &lt;==加载各项核心模块，就是驱动程序！
-&hellip;.(中间省略)&hellip;.
-echo Creating root device.
-mkrootdev -t ext3 -o defaults,ro hdc2 &lt;==尝试挂载根目录啦！
-&hellip;.(底下省略)&hellip;.
-&#8220;`
-复制代码</p>
+
+<p>复制代码</p>
 
 <p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
 
