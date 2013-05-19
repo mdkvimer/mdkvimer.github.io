@@ -5,15 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>20位运算知多少2 - mdk Blog home</title>
+  <title>20个位运算知多少2 - mdk Blog home</title>
   <meta name="author" content="mdkvimer">
 
   
   <meta name="description" content="int getMaxInt1(){ return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
-}
-int getMaxInt2(){ return ~( 1 &lt;&lt; 31 );
-}
-int getMaxInt3(){ return ( 1 &lt;&lt; -1 &hellip;">
+} int getMaxInt2(){ return ~( 1 &lt;&lt; 31 );
+} int getMaxInt3(){ return ( 1 &lt;&lt; -1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,7 +71,7 @@ int getMaxInt3(){ return ( 1 &lt;&lt; -1 &hellip;">
   
   <header>
     
-      <h1 class="entry-title">20位运算知多少2</h1>
+      <h1 class="entry-title">20个位运算知多少2</h1>
     
     
       <p class="meta">
@@ -99,60 +97,76 @@ int getMaxInt3(){ return ( 1 &lt;&lt; -1 &hellip;">
 
 <div class="entry-content"><p>int getMaxInt1(){
   return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
-}
-int getMaxInt2(){
+}</p>
+
+<p>int getMaxInt2(){
   return ~( 1 &lt;&lt; 31 );
-}
-int getMaxInt3(){
+}</p>
+
+<p>int getMaxInt3(){
   return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
-}
-int getMaxInt4(){
+}</p>
+
+<p>int getMaxInt4(){
   return ( (unsigned int) – 1 ) >> 1;
-}
-int getMinInt5(){
+}</p>
+
+<p>int getMinInt5(){
   return 1 &lt;&lt; 31; //获取int类型的最小值
-}
-int getMinInt6(){
+}</p>
+
+<p>int getMinInt6(){
   return 1 &lt;&lt; -1; //gcc 不支持
-}
-int getMaxLong(){
+}</p>
+
+<p>int getMaxLong(){
   return ((unsigned long) – 1 ) >> 1;
-}
-int getMinLong(){
+}</p>
+
+<p>int getMinLong(){
   return 1 &lt;&lt; 63;
-}
-int mulTwo(int n){
+}</p>
+
+<p>int mulTwo(int n){
    return n &lt;&lt; 1;
-}
-int divTwo(int n){
+}</p>
+
+<p>int divTwo(int n){
   return n >> 1;
-}
-int mulTwoPower(int n,int m){
- //n<em>(2<sup>m</sup>)
+}</p>
+
+<p>int mulTwoPower(int n,int m){
+ //n*(2<sup>m</sup>)
   return n &lt;&lt; m;
-}
-int divTwoPower(int n,int m){
+}</p>
+
+<p>int divTwoPower(int n,int m){
  //n/(2<sup>m</sup>)
   return n >> m;
-}
-bool isOddNumber(int n){
+}</p>
+
+<p>bool isOddNumber(int n){
   return (n &amp; 1) == 1;
-}
-void swap1(int a,int b){
+}</p>
+
+<p>void swap1(int a,int b){
  a ^= b;
  b ^= a;
  a ^= b;
  cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
-}
-void swap2(int </em>a,int <em>b){
- (</em>a) ^= (<em>b) ^= (</em>a) ^= (<em>b);
-}
-int abs(int n){
+}</p>
+
+<p>void swap2(int <em>a,int </em>b){
+ (<em>a) ^= (</em>b) ^= (<em>a) ^= (</em>b);
+}</p>
+
+<p>int abs(int n){
   return (n<sup> n >> 31 </sup>) &ndash;( n >> 31 );
-}
-int main(int argc,char </em>argv[])
+}</p>
+
+<p>int main(int argc,char <em>argv[])
 {
-   /*</p>
+   /</em></p>
 
 <pre><code>*位运算的20则
 * */
@@ -233,7 +247,7 @@ return 0;
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" title="Previous Post: 20位运算知多少1">&laquo; 20位运算知多少1</a>
+        <a class="basic-alignment left" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" title="Previous Post: 20个位运算知多少1">&laquo; 20个位运算知多少1</a>
       
       
         <a class="basic-alignment right" href="/blog/2013/05/18/as-acoder/" title="Next Post: as acoder">as acoder &raquo;</a>

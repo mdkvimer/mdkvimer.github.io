@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>20位运算知多少1 - mdk Blog home</title>
+  <title>20个位运算知多少1 - mdk Blog home</title>
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="/ * ===================================================================================== * * Filename: weiyi1.cpp * * Description: 位运算 * * Version: &hellip;">
+  <meta name="description" content="int max1(int a,int b){ return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
+} int max2(int x,int y){ return x ^ ((xy) &amp; &ndash;(x &lt; y));
+} &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,7 +71,7 @@
   
   <header>
     
-      <h1 class="entry-title">20位运算知多少1</h1>
+      <h1 class="entry-title">20个位运算知多少1</h1>
     
     
       <p class="meta">
@@ -93,74 +95,73 @@
   </header>
 
 
-<div class="entry-content"><p>/<em>
- * =====================================================================================
- *
- *       Filename:  weiyi1.cpp
- *
- *    Description:  位运算
- *
- *        Version:  1.0
- *        Created:  2012/12/19 13:05:23
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6d;&#x65;&#110;&#103;&#x64;&#x61;&#x69;&#x6b;&#117;&#x6e;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#109;&#x65;&#x6e;&#x67;&#x64;&#97;&#x69;&#107;&#117;&#x6e;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#109;</a>
- *        Company:  cjluacm-vim-mdk
- *
- * =====================================================================================
- </em>/
-int max1(int a,int b){
+<div class="entry-content"><p>int max1(int a,int b){
   return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
-}
-int max2(int x,int y){
+}</p>
+
+<p>int max2(int x,int y){
   return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}
-int min1(int a,int b){
+}</p>
+
+<p>int min1(int a,int b){
   return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
-}
-int min2(int x,int y){
+}</p>
+
+<p>int min2(int x,int y){
   return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}
-bool isSampSign(int x,int y){
+}</p>
+
+<p>bool isSampSign(int x,int y){
   return (x<sup>y</sup>) >= 0;
-}
-int getTwo(int n){
+}</p>
+
+<p>int getTwo(int n){
  // 2<sup>n</sup>
  return 2 &lt;&lt; (n-1);
-}
-bool isTwo(int n){
+}</p>
+
+<p>bool isTwo(int n){
  return n > 0 ? (n&amp;(n-1)) == 0:false;
-}
-int quyu(int m,int n){
+}</p>
+
+<p>int quyu(int m,int n){
   return m &amp; (n-1);
-}
-int getAgv1(int n,int m){
+}</p>
+
+<p>int getAgv1(int n,int m){
  return (n+m) >> 1;
-}
-int getAgv2(int x,int y){
+}</p>
+
+<p>int getAgv2(int x,int y){
  return ((x<sup>y</sup>) >> 1) + (x&amp;y);
-}
-int getBit(int n,int m){  //从低位到高位 取n的第m位
+}</p>
+
+<p>int getBit(int n,int m){  //从低位到高位 取n的第m位
  return (n >> (m-1)) &amp; 1;
-}
-int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
+}</p>
+
+<p>int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
  return n | (1 &lt;&lt; (m-1));
-}
-int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
+}</p>
+
+<p>int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
  return n &amp; ~(1 &lt;&lt; (m-1));
-}
-int getnum1(int n){
+}</p>
+
+<p>int getnum1(int n){
   //get n+1
   return &ndash;~n;
-}
-int getnum2(int n){
+}</p>
+
+<p>int getnum2(int n){
  return ~-n;
-}
-int getnum3(int n){
+}</p>
+
+<p>int getnum3(int n){
  return ~n + 1;
-}
-int main(int argc,char *argv[])
+}</p>
+
+<p>int main(int argc,char *argv[])
 {</p>
 
 <pre><code>int num1 = max1(3,5);
@@ -223,7 +224,7 @@ return 0;
         <a class="basic-alignment left" href="/blog/2013/05/18/xiao-sai/" title="Previous Post: 校赛">&laquo; 校赛</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/" title="Next Post: 20位运算知多少2">20位运算知多少2 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/" title="Next Post: 20个位运算知多少2">20个位运算知多少2 &raquo;</a>
       
     </p>
   </footer>
