@@ -9,8 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="socket()函数创建一个socket,然后调用bind()函数将其与本机的地址以及一个本地端口绑定~然后利用listen()在相应的socket上监听，当accept()接收到一个连接的服务请求时，服务器将显示客户机的ip地址,并通过新的socket向客户端发送字符串”Hello,you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,7 +93,148 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>socket()函数创建一个socket,然后调用bind()函数将其与本机的地址以及一个本地端口绑定~然后利用listen()在相应的socket上监听，当accept()接收到一个连接的服务请求时，服务器将显示客户机的ip地址,并通过新的socket向客户端发送字符串”Hello,you are connected!”最后关闭socket</p>
+
+<p>myserver.c:</p>
+
+<p>/<em>
+ </em>socket server
+ * */</p>
+
+<h1>include&lt;stdio.h></h1>
+
+<h1>include&lt;stdlib.h></h1>
+
+<h1>include&lt;errno.h></h1>
+
+<h1>include&lt;unistd.h></h1>
+
+<h1>include&lt;sys/types.h></h1>
+
+<h1>include&lt;netinet/in.h></h1>
+
+<h1>include&lt;sys/socket.h></h1>
+
+<h1>include&lt;sys/wait.h></h1>
+
+<h1>define SERVERPORT 3333</h1>
+
+<h1>define BACKLOG 10</h1>
+
+<p>int main()
+{</p>
+
+<pre><code>int sockfd,clientfd;
+struct sockaddr_in my_addr;
+struct sockaddr_in remote_addr;
+if((sockfd = socket(AF_INET , SOCK_STREAM ,0))== -1){
+perror(“socket create error !!!”);
+exit(1);
+}
+my_addr.sin_family = AF_INET;
+my_addr.sin_port = htons(SERVERPORT);
+my_addr.sin_addr.s_addr = INADDR_ANY;
+bzero(&amp;(my_addr.sin_zero),8);
+if(bind(sockfd,(struct sockaddr *)&amp;my_addr,sizeof(struct sockaddr)) == -1){
+ perror(“bind error….”);
+ exit(1);
+}
+if(listen(sockfd,BACKLOG) == -1)
+{
+ perror(“listen error ..”);
+ exit(1);
+}
+while(1){
+ int sin_size = sizeof(struct sockaddr_in);
+ if((clientfd = accept(sockfd,(struct sockaddr *)&amp;remote_addr,&amp;sin_size))==-1){
+ perror(“accept error…”);
+ continue;
+ }
+ printf(“Receied a connection from %s\n”,inet_ntoa(remote_addr.sin_addr));
+ if(!fork()){
+  if(send(clientfd,”Hello,you are connected!\n”,26,0) == -1)
+  perror(“send error…”);
+  close(clientfd);
+  exit(0);
+ }
+ close(clientfd);
+}
+</code></pre>
+
+<p>}</p>
+
+<p>客户端通过服务器域名获得服务器的ip,然后新建一个socket调用connect与服务器连接，连接成功后接收从服务器发送过来的数据，最后关闭socket</p>
+
+<p>gethostbyname()是完成域名转换的 struct hostent <em>gethostbyname(const char </em>name)</p>
+
+<p>myclient.c:</p>
+
+<p>/<em>
+ </em>socket client
+ * */</p>
+
+<h1>include&lt;stdio.h></h1>
+
+<h1>include&lt;stdlib.h></h1>
+
+<h1>include&lt;string.h></h1>
+
+<h1>include&lt;unistd.h></h1>
+
+<h1>include&lt;errno.h></h1>
+
+<h1>include&lt;netdb.h></h1>
+
+<h1>include&lt;sys/types.h></h1>
+
+<h1>include&lt;sys/wait.h></h1>
+
+<h1>include&lt;sys/socket.h></h1>
+
+<h1>include&lt;netinet/in.h></h1>
+
+<h1>define SERVERPORT 3333</h1>
+
+<h1>define MAXDATASIZE 100</h1>
+
+<p>int main(int argc,char <em>argv[])
+{
+  int sockfd,recvbytes;
+  char buf[MAXDATASIZE];
+  struct hostent </em>host;
+  struct sockaddr_in serv_addr;
+  if(argc &lt; 2)
+  {
+   fprintf(stderr,”Please enter the server’hostname!\n”);
+   exit(1);
+  }
+  if((host= gethostbyname(argv[1])) == NULL){
+   perror(“gethostbyname error…”);
+   exit(1);
+  }
+  if((sockfd=socket(AF_INET,SOCK_STREAM ,0)) == -1)
+  {
+   perror(“socket error…”);
+   exit(1);
+  }
+  serv_addr.sin_family = AF_INET ;
+  serv_addr.sin_port = htons(SERVERPORT);
+  serv_addr.sin_addr = <em>((struct in_addr </em>)host->h_addr);
+  bzero(&amp;(serv_addr.sin_zero),8);
+  if(connect(sockfd,(struct sockaddr *)&amp;serv_addr,sizeof(struct sockaddr)) == -1)
+  {
+  perror(“connext error…”);
+  exit(1);
+  }
+  if((recvbytes=recv(sockfd,buf,MAXDATASIZE,0)) == -1)
+  {
+   perror(“recv error ….”);
+   exit(1);
+  }
+  buf[recvbytes]=’\0′;
+  printf(“REceived:%s \n”,buf);
+  close(sockfd);
+}</p>
 </div>
 
 

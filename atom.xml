@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T09:39:21+08:00</updated>
+  <updated>2013-05-19T10:24:57+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -27,7 +27,148 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/unix-socket-server-and-client/"/>
     <updated>2013-05-18T22:48:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/unix-socket-server-and-client</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>socket()函数创建一个socket,然后调用bind()函数将其与本机的地址以及一个本地端口绑定~然后利用listen()在相应的socket上监听，当accept()接收到一个连接的服务请求时，服务器将显示客户机的ip地址,并通过新的socket向客户端发送字符串”Hello,you are connected!”最后关闭socket</p>
+
+<p>myserver.c:</p>
+
+<p>/<em>
+ </em>socket server
+ * */</p>
+
+<h1>include&lt;stdio.h></h1>
+
+<h1>include&lt;stdlib.h></h1>
+
+<h1>include&lt;errno.h></h1>
+
+<h1>include&lt;unistd.h></h1>
+
+<h1>include&lt;sys/types.h></h1>
+
+<h1>include&lt;netinet/in.h></h1>
+
+<h1>include&lt;sys/socket.h></h1>
+
+<h1>include&lt;sys/wait.h></h1>
+
+<h1>define SERVERPORT 3333</h1>
+
+<h1>define BACKLOG 10</h1>
+
+<p>int main()
+{</p>
+
+<pre><code>int sockfd,clientfd;
+struct sockaddr_in my_addr;
+struct sockaddr_in remote_addr;
+if((sockfd = socket(AF_INET , SOCK_STREAM ,0))== -1){
+perror(“socket create error !!!”);
+exit(1);
+}
+my_addr.sin_family = AF_INET;
+my_addr.sin_port = htons(SERVERPORT);
+my_addr.sin_addr.s_addr = INADDR_ANY;
+bzero(&amp;(my_addr.sin_zero),8);
+if(bind(sockfd,(struct sockaddr *)&amp;my_addr,sizeof(struct sockaddr)) == -1){
+ perror(“bind error….”);
+ exit(1);
+}
+if(listen(sockfd,BACKLOG) == -1)
+{
+ perror(“listen error ..”);
+ exit(1);
+}
+while(1){
+ int sin_size = sizeof(struct sockaddr_in);
+ if((clientfd = accept(sockfd,(struct sockaddr *)&amp;remote_addr,&amp;sin_size))==-1){
+ perror(“accept error…”);
+ continue;
+ }
+ printf(“Receied a connection from %s\n”,inet_ntoa(remote_addr.sin_addr));
+ if(!fork()){
+  if(send(clientfd,”Hello,you are connected!\n”,26,0) == -1)
+  perror(“send error…”);
+  close(clientfd);
+  exit(0);
+ }
+ close(clientfd);
+}
+</code></pre>
+
+<p>}</p>
+
+<p>客户端通过服务器域名获得服务器的ip,然后新建一个socket调用connect与服务器连接，连接成功后接收从服务器发送过来的数据，最后关闭socket</p>
+
+<p>gethostbyname()是完成域名转换的 struct hostent <em>gethostbyname(const char </em>name)</p>
+
+<p>myclient.c:</p>
+
+<p>/<em>
+ </em>socket client
+ * */</p>
+
+<h1>include&lt;stdio.h></h1>
+
+<h1>include&lt;stdlib.h></h1>
+
+<h1>include&lt;string.h></h1>
+
+<h1>include&lt;unistd.h></h1>
+
+<h1>include&lt;errno.h></h1>
+
+<h1>include&lt;netdb.h></h1>
+
+<h1>include&lt;sys/types.h></h1>
+
+<h1>include&lt;sys/wait.h></h1>
+
+<h1>include&lt;sys/socket.h></h1>
+
+<h1>include&lt;netinet/in.h></h1>
+
+<h1>define SERVERPORT 3333</h1>
+
+<h1>define MAXDATASIZE 100</h1>
+
+<p>int main(int argc,char <em>argv[])
+{
+  int sockfd,recvbytes;
+  char buf[MAXDATASIZE];
+  struct hostent </em>host;
+  struct sockaddr_in serv_addr;
+  if(argc &lt; 2)
+  {
+   fprintf(stderr,”Please enter the server’hostname!\n”);
+   exit(1);
+  }
+  if((host= gethostbyname(argv[1])) == NULL){
+   perror(“gethostbyname error…”);
+   exit(1);
+  }
+  if((sockfd=socket(AF_INET,SOCK_STREAM ,0)) == -1)
+  {
+   perror(“socket error…”);
+   exit(1);
+  }
+  serv_addr.sin_family = AF_INET ;
+  serv_addr.sin_port = htons(SERVERPORT);
+  serv_addr.sin_addr = <em>((struct in_addr </em>)host->h_addr);
+  bzero(&amp;(serv_addr.sin_zero),8);
+  if(connect(sockfd,(struct sockaddr *)&amp;serv_addr,sizeof(struct sockaddr)) == -1)
+  {
+  perror(“connext error…”);
+  exit(1);
+  }
+  if((recvbytes=recv(sockfd,buf,MAXDATASIZE,0)) == -1)
+  {
+   perror(“recv error ….”);
+   exit(1);
+  }
+  buf[recvbytes]=’\0′;
+  printf(“REceived:%s \n”,buf);
+  close(sockfd);
+}</p>
 ]]></content>
   </entry>
   
@@ -36,7 +177,553 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang/"/>
     <updated>2013-05-18T22:48:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>转载自有删减<a href="http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml">http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml</a>
+代码 1.1: 测试机器的规格</p>
+
+<p>（下述配置和耗时情况帮你粗略估计完成整个安装过程大概需要的时间）</p>
+
+<h1>grep bogo /proc/cpuinfo</h1>
+
+<p>bogomips       : 3337.81</p>
+
+<h1>hdparm -tT /dev/sda</h1>
+
+<p>/dev/sda:
+ Timing cached reads:   1100 MB in  2.00 seconds = 549.97 MB/sec
+ Timing buffered disk reads:  224 MB in  3.01 seconds =  74.36 MB/sec</p>
+
+<h1>grep MemTotal /proc/meminfo</h1>
+
+<p>MemTotal:       509248 kB</p>
+
+<ol>
+<li>快速安装指南</li>
+</ol>
+
+
+<p>安装介质</p>
+
+<p>从我们的镜像下载一张光盘。可以在releases/x86/current-iso/中找到最小光盘的ISO文件。最小安装光盘只适用于有网络环境的安装。本指南将使用最小光盘。</p>
+
+<p>刻制光盘，用它引导机器。</p>
+
+<p>从光盘启动</p>
+
+<p>启动时按下F2查看有哪些引导选项。你可以启动gentoo或者gentoo-nofb，后者禁用帧缓冲。如果你用LiveCD引导，别忘了添上nox选项以防止启动X图形环境。有好几个选项可用于启用或禁用一些特性。正常情况下会检测出你的硬件并装载所有模块。如果内核无法正确引导或是在引导过程中挂机，你可能不得不尝试不同的配置。最安全的办法大概是使用nodetect选项，然后显式地载入需要的模块。</p>
+
+<p>代码 2.1: 引导最小光盘</p>
+
+<p>Gentoo Linux Installation LiveCD                     <a href="http://www.gentoo.org">http://www.gentoo.org</a>
+Enter to Boot; F1 for kernels  F2 for options.
+boot: gentoo-nofb
+（或在有问题的情况下）
+boot: gentoo-nofb nodetect</p>
+
+<p>可选：装载模块</p>
+
+<p>如果使用了nodetect选项，就要在启动后载入必要的模块。你还要配置好网络并拥有访问磁盘的权限。lspci命令能帮助你确认硬件信息。</p>
+
+<p>代码 2.2: 载入必要的模块</p>
+
+<p>livecd root # lspci
+（根据lspci的输出查看需要哪些模块）</p>
+
+<p>（以下只是个例子，实际以具体硬件为准）
+livecd root # modprobe 3w-9xxx
+livecd root # modprobe r8169</p>
+
+<p>网络配置</p>
+
+<p>如果还没开启网络，可以用net-setup来配置网络。配置之前可能要先用modprobe为网卡载入支持模块。如果你有ADSL，请使用pppoe-setup和pppoe-start。要支持PPTP，首先编辑/etc/ppp/chap-secrets和/etc/ppp/options.pptp，然后使用pptp <server ip>。</p>
+
+<p>如果是无线连接，用iwconfig设置无线连接参数，然后再次执行net-setup或者手动运行ifconfig、dhcpcd和/或route。</p>
+
+<p>如果你用代理，不要忘了使用export http_proxy、ftp_proxy和RSYNC_PROXY初始化系统环境。</p>
+
+<p>代码 2.3: 通过向导配置网络</p>
+
+<p>livecd root # net-setup eth0</p>
+
+<p>或者，你也可以手动打开网络。下面的例子把你电脑的IP地址配置为192.168.1.10，并把网关和域名服务器设为192.168.1.1。</p>
+
+<p>代码 2.4: 手动配置网络</p>
+
+<p>livecd root # ifconfig eth0 192.168.1.10/24
+livecd root # route add default gw 192.168.1.1
+livecd root # echo nameserver 192.168.1.1 > /etc/resolv.conf</p>
+
+<p>安装盘允许你启动一个sshd服务，添加用户，运行irssi（一个命令行的客户端聊天工具），还可以使用links进行网上冲浪。</p>
+
+<p>可选：通过ssh连接到你的新机器</p>
+
+<p>最有趣的功能当然是sshd。启动这个服务，从另一台机器连过来，然后从本指南复制/粘贴命令。</p>
+
+<p>代码 2.5: 启动sshd</p>
+
+<p>livecd root # time /etc/init.d/sshd start
+ * Generating hostkey &hellip;
+（sshd生成密钥并显示更多输出）
+ * starting sshd &hellip;                            [ok]</p>
+
+<p>real   0m13.688s
+user   0m9.420s
+sys    0m0.090s</p>
+
+<p>现在设置一下安装盘的root密码，使你能通过另一台电脑连接。请注意正常情况下不推荐你允许root通过ssh连接。如果你的本地网络不太可靠，请设一个又长又复杂的密码。它只能使用一次，因为机器重启后就没掉了。</p>
+
+<p>代码 2.6: 设置root密码</p>
+
+<p>livecd root # passwd
+New UNIX password: 输入密码
+Retype new UNIX password: 输入密码
+passwd: password updated successfully</p>
+
+<p>现在就可以在另一台电脑上打开一个终端并连接到你的新机器，在新的窗口中继续本指南接下去的内容，复制/粘贴文中的命令。</p>
+
+<p>代码 2.7: 从另一台电脑连到你的新机器</p>
+
+<p>（使用你新机器的IP地址）
+$ ssh <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#111;&#x6f;&#x74;&#x40;&#x31;&#x39;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#49;&#x2e;&#49;&#x30;">&#x72;&#x6f;&#x6f;&#x74;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#46;&#x31;&#46;&#49;&#x30;</a>
+The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
+RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &lsquo;192.168.1.10&rsquo; (RSA) to the list of known hosts.
+Password: 输入密码</p>
+
+<p>准备磁盘</p>
+
+<p>使用fdisk或者cfdisk创建分区规划。至少需要一个交换分区（类别为82）和一个Linux分区（类别为83）。下面是我们的手册选用的方案，创建包括一个/boot分区，一个交换分区和一个主分区。将/dev/sda替换为你自己的磁盘。大多数系统忽略启动标志，但有的系统需要它。使用fdisk的a命令在启动分区上设置这个标志。</p>
+
+<p>代码 2.8: 创建分区</p>
+
+<p>livecd ~ # fdisk /dev/sda</p>
+
+<p>（本手册接下去使用以下分区规划）
+livecd ~ # fdisk -l /dev/sda</p>
+
+<p>Disk /dev/sda: 599.9 GB, 599978409984 bytes
+255 heads, 63 sectors/track, 72943 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes</p>
+
+<p>   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *           1          12       96358+  83  Linux
+/dev/sda2              13         110      787185   82  Linux swap / Solaris
+/dev/sda3             111       72943   585031072+  83  Linux</p>
+
+<p>使用mke2fs，mke2fs -j，mkreiserfs，mkfs.xfs和mkfs.jfs建立Linux分区的文件系统。使用mkswap和swapon初始化交换分区。</p>
+
+<p>代码 2.9: 创建文件系统并激活交换分区</p>
+
+<p>（ext2完全满足/boot分区的需要）
+livecd ~ # mke2fs /dev/sda1</p>
+
+<p>（主分区就用ext3吧）
+livecd ~ # mke2fs -j /dev/sda3</p>
+
+<p>（创建并激活交换分区）
+livecd ~ # mkswap /dev/sda2 &amp;&amp; swapon /dev/sda2</p>
+
+<p>把新建的文件系统挂载到/mnt/gentoo。如果需要其他挂载点（如/mnt/gentoo/boot），也要为它们创建目录并挂载好。</p>
+
+<p>代码 2.10: 挂载文件系统</p>
+
+<p>livecd ~ # mount /dev/sda3 /mnt/gentoo
+livecd ~ # mkdir /mnt/gentoo/boot
+livecd ~ # mount /dev/sda1 /mnt/gentoo/boot
+livecd ~ # cd /mnt/gentoo</p>
+
+<p>安装Stage</p>
+
+<p>首先确保正确设置了日期和时间。执行date MMDDhhmmYYYY，使用UTC时间。</p>
+
+<p>代码 2.11: 设定日期和UTC时间</p>
+
+<p>（查看时钟）
+livecd gentoo # date
+Mon Mar  6 00:14:13 UTC 2006</p>
+
+<p>（设置当前日期和时间，如果需要的话）
+livecd gentoo # date 030600162006 （格式为MMDDhhmmYYYY）
+Mon Mar  6 00:16:00 UTC 2006</p>
+
+<p>接下来，从我们的镜像下载一份stage包：</p>
+
+<p>代码 2.12: 下载一份stage3压缩包</p>
+
+<p>livecd gentoo # links <a href="http://www.gentoo.org/main/en/mirrors.xml">http://www.gentoo.org/main/en/mirrors.xml</a>
+（选一个镜像，进入releases/x86/current-stage3/目录，高亮显示你需要的stage3包，
+即i686 stage3，按下D键下载）</p>
+
+<p>进入/mnt/gentoo，执行tar xjpf <stage3 tarball>解压stage包。</p>
+
+<p>代码 2.13: 解开stage3压缩包</p>
+
+<p>livecd gentoo # time tar xjpf stage3*</p>
+
+<p>real  1m14.157s
+user  1m2.920s
+sys   0m7.530s</p>
+
+<p>安装最新的Portage快照。跟下载stage3压缩包一样：从我们的列表选择一个最近的镜像，下载最新的快照并解压。</p>
+
+<p>代码 2.14: 下载最新的Portage快照</p>
+
+<p>livecd gentoo # cd /mnt/gentoo/usr
+livecd usr # wget <a href="http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2">http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2</a></p>
+
+<p>代码 2.15: 解开Portage快照</p>
+
+<p>livecd usr # time tar xjf portage-lat*</p>
+
+<p>real  0m40.523s
+user  0m28.280s
+sys   0m8.240s</p>
+
+<p>切换系统</p>
+
+<p>挂载/proc &amp; /dev文件系统，拷贝/etc/resolv.conf文件，然后chroot到你的Gentoo环境。</p>
+
+<p>代码 2.16: Chroot</p>
+
+<p>livecd usr # cd /
+livecd / # mount -t proc proc /mnt/gentoo/proc
+livecd / # mount -o bind /dev /mnt/gentoo/dev
+livecd / # cp -L /etc/resolv.conf /mnt/gentoo/etc/
+livecd / # chroot /mnt/gentoo /bin/bash
+livecd / # env-update &amp;&amp; source /etc/profile</p>
+
+<blockquote><blockquote><blockquote><p>Regenerating /etc/ld.so.cache&hellip;</p></blockquote></blockquote></blockquote>
+
+<p>设定时区</p>
+
+<p>设置你的时区信息：使用/usr/share/zoneinfo中的正确条目。</p>
+
+<p>代码 2.17: 设置时区</p>
+
+<p>livecd / # ls /usr/share/zoneinfo
+（以上海为例）
+livecd / # cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+livecd / # date
+Thu Aug 30 11:03:16 CST 2007</p>
+
+<p>设定主机名和域名</p>
+
+<p>在/etc/conf.d/hostname和/etc/hosts中设置主机名。以下例子中我们用mybox作为主机名，用at.myplace作为域名。可以用nano编辑这些配置文件，或者使用下面的命令：</p>
+
+<p>代码 2.18: 设置主机名和域名</p>
+
+<p>livecd / # cd /etc
+livecd etc # echo &ldquo;127.0.0.1 mdk-server.vim.myplace mybox localhost&rdquo; > hosts
+livecd etc # sed -i -e &rsquo;s/HOSTNAME.*/HOSTNAME=&ldquo;mdk-server&rdquo;/&lsquo; conf.d/hostname
+（使用指定的主机名并检查）
+livecd etc # hostname mdk-server
+livecd etc # hostname -f
+mdk-server.vim.myplace</p>
+
+<p>内核配置</p>
+
+<p>安装一个内核源码包（通常为gentoo-sources），配置、编译并拷贝arch/i386/boot/bzImage文件到/boot。</p>
+
+<p>代码 2.19: 安装内核源码包，编译和安装内核</p>
+
+<p>livecd etc # time emerge gentoo-sources</p>
+
+<p>real  2m51.435s
+user  0m58.220s
+sys   0m29.890s
+livecd etc # cd /usr/src/linux
+livecd linux # make menuconfig
+（配置内核）
+livecd linux # time make -j2</p>
+
+<p>（所花的时间很大程度上决定于你所选的选项）
+real  3m51.962s
+user  3m27.060s
+sys   0m24.310s</p>
+
+<p>livecd linux # make modules_install
+livecd linux # cp arch/i386/boot/bzImage /boot/kernel</p>
+
+<p>配置系统</p>
+
+<p>编辑/etc/fstab，用实际的分区名代替BOOT、ROOT和SWAP。记得确认一下文件系统是否与所安装的相匹配。</p>
+
+<p>代码 2.20: fstab范例</p>
+
+<p>livecd linux # cd /etc
+livecd etc # nano -w fstab
+/dev/sda1   /boot     ext2    noauto,noatime     1 2
+/dev/sda3   /         ext3    noatime            0 1
+/dev/sda2   none      swap    sw                 0 0</p>
+
+<p>在/etc/conf.d/net中配置网络。把net.eth0启动脚本添加到默认运行级别。如果有多张网卡，分别为它们建立符号链接到net.eth0启动脚本，并一起添加到默认运行级别。用nano编辑/etc/conf.d/net，或者使用如下命令：</p>
+
+<p>代码 2.21: 配置网络</p>
+
+<p>livecd etc # cd conf.d
+livecd conf.d # echo &lsquo;config_eth0=( &ldquo;192.168.1.10/24&rdquo; )&rsquo; >> net
+livecd conf.d # echo &lsquo;routes_eth0=( &ldquo;default via 192.168.1.1&rdquo; )&rsquo; >> net
+livecd conf.d # rc-update add net.eth0 default
+（如果你把网卡驱动编译为模块，
+需要将它添加到/etc/modules.autoload.d/kernel-2.6）
+livecd conf.d # echo r8169 >> /etc/modules.autoload.d/kernel-2.6
+（如果希望重启后通过ssh重新连接到新机器）
+livecd conf.d # rc-update add sshd default</p>
+
+<p>注意: 如果需要支持PCMCIA卡，请emerge pcmciautils。</p>
+
+<p>执行passwd设置root密码。</p>
+
+<p>代码 2.22: 设置root密码</p>
+
+<p>livecd conf.d # passwd
+New UNIX password: 输入密码
+Retype new UNIX password: 再输入密码
+passwd: password updated successfully</p>
+
+<p>编辑/etc/conf.d/clock以定义前面所使用的时区。</p>
+
+<p>代码 2.23: 编辑/etc/conf.d/clock</p>
+
+<p>livecd conf.d # nano -w /etc/conf.d/clock
+TIMEZONE=&ldquo;Asia/Shanghai&rdquo;</p>
+
+<p>检查系统配置，查看并编辑这些配置文件：/etc/rc.conf， /etc/conf.d/rc，/etc/conf.d/keymaps。</p>
+
+<p>代码 2.24: 可选：编辑一些配置文件</p>
+
+<p>livecd conf.d # nano -w /etc/rc.conf
+livecd conf.d # nano -w /etc/conf.d/rc
+livecd conf.d # nano -w /etc/conf.d/keymaps</p>
+
+<p>安装系统工具</p>
+
+<p>安装一个系统日志如syslog-ng和一个cron守护进程如vixie-cron，并把它们添加到默认运行级别。
+注意: Cron守护进程依赖于MTA。mail-mta/ssmtp会因依赖性而被一起安装。如果你想使用一种更高级的MTA，可以现在安装它。要是现在没空，暂时先安装ssmtp，以后再卸载并安装你要的MTA。</p>
+
+<p>代码 2.25: 安装系统日志和cron守护进程</p>
+
+<p>livecd conf.d # time emerge syslog-ng vixie-cron</p>
+
+<p>real  1m54.099s
+user  1m2.630s
+sys   0m34.620s
+livecd conf.d # rc-update add syslog-ng default
+livecd conf.d # rc-update add vixie-cron default</p>
+
+<p>安装必要的文件系统工具（xfsprogs，reiserfsprogs或jfsutils）和网络工具（dhcpcd或ppp）。</p>
+
+<p>代码 2.26: 安装其它工具</p>
+
+<p>livecd conf.d # emerge xfsprogs       （如果使用XFS文件系统）
+livecd conf.d # emerge jfsutils       （如果使用JFS文件系统）
+livecd conf.d # emerge reiserfsprogs  （如果使用Reiser文件系统）
+livecd conf.d # emerge dhcpcd         （如果使用DHCP客户端）
+livecd conf.d # emerge ppp            （如果使用PPPoE ADSL连接）</p>
+
+<p>配置引导程序</p>
+
+<p>安装并配置grub。</p>
+
+<p>代码 2.27: Emerge grub并编辑它的配置文件</p>
+
+<p>livecd conf.d # time emerge grub</p>
+
+<p>real  1m4.634s
+user  0m39.460s
+sys   0m15.280s
+livecd conf.d # nano -w /boot/grub/grub.conf</p>
+
+<p>代码 2.28: grub.conf范例</p>
+
+<p>default 0
+timeout 10</p>
+
+<p>title Gentoo
+root (hd0,0)
+kernel /boot/kernel root=/dev/sda3</p>
+
+<p>代码 2.29: 安装grub</p>
+
+<p>livecd conf.d # grub
+Probing devices to guess BIOS drives. This may take a long time.</p>
+
+<p>grub> root (hd0,0)
+ Filesystem type is ext2fs, partition type 0xfd</p>
+
+<p>grub> setup (hd0)
+ Checking if &ldquo;/boot/grub/stage1&rdquo; exists&hellip; yes
+ Checking if &ldquo;/boot/grub/stage2&rdquo; exists&hellip; yes
+ Checking if &ldquo;/boot/grub/e2fs_stage1_5&rdquo; exists&hellip; yes
+ Running &ldquo;embed /boot/grub/e2fs_stage1_5 (hd0)&rdquo;&hellip;  16 sectors are embedded.
+succeeded
+ Running &ldquo;install /boot/grub/stage1 (hd0) (hd0)1+16 p (hd0,0)/boot/grub/stage2 /boot/
+grub/menu.lst&rdquo;&hellip; succeeded
+Done.</p>
+
+<p>grub> quit</p>
+
+<p>重启</p>
+
+<p>退出chroot环境，卸载所有文件系统并重启：</p>
+
+<p>代码 2.30: 重启</p>
+
+<p>livecd conf.d # exit
+livecd / # umount /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo/boot /mnt/gentoo
+livecd / # reboot
+（别忘了取出光盘）</p>
+
+<p>完成安装
+注意: 在我们这台测试机器上，从minimal CD启动显示boot提示符开始，到重启后显示登录提示符， 总用时为00:42:31 。没错，不到一个小时！注意这个时间还包含了stage3包、Portage快照和一些软件包的下载时间，以及配置内核所花的时间。</p>
+
+<p>以root身份登录，用useradd添加一个或多个用户，作为日常使用。</p>
+
+<p>代码 2.31: 从另一台电脑连到你的新机器</p>
+
+<p>（清理known_hosts文件中的内容，因为你的新机器已生成一个新的
+通用主机密钥）
+$ nano -w ~/.ssh/known_hosts
+（找出新机器的IP并删除那一行，保存并退出nano）</p>
+
+<p>（使用你新机器的IP地址）
+$ ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#46;&#49;&#46;&#x31;&#x30;">&#x72;&#x6f;&#x6f;&#116;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x31;&#x2e;&#x31;&#x30;</a>
+The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
+RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &lsquo;192.168.1.10&rsquo; (RSA) to the list of known hosts.
+Password: 输入密码</p>
+
+<p>代码 2.32: 添加一个新用户</p>
+
+<p>mybox ~ # adduser -g users -G lp,wheel,audio,cdrom,portage,cron -m john
+mybox ~ # passwd john
+New UNIX password: 设置John的密码
+Retype new UNIX password: 再次输入John的密码
+passwd: password updated successfully</p>
+
+<p>最后涉及的配置</p>
+
+<p>开始选择最近的镜像，在/etc/make.conf中定义SYNC变量和GENTOO_MIRRORS变量，或者也可以使用mirrorselect。此时你还可以定义并行编译的进程数。</p>
+
+<p>代码 2.33: 使用mirrorselect并设置MAKEOPTS</p>
+
+<p>mybox ~ # emerge mirrorselect
+mybox ~ # mirrorselect -i -o >> /etc/make.conf
+mybox ~ # mirrorselect -i -r -o >> /etc/make.conf
+（通常，一个较好的值为处理器数加一）
+mybox ~ # echo &lsquo;MAKEOPTS=&ldquo;-j2&rdquo;&rsquo; >> /etc/make.conf</p>
+
+<p>现在是启用或禁用一些USE标记的好时机。运行emerge -vpe world，列出所有当前已安装的软件包以及它们被启用和禁用的USE标记。编辑/etc/make.conf或使用下列命令定义USE变量：</p>
+
+<p>代码 2.34: 查看当前使用的USE标记并启用或禁用一些</p>
+
+<p>mybox ~ # emerge -vpe world
+（Portage列出软件包和它们的USE标记。作为例子，让我们禁用ipv6和fortran，
+并启用unicode）
+mybox ~ # echo &lsquo;USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode&rdquo;&rsquo; >> /etc/make.conf</p>
+
+<p>新版本的glibc使用/etc/locale.gen来定义语言环境。</p>
+
+<p>代码 2.35: 定义语言环境</p>
+
+<p>mybox ~ # cd /etc
+mybox etc # nano -w locale.gen
+mybox etc # locale-gen</p>
+
+<p>最后但并非最轻松的，你可能想修改/etc/make.conf中的CFLAGS变量来优化编码，以满足你的特定需要。请注意极少需要一长串的标记列表，那样甚至可能导致系统崩溃。建议通过march选项指定处理器类型并赋上-O2 -pipe。</p>
+
+<p>可能你还想转到 ~x86。只有当你能够对付那些脆弱不良的ebuild和软件包时才能这么做。如果你倾向于保持系统的稳定性，请不要添加ACCEPT_KEYWORDS变量。添加FEATURES=”ccache”却是个好主意。</p>
+
+<p>代码 2.36: 为make.conf作最后的修改</p>
+
+<p>mybox etc # nano -w make.conf
+（在CFLAGS中将-march设为你的CPU类型）
+CFLAGS=&ldquo;-O2 -march=athlon-xp -pipe&rdquo;
+（添加下面一行）
+FEATURES=&ldquo;ccache&rdquo;
+（只有清楚自己在干什么才添加下面一行）
+ACCEPT_KEYWORDS=&ldquo;~x86&rdquo;</p>
+
+<p>可能你会想重编译整个系统两次，以使你所作的最新配置完全生效。这要花很长的时间来完成，而只能得到微小的速度提升。你可以让系统自己随着以后新软件包的发布而逐步完成优化。不过，站在保持系统一致性的立场来看，重编译仍不失为一个好主意。请参考文档Gentoo GCC升级指南，其中讨论了如何搭建一个具有良好一致性的system和world，以及这样做的好处。</p>
+
+<p>只重编译那些因你应用了新的USE标记或受此影响而需要升级的软件包，也要花费不少时间。可能还必须卸载会阻止你升级的软件包。在emerge -vpuD –newuse world的输出中寻找“[blocks B ]”，用emerge -C卸载它们。</p>
+
+<p>代码 2.37: 升级软件包</p>
+
+<p>（安装ccache）
+mybox etc # emerge ccache</p>
+
+<p>（请注意转到~x86会导致很多软件包要升级）
+mybox etc # emerge -vpuD &mdash;newuse world
+（好好看一看软件包列表和它们的USE标记，
+有阻止的包就先卸载，然后启动漫长的过程）
+mybox etc # time emerge -vuD &mdash;newuse world
+（（重）编译了79个软件包）</p>
+
+<p>real  180m13.276s
+user  121m22.905s
+sys   36m31.472s</p>
+
+<p>（重编译libtool以避免一些潜在的问题）
+mybox etc # emerge &mdash;oneshot libtool</p>
+
+<p>（更新配置文件，确保不要让dispatch-conf更新你配置好的文件）
+mybox etc # dispatch-conf</p>
+
+<p>（如果升级了perl，应该执行perl-cleaner脚本）
+mybox etc # time perl-cleaner all
+real  1m6.495s
+user  0m42.699s
+sys   0m10.641s</p>
+
+<p>（如果升级了python的主要软件包，应该执行python-updater脚本）
+mybox etc # python-updater</p>
+
+<p>接下来该做什么</p>
+
+<p>想安装服务器应用程序还是一个桌面系统，取决于你打算让你的新Gentoo做什么。以下仅作为一个例子，统计了emerge gnome和emerge kde在~x86系统（按之前的描述安装的）上所花费的时间。两者是在同一起点开始安装的。</p>
+
+<p>去看看我们的文档目录，研究一下如何安装和配置你挑选的软件。
+重要: 以下只是举个例子，并不意味着就作为推荐设置。</p>
+
+<p>代码 2.38: Emerge GNOME</p>
+
+<p>mybox etc # emerge -vp gnome
+（查看软件包列表和它们的USE标记，
+如果需要请编辑make.conf
+mybox etc # nano -w /etc/make.conf
+（定义了以下USE标记）
+USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode svg hal dbus \</p>
+
+<pre><code> -kde -qt4 -arts -eds -esd gnome gstreamer gtk firefox"
+</code></pre>
+
+<p>mybox etc # time emerge gnome
+（安装了326个软件包）</p>
+
+<p>real  520m44.532s
+user  339m21.144s
+sys   146m22.337s</p>
+
+<p>代码 2.39: Emerge KDE</p>
+
+<p>mybox etc # emerge -vp kde-meta
+（查看软件包列表和它们的USE标记，
+如果需要请编辑make.conf
+mybox etc # nano -w /etc/make.conf
+定义了以下USE标记）
+USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode svg hal dbus \</p>
+
+<pre><code> kde qt4 -arts -eds -esd -gnome -gstreamer -gtk -firefox"
+</code></pre>
+
+<p>mybox etc # time emerge kde-meta
+（安装了391个软件包）</p>
+
+<p>real  1171m25.318s
+user  851m26.393s
+sys   281m45.629s</p>
 ]]></content>
   </entry>
   
@@ -54,7 +741,239 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-xu-han-shu-ji-xu-han-shu-biao-jie-xi/"/>
     <updated>2013-05-18T22:47:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-xu-han-shu-ji-xu-han-shu-biao-jie-xi</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>转自:<a href="http://www.cnblogs.com/realyan/archive/2011/07/14/2106339.html">http://www.cnblogs.com/realyan/archive/2011/07/14/2106339.html</a>
+虚函数的定义：</p>
+
+<p>　　虚函数必须是类的非静态成员函数（且非构造函数），其访问权限是public（可以定义为private or proteceted， 但是对于多态来说，没有意义。），在基类的类定义中定义虚函数的一般形式：</p>
+
+<p>　　virtual 函数返回值类型 虚函数名（形参表）</p>
+
+<p>　　{ 函数体 }</p>
+
+<p>　　虚函数的作用是实现动态联编，也就是在程序的运行阶段动态地选择合适的成员函数，在定义了虚函数后，</p>
+
+<p>　　可以在基类的派生类中对虚函数重新定义（形式也 是：virtual 函数返回值类型 虚函数名（形参表）{ 函数体 }），在派生类中重新定义的函数应与虚函数具有相同的形参个数和形参类型。以实现统一的接口，不同定义过程。如果在派生类中没有对虚函数重新定义，则它继 承其基类的虚函数。当程序发现虚函数名前的关键字virtual后，会自动将其作为动态联编处理，即在程序运行时动态地选择合适的成员函数。</p>
+
+<p>　　实现动态联编需要三个条件：</p>
+
+<p>　　1、 必须把需要动态联编的行为定义为类的公共属性的虚函数。</p>
+
+<p>　　2、 类之间存在子类型关系，一般表现为一个类从另一个类公有派生而来。</p>
+
+<p>　　3、 必须先使用基类指针指向子类型的对象，然后直接或者间接使用基类指针调用虚函数。</p>
+
+<p>　　定义虚函数的限制：</p>
+
+<p>　　（1）非类的成员函数不能定义为虚函数，类的成员函数中静态 成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数 定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析 构函数。</p>
+
+<p>　　（2）只需要在声明函数的类体中使用关键字“virtual”将函数声明为虚函数，而定义函数时不需要使用关键字“virtual”。</p>
+
+<p>　　（3）如果声明了某个成员函数为虚函数，则在该类中不能出现和这个成员函数同名并且返回值、参数个数、参数类型都相同的非虚函数。在以该类为基类的派生类中，也不能出现这种非虚的同名同返回值同参数个数同参数类型函数。</p>
+
+<p>　　为什么虚函数必须是类的成员函数：</p>
+
+<p>　　虚函数诞生的目的就是为了实现多态，在类外定义虚函数毫无实际用处。</p>
+
+<p>　　为什么类的静态成员函数不能为虚函数：</p>
+
+<p>　　如果定义为虚函数，那么它就是动态绑定的，也就是在派生类中可以被覆盖的，这与静态成员函数的定义（：在内存中只有一份拷贝；通过类名或对象引用访问静态成员）本身就是相矛盾的。</p>
+
+<p>　　为什么构造函数不能为虚函数：</p>
+
+<p>　　因为如果构造函数为虚函数的话，它将在执行期间被构造，而执行期则需要对象已经建立，构造函数所完成的工作就 是为了建立合适的对象，因此在没有构建好的对象上不可能执行多态（虚函数的目的就在于实现多态性）的工作。在继承体系中，构造的顺序就是从基类到派生类， 其目的就在于确保对象能够成功地构建。构造函数同时承担着虚函数表的建立，如果它本身都是虚函数的话，如何确保vtbl的构建成功呢？</p>
+
+<p>　　注意：当基类的构造函数内部有虚函数时，会出现什么情况呢？ 结果是在构造函数中，虚函数机制不起作用了，调用虚函数如同调用一般的成员函数一样。当基类的析构函数内部有虚函数时，又如何工作呢？与构造函数相同，只 有“局部”的版本被调用。但是，行为相同，原因是不一样的。构造函数只能调用“局部”版本，是因为调用时还没有派生类版本的信息。析构函数则是因为派生类 版本的信息已经不可靠了。我们知道，析构函数的调用顺序与构造函数相反，是从派生类的析构函数到基类的析构函数。当某个类的析构函数被调用时，其派生类的 析构函数已经被调用了，相应的数据也已被丢失，如果再调用虚函数的派生类的版本，就相当于对一些不可靠的数据进行操作，这是非常危险的。因此，在析构函数 中，虚函数机制也是不起作用的。</p>
+
+<p>　　C++中的虚函数的作用主要是实现了多态的机制。关于多态， 简而言之就是用父类型别的指针指向其子类的实例，然后通过父类的指针调用实际子类的成员函数。这种技术可以让父类的指针有“多种形态”，这是一种泛型技 术。所谓泛型技术，说白了就是试图使用不变的代码（Or 不变的 接口）来实现可变的算法。比如：模板技术，RTTI技术，虚函数技术，要么是试图做到在编译时决议，要么试图做到运行时决议。</p>
+
+<p>　　关于虚函数的使用方法，我在这里不做过多的阐述。大家可以看看相关的C++的书籍。在这篇文章中，我只想从虚函数的实现机制上面为大家一个清晰的剖析。</p>
+
+<p>　　当然，相同的文章在网上也出现过一些了，但我总感觉这些文章不是很容易阅读，大段大段的代码，没有图片，没有详细的说明，没有比较，没有举一反三。不利于学习和阅读，所以这是我想写下这篇文章的原因。也希望大家多给我提意见</p>
+
+<p>言归正传，让我们一起进入虚函数的世界。</p>
+
+<p>　　虚函数表</p>
+
+<p>　　对C++ 了解的人都应该知道虚函数（Virtual Function）是通过一张虚函数表（Virtual Table）来实现的。简称为V-Table。在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。 这样，在有虚函数的类的实例（注：抽象类即有纯虚函数的类不能被实例化。）中这个表被分配在了这个实例的内存中（注：一个类的虚函数表是静态的，也就是说 对这个类的每个实例，他的虚函数表的是固定的，不会为每个实例生成一个相应的虚函数表。），所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表 就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。</p>
+
+<p>　　这里我们着重看一下这张虚函数表。在C++的标准规格说明书 中说到，编译器必需要保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证正确取到虚函数的偏移量）。这意味着我们通过对象实例的地址得到这张 虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。</p>
+
+<p>　　假设我们有这样的一个类：
+　　class Base { 　</p>
+
+<p>　　　public: 　　</p>
+
+<p>　　　　virtual void f() { cout &lt;&lt; “Base::f” &lt;&lt; endl; } 　</p>
+
+<p>　　　　virtual void g() { cout &lt;&lt; “Base::g” &lt;&lt; endl; } 　</p>
+
+<p>　　　　virtual void h() { cout &lt;&lt; “Base::h” &lt;&lt; endl; } 　</p>
+
+<p>　};</p>
+
+<p>　　按照上面的说法，我们可以通过Base的实例来得到Base的虚函数表。 下面是实际例程：
+　　{ 　　… 　　typedef void(*Fun)(void); 　　</p>
+
+<p>Base b; 　</p>
+
+<p>　　　Fun pFun = NULL;</p>
+
+<p>　　 　cout &lt;&lt; “虚函数表地址：” &lt;&lt; (int*)(&amp;b) &lt;&lt; endl; 　</p>
+
+<p>　　　cout &lt;&lt; “虚函数表 — 第一个函数地址：” &lt;&lt; (int<em>)</em>(int*)(&amp;b) &lt;&lt; endl; 　　// Invoke the first virtual function</p>
+
+<p>　　　pFun = (Fun)<em>((int</em>)<em>(int</em>)(&amp;b));</p>
+
+<p>　　　pFun(); 　　… 　</p>
+
+<p>　}</p>
+
+<p>　　实际运行经果如下(Windows XP+VS2003, Linux 2.6.22 + GCC 4.1.3) ：</p>
+
+<p>　　虚函数表地址：0012FED4</p>
+
+<p>　　虚函数表 — 第一个函数地址：0044F148</p>
+
+<p>　　Base::f</p>
+
+<p>　　通过这个示例，我们可以看到，我们可以通过强行 把&amp;b转成int <em>，取得虚函数表的地址，然后，再次取址就可以得到第一个虚函数的地址了，也就是Base::f()，这在上面的程序中得到了验证（把int</em> 强制转成了函数指针）。通过这个示例，我们就可以知道如果要调用Base::g()和Base::h()，其代码如下：</p>
+
+<p>　　(Fun)<em>((int</em>)<em>(int</em>)(&amp;b)+0); // Base::f()</p>
+
+<p>　　(Fun)<em>((int</em>)<em>(int</em>)(&amp;b)+1); // Base::g()</p>
+
+<p>　　(Fun)<em>((int</em>)<em>(int</em>)(&amp;b)+2); // Base::h()</p>
+
+<p>　　画个图解释一下。如下所示：</p>
+
+<p>　　注意：在上面这个图中，我在虚函数表的最后多加了一个结点，这是虚函数表的结束结点，就像字符串的结束符“\0”一样，其标志了虚函数表的结束。这个结束标志的值在不同的编译器下是不同的。</p>
+
+<p>　　在WinXP+VS2003下，这个值是NULL。</p>
+
+<p>　　而在Ubuntu 7.10 + Linux 2.6.22 + GCC 4.1.3下，这个值是如果1，表示还有下一个虚函数表，如果值是0，表示是最后一个虚函数表。</p>
+
+<p>　　下面，我将分别说明“无覆盖”和“有覆盖”时的子类虚函数表的样子。没有覆盖父类的虚函数是毫无意义的。我之所以要讲述没有覆盖的情况，主要目的是为了给一个对比。在比较之下，我们可以更加清楚地知道其内部的具体实现。</p>
+
+<p>一般继承（无虚函数覆盖）</p>
+
+<p>　　下面，再让我们来看看继承时的虚函数表是什么样的。假设有如下所示的一个继承关系：</p>
+
+<p>　　请注意，在这个继承关系中，子类没有重写任何父类的函数。那么，在派生类的实例的虚函数表如下所示：</p>
+
+<p>　　对于实例：Derive d; 的虚函数表如下： （overload（重载） 和 override（重写），重载就是所谓的名同而签名不同，重写就是对子类对虚函数的重新实现。）</p>
+
+<p>　　我们可以看到下面几点：</p>
+
+<p>　　1）虚函数按照其声明顺序放于表中。</p>
+
+<p>　　2）父类的虚函数在子类的虚函数前面。</p>
+
+<p>　　一般继承（有虚函数覆盖）</p>
+
+<p>　　覆盖父类的虚函数是很显然的事情，不然，虚函数就变得毫无意义。下面，我们来看一下，如果子类中有虚函数重载了父类的虚函数，会是一个什么样子？假设，我们有下面这样的一个继承关系。</p>
+
+<p>　　为了让大家看到被继承过后的效果，在这个类的设计中，我只覆盖了父类的一个函数：f()。那么，对于派生类的实例的虚函数表会是下面的样子：</p>
+
+<p>　　我们从表中可以看到下面几点，</p>
+
+<p>　　1）覆盖的f()函数被放到了子类虚函数表中原来父类虚函数的位置。</p>
+
+<p>　　2）没有被覆盖的函数依旧。</p>
+
+<p>　　这样，我们就可以看到对于下面这样的程序，</p>
+
+<p>　　Base *b = new Derive();</p>
+
+<p>　　b->f();</p>
+
+<p>　　由b所指的内存中的虚函数表（子类的虚函数表）的f()的位置已经被Derive::f()函数地址所取代，于是在实际调用发生时，是Derive::f()被调用了。这就实现了多态。</p>
+
+<p>多重继承（无虚函数覆盖）</p>
+
+<p>　　下面，再让我们来看看多重继承中的情况，假设有下面这样一个类的继承关系。注意：子类并没有覆盖父类的函数。</p>
+
+<p>　　对于子类实例中的虚函数表，是下面这个样子：</p>
+
+<p>　　我们可以看到：</p>
+
+<p>　　1） 每个父类都有自己的虚表。</p>
+
+<p>　　2） 子类的成员函数被放到了第一个父类的表中。（所谓的第一个父类是按照声明顺序来判断的）</p>
+
+<p>　　这样做就是为了解决不同的父类类型的指针指向同一个子类实例，而能够调用到实际的函数。</p>
+
+<p>　　多重继承（有虚函数覆盖）</p>
+
+<p>　　下面我们再来看看，如果发生虚函数覆盖的情况。</p>
+
+<p>　　下图中，我们在子类中覆盖了父类的f()函数。</p>
+
+<p>　　下面是对于子类实例中的虚函数表的图：</p>
+
+<p>　　我们可以看见，三个父类虚函数表中的f()的位置被替换成了子类的函数指针。这样，我们就可以用任一个父类指针来指向子类，并调用子类的f()了。如：</p>
+
+<p>　　　Derive d; 　</p>
+
+<p>　　　Base1 *b1 = &d; 　</p>
+
+<p>　　　Base2 *b2 = &d; 　　</p>
+
+<p>　　　Base3 *b3 = &d; 　</p>
+
+<p>　　　b1->f(); //Derive::f()</p>
+
+<p>　　　b2->f(); //Derive::f() 　</p>
+
+<p>　　　b3->f(); //Derive::f() 　　</p>
+
+<p>　　　b1->g(); //Base1::g() 　　</p>
+
+<p>　　　b2->g(); //Base2::g() 　</p>
+
+<p>　　　b3->g(); //Base3::g()</p>
+
+<p>安全性</p>
+
+<p>　　每次写C++的文章，总免不了要批判一下C++。这篇文章也不例外。通过上面的讲述，相信我们对虚函数表有一个比较细致的了解了。水可载舟，亦可覆舟。下面，让我们来看看我们可以用虚函数表来干点什么坏事吧。</p>
+
+<p>　　一、尝试：通过父类型的指针（指向子类对象）访问子类自己的虚函数</p>
+
+<p>　　我们知道，子类没有重载父类的虚函数是一件毫无意义的事情。因为多态也是要基于函数重载的。虽然在上面的图中我们可以看到子类的虚表中有Derive自己的虚函数，但我们根本不可能使用基类的指针来调用子类的自有虚函数：</p>
+
+<p>　　Base1 *b1 = new Derive();</p>
+
+<p>　　b1->f1(); //编译出错</p>
+
+<p>　　任何妄图使用父类指针想调用子类中的未覆盖父类的成员函数的行为都会被编译器视为非法，所以，这样的程序根本无法编译通过。</p>
+
+<p>　　但在运行时，我们可以通过指针的方式访问虚函数表来达到违反C++语义的行为。</p>
+
+<p>　　二、尝试：通过父类型的指针（指向子类对象）访问父类的non-public虚函数</p>
+
+<p>　　另外，如果父类的虚函数是private或是protected的，但这些非public的虚函数同样会存在于子类虚函数表中，所以我们同样可以使用访问虚函数表的方式来访问这些non-public的虚函数，这是很容易做到的。</p>
+
+<p>　　如：
+　　class Base { 　　private: 　　virtual void f() { cout &lt;&lt; “Base::f” &lt;&lt; endl; } 　　};</p>
+
+<p>　　class Derive : public Base{ 　　}; 　　</p>
+
+<p>　　typedef void(*Fun)(void); 　　</p>
+
+<p>　　void main()</p>
+
+<p>　　 { 　</p>
+
+<p>　　　Derive d; 　</p>
+
+<p>　　　Fun pFun = (Fun)<em>((int</em>)<em>(int</em>)(&amp;d)+0);</p>
+
+<p>　　　　pFun(); 　　</p>
+
+<p>　　}</p>
+
+<p>　　结束语</p>
+
+<p>　　C++这门语言是一门Magic的语言，对于程序员来说，我们似乎永远摸不清楚这门语言背着我们在干了什么。需要熟悉这门语言，我们就必需要了解C++里面的那些东西，需要去了解C++中那些危险的东西。不然，这是一种搬起石头砸自己脚的编程语言。</p>
 ]]></content>
   </entry>
   
@@ -63,7 +982,213 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-zhong-de-xu-han-shu/"/>
     <updated>2013-05-18T22:46:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/c-plus-plus-zhong-de-xu-han-shu</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>转自:<a href="http://www.cnblogs.com/realyan/archive/2011/07/13/2105801.html">http://www.cnblogs.com/realyan/archive/2011/07/13/2105801.html</a></p>
+
+<p>一.简介</p>
+
+<p>虚函数是C++中用于实现多态(polymorphism)的机制。核心理念就是通过基类访问派生类定义的函数。假设我们有下面的类层次：</p>
+
+<p>class A {</p>
+
+<p>public: virtual void foo()</p>
+
+<p>{</p>
+
+<p>cout &lt;&lt; “A::foo() is called” &lt;&lt; endl;</p>
+
+<p>}</p>
+
+<p>};
+class B: public A</p>
+
+<p>{</p>
+
+<p>public: virtual void foo()</p>
+
+<p>{</p>
+
+<p>cout &lt;&lt; “B::foo() is called” &lt;&lt; endl;</p>
+
+<p>}</p>
+
+<p>};</p>
+
+<p>那么，在使用的时候，我们可以：　 A * a = new B();</p>
+
+<p>a->foo(); // 在这里，a虽然是指向A的指针，但是被调用的函数(foo)却是B的!</p>
+
+<p>这个例子是虚函数的一个典型应用，通过这个例子，也许你就对虚函数有了一些概念。它虚就虚在所谓“推迟联编”或者“动态联编”上，一个类函数的 调用并不是在编译时刻被确定的，而是在运行时刻被确定的。由于编写代码的时候并不能确定被调用的是基类的函数还是哪个派生类的函数，所以被成为“虚”函 数。
+虚函数只能借助于指针或者引用来达到多态的效果，如果是下面这样的代码，则虽然是虚函数，但它不是多态的：</p>
+
+<p>class A</p>
+
+<p>{</p>
+
+<p>public: virtual void foo();</p>
+
+<p>};</p>
+
+<p>class B: public A</p>
+
+<p>{</p>
+
+<p>virtual void foo();</p>
+
+<p>};
+void bar()</p>
+
+<p>{</p>
+
+<p>A a; a.foo(); // A::foo()被调用</p>
+
+<p>}</p>
+
+<p>1.1 多态　　在了解了虚函数的意思之后，再考虑什么是多态就很容易了。仍然针对上面的类层次，但是使用的方法变的复杂了一些：void bar(A * a)</p>
+
+<p>{ a->foo(); // 被调用的是A::foo() 还是B::foo()？ }</p>
+
+<p>因为foo()是个虚函数，所以在bar这个函数中，只根据这段代码，无从确定这里被调用的是A::foo()还是B::foo()，但是可以肯定的说：如果a指向的是A类的实例，则A::foo()被调用，如果a指向的是B类的实例，则B::foo()被调用。
+这种同一代码可以产生不同效果的特点，被称为“多态”。
+1.2 多态有什么用？ 　　多态这么神奇，但是能用来做什么呢？这个命题我难以用一两句话概括，一般的C++教程（或者其它面向对象语言的教程）都用一个画图的例子来展示多态的 用途，我就不再重复这个例子了，如果你不知道这个例子，随便找本书应该都有介绍。我试图从一个抽象的角度描述一下，回头再结合那个画图的例子，也许你就更 容易理解。
+在面向对象的编程中，首先会针对数据进行抽象（确定基类）和继承（确定派生类），构成类层次。这个类层次的使用者在使用它们的时 候，如果仍然在需要基类的时候写针对基类的代码，在需要派生类的时候写针对派生类的代码，就等于类层次完全暴露在使用者面前。如果这个类层次有任何的改变 （增加了新类），都需要使用者“知道”（针对新类写代码）。这样就增加了类层次与其使用者之间的耦合，有人把这种情况列为程序中的“bad smell”之一。
+多态可以使程序员脱离这种窘境。再回头看看1.1中的例子，bar()作为A-B这个类层次的使用者，它并不知道这个类层 次中有多少个类，每个类都叫什么，但是一样可以很好的工作，当有一个C类从A类派生出来后，bar()也不需要“知道”（修改）。这完全归功于多态–编 译器针对虚函数产生了可以在运行时刻确定被调用函数的代码。</p>
+
+<p>1.3 如何“动态联编” 　　编译器是如何针对虚函数产生可以再运行时刻确定被调用函数的代码呢？也就是说，虚函数实际上是如何被编译器处理的呢？Lippman在深度探索C++对象模型[1]中的不同章节讲到了几种方式，这里把“标准的”方式简单介绍一下。
+我所说的“标准”方式，也就是所谓的“VTABLE”机制。编译器发现一个类中有被声明为virtual的函数，就会为其搞一个虚函数表，也就是 VTABLE。VTABLE实际上是一个函数指针的数组，每个虚函数占用这个数组的一个slot。一个类只有一个VTABLE，不管它有多少个实例。派生 类有自己的VTABLE，但是派生类的VTABLE与基类的VTABLE有相同的函数排列顺序，同名的虚函数被放在两个数组的相同位置上。在创建类实例的 时候，编译器还会在每个实例的内存布局中增加一个vptr字段，该字段指向本类的VTABLE。通过这些手段，编译器在看到一个虚函数调用的时候，就会将 这个调用改写，针对1.1中的例子：</p>
+
+<p>void bar(A * a) { a->foo(); }</p>
+
+<p>会被改写为：</p>
+
+<p>void bar(A * a) { (a->vptr[1])(); }</p>
+
+<p>因为派生类和基类的foo()函数具有相同的VTABLE索引，而他们的vptr又指向不同的VTABLE，因此通过这样的方法可以在运行时刻决定调用哪个foo()函数。
+虽然实际情况远非这么简单，但是基本原理大致如此。
+1.4 overload和override 　　虚函数总是在派生类中被改写，这种改写被称为“override”。我经常混淆“overload”和“override”这两个单词。但是随着各类C++的书越来越多，后来的程序员也许不会再犯我犯过的错误了。但是我打算澄清一下：
+override是指派生类重写基类的虚函数，就象我们前面B类中重写了A类中的foo()函数。重写的函数必须有一致的参数表和返回值（C++标准允 许返回值不同的情况，这个我会在“语法”部分简单介绍，但是很少编译器支持这个feature）。这个单词好象一直没有什么合适的中文词汇来对应，有人译 为“覆盖”，还贴切一些。 overload约定成俗的被翻译为“重载”。是指编写一个与已有函数同名但是参数表不同的函数。例如一个函数即可以接受整型数作为参数，也可以接受浮点 数作为参数。
+二. 虚函数的语法 　　虚函数的标志是“virtual”关键字。
+2.1 使用virtual关键字　　考虑下面的类层次：</p>
+
+<p>class A { public: virtual void foo(); };
+class B: public A { public: void foo(); // 没有virtual关键字! };
+class C: public B // 从B继承，不是从A继承！ { public: void foo(); // 也没有virtual关键字！ };</p>
+
+<p>这种情况下，B::foo()是虚函数，C::foo()也同样是虚函数。因此，可以说，基类声明的虚函数，在派生类中也是虚函数，即使不再使用virtual关键字。
+2.2 纯虚函数　　如下声明表示一个函数为纯虚函数：</p>
+
+<p>class A { public: virtual void foo()=0; // =0标志一个虚函数为纯虚函数 };</p>
+
+<p>一个函数声明为纯虚后，纯虚函数的意思是：我是一个抽象类！不要把我实例化！纯虚函数用来规范派生类的行为，实际上就是所谓的“接口”。它告诉使用者，我的派生类都会有这个函数。
+2.3 虚析构函数　　析构函数也可以是虚的，甚至是纯虚的。例如：</p>
+
+<p>class A { public: virtual ~A()=0; // 纯虚析构函数 };</p>
+
+<p>当一个类打算被用作其它类的基类时，它的析构函数必须是虚的。考虑下面的例子：</p>
+
+<p>class A {</p>
+
+<p>public: A() { ptra_ = new char[10];}</p>
+
+<p>~A() { delete[] ptra_;} // 非虚析构函数</p>
+
+<p>private: char * ptra<em>; };
+class B: public A { public: B() { ptrb</em> = new char[20];}</p>
+
+<p>~B() { delete[] ptrb<em>;} private: char * ptrb</em>; };
+void foo() { A * a = new B; delete a; }</p>
+
+<p>在这个例子中，程序也许不会象你想象的那样运行，在执行delete a的时候，实际上只有A::~A()被调用了，而B类的析构函数并没有被调用！这是否有点儿可怕？
+如果将上面A::~A()改为virtual，就可以保证B::~B()也在delete a的时候被调用了。因此基类的析构函数都必须是virtual的。
+纯虚的析构函数并没有什么作用，是虚的就够了。通常只有在希望将一个类变成抽象类（不能实例化的类），而这个类又没有合适的函数可以被纯虚化的时候，可以使用纯虚的析构函数来达到目的。
+2.4 虚构造函数？ 　　构造函数不能是虚的。
+三. 虚函数使用技巧</p>
+
+<p>3.1 private的虚函数 　　考虑下面的例子：</p>
+
+<p>class A { public:</p>
+
+<p>void foo() { bar();}</p>
+
+<p>private:</p>
+
+<p>virtual void bar() { …}</p>
+
+<p>};
+class B: public A</p>
+
+<p>{</p>
+
+<p>private: virtual void bar() { …}</p>
+
+<p>};</p>
+
+<p>在这个例子中，虽然bar()在A类中是private的，但是仍然可以出现在派生类中，并仍然可以与public 或者protected的虚函数一样产生多态的效果。并不会因为它是private的，就发生A::foo()不能访问B::bar()的情况，也不会发 生B::bar()对A::bar()的override不起作用的情况。
+这种写法的语意是：A告诉B，你最好override我的bar()函数，但是你不要管它如何使用，也不要自己调用这个函数。
+3.2 构造函数和析构函数中的虚函数调用　　一个类的虚函数在它自己的构造函数和析构函数中被调用的时候，它们就变成普通函数了，不“虚”了。也就是说不能在构造函数和析构函数中让自己“多态”。例如：</p>
+
+<p>class A {</p>
+
+<p>public: A() { foo();} // 在这里，无论如何都是A::foo()被调用！</p>
+
+<p>~A() { foo();} // 同上</p>
+
+<p>virtual void foo();</p>
+
+<p>};
+class B: public A</p>
+
+<p>{</p>
+
+<p>public: virtual void foo();</p>
+
+<p>};
+void bar()</p>
+
+<p>{</p>
+
+<p>A * a = new B;</p>
+
+<p>delete a;</p>
+
+<p>}</p>
+
+<p>如果你希望delete a的时候，会导致B::foo()被调用，那么你就错了。同样，在new B的时候，A的构造函数被调用，但是在A的构造函数中，被调用的是A::foo()而不是B::foo()。
+3.3 多继承中的虚函数 3.4 什么时候使用虚函数 　　在你设计一个基类的时候，如果发现一个函数需要在派生类里有不同的表现，那么它就应该是虚的。从设计的角度讲，出现在基类中的虚函数是接口，出现在派生类中的虚函数是接口的具体实现。通过这样的方法，就可以将对象的行为抽象化。
+以设计模式[2]中Factory Method模式为例，Creator的factoryMethod()就是虚函数，派生类override这个函数后，产生不同的Product类，被 产生的Product类被基类的AnOperation()函数使用。基类的AnOperation()函数针对Product类进行操作，当然 Product类一定也有多态（虚函数）。</p>
+
+<p>另外一个例子就是集合操作，假设你有一个以A类为基类的类层次，又用了一个std::vector来保存这个类层次中不同类的实例指针，那么你一定希望在对这个集合中的类进行操作的时候，不要把每个指针再cast回到它原来的类型（派生类），而是希望对他们进行同样的操作。那么就应该将这个“一样的操作”声明为virtual。
+现实中，远不只我举的这两个例子，但是大的原则都是我前面说到的“如果发现一个函数需要在派生类里有不同的表现，那么它就应该是虚的”。这句话也可以反过来说：“如果你发现基类提供了虚函数，那么你最好override它”。</p>
+
+<p>附：C++中的虚函数和纯虚函数用法</p>
+
+<p>1.虚函数和纯虚函数可以定义在同一个类(class)中，含有纯虚函数的类被称为抽象类（abstract class），而只含有虚函数的类（class）不能被称为抽象类（abstract class）。
+2.虚函数可以被直接使用，也可以被子类（sub class）重载以后以多态的形式调用，而纯虚函数必须在子类（sub class）中实现该函数才可以使用，因为纯虚函数在基类（base class） 只有声明而没有定义。
+3.虚函数和纯虚函数都可以在子类（sub class）中被重载，以多态的形式被调用。
+　　4.虚函数和纯虚函数通常存在于抽象基类（abstract base class -ABC）之中，被继承的子类重载，目的是提供一个统一的接口。
+　　5. 虚函数的定义形式：virtual {method body} ；纯虚函数的定义形式：virtual { } = 0; 在虚函数和纯虚函数的定义中不能有static标识符，原因很简单，被static修饰的函数在编译时候要求前期bind,然而虚函数却是动态绑定 （run-time bind），而且被两者修饰的函数生命周期（life recycle）也不一样。</p>
+
+<p>6.如果一个类中含有纯虚函数，那么任何试图对该类进行实例化的语句都将导致错误的产生，因为抽象基类（ABC）是不能被直接调用的。必须被子类继承重载以后，根据要求调用其子类的方法。
+以下为一个简单的虚函数和纯虚寒数的使用演示，目的是抛砖引玉！</p>
+
+<p>class Virtualbase</p>
+
+<p>{</p>
+
+<p>public:</p>
+
+<p>virtual void Demon()= 0; //prue virtual function</p>
+
+<p>virtual void Base() {cout&lt;&lt;”this is farther class”&lt;}; //sub class</p>
+
+<p>void main() {  Virtualbase* inst = new SubVirtual(); //multstate pointer</p>
+
+<p>inst->Demon();</p>
+
+<p>inst->Base(); // inst = new Virtualbase(); // inst->Base()</p>
+
+<p>return ;</p>
+
+<p>}</p>
 ]]></content>
   </entry>
   
@@ -81,7 +1206,103 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/"/>
     <updated>2013-05-18T22:46:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>int getMaxInt1(){
+  return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
+}
+int getMaxInt2(){
+  return ~( 1 &lt;&lt; 31 );
+}
+int getMaxInt3(){
+  return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
+}
+int getMaxInt4(){
+  return ( (unsigned int) – 1 ) >> 1;
+}
+int getMinInt5(){
+  return 1 &lt;&lt; 31; //获取int类型的最小值
+}
+int getMinInt6(){
+  return 1 &lt;&lt; -1; //gcc 不支持
+}
+int getMaxLong(){
+  return ((unsigned long) – 1 ) >> 1;
+}
+int getMinLong(){
+  return 1 &lt;&lt; 63;
+}
+int mulTwo(int n){
+   return n &lt;&lt; 1;
+}
+int divTwo(int n){
+  return n >> 1;
+}
+int mulTwoPower(int n,int m){
+ //n<em>(2<sup>m</sup>)
+  return n &lt;&lt; m;
+}
+int divTwoPower(int n,int m){
+ //n/(2<sup>m</sup>)
+  return n >> m;
+}
+bool isOddNumber(int n){
+  return (n &amp; 1) == 1;
+}
+void swap1(int a,int b){
+ a ^= b;
+ b ^= a;
+ a ^= b;
+ cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+}
+void swap2(int </em>a,int <em>b){
+ (</em>a) ^= (<em>b) ^= (</em>a) ^= (<em>b);
+}
+int abs(int n){
+  return (n<sup> n >> 31 </sup>) &ndash;( n >> 31 );
+}
+int main(int argc,char </em>argv[])
+{
+   /*</p>
+
+<pre><code>*位运算的20则
+* */
+int max1 = getMaxInt1();
+int max2 = getMaxInt2();
+int max3 = getMaxInt4();
+int min1 = getMinInt5();
+int min2 = getMinInt6();
+int max4 = getMaxLong();
+int min3 = getMinLong();
+int num1 = mulTwo(2);
+int num2 = divTwo(2);
+int num3 = mulTwoPower(2,1);
+int num4 = divTwoPower(2,1);
+int num5 = isOddNumber(4);
+int num6 = isOddNumber(3);
+int a=3;
+int b=4;
+int a1=3;
+int b1=4;
+a ^= b;
+b ^= a;
+a ^= b;
+//cout&lt;&lt;a&lt;&lt;”  “&lt;&lt;b&lt;&lt;endl;
+//cout&lt;&lt;max1&lt;&lt;” “&lt;&lt;max2&lt;&lt;” “&lt;&lt;max3&lt;&lt;endl;
+//cout&lt;&lt;min1&lt;&lt;” “&lt;&lt;min2&lt;&lt;endl;
+//cout&lt;&lt;max4&lt;&lt;endl;
+//cout&lt;&lt;min3&lt;&lt;endl;
+//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+//cout&lt;&lt;num5&lt;&lt;” “&lt;&lt;num6&lt;&lt;endl;
+//swap1(a,b);
+//cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+//swap2(&amp;a1,&amp;b1);
+//cout&lt;&lt;a1&lt;&lt;” “&lt;&lt;b1&lt;&lt;endl;
+int abs1 = abs(-5);
+cout&lt;&lt;abs1&lt;&lt;endl;
+return 0;
+</code></pre>
+
+<p>}</p>
 ]]></content>
   </entry>
   
@@ -90,7 +1311,94 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/"/>
     <updated>2013-05-18T22:45:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>/<em>
+ * =====================================================================================
+ *
+ *       Filename:  weiyi1.cpp
+ *
+ *    Description:  位运算
+ *
+ *        Version:  1.0
+ *        Created:  2012/12/19 13:05:23
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6d;&#x65;&#110;&#x67;&#100;&#97;&#105;&#x6b;&#117;&#110;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x6d;&#x65;&#110;&#x67;&#x64;&#97;&#x69;&#107;&#x75;&#110;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>
+ *        Company:  cjluacm-vim-mdk
+ *
+ * =====================================================================================
+ </em>/
+int max1(int a,int b){
+  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
+}
+int max2(int x,int y){
+  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
+}
+int min1(int a,int b){
+  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
+}
+int min2(int x,int y){
+  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
+}
+bool isSampSign(int x,int y){
+  return (x<sup>y</sup>) >= 0;
+}
+int getTwo(int n){
+ // 2<sup>n</sup>
+ return 2 &lt;&lt; (n-1);
+}
+bool isTwo(int n){
+ return n > 0 ? (n&amp;(n-1)) == 0:false;
+}
+int quyu(int m,int n){
+  return m &amp; (n-1);
+}
+int getAgv1(int n,int m){
+ return (n+m) >> 1;
+}
+int getAgv2(int x,int y){
+ return ((x<sup>y</sup>) >> 1) + (x&amp;y);
+}
+int getBit(int n,int m){  //从低位到高位 取n的第m位
+ return (n >> (m-1)) &amp; 1;
+}
+int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
+ return n | (1 &lt;&lt; (m-1));
+}
+int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
+ return n &amp; ~(1 &lt;&lt; (m-1));
+}
+int getnum1(int n){
+  //get n+1
+  return &ndash;~n;
+}
+int getnum2(int n){
+ return ~-n;
+}
+int getnum3(int n){
+ return ~n + 1;
+}
+int main(int argc,char *argv[])
+{</p>
+
+<pre><code>int num1 = max1(3,5);
+int num2 = max2(3,5);
+int num3 = min1(3,5);
+int num4 = min2(3,5);
+cout&lt;&lt;getnum3(3)&lt;&lt;endl;
+//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
+//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
+//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
+//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
+//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
+//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
+//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
+//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+return 0;
+</code></pre>
+
+<p>}</p>
 ]]></content>
   </entry>
   
@@ -99,7 +1407,11 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/xiao-sai/"/>
     <updated>2013-05-18T22:39:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/xiao-sai</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>今天校赛~也是OJ升级以来面临正式的比赛的之一~lamp架构的抗压相比lnmp肯定弱些~OJ的优化还有一些工作没做好~后期会越来越好的~长颈鹿前浪已经死在沙滩上后浪还是很给力的~让我们看到12级的好苗子~11级还在猛进步~后生可畏啊~今天比赛过程中天师过来看了一眼~笑眯眯的说是不是题目偏难~后面自个又说练的太少~我大天师啊~</p>
+
+<p>OJ对IE10的兼容性还是挺好的~在线IDE，test，划词翻译都可以正常使用,当然还是首选火狐和谷歌~好了就说这些吧</p>
+
+<p>感谢大晨哥做出解题报告~大晨哥辛苦了~以下引用大晨哥的解题报告~长颈鹿加油~</p>
 ]]></content>
   </entry>
   
@@ -108,7 +1420,86 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/er-fen/"/>
     <updated>2013-05-18T22:39:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/er-fen</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>//从排好序的数组中找出k出现的字数</p>
+
+<h1>include<iostream></h1>
+
+<h1>include<cstdio></h1>
+
+<h1>include<string></h1>
+
+<p>using namespace std;
+int GetFistK(int* data,int length,int k,int start,int end)
+{
+  if(start > end)
+   return -1;
+  int middleIndex = (start + end) / 2;
+  int middleData = data[middleIndex];
+  if(middleData == k)
+  {
+   if((middleIndex > 0 &amp;&amp; data[middleIndex-1]!=k)||middleIndex ==0)</p>
+
+<pre><code>return middleIndex;
+</code></pre>
+
+<p>   else</p>
+
+<pre><code>end = middleIndex – 1;
+</code></pre>
+
+<p>  }
+  else if(middleData > k)
+   end = middleIndex – 1;
+  else
+   start = middleIndex + 1;
+  return GetFistK(data,length,k,start,end);
+}
+int GetLastK(int<em> data,int length,int k,int start,int end)
+{
+ if(start > end)
+  return -1;
+ int middleIndex = (start + end) / 2;
+ int middleData = data[middleIndex];
+ if(middleData == k)
+ {
+  if((middleIndex &lt; length – 1 &amp;&amp; data[middleIndex + 1] != k)||middleIndex == length -1 )
+   return middleIndex;
+  else
+   start = middleIndex + 1;
+ }
+ else if(middleData &lt; k)
+  start = middleIndex + 1;
+ else
+  end = middleIndex – 1;
+ return GetLastK(data,length,k,start,end);
+}
+int GetNumberK(int</em> data,int length,int k)
+{
+   int number = 0;
+   if(data != NULL &amp;&amp; length > 0)
+   {</p>
+
+<pre><code>int first = GetFistK(data,length,k,0,length – 1);
+</code></pre>
+
+<p> int last = GetLastK(data,length,k,0,length – 1);</p>
+
+<p> if(first > -1 &amp;&amp; last > -1)
+  number = last – first + 1;
+   }
+   return number;
+}
+int main()
+{</p>
+
+<pre><code>int data[8] = {3,3,3,3,3,3,4,5};
+</code></pre>
+
+<p> int k = 4;
+ int total=GetNumberK(data,8,k);
+ cout&lt;&lt;total&lt;&lt;endl;
+ return 0;
+}</p>
 ]]></content>
   </entry>
   
@@ -117,7 +1508,132 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/chang-jing-lu-oj/"/>
     <updated>2013-05-18T22:39:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/chang-jing-lu-oj</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>计量OJ简史</p>
+
+<p>/<em>
+ * =====================================================================================
+ *
+ *       Filename:  oj.cpp
+ *
+ *    Description:  计量oj简史2
+ *
+ *        Version:  1.0
+ *        Created:  2013/1/12 19:46:55
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#109;&#100;&#x6b;&#64;&#115;&#x65;&#x72;&#118;&#x65;&#x72;&#46;&#101;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;">&#109;&#100;&#x6b;&#64;&#x73;&#101;&#114;&#x76;&#101;&#114;&#x2e;&#x65;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;</a>
+ *        Company:  cjluacm-vim-mdk
+ *
+ * =====================================================================================
+ </em>/</p>
+
+<h1>pragma warning(disable:一切阻力)</h1>
+
+<h1>include &lt; 院领导 ></h1>
+
+<h1>include &lt; 尤天师 ></h1>
+
+<h1>include &lt; 308 全体成员 ></h1>
+
+<p>using 一台很老的 DELL 台式机 std;</p>
+
+<h1>define              OJ史前时代      ( 以UVA转载题为主 );</h1>
+
+<h1>define              OJ目前大事      ( 稳步发展月赛 );</h1>
+
+<h1>define              ACM基地记事     ( 出题解题做题 );</h1>
+
+<p>int main()</p>
+
+<p>{</p>
+
+<pre><code>        time        = 2009 / 7 /28;
+
+        place       = hdu 信息楼一楼;
+
+        action      = *****ACM研讨交流会;
+
+        person      = 院领导 + 尤天师 + 308 全体成员 + 部分08级同学;
+
+        harvest     = ” 领导一定支持 ~~! ” + 水果若干;
+
+        time        = 2009 / 9 / 12;
+
+        action      = 尤天师提交月赛申请书;
+
+        time       += 3;
+
+        action      = 月赛审核通过;
+
+        for(   time = 2009 / 9 / 28; time != 2009 / 10 / 5; ++time )
+
+        {
+
+             action = OJ construting;
+
+        }
+
+        time        = 9 / 10 / 2009;
+
+        action      = OJ 在后院论坛开辟子版块;               
+
+        time        = 21 / 11 / 2009;
+
+        action      = 招新赛完毕;
+
+        time        = 1 / 12 / 2009;
+
+        action      = 新人入住完毕;
+
+        time        = 5/ 01/ 2010;
+
+        action      = 月赛进入全校范围;
+
+        while ( time++ != 2011 / 7 )
+
+        {
+
+                  action = OJ updating;
+
+        }
+
+        /*
+         *未获得前辈们的认可就将OJ转换
+         *在此向前辈们致歉
+         * 我们的宗旨是将OJ打造成造福于全校搞IT的学生
+         * */
+
+        time        =  5 / 6 / 2012
+
+        action      =  平台转换 windows-&gt;linux 内核开源
+
+        time        =  25 / 6 / 2012
+
+        action      =  web 端修改完毕 数据无损伤导入 新oj 新特性
+
+        time        =  * / 7 / 2012
+
+        action      =  投入使用(期间省赛被挫三人组组织两场比赛)
+
+        time        = 28 / 10 / 2012
+
+        action      = 域名重新对外(acm.cjlu.edu.cn)
+
+        while ( time ++ != 2014 / 7 )
+
+        {
+
+               action1 = OJ updating
+
+               action2 = CODE2AC()
+
+        }
+
+        return 0;
+</code></pre>
+
+<p>}</p>
 ]]></content>
   </entry>
   
@@ -126,7 +1642,62 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/acmyu-shu-mo/"/>
     <updated>2013-05-18T22:38:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/acmyu-shu-mo</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>利用半小时的时间<del>~为4.14日感叹一下</del>这里利用某大牛的部分篇幅。</p>
+
+<pre><code>  学校总喜欢拿数学建模和ACM程序设计竞赛进行对比，的确，这两个比赛都是
+</code></pre>
+
+<p>三个人一个队伍，应该说都考察了参赛选手全面的素质。然而毕竟区别还是很大的，
+数学建模竞赛是教育部倡导的几项大学传统赛事之一，相信会有很多大学会像我们学
+校一样看重这一点—–官方认证</p>
+
+<pre><code> 在说数学建模竞赛本身是一个很好的竞赛形式，的确能提高数学素养，在科学研究数
+</code></pre>
+
+<p>学建模发挥的作用是越来越明显，实验室产生的大量数据绝对是需要数学处理才能产
+生真正的科学结果，完全凭直觉的时代早已经过去了。教育部倡导这项竞赛的确是用
+心良苦，真正用心参加过数学建模竞赛的人肯定能得到科学研究的锻炼。然而似乎在
+中国这样国情下，各个学校名利心太强了，使得数学建模竞赛这一个如此好的竞赛形
+式带来了如此多的不公正，无论从竞赛过程还是评奖过程，指导老师参与的都过多
+了，以至有人发出感叹“数学建模究竟是学生参加，还是导师参加呢？”。再就是评
+奖的过程的确是人为因素大了点，受大干扰也大了些。</p>
+
+<pre><code> 现在的数学建模竞赛好多都是成了伪造数据竞赛，从赛区的初评来看是产生这种情况
+</code></pre>
+
+<p>的温床。赛区的初评都是看结果的，结果的好坏直接影响着一篇论文的质量，只要结
+果不理想的将很可能是直接刷掉，于是出现了好多数据伪造，只要模型的结果不理
+想，在时间不允许的前提下只能这样，要不然尽管在问题的解决中有创新，但是人家
+根本就看不到了。这样的事实看多了，可以说麻木了。看着那么多伪造数据的论文拿
+国家大奖我只能说数学建模已经在慢慢的贬值，给人一种上当受骗的感觉。数学建模
+就是鼓励造假，越假越好，越假越能拿大奖。看到了拿全国大奖的同学，问他们结果
+怎么那么好，一句话伤透了心“我们的数据都是伪造的”。伤心之余，被获奖的网友们称
+我们队“经验不足，人太老实”进行总结。教训是惨重的，对心灵的打击是不能磨灭的。</p>
+
+<pre><code>从此对数学建模的印象就不如之前的那么虔诚，感觉都是假的，尽管不想造假，但是
+</code></pre>
+
+<p>造假获奖得到的是学校的奖励与鼓励，得到的是各种荣誉。从这个方面至少反映了现
+在的大学造假之风已经比较严重了。</p>
+
+<pre><code>相反ACM程序设计竞赛给人的是一种积极向上，公平，公正，机器评判有效的避免了人
+</code></pre>
+
+<p>为误差，对与不对自有数据进行测试。而且ACM程序设计竞赛还给人一种永远要继续学
+习的动力，考察的的各个方面，数学，编程能力，相关学科背景，身体素质，心理素
+质，团队合作。。。。。。热爱这个活动的人相信大部分都是一种兴趣，一种发自内
+心的热爱，一种追求梦想，一种永远上进的精神。ACM需要长期的积累，没有随便就成
+功的，从这个意义上说，ACM也是一种奥林匹克，需要长期的锻炼，加上现场的良好发
+挥才能取得好成绩。一个考试成绩很牛的学生可以对经典的最短路
+算法，最小生成树算法讲得头头是道，然而就是不能写程序，不能实现自己的想法，
+甚至很多人对于经典算法是为了考试而死记硬背下来的。科学技术领域日新月异，计
+算机算法领域也是如此，大学本科的教育教材方面已经是难跟上发展，ACM程序设计则
+提供了这样一个引领前进的平台，很多教科书上没有的算法与思考方法都可以在赛题
+上找到答案，而且通过题目的训练不仅能锻炼编程能力，至少对算法也是应该理解。
+所谓“与时俱进”在这里也得到了最大的体现。</p>
+
+<pre><code>                                                 ~~仅以此篇祭拜我一年多来的青春
+</code></pre>
 ]]></content>
   </entry>
   
@@ -135,7 +1706,27 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong/"/>
     <updated>2013-05-18T22:38:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>致我热衷的acm:</p>
+
+<p>我真的希望
+大家加油！！！
+不是因为别的原因，因为我们都曾经迷惑，无助，我们没有别人那么强的教练，没有别人那么好的基础，但是，我们都绝对不能放弃。绝对不能，因为，当我们坐在赛场上的时候，不管你是不是愿意，在你上空飘动的始终是你的校旗，别误会，我不是说什么要“为了学校争光”，那种话是用来哄小孩子的。我只想问大家，如果是你，坐在电脑前~~，你的背后有多少人在看着你？你的身上寄托的是什么？
+是希望，是所有喜欢ACM的同学对你的希望，希望有这么一天，ACM也可以象其他的东西一样被其他的人所肯定，而不是什么需要被人怜悯的东西！！！！！！！！！</p>
+
+<p>如果，现在我们寄托了这些东西的话，谁还会告诉我：我们不该奋斗呢？
+如果可以，我宁愿安静的呆在一个不为人知的小角落，平平淡淡的过了这大学四年的生活，至少不会这么累。
+如果可以，我宁愿在开始的时候，就找一个可以依靠的地方，傻傻的什么都不想，幸福的过了这四年。
+如果可以，我宁愿只做一个ACM的看客，静静的品味他们成功的喜悦，分担失败的痛苦。
+如果可以，我宁愿早早的放弃着艰苦的训练，因为我实在不愿意再做这样一个噩梦。
+如果、可以…………
+但是，只是如果……
+而且，决不可以！！
+当我们弱校的人喜欢上ACM的时候，就应该有这种觉悟！
+如果，要后退，那么，就你就不要参加ACM，因为，你不适合。ACM比的并不仅仅是写程序的水平，而更多是三个人的综合素质。没有胆小的人可以赢得ACM的青睐，没有退缩的人可以赢得比赛的胜利。我们这些人，水平本来就有限，也没有什么很出色专业教练。那么如果我们连一拼的勇气都没有了。我们还剩下什么？
+如果可以，让我再次站在大一时候的海报前，我还是会小声的说：“去试试吧，也许很好玩呢~~”
+谢谢大家看了这么多，是不是烦了？呵呵，最后，我只希望大家能+U，同时弱校的队员，
+我希望我们能互相帮助。
+大家~~~~~~~~加油~~~~~~~~~</p>
 ]]></content>
   </entry>
   
