@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T10:24:57+08:00</updated>
+  <updated>2013-05-19T10:32:24+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,172 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[网易笔试]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/wang-yi-bi-shi/"/>
+    <updated>2013-05-19T10:31:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/wang-yi-bi-shi</id>
+    <content type="html"><![CDATA[<p>应该说网易的这个笔试对我来说很简单~有那么几个点可以写出来</p>
+
+<p>mysql 一些基础的应用</p>
+
+<p>linux操作系统</p>
+
+<p>tcp/ip</p>
+
+<p>tcp/ip的三次握手过程~</p>
+
+<p>vim/gcc/gdb的使用</p>
+
+<p>进程线程端口号</p>
+
+<p>文件的权限使用情况</p>
+
+<p>大概就这么几点~总体难度不大的</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[企鹅实习生笔试]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi/"/>
+    <updated>2013-05-19T10:31:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi</id>
+    <content type="html"><![CDATA[<p>笔试的范围面算是比较广吧～涉及操作系统～数据结构和算法～网络～c/c++~软件工程~唉～还是太弱了～抱着打酱油的心去带回一大瓶酱油～还是得总结总结打有准备的仗~考到线程的并发~插入排序～tcp/ip~操作系统内存分配~~加油了～要有准备要努力啊</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[这三天]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/zhe-san-tian/"/>
+    <updated>2013-05-19T10:29:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/zhe-san-tian</id>
+    <content type="html"><![CDATA[<p>逃了三天课，这三天来~也算是对三年来的验证吧。星期一，浙大玉泉校区参加163.com的笔试（sa反垃圾邮件工程师）,星期二，笔试太累,基本一天在实验室睡觉。今天去了趟滨江。在163.com的c座大厦里就吃了一个他们的小面包和一杯水。╮(╯▽╰)╭，不管结果如何~或许都得到历练了~
+星期一，下午两点多，自个火急火燎的赶到浙大，看到玉泉校区才知道什么是读书人的地方，人家的校园，人家的读书氛围，看的像我这种二本掉渣的院校心里不是一般滋味.在里面逛了一圈后终于找到了曹光彪科技楼.晚上的宣讲会赵HR看起来很年轻，讲得很有渲染力。演讲的能力让我打心底里佩服。到场有三百多个人~大部分都是浙大~好不自卑吗~我是坐b1去的玉泉校区~然后我的笔试座位号也B1(神座啊)~八点的考试~主考官最后一个把考卷给我~算是从8:10开始的~我是9:01交的卷子~当时在场的我第三个交卷~自我感觉不错的~就赶着坐公交回下沙了~回到学校的时候已经10:30了~所以没回寝室~在实验室睡了一晚~还因此感冒了~杭州的天气还真是易变啊
+星期二，因为笔试那天晚上赶着回来太累了~而且这一天就一节软件工程~所以逃了~也因HR告诉我们笔试的通知最晚在第二天的晚上告诉我们~这一天我是在焦虑中度过的~但我觉得自己的笔试很好~可以拿到面试的~晚上跟着老聂从实验室回去~吃了个饭洗了个澡~然后突然发现163.com的面试通知短信~很兴奋~跑去特地要老聂找去滨江的公交路线~一整晚睡得还可以~
+今天~怎么说呢~一切的一切或许又回归了吧~今天又逃了一天的课~早上八点跑来实验室拿简历~九点的时候去书店给天师取快递~快十点的时候坐着566前往滨江~快中午的时候到达滨江~好久都不出去了~下车后有点找不着北的感觉~找了好久才找到面试的地点~快下午一点的时候开始前往面试地点~路上认识一位从上海赶过来的哥们~他研二搞安卓的~他说饿想找吃的~最后我们一起来到了163.com大厦的C座签到，发现面试区域居然提供吃喝~163.com的研究所所在地的确很偏僻~跟我一起的哥们也这么说~他一口气吃了两个面包~我们才坐下不久我就面试开始了~面我的是个很年轻的技术哥~他首先让我自我介绍~然后他开始看我的网上简历和我的笔试卷子~边看边问~当时也是脑子一片空白~随性也跟他扯起来~我记得他让我介绍了我的两个项目~一个是在线评判系统~另一个是ftp（半成品的项目）~我糊里糊涂的也不知道怎么说了~最后依稀记得他向我问了tcpdump和smtp协议~我记得笔试的卷有两道tcp/ip的题目~我答得都挺好的~一个是tcp的三次握手过程和那七层协议~其实我看到面试官手里我的卷子上打着一个不错的分数~心里窃喜啊~最后面试官让我问他问题~我问了几个后就不问了~然后他说面试结束了让我去面试区等待HR通知~走出来的时候我问面试官怎么不问shell啊？他没回答~他过了会问我课多吗~我随性的回答了~出来后发现跟我一起来的那哥们也刚面完出来~我们彼此谈了感受~期间他又吃了两个面包~我们在等待区侯着期间认识了一位中国科技大学的研一的也搞安卓的~他还没有面~他不断地询问都面了啥~我看了他的简历~光项目他就有了一页纸了~牛人啊~然后的然后~那个女HR告诉我结果~我没有追问为何~走出来的时候也挺释然的~╮(╯▽╰)╭╮(╯▽╰)╭~
+一句话概括：面包挺好吃的，水也挺甜的~这三天也算是攒了经验值吧~结果已经不重要了~过程已经享受了~在此之前在群里也吼了好多~╮(╯▽╰)╭~回去洗个澡~睡个觉明天的太阳依旧灿烂~一个掉渣的二本院校的技术屌丝男的小逆袭？或许吧~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[多线程之生产者于消费者问题]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti/"/>
+    <updated>2013-05-19T10:26:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti</id>
+    <content type="html"><![CDATA[<p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的</p>
+
+<h1>include&lt;stdio.h></h1>
+
+<h1>include&lt;stdlib.h></h1>
+
+<h1>include&lt;string.h></h1>
+
+<h1>include&lt;sys/wait.h></h1>
+
+<h1>include&lt;sys/types.h></h1>
+
+<h1>include&lt;unistd.h></h1>
+
+<h1>include&lt;pthread.h></h1>
+
+<h1>include&lt;time.h></h1>
+
+<h1>include&lt;math.h></h1>
+
+<h1>define BUFFER_SIZE 8</h1>
+
+<p>struct prodcons {
+int buffer[BUFFER_SIZE];
+pthread_mutex_t lock;
+int readpos,writepos;
+pthread_cond_t notempty;
+pthread_cond_t notfull;
+};</p>
+
+<p>void init(struct prodcons *b)
+{
+pthread_mutex_init(&amp;b->lock,NULL);
+pthread_cond_init(&amp;b->notempty,NULL);
+pthread_cond_init(&amp;b->notfull,NULL);
+b->readpos = 0 ;
+b->writepos = 0 ;
+}</p>
+
+<p>void put(struct prodcons *b,int data)
+{
+pthread_mutex_lock(&amp;b->lock);
+if((b->writepos + 1)%BUFFER_SIZE == b->readpos)
+{
+pthread_cond_wait(&amp;b->notfull,&amp;b->lock);
+}
+b->buffer[b->writepos] = data;
+b->writepos++;
+if(b->writepos >= BUFFER_SIZE)
+b->writepos = 0;
+pthread_cond_signal(&amp;b->notempty);
+pthread_mutex_unlock(&amp;b->lock);
+}</p>
+
+<p>int get(struct prodcons *b)
+{
+int data;
+pthread_mutex_lock(&amp;b->lock);
+if(b->writepos == b->readpos)
+{
+pthread_cond_wait(&amp;b->notempty,&amp;b->lock);
+}
+data = b->buffer[b->readpos];
+b->readpos++;</p>
+
+<p>if(b->readpos >= BUFFER_SIZE)
+b->readpos = 0;</p>
+
+<p>pthread_cond_signal(&amp;b->notfull);
+pthread_mutex_unlock(&amp;b->lock);
+return data;
+}</p>
+
+<h1>define OVER (-1)</h1>
+
+<p>struct prodcons buffer;
+void <em>producer(void </em>data)
+{
+int n;
+for(n = 0 ; n &lt; 50 ; n++)
+{
+printf(“%d\t”,n);
+put(&amp;buffer,n);
+}
+put(&amp;buffer,OVER);
+return NULL;
+}
+void <em>consumer(void </em>data)
+{
+int d;
+while(1)
+{
+d = get(&amp;buffer);
+if(d == OVER)
+break;
+printf(“%d\t”,d);
+}
+return NULL;
+}
+int main(void)
+{
+pthread_t th_a,th_b;
+void *retval;
+init(&amp;buffer);
+pthread_create(&amp;th_a,NULL,producer,0);
+pthread_create(&amp;th_b,NULL,consumer,0);
+pthread_join(th_a,&amp;retval);
+pthread_join(th_b,&amp;retval);
+printf(“\n”);
+return 0;
+}</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[新交通规则]]></title>
@@ -283,7 +449,7 @@ passwd: password updated successfully</p>
 <p>代码 2.7: 从另一台电脑连到你的新机器</p>
 
 <p>（使用你新机器的IP地址）
-$ ssh <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#114;&#111;&#x6f;&#x74;&#x40;&#x31;&#x39;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#49;&#x2e;&#49;&#x30;">&#x72;&#x6f;&#x6f;&#x74;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#56;&#46;&#x31;&#46;&#49;&#x30;</a>
+$ ssh <a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#x72;&#111;&#x6f;&#116;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#x2e;&#x31;&#x2e;&#x31;&#x30;">&#x72;&#x6f;&#111;&#x74;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#54;&#56;&#x2e;&#49;&#x2e;&#x31;&#48;</a>
 The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -587,7 +753,7 @@ $ nano -w ~/.ssh/known_hosts
 （找出新机器的IP并删除那一行，保存并退出nano）</p>
 
 <p>（使用你新机器的IP地址）
-$ ssh <a href="&#x6d;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#57;&#x32;&#x2e;&#49;&#54;&#56;&#46;&#49;&#46;&#x31;&#x30;">&#x72;&#x6f;&#x6f;&#116;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x31;&#x2e;&#x31;&#x30;</a>
+$ ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#114;&#111;&#111;&#x74;&#x40;&#x31;&#57;&#x32;&#x2e;&#x31;&#54;&#56;&#x2e;&#x31;&#x2e;&#49;&#48;">&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#57;&#50;&#46;&#x31;&#x36;&#56;&#x2e;&#x31;&#46;&#x31;&#x30;</a>
 The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1323,7 +1489,7 @@ return 0;
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6d;&#x65;&#110;&#x67;&#100;&#97;&#105;&#x6b;&#117;&#110;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x6d;&#x65;&#110;&#x67;&#x64;&#97;&#x69;&#107;&#x75;&#110;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x6d;&#101;&#110;&#103;&#100;&#x61;&#x69;&#x6b;&#117;&#110;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x6d;&#x65;&#110;&#103;&#100;&#x61;&#x69;&#x6b;&#x75;&#110;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -1522,7 +1688,7 @@ int main()
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#109;&#100;&#x6b;&#64;&#115;&#x65;&#x72;&#118;&#x65;&#x72;&#46;&#101;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;">&#109;&#100;&#x6b;&#64;&#x73;&#101;&#114;&#x76;&#101;&#114;&#x2e;&#x65;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x6d;&#x64;&#107;&#64;&#115;&#101;&#x72;&#118;&#x65;&#x72;&#x2e;&#101;&#x78;&#97;&#x6d;&#x70;&#108;&#101;&#x2e;&#x63;&#x6f;&#109;">&#109;&#x64;&#107;&#x40;&#115;&#101;&#x72;&#x76;&#x65;&#114;&#x2e;&#x65;&#120;&#x61;&#109;&#x70;&#x6c;&#x65;&#46;&#99;&#x6f;&#x6d;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================

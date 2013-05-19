@@ -9,9 +9,8 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="//从排好序的数组中找出k出现的字数 include include include using namespace std;
-int GetFistK(int* data,int length,int k,int start,int end)
-{ if(start > end) return - &hellip;">
+  <meta name="description" content="
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +67,341 @@ int GetFistK(int* data,int length,int k,int start,int end)
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/as-acoder/">As Acoder</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:46:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/">20位运算知多少2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:46:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>int getMaxInt1(){
+  return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
+}
+int getMaxInt2(){
+  return ~( 1 &lt;&lt; 31 );
+}
+int getMaxInt3(){
+  return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
+}
+int getMaxInt4(){
+  return ( (unsigned int) – 1 ) >> 1;
+}
+int getMinInt5(){
+  return 1 &lt;&lt; 31; //获取int类型的最小值
+}
+int getMinInt6(){
+  return 1 &lt;&lt; -1; //gcc 不支持
+}
+int getMaxLong(){
+  return ((unsigned long) – 1 ) >> 1;
+}
+int getMinLong(){
+  return 1 &lt;&lt; 63;
+}
+int mulTwo(int n){
+   return n &lt;&lt; 1;
+}
+int divTwo(int n){
+  return n >> 1;
+}
+int mulTwoPower(int n,int m){
+ //n<em>(2<sup>m</sup>)
+  return n &lt;&lt; m;
+}
+int divTwoPower(int n,int m){
+ //n/(2<sup>m</sup>)
+  return n >> m;
+}
+bool isOddNumber(int n){
+  return (n &amp; 1) == 1;
+}
+void swap1(int a,int b){
+ a ^= b;
+ b ^= a;
+ a ^= b;
+ cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+}
+void swap2(int </em>a,int <em>b){
+ (</em>a) ^= (<em>b) ^= (</em>a) ^= (<em>b);
+}
+int abs(int n){
+  return (n<sup> n >> 31 </sup>) &ndash;( n >> 31 );
+}
+int main(int argc,char </em>argv[])
+{
+   /*</p>
+
+<pre><code>*位运算的20则
+* */
+int max1 = getMaxInt1();
+int max2 = getMaxInt2();
+int max3 = getMaxInt4();
+int min1 = getMinInt5();
+int min2 = getMinInt6();
+int max4 = getMaxLong();
+int min3 = getMinLong();
+int num1 = mulTwo(2);
+int num2 = divTwo(2);
+int num3 = mulTwoPower(2,1);
+int num4 = divTwoPower(2,1);
+int num5 = isOddNumber(4);
+int num6 = isOddNumber(3);
+int a=3;
+int b=4;
+int a1=3;
+int b1=4;
+a ^= b;
+b ^= a;
+a ^= b;
+//cout&lt;&lt;a&lt;&lt;”  “&lt;&lt;b&lt;&lt;endl;
+//cout&lt;&lt;max1&lt;&lt;” “&lt;&lt;max2&lt;&lt;” “&lt;&lt;max3&lt;&lt;endl;
+//cout&lt;&lt;min1&lt;&lt;” “&lt;&lt;min2&lt;&lt;endl;
+//cout&lt;&lt;max4&lt;&lt;endl;
+//cout&lt;&lt;min3&lt;&lt;endl;
+//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+//cout&lt;&lt;num5&lt;&lt;” “&lt;&lt;num6&lt;&lt;endl;
+//swap1(a,b);
+//cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+//swap2(&amp;a1,&amp;b1);
+//cout&lt;&lt;a1&lt;&lt;” “&lt;&lt;b1&lt;&lt;endl;
+int abs1 = abs(-5);
+cout&lt;&lt;abs1&lt;&lt;endl;
+return 0;
+</code></pre>
+
+<p>}</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/">20位运算知多少1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/<em>
+ * =====================================================================================
+ *
+ *       Filename:  weiyi1.cpp
+ *
+ *    Description:  位运算
+ *
+ *        Version:  1.0
+ *        Created:  2012/12/19 13:05:23
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x6d;&#101;&#110;&#103;&#100;&#x61;&#x69;&#x6b;&#117;&#110;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x6d;&#x65;&#110;&#103;&#100;&#x61;&#x69;&#x6b;&#x75;&#110;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a>
+ *        Company:  cjluacm-vim-mdk
+ *
+ * =====================================================================================
+ </em>/
+int max1(int a,int b){
+  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
+}
+int max2(int x,int y){
+  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
+}
+int min1(int a,int b){
+  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
+}
+int min2(int x,int y){
+  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
+}
+bool isSampSign(int x,int y){
+  return (x<sup>y</sup>) >= 0;
+}
+int getTwo(int n){
+ // 2<sup>n</sup>
+ return 2 &lt;&lt; (n-1);
+}
+bool isTwo(int n){
+ return n > 0 ? (n&amp;(n-1)) == 0:false;
+}
+int quyu(int m,int n){
+  return m &amp; (n-1);
+}
+int getAgv1(int n,int m){
+ return (n+m) >> 1;
+}
+int getAgv2(int x,int y){
+ return ((x<sup>y</sup>) >> 1) + (x&amp;y);
+}
+int getBit(int n,int m){  //从低位到高位 取n的第m位
+ return (n >> (m-1)) &amp; 1;
+}
+int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
+ return n | (1 &lt;&lt; (m-1));
+}
+int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
+ return n &amp; ~(1 &lt;&lt; (m-1));
+}
+int getnum1(int n){
+  //get n+1
+  return &ndash;~n;
+}
+int getnum2(int n){
+ return ~-n;
+}
+int getnum3(int n){
+ return ~n + 1;
+}
+int main(int argc,char *argv[])
+{</p>
+
+<pre><code>int num1 = max1(3,5);
+int num2 = max2(3,5);
+int num3 = min1(3,5);
+int num4 = min2(3,5);
+cout&lt;&lt;getnum3(3)&lt;&lt;endl;
+//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
+//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
+//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
+//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
+//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
+//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
+//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
+//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+return 0;
+</code></pre>
+
+<p>}</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/xiao-sai/">校赛</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:39:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天校赛~也是OJ升级以来面临正式的比赛的之一~lamp架构的抗压相比lnmp肯定弱些~OJ的优化还有一些工作没做好~后期会越来越好的~长颈鹿前浪已经死在沙滩上后浪还是很给力的~让我们看到12级的好苗子~11级还在猛进步~后生可畏啊~今天比赛过程中天师过来看了一眼~笑眯眯的说是不是题目偏难~后面自个又说练的太少~我大天师啊~</p>
+
+<p>OJ对IE10的兼容性还是挺好的~在线IDE，test，划词翻译都可以正常使用,当然还是首选火狐和谷歌~好了就说这些吧</p>
+
+<p>感谢大晨哥做出解题报告~大晨哥辛苦了~以下引用大晨哥的解题报告~长颈鹿加油~</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -228,7 +562,7 @@ int main()
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#109;&#100;&#x6b;&#64;&#115;&#x65;&#x72;&#118;&#x65;&#x72;&#46;&#101;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;">&#109;&#100;&#x6b;&#64;&#x73;&#101;&#114;&#x76;&#101;&#114;&#x2e;&#x65;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#109;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x6d;&#x64;&#107;&#64;&#115;&#101;&#x72;&#118;&#x65;&#x72;&#x2e;&#101;&#x78;&#97;&#x6d;&#x70;&#108;&#101;&#x2e;&#x63;&#x6f;&#109;">&#109;&#x64;&#107;&#x40;&#115;&#101;&#x72;&#x76;&#x65;&#114;&#x2e;&#x65;&#120;&#x61;&#109;&#x70;&#x6c;&#x65;&#46;&#99;&#x6f;&#x6d;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -644,23 +978,23 @@ return 0;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/19/wang-yi-bi-shi/">网易笔试</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi/">企鹅实习生笔试</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/zhe-san-tian/">这三天</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti/">多线程之生产者于消费者问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/18/xin-jiao-tong-gui-ze/">新交通规则</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/18/unix-socket-server-and-client/">Unix Socket Server&amp;client</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang/">Gentoo最小化安装</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/18/yan-fa-yu-kai-fa/">研发与开发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/18/c-plus-plus-xu-han-shu-ji-xu-han-shu-biao-jie-xi/">C++虚函数及虚函数表解析</a>
       </li>
     
   </ul>
