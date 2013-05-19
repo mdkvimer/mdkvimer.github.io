@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 长颈鹿 | mdk Blog home]]></title>
+  <link href="http://mdkvimer.github.io/blog/categories/chang-jing-lu/atom.xml" rel="self"/>
+  <link href="http://mdkvimer.github.io/"/>
+  <updated>2013-05-19T15:39:14+08:00</updated>
+  <id>http://mdkvimer.github.io/</id>
+  <author>
+    <name><![CDATA[mdkvimer]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[校赛]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/xiao-sai/"/>
+    <updated>2013-05-18T22:39:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/xiao-sai</id>
+    <content type="html"><![CDATA[<p>今天校赛~也是OJ升级以来面临正式的比赛的之一~lamp架构的抗压相比lnmp肯定弱些~OJ的优化还有一些工作没做好~后期会越来越好的~长颈鹿前浪已经死在沙滩上后浪还是很给力的~让我们看到12级的好苗子~11级还在猛进步~后生可畏啊~今天比赛过程中天师过来看了一眼~笑眯眯的说是不是题目偏难~后面自个又说练的太少~我大天师啊~</p>
+
+<p>OJ对IE10的兼容性还是挺好的~在线IDE，test，划词翻译都可以正常使用,当然还是首选火狐和谷歌~好了就说这些吧</p>
+
+<p>感谢大晨哥做出解题报告~大晨哥辛苦了~以下引用大晨哥的解题报告~长颈鹿加油~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[长颈鹿OJ]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/chang-jing-lu-oj/"/>
+    <updated>2013-05-18T22:39:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/chang-jing-lu-oj</id>
+    <content type="html"><![CDATA[<p>计量OJ简史</p>
+
+<p>```</p>
+
+<p>/<em>
+ * =====================================================================================
+ *
+ *       Filename:  oj.cpp
+ *
+ *    Description:  计量oj简史2
+ *
+ *        Version:  1.0
+ *        Created:  2013/1/12 19:46:55
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#109;&#x64;&#107;&#x40;&#115;&#x65;&#x72;&#x76;&#x65;&#114;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#x6d;">&#109;&#x64;&#107;&#x40;&#x73;&#x65;&#x72;&#118;&#x65;&#x72;&#x2e;&#x65;&#x78;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;</a>
+ *        Company:  cjluacm-vim-mdk
+ *
+ * =====================================================================================
+ </em>/</p>
+
+<h1>pragma warning(disable:一切阻力)</h1>
+
+<h1>include &lt; 院领导 ></h1>
+
+<h1>include &lt; 尤天师 ></h1>
+
+<h1>include &lt; 308 全体成员 ></h1>
+
+<p>using 一台很老的 DELL 台式机 std;</p>
+
+<h1>define              OJ史前时代      ( 以UVA转载题为主 );</h1>
+
+<h1>define              OJ目前大事      ( 稳步发展月赛 );</h1>
+
+<h1>define              ACM基地记事     ( 出题解题做题 );</h1>
+
+<p>int main()</p>
+
+<p>{</p>
+
+<pre><code>        time        = 2009 / 7 /28;
+
+        place       = hdu 信息楼一楼;
+
+        action      = *****ACM研讨交流会;
+
+        person      = 院领导 + 尤天师 + 308 全体成员 + 部分08级同学;
+
+        harvest     = ” 领导一定支持 ~~! ” + 水果若干;
+
+        time        = 2009 / 9 / 12;
+
+        action      = 尤天师提交月赛申请书;
+
+        time       += 3;
+
+        action      = 月赛审核通过;
+
+        for(   time = 2009 / 9 / 28; time != 2009 / 10 / 5; ++time )
+
+        {
+
+             action = OJ construting;
+
+        }
+
+        time        = 9 / 10 / 2009;
+
+        action      = OJ 在后院论坛开辟子版块;               
+
+        time        = 21 / 11 / 2009;
+
+        action      = 招新赛完毕;
+
+        time        = 1 / 12 / 2009;
+
+        action      = 新人入住完毕;
+
+        time        = 5/ 01/ 2010;
+
+        action      = 月赛进入全校范围;
+
+        while ( time++ != 2011 / 7 )
+
+        {
+
+                  action = OJ updating;
+
+        }
+
+        /*
+         *未获得前辈们的认可就将OJ转换
+         *在此向前辈们致歉
+         * 我们的宗旨是将OJ打造成造福于全校搞IT的学生
+         * */
+
+        time        =  5 / 6 / 2012
+
+        action      =  平台转换 windows-&gt;linux 内核开源
+
+        time        =  25 / 6 / 2012
+
+        action      =  web 端修改完毕 数据无损伤导入 新oj 新特性
+
+        time        =  * / 7 / 2012
+
+        action      =  投入使用(期间省赛被挫三人组组织两场比赛)
+
+        time        = 28 / 10 / 2012
+
+        action      = 域名重新对外(acm.cjlu.edu.cn)
+
+        while ( time ++ != 2014 / 7 )
+
+        {
+
+               action1 = OJ updating
+
+               action2 = CODE2AC()
+
+        }
+
+        return 0;
+</code></pre>
+
+<p>}
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[acm的触动]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong/"/>
+    <updated>2013-05-18T22:38:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong</id>
+    <content type="html"><![CDATA[<p>致我热衷的acm:</p>
+
+<p>我真的希望
+大家加油！！！
+不是因为别的原因，因为我们都曾经迷惑，无助，我们没有别人那么强的教练，没有别人那么好的基础，但是，我们都绝对不能放弃。绝对不能，因为，当我们坐在赛场上的时候，不管你是不是愿意，在你上空飘动的始终是你的校旗，别误会，我不是说什么要“为了学校争光”，那种话是用来哄小孩子的。我只想问大家，如果是你，坐在电脑前~~，你的背后有多少人在看着你？你的身上寄托的是什么？
+是希望，是所有喜欢ACM的同学对你的希望，希望有这么一天，ACM也可以象其他的东西一样被其他的人所肯定，而不是什么需要被人怜悯的东西！！！！！！！！！</p>
+
+<p>如果，现在我们寄托了这些东西的话，谁还会告诉我：我们不该奋斗呢？
+如果可以，我宁愿安静的呆在一个不为人知的小角落，平平淡淡的过了这大学四年的生活，至少不会这么累。
+如果可以，我宁愿在开始的时候，就找一个可以依靠的地方，傻傻的什么都不想，幸福的过了这四年。
+如果可以，我宁愿只做一个ACM的看客，静静的品味他们成功的喜悦，分担失败的痛苦。
+如果可以，我宁愿早早的放弃着艰苦的训练，因为我实在不愿意再做这样一个噩梦。
+如果、可以…………
+但是，只是如果……
+而且，决不可以！！
+当我们弱校的人喜欢上ACM的时候，就应该有这种觉悟！
+如果，要后退，那么，就你就不要参加ACM，因为，你不适合。ACM比的并不仅仅是写程序的水平，而更多是三个人的综合素质。没有胆小的人可以赢得ACM的青睐，没有退缩的人可以赢得比赛的胜利。我们这些人，水平本来就有限，也没有什么很出色专业教练。那么如果我们连一拼的勇气都没有了。我们还剩下什么？
+如果可以，让我再次站在大一时候的海报前，我还是会小声的说：“去试试吧，也许很好玩呢~~”
+谢谢大家看了这么多，是不是烦了？呵呵，最后，我只希望大家能+U，同时弱校的队员，
+我希望我们能互相帮助。
+大家~~~~~~~~加油~~~~~~~~~</p>
+]]></content>
+  </entry>
+  
+</feed>
