@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>linux内存动态分区管理 - mdk Blog home</title>
+  <meta name="author" content="mdkvimer">
+
+  
+  <meta name="description" content="1.分别使用首次适应算法,最佳适应算法分配内存空间 2.实现对内存空间的释放 3.显示内存分配情况 #include&lt;stdio.h> #include&lt;unistd.h> #include&lt;stdlib.h> #include&lt;string.h> #include&lt; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="mdk Blog home" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">mdk Blog home</a></h1>
+  
+    <h2>A vimer fork github bin.sh&py</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mdkvimer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">mdkvimer</a></li>
+  <li><a href="/blog/archives">二逼码农mdk</a></li>
+  <li><a href="/about">ABOUT</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux内存动态分区管理</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T11:04:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>1.分别使用首次适应算法,最佳适应算法分配内存空间</p>
+
+<p>2.实现对内存空间的释放</p>
+
+<p>3.显示内存分配情况</p>
+
+<p> #include&lt;stdio.h>
+ #include&lt;unistd.h>
+ #include&lt;stdlib.h>
+ #include&lt;string.h>
+ #include&lt;sys/wait.h>
+ #include&lt;sys/typs.h>
+ #define MEMSIZE 100 <br/>
+ #define MINSIZE 2  <br/>
+typedef struct MemoryInformation{
+int start;<br/>
+int size;<br/>
+char info;<br/>
+}MEMINFO;
+MEMINFO MemList[MEMSIZE];
+void Display();
+void InitAll()
+{
+int i;
+MEMINFO temp={0,0,’e&#8217;};
+for(i=0;i&lt;MEMSIZE;i++)
+MemList[i]=temp;
+MemList[0].start = 0;
+MemList[0].size = MEMSIZE;
+MemList[0].info = ‘f’;
+}</p>
+
+<p>void FirstFit_new()
+{
+int i,j,size;
+char temp[10];
+printf(“How MAny MEMORY do you require?”);
+scanf(“%d”,&amp;size);
+for(i=0;i &lt; MEMSIZE -1 &amp;&amp; MemList[i].info!=’e&#8217;;i++){
+if(MemList[i].size >= size &amp;&amp; MemList[i].info==’f&#8217;){
+if(MemList[i].size – size &lt;= MINSIZE)
+MemList[i].info=’u&#8217;;
+else{
+for(j=MEMSIZE – 2;j > i;j–){
+MemList[j+1] = MemList[j];
+}
+MemList[i+1].start = MemList[i].start + size;
+MemList[i+1].size = MemList[i].size – size;
+MemList[i+1].info = ‘f’;
+MemList[i].size = size;
+MemList[i].info = ‘u’;
+}
+break;
+}
+}
+if(i == MEMSIZE – 1 || MemList[i].info == ‘e’){
+printf(“NOT Enough Memory!\n”);
+getchar();
+}
+Display();
+}
+void BestFit_new()
+{
+int i,j,k,flag,size;
+char temp[10];
+printf(“How Many MEMORY require?”);
+scanf(“%d”,&amp;size);
+j = 0;
+flag = 0;
+k = MEMSIZE;
+for(i=0;i<MEMSIZE – 1 && MemList[i].info!=’e';i++){
+if(MemList[i].size >= size &amp;&amp; MemList[i].info == ‘f’){
+flag = 1;
+if(MemList[i].size &lt; k){
+k = MemList[i].size;
+j = i;
+}
+}
+}
+i=j;
+if(flag == 0)
+{
+printf(“NOT ENOUGH Memory!\n”);
+getchar();
+}
+else if(MemList[i].size – size &lt;= MINSIZE)
+MemList[i].info = ‘u’;
+else{
+for(j=MEMSIZE-2;j > i;j–){
+MemList[j+1]=MemList[j];
+}
+MemList[i].start = MemList[i].start + size;
+MemList[i].size = MemList[i].size – size;
+MemList[i].info = ‘f’;
+MemList[i].size = size;
+MemList[i].info = ‘u’;
+}
+Display();
+}
+void del()
+{
+int i,number;
+printf(“please input the NUMBER you want to delete:”);
+scanf(“%d”,&amp;number);
+if(MemList[number].info == ‘u’){
+MemList[number].info = ‘f’;
+if(MemList[number+1].info==’f&#8217;){
+MemList[number].size += MemList[number+1].size;
+for(i=number+1;i&lt;MEMSIZE – 1 &amp;&amp; MemList[i].info!=’e&#8217;;i++)
+MemList[i]=MemList[i+1];
+}
+if(MemList[number &ndash; 1].info != ‘f’){
+MemList[number -1].size += MemList[number].size;
+for(i=number;i&lt;MEMSIZE – 1 &amp;&amp; MemList[i].info!=’e&#8217;;i++)
+MemList[i]=MemList[i+1];
+}
+}
+else{
+printf(“This number is NOT exits or is NOT sued!\n”);
+getchar();
+}
+Display();
+}
+void Display()
+{
+int i,used = 0;
+printf(“\n——————————————\n”);
+printf(“%5s %15s %15s”,”Number”,”Start”,”Size”,”info”);
+printf(“\n——————————————\n”);
+for(i=0;i&lt;MEMSIZE &amp;&amp; MemList[i].info != ‘e’;i++){
+if(MemList[i].info == ‘u’)
+used+= MemList[i].size;
+printf(“%5d %15d %15d %15s\n”,i,MemList[i].start,MemList[i].size,MemList[i].info == ‘u’?”USED”:”FREE”);
+}
+printf(“\n——————————————\n”);
+printf(“TotalSize : %-10d Used: %-10d Free:%-10d\n”,MEMSIZE,used,MEMSIZE – used);
+printf(“\n\nPress Any Key to Return\n”);
+getchar();
+}
+int main()
+{
+char ch;
+InitAll();
+while(1)
+{
+printf(“   Memory manager  \n”);
+printf(“================================================\n”);
+printf(“1. Get a block use the FIRSTFIT method\n”);
+printf(“2. Get a block use the BESTFFIT method\n”);
+printf(“3. Free or delete a block\n”);
+printf(“4. Display Mem information\n”);
+printf(“5. Exit\n”);
+printf(“================================================\n”);
+ch = getchar();
+switch(ch){
+case ’1′:
+FirstFit_new();
+break;
+case ’2′:
+BestFit_new();
+break;
+case ’3′:
+del();
+break;
+case ’4′:
+Display();
+break;
+case ’5′:
+exit(0);
+}
+}
+}</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">mdkvimer</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T11:04:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/19/tcpyi-nan-quan-jing-jie-xi/" title="Previous Post: tcp疑难全景解析">&laquo; tcp疑难全景解析</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li/">Linux内存动态分区管理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/tcpyi-nan-quan-jing-jie-xi/">Tcp疑难全景解析</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/svn/">Svn</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/chang-yong-de-ming-ling-2/">常用的命令2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/chang-yong-de-ming-ling/">常用的命令</a>
+      </li>
+    
+  </ul>
+</section>
+<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=300&skin=10&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=2702542424&verifier=597ea069&dpc=1"></iframe>
+
+
+  
+</aside>
+
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - mdkvimer -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
