@@ -134,7 +134,7 @@ Boot Loader</p>
 
 <p>我们刚刚提到的两个问题还是没有解决啊！虽然各个操作系统都可以安装一份 boot loader 到他们的 boot sector 中， 这样操作系统可以透过自己的 boot loader 来加载核心了。问题是系统的 MBR 只有一个哩！ 你要怎么运行 boot sector 里面的 loader 啊？</p>
 
-<p>boot loader 主要的功能如下：</p>
+<p>boot loader 主要的功能如下</p>
 
 <pre><code>提供菜单：使用者可以选择不同的启动项目，这也是多重启动的重要功能！
 加载核心文件：直接指向可启动的程序区段来开始操作系统；
@@ -228,21 +228,33 @@ initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
 </pre></td><td class='code'><pre><code class=''><span class='line'>[root@www initrd]# cat init</span></code></pre></td></tr></table></div></figure>
 
 
-<h1>!/bin/nash                 使用类似 bash 的 shell 来运行</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/nash                 使用类似 bash 的 shell 来运行
+</span><span class='line'>mount -t proc /proc /proc    挂载内存的虚拟文件系统
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo Creating initial device nodes
+</span><span class='line'>mknod /dev/null c 1 3        创建系统所需要的各项装置！
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo "Loading ehci-hcd.ko module"
+</span><span class='line'>insmod /lib/ehci-hcd.ko      加载各项核心模块，就是驱动程序！
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo Creating root device.
+</span><span class='line'>mkrootdev -t ext3 -o defaults,ro hdc2 尝试挂载根目录啦！
+</span><span class='line'>....(底下省略)....</span></code></pre></td></tr></table></div></figure>
 
-<p>mount -t proc /proc /proc    挂载内存的虚拟文件系统
-&hellip;.(中间省略)&hellip;.
-echo Creating initial device nodes
-mknod /dev/null c 1 3        创建系统所需要的各项装置！
-&hellip;.(中间省略)&hellip;.
-echo &ldquo;Loading ehci-hcd.ko module&rdquo;
-insmod /lib/ehci-hcd.ko      加载各项核心模块，就是驱动程序！
-&hellip;.(中间省略)&hellip;.
-echo Creating root device.
-mkrootdev -t ext3 -o defaults,ro hdc2 尝试挂载根目录啦！
-&hellip;.(底下省略)&hellip;.
-&#8220;`
-复制代码</p>
+
+<p>复制代码</p>
 
 <p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
 
