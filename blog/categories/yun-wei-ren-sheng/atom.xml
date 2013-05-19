@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 运维人生 | mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/yun-wei-ren-sheng/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T16:31:07+08:00</updated>
+  <updated>2013-05-19T17:03:03+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[今天]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/jin-tian/"/>
+    <updated>2013-05-19T10:49:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/jin-tian</id>
+    <content type="html"><![CDATA[<p>今天~冷~冻~冰。高一同班的一女生今告诉我《盗墓笔记8》出了，曾经坐在她后面看这小说，想不到她居然也看了而且很迷恋。。移动硬盘两天了还没到，可恶的申通！！晚上打电话回家了。。怀念老妈做的菜，更喜欢吃自个做的菜。。青菜啊。。就这样了</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[想说的那些话]]></title>
@@ -61,6 +70,17 @@
   有的时候还会为久违的问候而感动，人家说，我不想知道你的主角是谁，我只是想看看你的文字而已…傻啊，你怎么不说你是想看看我的心情，想知道我过得好不好呢；
   有的时候…有的时候也想问某个人，如果你也听说，我把自己的生活过成这样，会不会你也开始有那么一点心疼我？
   有的时候，每个人都有很多个“有的时候”吧，只是不同的时候不同的心情，不同的感慨而已。我不知道你在想什么，不知道你在做什么，也许吃饭，也许～～</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/hello-world/"/>
+    <updated>2013-05-18T19:55:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/hello-world</id>
+    <content type="html"><![CDATA[<p><code>
+hello world
+</code></p>
 ]]></content>
   </entry>
   
