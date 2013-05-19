@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 长颈鹿 | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/chang-jing-lu/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T20:09:28+08:00</updated>
+  <updated>2013-05-19T20:33:42+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[搬家了]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/ban-jia-liao/"/>
+    <updated>2013-05-19T20:13:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/ban-jia-liao</id>
+    <content type="html"><![CDATA[<p>~终于搬好家了~抛弃了wordpress~之前在新浪sae搞过~但效果不理想~以后就在这里安家一段时间了~之所以选op而不选wp~op拥有wp所没有的~支持git&amp;github
+装好后直接几个命令就可以发表博文了~
+<code>
+$ rake new_post["name"] # 发表的博文名
+$ rake new_page["name"] # 页面
+$vim *.markdown
+$ rake generate
+$ rake deploy
+</code></p>
+
+<p>就这么命令，代码支持高亮~重要的是可用vim ^_^</p>
+
+<p>依旧沿街摆摊中<del>~哈哈~没钱买vps啊啊啊啊</del></p>
+
+<p>苦逼一枚</p>
+
+<p>纪念搬家在此留下一笔</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[看你这闹的]]></title>
@@ -58,7 +83,7 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#x3a;&#109;&#100;&#107;&#x40;&#x73;&#x65;&#114;&#x76;&#101;&#x72;&#x2e;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#x65;&#x2e;&#x63;&#x6f;&#x6d;">&#x6d;&#100;&#107;&#x40;&#115;&#x65;&#x72;&#118;&#101;&#114;&#x2e;&#101;&#x78;&#97;&#x6d;&#x70;&#x6c;&#x65;&#46;&#99;&#x6f;&#109;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#109;&#100;&#x6b;&#64;&#x73;&#101;&#114;&#x76;&#101;&#114;&#x2e;&#x65;&#120;&#x61;&#109;&#x70;&#108;&#x65;&#46;&#99;&#x6f;&#109;">&#x6d;&#100;&#107;&#64;&#x73;&#x65;&#114;&#x76;&#101;&#x72;&#46;&#x65;&#x78;&#x61;&#x6d;&#x70;&#108;&#x65;&#x2e;&#x63;&#111;&#109;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -227,35 +252,6 @@
 
 <pre><code>                                                 祭拜我一年多来的青春
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[acm的触动]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong/"/>
-    <updated>2013-05-18T22:38:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong</id>
-    <content type="html"><![CDATA[<p>致我热衷的acm:</p>
-
-<p>我真的希望
-大家加油！！！
-不是因为别的原因，因为我们都曾经迷惑，无助，我们没有别人那么强的教练，没有别人那么好的基础，但是，我们都绝对不能放弃。绝对不能，因为，当我们坐在赛场上的时候，不管你是不是愿意，在你上空飘动的始终是你的校旗，别误会，我不是说什么要“为了学校争光”，那种话是用来哄小孩子的。我只想问大家，如果是你，坐在电脑前~~，你的背后有多少人在看着你？你的身上寄托的是什么？
-是希望，是所有喜欢ACM的同学对你的希望，希望有这么一天，ACM也可以象其他的东西一样被其他的人所肯定，而不是什么需要被人怜悯的东西！！！！！！！！！</p>
-
-<p>如果，现在我们寄托了这些东西的话，谁还会告诉我：我们不该奋斗呢？
-如果可以，我宁愿安静的呆在一个不为人知的小角落，平平淡淡的过了这大学四年的生活，至少不会这么累。
-如果可以，我宁愿在开始的时候，就找一个可以依靠的地方，傻傻的什么都不想，幸福的过了这四年。
-如果可以，我宁愿只做一个ACM的看客，静静的品味他们成功的喜悦，分担失败的痛苦。
-如果可以，我宁愿早早的放弃着艰苦的训练，因为我实在不愿意再做这样一个噩梦。
-如果、可以…………
-但是，只是如果……
-而且，决不可以！！
-当我们弱校的人喜欢上ACM的时候，就应该有这种觉悟！
-如果，要后退，那么，就你就不要参加ACM，因为，你不适合。ACM比的并不仅仅是写程序的水平，而更多是三个人的综合素质。没有胆小的人可以赢得ACM的青睐，没有退缩的人可以赢得比赛的胜利。我们这些人，水平本来就有限，也没有什么很出色专业教练。那么如果我们连一拼的勇气都没有了。我们还剩下什么？
-如果可以，让我再次站在大一时候的海报前，我还是会小声的说：“去试试吧，也许很好玩呢~~”
-谢谢大家看了这么多，是不是烦了？呵呵，最后，我只希望大家能+U，同时弱校的队员，
-我希望我们能互相帮助。
-大家~~~~~~~~加油~~~~~~~~~</p>
 ]]></content>
   </entry>
   

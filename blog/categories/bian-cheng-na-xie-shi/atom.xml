@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 编程那些事 | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/bian-cheng-na-xie-shi/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T20:09:28+08:00</updated>
+  <updated>2013-05-19T20:33:42+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -1253,11 +1253,19 @@ if(light == “green”){
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[研发与开发]]></title>
+    <title type="html"><![CDATA[开发与研发]]></title>
     <link href="http://mdkvimer.github.io/blog/2013/05/18/yan-fa-yu-kai-fa/"/>
     <updated>2013-05-18T22:47:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/yan-fa-yu-kai-fa</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p><code>
+开发与研发，前者是工程派，后者是理论派,后者太过于看重理论的东西，但两者都很重要
+从商业的角度来说，前者重要，从研究的角度来说，后者重要.
+单本质还是工程带动研发，研发补充开发。
+上层框架的设计比纯做理论的要复杂的多，他们构造的是一个生态系统，例如操作系统1 + 1 &lt; 2
+研发解决现有的技术解决不了的问题，开发是利用现有的技术解决现实的问题
+开发的问题研发总能解决。开发能够提出研发的课题，研发完了，在回归开发
+就好比开发调用研发这个函数，开发与研发就好比cpu和主板，哪个不行都不行~
+</code></p>
 ]]></content>
   </entry>
   
