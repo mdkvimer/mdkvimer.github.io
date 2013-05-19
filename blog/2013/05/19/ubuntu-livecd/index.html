@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>20位运算知多少1 - mdk Blog home</title>
+  <title>ubuntu livecd - mdk Blog home</title>
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="/ * ===================================================================================== * * Filename: weiyi1.cpp * * Description: 位运算 * * Version: &hellip;">
+  <meta name="description" content="将现有的ubuntu系统打造成LiveCD ~下载Live Ubuntu Backup V2.2 (lub) 将所有环境装好后分别执行: 将lub放到家目录 1.sudo chmod 777 /home/lub 2.sudo /home/lub -b 然后按e或c来选择是英文提示，还是中文提示。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1">
+  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/19/ubuntu-livecd">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mdk Blog home" type="application/atom+xml">
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">20位运算知多少1</h1>
+      <h1 class="entry-title">Ubuntu Livecd</h1>
     
     
       <p class="meta">
@@ -85,7 +85,7 @@
   
 
 
-<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+<time datetime="2013-05-19T10:45:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
         
         
       </p>
@@ -93,94 +93,70 @@
   </header>
 
 
-<div class="entry-content"><p>/<em>
- * =====================================================================================
- *
- *       Filename:  weiyi1.cpp
- *
- *    Description:  位运算
- *
- *        Version:  1.0
- *        Created:  2012/12/19 13:05:23
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#109;&#x65;&#110;&#x67;&#x64;&#x61;&#x69;&#107;&#x75;&#x6e;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x6d;&#101;&#110;&#x67;&#100;&#x61;&#x69;&#107;&#x75;&#110;&#x40;&#x67;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#109;</a>
- *        Company:  cjluacm-vim-mdk
- *
- * =====================================================================================
- </em>/
-int max1(int a,int b){
-  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
-}
-int max2(int x,int y){
-  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}
-int min1(int a,int b){
-  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
-}
-int min2(int x,int y){
-  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}
-bool isSampSign(int x,int y){
-  return (x<sup>y</sup>) >= 0;
-}
-int getTwo(int n){
- // 2<sup>n</sup>
- return 2 &lt;&lt; (n-1);
-}
-bool isTwo(int n){
- return n > 0 ? (n&amp;(n-1)) == 0:false;
-}
-int quyu(int m,int n){
-  return m &amp; (n-1);
-}
-int getAgv1(int n,int m){
- return (n+m) >> 1;
-}
-int getAgv2(int x,int y){
- return ((x<sup>y</sup>) >> 1) + (x&amp;y);
-}
-int getBit(int n,int m){  //从低位到高位 取n的第m位
- return (n >> (m-1)) &amp; 1;
-}
-int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
- return n | (1 &lt;&lt; (m-1));
-}
-int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
- return n &amp; ~(1 &lt;&lt; (m-1));
-}
-int getnum1(int n){
-  //get n+1
-  return &ndash;~n;
-}
-int getnum2(int n){
- return ~-n;
-}
-int getnum3(int n){
- return ~n + 1;
-}
-int main(int argc,char *argv[])
-{</p>
+<div class="entry-content"><p>将现有的ubuntu系统打造成LiveCD ~下载Live Ubuntu Backup V2.2 (lub)</p>
 
-<pre><code>int num1 = max1(3,5);
-int num2 = max2(3,5);
-int num3 = min1(3,5);
-int num4 = min2(3,5);
-cout&lt;&lt;getnum3(3)&lt;&lt;endl;
-//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
-//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
-//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
-//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
-//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
-//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
-//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
-//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
-//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
-return 0;
-</code></pre>
+<p>将所有环境装好后分别执行: 将lub放到家目录</p>
 
-<p>}</p>
+<p>1.sudo chmod 777 /home/lub</p>
+
+<p>2.sudo /home/lub -b</p>
+
+<p>然后按e或c来选择是英文提示，还是中文提示。第一次执行时，可能会提示需要安装lupin-casper和squashfs-tools，其中 lupin-casper可以忽略，而squashfs-tools必须安装，运行$sudo apt-get install squashfs-tools即可</p>
+
+<p>之后再次运行$sudo /home/lub -b，依提示运行，就能在用户文件夹下生成一个backup-2013.01.02的目录了，其中有的backup-2013.01.02.squashfs文件就是我们想要的</p>
+
+<p>3.将ubuntu-11.10-desktop.i386.iso拷贝到/home.acmer/下:</p>
+
+<p>执行:sudo /home/acmer/mnt &amp;&amp; sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</p>
+
+<p>4.sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</p>
+
+<p>执行: $sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd</p>
+
+<p>5.对/home/acmer/livecd/casper/目录下的filesystem.squashfs、 filesystem.manifest、filesystem.manifest-desktop这三个文件进行操作，由于它们只有读权限，所以先执行$sudo chmod o+w /home/acmer/livecd/casper/filesystem.*</p>
+
+<p>将刚才lub生成的那个backup-2013.01.02.squashfs文件，拷贝成/home/acmer/livecd/casper/filesystem.squashfs</p>
+
+<p>执行： $sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</p>
+
+<ol>
+<li></li>
+</ol>
+
+
+<p>此外，还要更新/home/acmer/livecd/casper/目录下的filesystem.manifest和filesystem.manifest-remove，这两个文件实际上是系统所装包的列表，通过以下方式更新</p>
+
+<p>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ >/home/acmer/livecd/casper/filesystem.manifest</p>
+
+<p>$sudo dpkg -l | grep ii | awk {print$2,$3}’> /home/acmer/livecd/casper/filesystem.manifes-remove</p>
+
+<ol>
+<li></li>
+</ol>
+
+
+<p>退回的LiveCD的工作目录 /home/acmer/livecd 下，</p>
+
+<p>执行$sudo rm md5sum.txt</p>
+
+<p>再执行$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</p>
+
+<p>更新原来的md5sum</p>
+
+<ol>
+<li></li>
+</ol>
+
+
+<p>将工作目录下的内容打包成ISO</p>
+
+<p>先运行$sudo apt-get install mkisofs 安装ISO打包工具，</p>
+
+<p>执行$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</p>
+
+<p>打包iso时最后一定加 . 来表示目前目录</p>
+
+<p>参照文章来源（有删节）:<a href="http://www.linuxidc.com/Linux/2011-04/34097.htm">http://www.linuxidc.com/Linux/2011-04/34097.htm</a></p>
 </div>
 
 
@@ -203,7 +179,7 @@ return 0;
   
 
 
-<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+<time datetime="2013-05-19T10:45:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
       
 
 
@@ -211,7 +187,7 @@ return 0;
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/19/ubuntu-livecd/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/19/ubuntu-livecd/" >Tweet</a>
   
   
   
@@ -220,10 +196,10 @@ return 0;
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/05/18/xiao-sai/" title="Previous Post: 校赛">&laquo; 校赛</a>
+        <a class="basic-alignment left" href="/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/" title="Previous Post: 运维的那些命令">&laquo; 运维的那些命令</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/" title="Next Post: 20位运算知多少2">20位运算知多少2 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/05/19/you-de-shi-hou/" title="Next Post: 有的时候">有的时候 &raquo;</a>
       
     </p>
   </footer>
