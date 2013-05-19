@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T13:55:24+08:00</updated>
+  <updated>2013-05-19T13:56:50+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -670,12 +670,6 @@ initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
 </span><span class='line'>shmat     连接共享内存
 </span><span class='line'>shmdt     拆卸共享内存</span></code></pre></td></tr></table></div></figure>
 
-
-<p>参考资料</p>
-
-<pre><code>Linux man pages
-Advanced Programming in the UNIX Environment, W. Richard Stevens, 1993
-</code></pre>
 
 <p>转自:<a href="http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html">http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html</a></p>
 ]]></content>
