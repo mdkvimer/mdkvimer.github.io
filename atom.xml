@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T13:46:11+08:00</updated>
+  <updated>2013-05-19T13:51:47+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -151,7 +151,7 @@ initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
 
 
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -163,22 +163,19 @@ initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/nash                 使用类似 bash 的 shell 来运行</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/nash             
 </span><span class='line'>mount -t proc /proc /proc    挂载内存的虚拟文件系统
-</span><span class='line'>....<span class="o">(</span>中间省略<span class="o">)</span>....
-</span><span class='line'><span class="nb">echo </span>Creating initial device nodes
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo Creating initial device nodes
 </span><span class='line'>mknod /dev/null c 1 3        创建系统所需要的各项装置！
-</span><span class='line'>....<span class="o">(</span>中间省略<span class="o">)</span>....
-</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Loading ehci-hcd.ko module&quot;</span>
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo "Loading ehci-hcd.ko module"
 </span><span class='line'>insmod /lib/ehci-hcd.ko      加载各项核心模块，就是驱动程序！
-</span><span class='line'>....<span class="o">(</span>中间省略<span class="o">)</span>....
-</span><span class='line'><span class="nb">echo </span>Creating root device.
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>echo Creating root device.
 </span><span class='line'>mkrootdev -t ext3 -o defaults,ro hdc2 尝试挂载根目录啦！
-</span><span class='line'>....<span class="o">(</span>底下省略<span class="o">)</span>....
-</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>....(底下省略)....</span></code></pre></td></tr></table></div></figure>
 
-
-<p>复制代码</p>
 
 <p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
 
