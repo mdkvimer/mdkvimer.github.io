@@ -189,31 +189,7 @@
 </span><span class='line'># dmesg | grep IDE       # 查看启动时IDE设备检测状况</span></code></pre></td></tr></table></div></figure>
 
 
-<p> 网络</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># ifconfig               # 查看所有网络接口的属性   
-</span><span class='line'># iptables -L            # 查看防火墙设置
-</span><span class='line'># route -n               # 查看路由表
-</span><span class='line'># netstat -lntp          # 查看所有监听端口
-</span><span class='line'># netstat -antp          # 查看所有已经建立的连接
-</span><span class='line'># netstat -s             # 查看网络统计信息</span></code></pre></td></tr></table></div></figure>
-
-
-<p>进程</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># ps -ef                 # 查看所有进程  
-</span><span class='line'># top                    # 实时显示进程状态</span></code></pre></td></tr></table></div></figure>
-
-
-<p>用户</p>
+<p>网络 进程 用户 服务 程序</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -225,7 +201,47 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># w                      # 查看活动用户   
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># ifconfig               # 查看所有网络接口的属性   
+</span><span class='line'>
+</span><span class='line'># iptables -L            # 查看防火墙设置
+</span><span class='line'>
+</span><span class='line'># route -n               # 查看路由表
+</span><span class='line'>
+</span><span class='line'># netstat -lntp          # 查看所有监听端口
+</span><span class='line'>
+</span><span class='line'># netstat -antp          # 查看所有已经建立的连接
+</span><span class='line'>
+</span><span class='line'># netstat -s             # 查看网络统计信息   
+</span><span class='line'>
+</span><span class='line'># ps -ef                 # 查看所有进程  
+</span><span class='line'>
+</span><span class='line'># top                    # 实时显示进程状态
+</span><span class='line'>
+</span><span class='line'># w                      # 查看活动用户   
+</span><span class='line'>
 </span><span class='line'># id             # 查看指定用户信息
 </span><span class='line'>
 </span><span class='line'># last                   # 查看用户登录日志
@@ -234,21 +250,13 @@
 </span><span class='line'>
 </span><span class='line'># cut -d: -f1 /etc/group    # 查看系统所有组
 </span><span class='line'>
-</span><span class='line'># crontab -l             # 查看当前用户的计划任务</span></code></pre></td></tr></table></div></figure>
-
-
-<p>服务</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># chkconfig –list       # 列出所有系统服务   
-</span><span class='line'># chkconfig –list | grep on    # 列出所有启动的系统服务</span></code></pre></td></tr></table></div></figure>
-
-
-<p>程序</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># rpm -qa                # 查看所有安装的软件包</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'># crontab -l             # 查看当前用户的计划任务
+</span><span class='line'>
+</span><span class='line'># chkconfig –list       # 列出所有系统服务   
+</span><span class='line'>
+</span><span class='line'># chkconfig –list | grep on    # 列出所有启动的系统服务
+</span><span class='line'>
+</span><span class='line'># rpm -qa                # 查看所有安装的软件包</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
