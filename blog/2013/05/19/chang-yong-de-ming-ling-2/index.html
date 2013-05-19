@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>20位运算知多少1 - mdk Blog home</title>
+  <title>常用的命令2 - mdk Blog home</title>
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="/ * ===================================================================================== * * Filename: weiyi1.cpp * * Description: 位运算 * * Version: &hellip;">
+  <meta name="description" content="uname -a # 查看内核/操作系统/CPU信息 # head -n 1 /etc/issue # 查看操作系统版本 cat /proc/cpuinfo # 查看CPU信息 hostname # 查看计算机名 lspci -tv # 列出所有PCI设备 lsusb -tv # &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1">
+  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="mdk Blog home" type="application/atom+xml">
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">20位运算知多少1</h1>
+      <h1 class="entry-title">常用的命令2</h1>
     
     
       <p class="meta">
@@ -85,7 +85,7 @@
   
 
 
-<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+<time datetime="2013-05-19T10:58:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
         
         
       </p>
@@ -93,94 +93,80 @@
   </header>
 
 
-<div class="entry-content"><p>/<em>
- * =====================================================================================
- *
- *       Filename:  weiyi1.cpp
- *
- *    Description:  位运算
- *
- *        Version:  1.0
- *        Created:  2012/12/19 13:05:23
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#101;&#x6e;&#103;&#100;&#97;&#105;&#x6b;&#117;&#x6e;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#111;&#x6d;">&#x6d;&#x65;&#x6e;&#x67;&#x64;&#x61;&#105;&#x6b;&#x75;&#110;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>
- *        Company:  cjluacm-vim-mdk
- *
- * =====================================================================================
- </em>/
-int max1(int a,int b){
-  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
-}
-int max2(int x,int y){
-  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}
-int min1(int a,int b){
-  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
-}
-int min2(int x,int y){
-  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}
-bool isSampSign(int x,int y){
-  return (x<sup>y</sup>) >= 0;
-}
-int getTwo(int n){
- // 2<sup>n</sup>
- return 2 &lt;&lt; (n-1);
-}
-bool isTwo(int n){
- return n > 0 ? (n&amp;(n-1)) == 0:false;
-}
-int quyu(int m,int n){
-  return m &amp; (n-1);
-}
-int getAgv1(int n,int m){
- return (n+m) >> 1;
-}
-int getAgv2(int x,int y){
- return ((x<sup>y</sup>) >> 1) + (x&amp;y);
-}
-int getBit(int n,int m){  //从低位到高位 取n的第m位
- return (n >> (m-1)) &amp; 1;
-}
-int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
- return n | (1 &lt;&lt; (m-1));
-}
-int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
- return n &amp; ~(1 &lt;&lt; (m-1));
-}
-int getnum1(int n){
-  //get n+1
-  return &ndash;~n;
-}
-int getnum2(int n){
- return ~-n;
-}
-int getnum3(int n){
- return ~n + 1;
-}
-int main(int argc,char *argv[])
-{</p>
+<div class="entry-content"><h1>uname -a               # 查看内核/操作系统/CPU信息   # head -n 1 /etc/issue   # 查看操作系统版本</h1>
 
-<pre><code>int num1 = max1(3,5);
-int num2 = max2(3,5);
-int num3 = min1(3,5);
-int num4 = min2(3,5);
-cout&lt;&lt;getnum3(3)&lt;&lt;endl;
-//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
-//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
-//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
-//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
-//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
-//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
-//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
-//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
-//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
-return 0;
-</code></pre>
+<h1>cat /proc/cpuinfo      # 查看CPU信息</h1>
 
-<p>}</p>
+<h1>hostname               # 查看计算机名</h1>
+
+<h1>lspci -tv              # 列出所有PCI设备</h1>
+
+<h1>lsusb -tv              # 列出所有USB设备</h1>
+
+<h1>lsmod                  # 列出加载的内核模块</h1>
+
+<h1>env                    # 查看环境变量</h1>
+
+<p>资源</p>
+
+<h1>free -m                # 查看内存使用量和交换区使用量   # df -h                  # 查看各分区使用情况</h1>
+
+<h1>du -sh &lt;目录名&gt;        # 查看指定目录的大小</h1>
+
+<h1>grep MemTotal /proc/meminfo   # 查看内存总量</h1>
+
+<h1>grep MemFree /proc/meminfo    # 查看空闲内存量</h1>
+
+<h1>uptime                 # 查看系统运行时间、用户数、负载</h1>
+
+<h1>cat /proc/loadavg      # 查看系统负载</h1>
+
+<p>磁盘和分区</p>
+
+<h1>mount | column -t      # 查看挂接的分区状态   # fdisk -l               # 查看所有分区</h1>
+
+<h1>swapon -s              # 查看所有交换分区</h1>
+
+<h1>hdparm -i /dev/hda     # 查看磁盘参数(仅适用于IDE设备)</h1>
+
+<h1>dmesg | grep IDE       # 查看启动时IDE设备检测状况</h1>
+
+<p>网络</p>
+
+<h1>ifconfig               # 查看所有网络接口的属性   # iptables -L            # 查看防火墙设置</h1>
+
+<h1>route -n               # 查看路由表</h1>
+
+<h1>netstat -lntp          # 查看所有监听端口</h1>
+
+<h1>netstat -antp          # 查看所有已经建立的连接</h1>
+
+<h1>netstat -s             # 查看网络统计信息</h1>
+
+<p>进程
+1   2</p>
+
+<h1>ps -ef                 # 查看所有进程   # top                    # 实时显示进程状态</h1>
+
+<p>用户</p>
+
+<h1>w                      # 查看活动用户   # id &lt;用户名&gt;            # 查看指定用户信息</h1>
+
+<h1>last                   # 查看用户登录日志</h1>
+
+<h1>cut -d: -f1 /etc/passwd   # 查看系统所有用户</h1>
+
+<h1>cut -d: -f1 /etc/group    # 查看系统所有组</h1>
+
+<h1>crontab -l             # 查看当前用户的计划任务</h1>
+
+<p>服务</p>
+
+<h1>chkconfig –list       # 列出所有系统服务   # chkconfig –list | grep on    # 列出所有启动的系统服务</h1>
+
+<p>程序</p>
+
+<h1>rpm -qa                # 查看所有安装的软件包</h1>
 </div>
 
 
@@ -203,7 +189,7 @@ return 0;
   
 
 
-<time datetime="2013-05-18T22:45:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+<time datetime="2013-05-19T10:58:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
       
 
 
@@ -211,7 +197,7 @@ return 0;
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2/" >Tweet</a>
   
   
   
@@ -220,10 +206,10 @@ return 0;
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/05/18/xiao-sai/" title="Previous Post: 校赛">&laquo; 校赛</a>
+        <a class="basic-alignment left" href="/blog/2013/05/19/chang-yong-de-ming-ling/" title="Previous Post: 常用的命令">&laquo; 常用的命令</a>
       
       
-        <a class="basic-alignment right" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/" title="Next Post: 20位运算知多少2">20位运算知多少2 &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2013/05/19/svn/" title="Next Post: svn">svn &raquo;</a>
       
     </p>
   </footer>
