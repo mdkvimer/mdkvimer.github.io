@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T14:00:12+08:00</updated>
+  <updated>2013-05-19T14:06:28+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -204,7 +204,7 @@ Boot Loader</p>
 
 <p>按照惯例，这个列表以man pages第2节，即系统调用节为蓝本。按照笔者的理解，对其作了大致的分类，同时也作了一些小小的修改，删去了几个仅供内核使用，不允许用户调用的系统调用，对个别本人稍觉不妥的地方作了一些小的修改，并对所有列出的系统调用附上简要注释。</p>
 
-<p>其中有一些函数的作用完全相同，只是参数不同。（可能很多熟悉C++朋友马上就能联想起函数重载，但是别忘了Linux核心是用C语言写的，所以只 能取成不同的函数名）。还有一些函数已经过时，被新的更好的函数所代替了（gcc在链接这些函数时会发出警告），但因为兼容的原因还保留着，这些函数我会 在前面标上“*”号以示区别。
+<p>其中有一些函数的作用完全相同，只是参数不同。（可能很多熟悉C++朋友马上就能联想起函数重载，但是别忘了Linux核心是用C语言写的，所以只 能取成不同的函数名）。还有一些函数已经过时，被新的更好的函数所代替了（gcc在链接这些函数时会发出警告），但因为兼容的原因还保留着，这些函数我会 在前面标上星号以示区别。
 一、进程控制：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -363,6 +363,8 @@ Boot Loader</p>
 <span class='line-number'>28</span>
 <span class='line-number'>29</span>
 <span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>access   确定文件的可存取性
 </span><span class='line'>chdir     改变当前工作目录
 </span><span class='line'>fchdir    参见chdir
@@ -392,10 +394,47 @@ Boot Loader</p>
 </span><span class='line'>ustat     取文件系统信息
 </span><span class='line'>utime     改变文件的访问修改时间
 </span><span class='line'>utimes    参见utime
-</span><span class='line'>quotactl  控制磁盘配额</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>quotactl  控制磁盘配额
+</span><span class='line'> ```
+</span><span class='line'>三、系统控制</span></code></pre></td></tr></table></div></figure>
 
 
-<p>三、系统控制</p>
+<p>ioctl   I/O总控制函数
+_sysctl     读/写系统参数
+acct    启用或禁止进程记账
+getrlimit   获取系统资源上限
+setrlimit   设置系统资源上限
+getrusage   获取系统资源使用情况
+uselib  选择要使用的二进制函数库
+ioperm  设置端口I/O权限
+iopl    改变进程I/O权限级别
+outb    低级端口操作
+reboot  重新启动
+swapon  打开交换文件和设备
+swapoff     关闭交换文件和设备
+bdflush     控制bdflush守护进程
+sysfs   取核心支持的文件系统类型
+sysinfo     取得系统信息
+adjtimex    调整系统时钟
+alarm   设置进程的闹钟
+getitimer   获取计时器值
+setitimer   设置计时器值
+gettimeofday    取时间和时区
+settimeofday    设置时间和时区
+stime   设置系统日期和时间
+time    取得系统时间
+times   取进程运行时间
+uname   获取当前UNIX系统的名称、版本和主机等信息
+vhangup     挂起当前终端
+nfsservctl  对NFS守护进程进行控制
+vm86    进入模拟8086模式
+create_module   创建可装载的模块项
+delete_module   删除可装载的模块项
+init_module     初始化模块
+query_module    查询模块信息
+*get_kernel_syms    取得核心符号,已被query_module代替
+ &#8220;`
+四、内存管理</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -413,76 +452,6 @@ Boot Loader</p>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ioctl    I/O总控制函数
-</span><span class='line'>_sysctl   读/写系统参数
-</span><span class='line'>acct  启用或禁止进程记账
-</span><span class='line'>getrlimit     获取系统资源上限
-</span><span class='line'>setrlimit     设置系统资源上限
-</span><span class='line'>getrusage     获取系统资源使用情况
-</span><span class='line'>uselib    选择要使用的二进制函数库
-</span><span class='line'>ioperm    设置端口I/O权限
-</span><span class='line'>iopl  改变进程I/O权限级别
-</span><span class='line'>outb  低级端口操作
-</span><span class='line'>reboot    重新启动
-</span><span class='line'>swapon    打开交换文件和设备
-</span><span class='line'>swapoff   关闭交换文件和设备
-</span><span class='line'>bdflush   控制bdflush守护进程
-</span><span class='line'>sysfs     取核心支持的文件系统类型
-</span><span class='line'>sysinfo   取得系统信息
-</span><span class='line'>adjtimex  调整系统时钟
-</span><span class='line'>alarm     设置进程的闹钟
-</span><span class='line'>getitimer     获取计时器值
-</span><span class='line'>setitimer     设置计时器值
-</span><span class='line'>gettimeofday  取时间和时区
-</span><span class='line'>settimeofday  设置时间和时区
-</span><span class='line'>stime     设置系统日期和时间
-</span><span class='line'>time  取得系统时间
-</span><span class='line'>times     取进程运行时间
-</span><span class='line'>uname     获取当前UNIX系统的名称、版本和主机等信息
-</span><span class='line'>vhangup   挂起当前终端
-</span><span class='line'>nfsservctl    对NFS守护进程进行控制
-</span><span class='line'>vm86  进入模拟8086模式
-</span><span class='line'>create_module     创建可装载的模块项
-</span><span class='line'>delete_module     删除可装载的模块项
-</span><span class='line'>init_module   初始化模块
-</span><span class='line'>query_module  查询模块信息
-</span><span class='line'>*get_kernel_syms  取得核心符号,已被query_module代替</span></code></pre></td></tr></table></div></figure>
-
-
-<p>四、内存管理</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>brk  改变数据段空间的分配
 </span><span class='line'>sbrk  参见brk
 </span><span class='line'>mlock     内存页面加锁
@@ -496,26 +465,19 @@ Boot Loader</p>
 </span><span class='line'>mprotect  设置内存映像保护
 </span><span class='line'>getpagesize   获取页面大小
 </span><span class='line'>sync  将内存缓冲区数据写回硬盘
-</span><span class='line'>cacheflush    将指定缓冲区中的内容写回磁盘</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>cacheflush    将指定缓冲区中的内容写回磁盘
+</span><span class='line'> ```
+</span><span class='line'>五、网络管理</span></code></pre></td></tr></table></div></figure>
 
 
-<p>五、网络管理</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>getdomainname    取域名
-</span><span class='line'>setdomainname     设置域名
-</span><span class='line'>gethostid     获取主机标识号
-</span><span class='line'>sethostid     设置主机标识号
-</span><span class='line'>gethostname   获取本主机名称
-</span><span class='line'>sethostname   设置主机名称</span></code></pre></td></tr></table></div></figure>
-
-
-<p>六、socket控制</p>
+<p>getdomainname   取域名
+setdomainname   设置域名
+gethostid   获取主机标识号
+sethostid   设置主机标识号
+gethostname     获取本主机名称
+sethostname     设置主机名称
+ &#8220;`
+六、socket控制</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -579,6 +541,8 @@ Boot Loader</p>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>getuid   获取用户标识号
 </span><span class='line'>setuid    设置用户标志号
 </span><span class='line'>getgid    获取组标识号
@@ -596,84 +560,63 @@ Boot Loader</p>
 </span><span class='line'>setfsgid  设置文件系统检查时使用的组标识号
 </span><span class='line'>setfsuid  设置文件系统检查时使用的用户标识号
 </span><span class='line'>getgroups     获取后补组标志清单
-</span><span class='line'>setgroups     设置后补组标志清单</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>setgroups     设置后补组标志清单
+</span><span class='line'> ```
+</span><span class='line'>八、进程间通信</span></code></pre></td></tr></table></div></figure>
 
 
-<p>八、进程间通信</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ipc  进程间通信总控制调用</span></code></pre></td></tr></table></div></figure>
-
-
-<p>1、信号</p>
+<p>ipc     进程间通信总控制调用</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sigaction    设置对指定信号的处理方法
-</span><span class='line'>sigprocmask   根据参数对信号集中的信号执行阻塞/解除阻塞等操作
-</span><span class='line'>sigpending    为指定的被阻塞信号设置队列
-</span><span class='line'>sigsuspend    挂起进程等待特定信号
-</span><span class='line'>signal    参见signal
-</span><span class='line'>kill  向进程或进程组发信号
-</span><span class='line'>*sigblock     向被阻塞信号掩码中添加信号,已被sigprocmask代替
-</span><span class='line'>*siggetmask   取得现有阻塞信号掩码,已被sigprocmask代替
-</span><span class='line'>*sigsetmask   用给定信号掩码替换现有阻塞信号掩码,已被sigprocmask代替
-</span><span class='line'>*sigmask  将给定的信号转化为掩码,已被sigprocmask代替
-</span><span class='line'>*sigpause     作用同sigsuspend,已被sigsuspend代替
-</span><span class='line'>sigvec    为兼容BSD而设的信号处理函数,作用类似sigaction
-</span><span class='line'>ssetmask  ANSI C的信号处理函数,作用类似sigaction</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1、信号</span></code></pre></td></tr></table></div></figure>
 
 
-<p>2、消息</p>
+<p>sigaction   设置对指定信号的处理方法
+sigprocmask     根据参数对信号集中的信号执行阻塞/解除阻塞等操作
+sigpending  为指定的被阻塞信号设置队列
+sigsuspend  挂起进程等待特定信号
+signal  参见signal
+kill    向进程或进程组发信号
+<em>sigblock   向被阻塞信号掩码中添加信号,已被sigprocmask代替
+</em>siggetmask     取得现有阻塞信号掩码,已被sigprocmask代替
+<em>sigsetmask     用给定信号掩码替换现有阻塞信号掩码,已被sigprocmask代替
+</em>sigmask    将给定的信号转化为掩码,已被sigprocmask代替
+*sigpause   作用同sigsuspend,已被sigsuspend代替
+sigvec  为兼容BSD而设的信号处理函数,作用类似sigaction
+ssetmask    ANSI C的信号处理函数,作用类似sigaction</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>msgctl   消息控制操作
-</span><span class='line'>msgget    获取消息队列
-</span><span class='line'>msgsnd    发消息
-</span><span class='line'>msgrcv    取消息</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2、消息</span></code></pre></td></tr></table></div></figure>
 
 
-<p>3、管道</p>
+<p>msgctl  消息控制操作
+msgget  获取消息队列
+msgsnd  发消息
+msgrcv  取消息</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pipe     创建管道</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>3、管道</span></code></pre></td></tr></table></div></figure>
 
 
-<p>4、信号量</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>semctl   信号量控制
-</span><span class='line'>semget    获取一组信号量
-</span><span class='line'>semop     信号量操作</span></code></pre></td></tr></table></div></figure>
-
-
-<p>5、共享内存</p>
+<p>pipe    创建管道</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>shmctl   控制共享内存
-</span><span class='line'>shmget    获取共享内存
-</span><span class='line'>shmat     连接共享内存
-</span><span class='line'>shmdt     拆卸共享内存</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>4、信号量</span></code></pre></td></tr></table></div></figure>
 
+
+<p>semctl  信号量控制
+semget  获取一组信号量
+semop   信号量操作</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>5、共享内存</span></code></pre></td></tr></table></div></figure>
+
+
+<p>shmctl  控制共享内存
+shmget  获取共享内存
+shmat   连接共享内存
+shmdt   拆卸共享内存
+ &#8220;`</p>
 
 <p>转自:<a href="http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html">http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html</a></p>
 ]]></content>
