@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>centos启动 - mdk Blog home</title>
+  <meta name="author" content="mdkvimer">
+
+  
+  <meta name="description" content="启动流程概览 在硬件驱动成功后，Kernel 会主动呼叫 init 程序，而 init 会取得 run-level 资讯；
+init 运行 /etc/rc.d/rc.sysinit 文件来准备软件运行的作业环境 (如网络、时区等)；
+init 运行 run-level 的各个服务之启动 ( &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/19/centosqi-dong">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="mdk Blog home" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">mdk Blog home</a></h1>
+  
+    <h2>A vimer fork github bin.sh&py</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mdkvimer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">mdkvimer</a></li>
+  <li><a href="/blog/archives">二逼码农mdk</a></li>
+  <li><a href="/about">ABOUT</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Centos启动</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:40:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>启动流程概览</p>
+
+<pre><code>在硬件驱动成功后，Kernel 会主动呼叫 init 程序，而 init 会取得 run-level 资讯；
+init 运行 /etc/rc.d/rc.sysinit 文件来准备软件运行的作业环境 (如网络、时区等)；
+init 运行 run-level 的各个服务之启动 (script 方式)；
+init 运行 /etc/rc.d/rc.local 文件；
+init 运行终端机模拟程序 mingetty 来启动 login 程序，最后就等待使用者登陆啦；
+</code></pre>
+
+<p> init,/etc/inittab,runlevel介绍</p>
+
+<p>在核心加载完毕、进行完硬件侦测与驱动程序加载后，此时你的主机硬件应该已经准备就绪了 (ready) ， 此时核心会主动的呼叫第一支程序，那就是 /sbin/init 罗。 init 的 PID 号码是一号啦。 /sbin/init 最主要的功能就是准备软件运行的环境，包括系统的主机名称、网络配置、语系处理、文件系统格式及其他服务的启动等。 而所有的动作都会透过 init 的配置档，亦即是 /etc/inittab 来规划，而 inittab 内还有一个很重要的配置项目，那就是默认的 runlevel (启动运行等级) 啦！
+Run level：运行等级有哪些？</p>
+
+<p>那么什么是 run level 呢？他有什么功用啊？其实很简单啦， Linux 就是藉由配置 run level 来规定系统使用不同的服务来启动，让 Linux 的使用环境不同。基本上，依据有无网络与有无 X Window 而将 run level 分为 7 个等级，分别是：</p>
+
+<pre><code>0 – halt (系统直接关机)
+1 – single user mode (单人维护模式，用在系统出问题时的维护)
+2 – Multi-user, without NFS (类似底下的 runlevel 3，但无 NFS 服务)
+3 – Full multi-user mode (完整含有网络功能的纯文字模式)
+4 – unused (系统保留功能)
+5 – X11 (与 runlevel 3 类似，但加载使用 X Window)
+6 – reboot (重新启动)
+</code></pre>
+
+<p>由於 run level 0, 4, 6 不是关机、重新启动就是系统保留的，所以：『 您当然不能将默认的 run level 配置为这三个值 』， 否则系统就会不断的自动关机或自动重新启动…. 好了，那么我们启动时，到底是如何取得系统的 run level 的？当然是 /etc/inittab 所配置的罗！ 那么 /etc/inittab 到底有什么资讯呢？我们先来看看这个文件的内容好了：
+/etc/inittab 的内容与语法
+复制代码</p>
+
+<p>[root@www ~]# vim /etc/inittab
+id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5</p>
+
+<p>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档</p>
+
+<p>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
+l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
+l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
+l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
+l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
+l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
+l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/</p>
+
+<p>ca::ctrlaltdel:/sbin/shutdown -t3 -r now</p>
+
+<p>pf::powerfail:/sbin/shutdown -f -h +2 &ldquo;Power Failure; System Shutting Down&rdquo;
+pr:12345:powerokwait:/sbin/shutdown -c &ldquo;Power Restored; Shutdown Cancelled&rdquo;</p>
+
+<p>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6</p>
+
+<p>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</p>
+
+<p>复制代码</p>
+
+<p>让我们解析一下这个文件吧！首先，这个文件的语法是利用冒号 (:) 将配置分隔成为四个栏位，每个栏位的意义与说明如下：</p>
+
+<pre><code>配置项目：最多四个字节，代表 init 的主要工作项目，只是一个简单的代表说明。
+run level：该项目在哪些 run level 底下进行的意思。如果是 35 则代表 runlevel 3 与 5 都会运行。
+init 的动作项目：主要可以进行的动作项目意义有：
+inittab 配置值   意义说明
+initdefault     代表默认的 run level 配置值
+sysinit     代表系统初始化的动作项目
+ctrlaltdel  代表 [ctrl]+[alt]+[del] 三个按键是否可以重新启动的配置
+wait    代表后面栏位配置的命令项目必须要运行完毕才能继续底下其他的动作
+respawn     代表后面栏位的命令可以无限制的再生 (重新启动)。举例来说， tty1 的 mingetty 产生的可登陆画面， 在你注销而结束后，系统会再开一个新的可登陆画面等待下一个登陆。
+
+更多的配置项目请参考 man inittab 的说明。
+命令项目：亦即应该可以进行的命令，通常是一些 script 罗。
+</code></pre>
+
+<p>init 的处理流程</p>
+
+<p>事实上 /etc/inittab 的配置也有点类似 shell script 啦，因为该文件内容的配置也是一行一行的从上往下处理的， 因此我们可以知道 CentOS 的 init 依据 inittab 配置的处理流程会是：</p>
+
+<pre><code>先取得 runlevel 亦即默认运行等级的相关等级 (以鸟哥的测试机为例，为 5 号)；
+使用 /etc/rc.d/rc.sysinit 进行系统初始化
+由於 runlevel 是 5 ，因此只进行『l5:5:wait:/etc/rc.d/rc 5』，其他行则略过
+配置好 [ctrl]+[alt]+[del] 这组的组合键功能
+配置不断电系统的 pf, pr 两种机制；
+启动 mingetty 的六个终端机 (tty1 ~ tty6)
+最终以 /etc/X11/perfdm -nodaemon 启动图形介面啦！
+</code></pre>
+
+<p>现在你可以知道为啥 [ctrl]+[alt]+[del] 可以重新启动而我们默认提供 6 个虚拟终端机 (tty1~tty6) 给你使用了吧！由於整个配置都是依据 /etc/inittab 来决定的，因此如果你想要修改任何细节的话， 可以这样做喔：</p>
+
+<pre><code>如果不想让使用者利用 [crtl]+[alt]+[del] 来重新启动系统，可以将『 ca::ctrlaltdel:/sbin/shutdown -t3 -r now 』加上注解 (#) 来取消该配置
+规定启动的默认 run level 是纯文字的 3 号或者是具有图形介面的 5 号 ，可经由 『 id:5:initdefault: 』那个数字来决定！ 以鸟哥自己这个文件为例，我是使用默认的图形介面。如果你想要关闭图形介面的话，将该行 5 改成 3 即可。
+如果不想要启动六个终端机 (tty1~tty6)，那么可以将『 6:2345:respawn:/sbin/mingetty tty6』关闭数个。但务必至少启动一个喔！
+</code></pre>
+
+<p>所以说，你现在会自行修改登陆时的默认 run level 配置值了吗？够简单的吧？ 一般来说，我们默认都是 3 或者是 5 来作为默认的 run level 的。但有时后可能需要进入 run level 1， 也就是单人维护模式的环境当中。这个 run level 1 有点像是 Windows 系统当中的『安全模式』啦， 专门用来处理当系统有问题时的操作环境。此外，当系统发现有问题时，举例来说，不正常关机造成 filesystem 的不一致现象时，系统会主动的进入单人维护模式呢！</p>
+
+<p>好了， init 在取得 run level 之后，接下来要干嘛？ 上面 /etc/inittab 文件内容不是有提到 sysinit 吗？准备初始化系统了吧！</p>
+
+<p>init 处理系统初始化流程 (/etc/rc.d/rc.sysinit)</p>
+
+<p>还记得上面提到 /etc/inittab 里头有这一句『 si::sysinit:/etc/rc.d/rc.sysinit 』吧？ 这表示：『我开始加载各项系统服务之前，得先做好整个系统环境，我主要利用 /etc/rc.d/rc.sysinit 这个 shell script 来配置好我的系统环境的。』够清楚了吧？ 所以，我想要知道到底 CentOS 启动的过程当中帮我进行了什么动作，就得要仔细的分析 /etc/rc.d/rc.sysinit 罗。</p>
+
+<p>如果你使用 vim 去查阅过 /etc/rc.d/rc.sysinit 的话，那么可以发现他主要的工作大抵有这几项：</p>
+
+<pre><code>取得网络环境与主机类型：
+读取网络配置档 /etc/sysconfig/network ，取得主机名称与默认通讯闸 (gateway) 等网络环境。
+测试与挂载内存装置 /proc 及 U盘 装置 /sys：
+除挂载内存装置 /proc 之外，还会主动侦测系统上是否具有 usb 的装置， 若有则会主动加载 usb 的驱动程序，并且尝试挂载 usb 的文件系统。
+决定是否启动 SELinux ：
+SELinux 在此时进行一些检测， 并且检测是否需要帮所有的文件重新编写标准的 SELinux 类型 (auto relabel)。
+启动系统的乱数产生器
+乱数产生器可以帮助系统进行一些口令加密演算的功能，在此需要启动两次乱数产生器。
+配置终端机 (console) 字形：
+配置显示於启动过程中的欢迎画面 (text banner)；
+配置系统时间 (clock) 与时区配置：需读入 /etc/sysconfig/clock 配置值
+周边设备的侦测与 Plug and Play (PnP) 参数的测试：
+根据核心在启动时侦测的结果 (/proc/sys/kernel/modprobe ) 开始进行 ide / scsi / 网络 / 音效 等周边设备的侦测，以及利用以加载的核心模块进行 PnP 装置的参数测试。
+使用者自订模块的加载
+使用者可以在 /etc/sysconfig/modules/*.modules 加入自订的模块，则此时会被加载到系统当中
+加载核心的相关配置：
+系统会主动去读取 /etc/sysctl.conf 这个文件的配置值，使核心功能成为我们想要的样子。
+配置主机名称与初始化电源管理模块 (ACPI)
+初始化软件磁盘阵列：主要是透过 /etc/mdadm.conf 来配置好的。
+初始化 LVM 的文件系统功能
+以 fsck 检验磁碟文件系统：会进行 filesystem check
+进行磁碟配额 quota 的转换 (非必要)：
+重新以可读写模式挂载系统磁碟：
+启动 quota 功能：所以我们不需要自订 quotaon 的动作
+启动系统虚拟乱数产生器 (pseudo-random)：
+清除启动过程当中的缓存文件：
+将启动相关资讯加载 /var/log/dmesg 文件中。
+</code></pre>
+
+<p>在 /etc/rc.d/rc.sysinit 将基本的系统配置数据都写好了，也将系统的数据配置完整！ 而如果你想要知道到底启动的过程中发生了什么事情呢？那么就运行『 dmesg 』吧。 另外，基本上，在这个文件当中所进行的很多工作的默认配置档，其实都在 /etc/sysconfig/ 当中呢！ 所以，请记得将 /etc/sysconfig/ 内的文件好好的瞧一瞧喔！ ^_^</p>
+
+<p>在这个过程当中，比较值得注意的是自订模块的加载！在 CentOS 当中，如果我们想要加载核心模块的话， 可以将整个模块写入到 /etc/sysconfig/modules/*.modules 当中，在该目录下， 只要记得档名最后是以 .modules 结尾即可。 这个过程是非必要的，因为我们目前的默认模块实在已经很够用了，除非是您的主机硬件实在太新了， 非要自己加载新的模块不可，否则，在经过 /etc/rc.d/rc.sysinit 的处理后， 你的主机系统应该是已经跑得很顺畅了啦！就等著你将系统相关的服务与网络服务启动罗！</p>
+
+<p>启动系统服务与相关启动配置档 (/etc/rc.d/rc N &amp; /etc/sysconfig)</p>
+
+<p>加载核心让整个系统准备接受命令来工作，再经过 /etc/rc.d/rc.sysinit 的系统模块与相关硬件资讯的初始化后，你的 CentOS 系统应该已经顺利工作了。 只是，我们还得要启动系统所需要的各项『服务』啊！这样主机才能提供我们相关的网络或者是主机功能嘛！ 这个时候，依据我们在 /etc/inittab 里面提到的 run level 配置值，就可以来决定启动的服务项目了。 举例来说，使用 run level 3 当然就不需要启动 X Window 的相关服务罗，您说是吧？</p>
+
+<p>那么各个不同的 run level 服务启动的各个 shell script 放在哪？还记得 /etc/inittab 里面提到的：
+复制代码</p>
+
+<p>l0:0:wait:/etc/rc.d/rc 0
+l1:1:wait:/etc/rc.d/rc 1
+l2:2:wait:/etc/rc.d/rc 2
+l3:3:wait:/etc/rc.d/rc 3
+l4:4:wait:/etc/rc.d/rc 4
+l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
+l6:6:wait:/etc/rc.d/rc 6</p>
+
+<p>复制代码</p>
+
+<p>上面提到的就是各个 run level 要运行的各项脚本放置处啦！主要是透过 /etc/rc.d/rc 这个命令来处理相关任务！ 由於鸟哥使用默认的 runlevel 5 ，因此我们主要针对上述特殊字体那行来解释好了： /etc/rc.d/rc 5 的意义是这样的 (建议您自行使用 vim 去观察一下 /etc/rc.d/rc 这个文件，你会更有概念！)：</p>
+
+<pre><code>透过外部第一号参数 ($1) 来取得想要运行的脚本目录。亦即由 /etc/rc.d/rc 5 可以取得 /etc/rc5.d/ 这个目录来准备处理相关的脚本程序；
+找到 /etc/rc5.d/K??* 开头的文件，并进行『 /etc/rc5.d/K??* stop 』的动作；
+找到 /etc/rc5.d/S??* 开头的文件，并进行『 /etc/rc5.d/S??* start 』的动作；
+</code></pre>
+
+<p>透过上面的说明我们可以知道所有的项目都与 /etc/rc5.d/ 有关，那么我们就来瞧瞧这个目录下有些什么玩意儿吧！
+复制代码</p>
+
+<p>[root@www ~]# ll /etc/rc5.d/
+lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd &ndash;> ../init.d/dhcdbd
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi &ndash;> ../init.d/capi
+lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl &ndash;> ../init.d/microcode_ctl
+lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor &ndash;> ../init.d/lvm2-monitor
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network &ndash;> ../init.d/network
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local &ndash;> ../rc.local
+lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
+&hellip;.(底下省略)&hellip;.</p>
+
+<p>复制代码</p>
+
+<p>在这个目录下的文件很有趣，主要具有几个特点：</p>
+
+<pre><code>档名全部以 Sxx 或 Kxx ，其中 xx 为数字，且这些数字在文件之间是有相关性的！
+全部是连结档，连结到 stand alone 服务启动的目录 /etc/init.d/ 去
+</code></pre>
+
+<p>服务的启动主要是以『/etc/init.d/服务档名 {start,stop}』 来启动与关闭的，那么透过刚刚 /etc/rc.d/rc 程序的解说，我们可以清楚的了解到了 /etc/rc5.d/[SK]xx 其实就是跑到 /etc/init.d/ 去找到相对应的服务脚本， 然后分别进行 start (Sxx) 或 stop (Kxx) 的动作而已啦！举例来说，以上述的表格内的 K91capi 及 S10network 为例好了， 透过 /etc/rc.d/rc 5 的运行，这两个文件会这样进行：</p>
+
+<pre><code>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
+/etc/rc5.d/S10network start –&gt; /etc/init.d/network start
+</code></pre>
+
+<p>所以说，你有想要启动该 runlevel 时就运行的服务，那么利用 Sxx 并指向 /etc/init.d/ 的特定服务启动脚本后， 该服务就能够在启动时启动啦！就这么简单！问题是，你需要自行处理这个 K, S 开头的连结档吗？ 并不需要的，chkconfig 就是在负责处理这个连结档啦！这样有没有跟第十八章的观念串在一起了呢？ ^_^</p>
+
+<p>那么为什么 K 与 S 后面要有数字呢？因为各不同的服务其实还是互有关系的。举例来说，如果要启动 WWW 服务，总是得要有网络吧？所以 /etc/init.d/network 就会比较先被启动啦！那么您就会知道在 S 或者是 K 后面接的数字是啥意思了吧？嘿嘿，那就是运行的顺序啦！那么哪个文件被最后运行呢？ 看到最后一个被运行的项目是啥？没错，就是 S99local ，亦即是：/etc/rc.d/rc.local 这个文件啦！</p>
+
+<p>使用者自订启动启动程序 (/etc/rc.d/rc.local)</p>
+
+<p>在完成默认 runlevel 指定的各项服务的启动后，如果我还有其他的动作想要完成时，举例来说， 我还想要寄一封 mail 给某个系统管理帐号，通知他，系统刚刚重新启动完毕，那么是否应该要制作一个 shell script 放置在 /etc/init.d/ 里面，然后再以连结方式连结到 /etc/rc5.d/ 里面呢？呵呵！当然不需要！还记得上一小节提到的 /etc/rc.d/rc.local 吧？ 这个文件就可以运行您自己想要运行的系统命令了。</p>
+
+<p>也就是说，我有任何想要在启动时就进行的工作时，直接将他写入 /etc/rc.d/rc.local ， 那么该工作就会在启动的时候自动被加载喔！而不必等我们登陆系统去启动呢！ 是否很方便啊！一般来说，鸟哥就很喜欢把自己制作的 shell script 完整档名写入 /etc/rc.d/rc.local ，如此一来，启动就会将我的 shell script 运行过，真是好棒那！</p>
+
+<p>根据 /etc/inittab 之配置，加载终端机或 X-Window 介面</p>
+
+<p>在完成了系统所有服务的启动后，接下来 Linux 就会启动终端机或者是 X Window 来等待使用者登陆啦！ 实际参考的项目是 /etc/inittab 内的这一段：
+复制代码</p>
+
+<p>1:2345:respawn:/sbin/mingetty tty1
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6
+x:5:respawn:/etc/X11/prefdm -nodaemon</p>
+
+<p>复制代码</p>
+
+<p>这一段代表，在 run level 2, 3, 4, 5 时，都会运行 /sbin/mingetty 这个咚咚， 而且运行六个，这也是为何我们 Linux 会提供『六个纯文字终端机』的配置所在啊！ 因为 mingetty 就是在启动终端机的命令说。</p>
+
+<p>要注意的是那个 respawn 的 init 动作项目，他代表『当后面的命令被终止 (terminal) 时， init 会主动的重新启动该项目。』这也是为何我们登陆 tty1 终端机介面后，以 exit 离开后， 系统还是会重新显示等待使用者输入的画面的原因啊！</p>
+
+<p>如果改天您不想要有六个终端机时，可以取消某些终端机介面吗？当然可以啊！ 就将上面表格当中的某些项目注解掉即可！例如不想要 tty5 与 tty6 ，就将那两行注解， 则下次重新启动后，您的 Linux 就只剩下『 F1 ~ F4 』有效而已，这样说，可以了解吧！！^_^</p>
+
+<p>至於如果我们使用的是 run level 5 呢？那么除了这六个终端机之外， init 还会运行 /etc/X11/prefdm -nodaemon 那个命令喔！ 他主要的功能就是在启动 X Window 啦！</p>
+
+<p>启动过程会用到的主要配置档</p>
+
+<p>我们在 /sbin/init 的运行过程中有谈到许多运行脚本，包括 /etc/rc.d/rc.sysinit 以及 /etc/rc.d/rc 等等， 其实这些脚本都会使用到相当多的系统配置档，这些启动过程会用到的配置档则大多放置在 /etc/sysconfig/ 目录下。 同时，由於核心还是需要加载一些驱动程序 (核心模块)，此时系统自订的装置与模块对应档 (/etc/modprobe.conf) 就显的挺重要了喔！
+关於模块： /etc/modprobe.conf</p>
+
+<p>/etc/rc.d/rc.sysinit 当中的加载使用者自订模块的地方吗？就是在 /etc/sysconfig/modules/ 目录下啊！ 虽然核心提供的默认模块已经很足够我们使用了，但是，某些条件下我们还是得对模块进行一些参数的规划， 此时就得要使用到 /etc/modprobe.conf 罗！举例来说，鸟哥的 CentOS 主机的 modprobe.conf 有点像这样：</p>
+
+<p>[root@www ~]# cat /etc/modprobe.conf
+alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
+alias scsi_hostadapter pata_sis
+alias snd-card-0 snd-trident
+options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
+options snd-trident index=0</p>
+
+<p>以上表的第一行为例，鸟哥使用螃蟹卡 (Realtek 的芯片组) 来作为我的网络卡，那螃蟹卡使用的模块就是 8139too 啦！这样看的懂了吧？当我要启动网络卡时，系统会跑到这个文件来查阅一下，然后加载 8139too 驱动程序来驱动网络卡罗！更多的相关说明，请 man modprobe.conf 喔！这个文件大多在指定系统内的硬件所使用的模块啦！这个文件通常系统是可以自行产生的，所以你不必手动去订正他！ 不过，如果系统捉到错误的驱动程序，或者是你想要使用升级的驱动程序来对应相关的硬件配备时， 你就得要自行手动的处理一下这个文件了。
+ /etc/sysconfig/*</p>
+
+<p>不说您也知道，整个启动的过程当中，老是读取的一些服务的相关配置档都是记录在 /etc/sysconfig 目录下的！那么该目录底下有些啥玩意儿？我们找几个重要的文件来谈谈：</p>
+
+<pre><code>authconfig：
+这个文件主要在规范使用者的身份认证的机 制，包括是否使用本机的 /etc/passwd, /etc/shadow 等， 以及 /etc/shadow 口令记录使用何种加密演算法，还有是否使用外部口令服务器提供的帐号验证 (NIS, LDAP) 等。 系统默认使用 MD5 加密演算法，并且不使用外部的身份验证机制；
+clock：
+此文件在配置 Linux 主机的时区，可以使用格林威治时间(GMT)，也可以使用台湾的本地时间 (local)。基本上，在 clock 文件内的配置项目『 ZONE 』所参考的时区位於 /usr/share/zoneinfo 目录下的相对路径中。而且要修改时区的话，还得将 /usr/share/zoneinfo/Asia/Taipei 这个文件复制成为 /etc/localtime 才行！
+i18n：
+i18n 在配置一些语系的使用方面，例如最麻烦的文字介面下的日期显示问题！ 如果你是以中文安装的，那么默认语系会被选择 zh_TW.UTF8 ，所以在纯文字介面之下， 你的文件日期显示可能就会呈现乱码！这个时候就需要更改一下这里啦！更动这个 i18n 的文件，将里面的 LC_TIME 改成 en 即可！
+keyboard &amp; mouse：
+keyboard 与 mouse 就是在配置键盘与鼠标的形式；
+network：
+network 可以配置是否要启动网络，以及配置主机名称还有通讯闸 (GATEWAY) 这两个重要资讯呢！
+network-scripts/：
+至於 network-scripts 里面的文件，则是主要用在配置网络卡～
+</code></pre>
+
+<p>总而言之一句话，这个目录下的文件很重要的啦！启动过程里面常常会读取到的！</p>
+
+<p>Run level 的切换</p>
+
+<p>在我们完成上面的所有资讯后，其实整个 Linux 主机就已经在等待我们使用者的登陆啦！ 但是，相信您应该还是会有一点疑问的地方，那就是：『我该如何切换 run level 呢？』会不会很难啊？不会啦！很简单～但是依据运行的时间而有不同的方式啊！</p>
+
+<p>事实上，与 run level 有关的启动其实是在 /etc/rc.d/rc.sysinit 运行完毕之后。也就是说，其实 run level 的不同仅是 /etc/rc[0-6].d 里面启动的服务不同而已。不过，依据启动是否自动进入不同 run level 的配置，我们可以说：</p>
+
+<pre><code>要每次启动都运行某个默认的 run level ，则需要修改 /etc/inittab 内的配置项目， 亦即是『 id:5:initdefault: 』里头的数字啊；
+如果仅只是暂时变更系统的 run level 时，则使用 init [0-6] 来进行 run level 的变更。 但下次重新启动时，依旧会是以 /etc/inittab 的配置为准。
+</code></pre>
+
+<p>假设原本我们是以 run level 5 登陆系统的，但是因为某些因素，想要切换成为 run level 3 时， 该怎么办呢？很简单啊，运行『 init 3 』即可切换。但是 init 3 这个动作到底做了什么呢？ 我们不是说了吗？事实上，不同的 run level 只是加载的服务不同罢了， 亦即是 /etc/rc5.d/ 还有 /etc/rc3.d 内的 Sxxname 与 Kxxname 有差异而已。 所以说，当运行 init 3 时，系统会：</p>
+
+<pre><code>先比对 /etc/rc3.d/ 及 /etc/rc5.d 内的 K 与 S 开头的文件；
+在新的 runlevel 亦即是 /etc/rc3.d/ 内有多的 K 开头文件，则予以关闭；
+在新的 runlevel 亦即是 /etc/rc3.d/ 内有多的 S 开头文件，则予以启动；
+</code></pre>
+
+<p>也就是说，两个 run level 都存在的服务就不会被关闭啦！如此一来，就很容易切换 run level 了， 而且还不需要重新启动呢！真方便。那我怎么知道目前的 run level 是多少呢？ 直接在 bash 当中输入 runlevel 即可啊！
+复制代码</p>
+
+<p>[root@www ~]# runlevel
+N 5</p>
+
+<h1>左边代表前一个 runlevel ，右边代表目前的 runlevel。</h1>
+
+<h1>由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)</h1>
+
+<h1>将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)</h1>
+
+<p>[root@www ~]# init 3
+NIT: Sending processes the TERM signal
+Applying Intel CPU microcode update:        [  OK  ]
+Starting background readahead:              [  OK  ]
+Starting irqbalance:                        [  OK  ]
+Starting httpd:                             [  OK  ]
+Starting anacron:                           [  OK  ]</p>
+
+<h1>这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务</h1>
+
+<p>[root@www ~]# runlevel
+5 3</p>
+
+<h1>看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</h1>
+
+<p>复制代码</p>
+
+<p>那么你能不能利用 init 来进行关机与重新启动呢？可以的啦！利用『 init 0 』就能够关机， 而『 init 6 』就能够重新启动！为什么？往前翻一下 runlevel 的定义即可了解吧！</p>
+
+<p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php#startup_init">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php#startup_init</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">mdkvimer</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:40:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/19/centosqi-dong/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/19/centosqi-dong/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/19/shell/" title="Previous Post: shell">&laquo; shell</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/" title="Next Post: 运维的那些命令">运维的那些命令 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/">运维的那些命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/centosqi-dong/">Centos启动</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/shell/">Shell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/wang-yi-bi-shi/">网易笔试</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi/">企鹅实习生笔试</a>
+      </li>
+    
+  </ul>
+</section>
+<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=300&skin=10&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=2702542424&verifier=597ea069&dpc=1"></iframe>
+
+
+  
+</aside>
+
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - mdkvimer -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

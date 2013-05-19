@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T10:35:09+08:00</updated>
+  <updated>2013-05-19T10:43:38+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,878 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[运维的那些命令]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/"/>
+    <updated>2013-05-19T10:42:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/yun-wei-de-na-xie-ming-ling</id>
+    <content type="html"><![CDATA[<p>转自:<a href="http://deepin.iteye.com/blog/711813">http://deepin.iteye.com/blog/711813</a>
+1.删除0字节文件
+find -type f -size 0 -exec rm -rf {} \;</p>
+
+<p>2.查看进程
+按内存从大到小排列
+ps -e   -o “%C   : %p : %z : %a”|sort -k5 -nr</p>
+
+<p>3.按cpu利用率从大到小排列
+ps -e   -o “%C   : %p : %z : %a”|sort   -nr</p>
+
+<p>4.打印说cache里的URL
+grep -r -a   jpg /data/cache/* | strings | grep “<a href="http:%E2%80%9D">http:%E2%80%9D</a> | awk -F’<a href="http:%E2%80%99">http:%E2%80%99</a> ‘{print “<a href="http:%E2%80%9D$2;">http:%E2%80%9D$2;</a>}’</p>
+
+<p>5.查看http的并发请求数及其TCP连接状态：
+netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</p>
+
+<ol>
+<li>sed -i ‘/Root/s/no/yes/’ /etc/ssh/sshd_config   sed在这个文里Root的一行，匹配Root一行，将no替换成yes.
+7.1.如何杀掉mysql进程：
+ps aux |grep mysql |grep -v grep  |awk ‘{print $2}’ |xargs kill -9 (从中了解到awk的用途)</li>
+</ol>
+
+
+<p>killall -TERM mysqld</p>
+
+<p>kill -9 <code>cat /usr/local/apache2/logs/httpd.pid</code>   试试查杀进程PID</p>
+
+<p>8.显示运行3级别开启的服务:
+ls /etc/rc3.d/S* |cut -c 15-   (从中了解到cut的用途，截取数据)</p>
+
+<p>9.如何在编写SHELL显示多个信息，用EOF
+cat &lt;&lt; EOF
++————————————————————–+
+|       === Welcome to Tunoff services ===                |
++————————————————————–+
+EOF</p>
+
+<ol>
+<li><p>for 的巧用(如给mysql建软链接)
+cd /usr/local/mysql/bin
+for i in *
+do ln /usr/local/mysql/bin/$i /usr/bin/$i
+done</p></li>
+<li><p>取IP地址：
+ifconfig eth0 |grep “inet addr:” |awk ‘{print $2}’|cut -c 6-   或者</p></li>
+</ol>
+
+
+<p>ifconfig   | grep ‘inet addr:’| grep -v ’127.0.0.1′ | cut -d: -f2 | awk ‘{ print $1}’</p>
+
+<p>12.内存的大小:
+free -m |grep “Mem” | awk ‘{print $2}’</p>
+
+<ol>
+<li><p>netstat -an -t | grep “:80″ | grep ESTABLISHED | awk ‘{printf “%s %s\n”,$5,$6}’ | sort</p></li>
+</ol>
+
+
+<p>14.查看Apache的并发请求数及其TCP连接状态：
+netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</p>
+
+<p>15.因为同事要统计一下服务器下面所有的jpg的文件的大小,写了个shell给他来统计.原来用xargs实现,但他一次处理一部分,搞的有多个总和….,下面的命令就能解决啦.
+find / -name *.jpg -exec wc -c {} \;|awk ‘{print $1}’|awk ‘{a+=$1}END{print a}’</p>
+
+<p>CPU的数量（多核算多个CPU，cat /proc/cpuinfo |grep -c processor）越多，系统负载越低，每秒能处理的请求数也越多。</p>
+
+<p>—————————————————————————————
+16   CPU负载   # cat /proc/loadavg
+检查前三个输出值是否超过了系统逻辑CPU的4倍。</p>
+
+<p>18   CPU负载   #mpstat 1 1
+检查%idle是否过低(比如小于5%)</p>
+
+<p>19   内存空间   # free
+检查free值是否过低   也可以用 # cat /proc/meminfo</p>
+
+<p>20   swap空间   # free
+检查swap used值是否过高   如果swap used值过高，进一步检查swap动作是否频繁：</p>
+
+<h1>vmstat 1 5</h1>
+
+<p>观察si和so值是否较大</p>
+
+<p>21   磁盘空间   # df -h
+检查是否有分区使用率(Use%)过高(比如超过90%)   如发现某个分区空间接近用尽，可以进入该分区的挂载点，用以下命令找出占用空间最多的文件或目录：</p>
+
+<h1>du -cks * | sort -rn | head -n 10</h1>
+
+<p>22   磁盘I/O负载   # iostat -x 1 2
+检查I/O使用率(%util)是否超过100%</p>
+
+<p>23   网络负载   # sar -n DEV
+检查网络流量(rxbyt/s, txbyt/s)是否过高</p>
+
+<p>24   网络错误   # netstat -i
+检查是否有网络错误(drop fifo colls carrier)   也可以用命令：# cat /proc/net/dev</p>
+
+<p>25 网络连接数目   # netstat -an | grep -E “<sup>tcp</sup>” | cut -c 68- | sort | uniq -c | sort -n</p>
+
+<p>26   进程总数   # ps aux | wc -l
+检查进程个数是否正常 (比如超过250)</p>
+
+<p>27   可运行进程数目   # vmwtat 1 5
+列给出的是可运行进程的数目，检查其是否超过系统逻辑CPU的4倍</p>
+
+<p>28   进程   # top -id 1
+观察是否有异常进程出现</p>
+
+<p>29   网络状态   检查DNS, 网关等是否可以正常连通</p>
+
+<p>30   用户   # who | wc -l
+检查登录用户是否过多 (比如超过50个)   也可以用命令：# uptime</p>
+
+<p>31   系统日志   # cat /var/log/rflogview/*errors
+检查是否有异常错误记录   也可以搜寻一些异常关键字，例如：</p>
+
+<h1>grep -i error /var/log/messages</h1>
+
+<h1>grep -i fail /var/log/messages</h1>
+
+<p>32   核心日志   # dmesg
+检查是否有异常错误记录</p>
+
+<p>33   系统时间   # date
+检查系统时间是否正确</p>
+
+<p>34   打开文件数目   # lsof | wc -l
+检查打开文件总数是否过多</p>
+
+<p>35   日志   # logwatch –print   配置/etc/log.d/logwatch.conf，将 Mailto 设置为自己的email 地址，启动mail服务 (sendmail或者postfix)，这样就可以每天收到日志报告了。
+缺省logwatch只报告昨天的日志，可以用# logwatch –print –range all 获得所有的日志分析结果。
+可以用# logwatch –print –detail high 获得更具体的日志分析结果(而不仅仅是出错日志)。</p>
+
+<p>36.杀掉80端口相关的进程
+lsof -i :80|grep -v “PID”|awk ‘{print “kill -9″,$2}’|sh</p>
+
+<p>37.清除僵死进程。
+ps -eal | awk ‘{ if ($2 == “Z”) {print $4}}’ | kill -9</p>
+
+<p>38.tcpdump 抓包 ，用来防止80端口被人攻击时可以分析数据</p>
+
+<h1>tcpdump -c 10000 -i eth0 -n dst port 80 > /root/pkts</h1>
+
+<p>39.然后检查IP的重复数 并从小到大排序 注意 “-t\ +0″   中间是两个空格</p>
+
+<h1>less pkts | awk {‘printf $3″\n”‘} | cut -d. -f 1-4 | sort | uniq -c | awk {‘printf $1″ “$2″\n”‘} | sort -n -t\ +0</h1>
+
+<p>40.查看有多少个活动的php-cgi进程
+netstat -anp | grep php-cgi | grep ^tcp | wc -l</p>
+
+<p>chkconfig –list | awk ‘{if ($5==”3:on”) print $1}’</p>
+
+<p>41.kudzu查看网卡型号
+kudzu –probe –class=network</p>
+
+<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]
+评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
+
+<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]
+评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
+
+<p>匹配空白行的正则表达式：\n\s*\r
+评注：可以用来删除空白行</p>
+
+<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^>]</em>>.<em>?&lt;/\1>|&lt;.</em>? />
+评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力</p>
+
+<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$
+评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
+
+<p>匹配Email地址的正则表达式：\w+([&ndash;+.]\w+)<em>@\w+([&ndash;.]\w+)</em>.\w+([&ndash;.]\w+)*
+评注：表单验证时很实用</p>
+
+<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*
+评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
+
+<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$
+评注：表单验证时很实用</p>
+
+<p>匹配国内电话号码：\d{3}&ndash;\d{8}|\d{4}&ndash;\d{7}
+评注：匹配形式如 0511-4405222 或 021-87888822</p>
+
+<p>匹配腾讯QQ号：[1-9][0-9]{4,}
+评注：腾讯QQ号从10000开始</p>
+
+<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)
+评注：中国邮政编码为6位数字</p>
+
+<p>匹配身份证：\d{15}|\d{18}
+评注：中国的身份证为15位或18位</p>
+
+<p>匹配ip地址：\d+.\d+.\d+.\d+</p>
+
+<p>评注：提取ip地址时有用</p>
+
+<p>匹配特定数字：
+^[1-9]\d<em>$　 　 //匹配正整数
+^&ndash;[1-9]\d</em>$ 　 //匹配负整数
+^&ndash;?[1-9]\d<em>$　　 //匹配整数
+^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）
+^&ndash;[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）
+^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数
+^&ndash;([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数
+^&ndash;?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数
+^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）
+^(&ndash;([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）
+评注：处理大量数据时有用，具体应用时注意修正</p>
+
+<p>匹配特定字符串：
+^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串
+^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串
+^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串
+^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串
+^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串
+评注：最基本也是最常用的一些表达式</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[centos启动]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/centosqi-dong/"/>
+    <updated>2013-05-19T10:40:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/centosqi-dong</id>
+    <content type="html"><![CDATA[<p>启动流程概览</p>
+
+<pre><code>在硬件驱动成功后，Kernel 会主动呼叫 init 程序，而 init 会取得 run-level 资讯；
+init 运行 /etc/rc.d/rc.sysinit 文件来准备软件运行的作业环境 (如网络、时区等)；
+init 运行 run-level 的各个服务之启动 (script 方式)；
+init 运行 /etc/rc.d/rc.local 文件；
+init 运行终端机模拟程序 mingetty 来启动 login 程序，最后就等待使用者登陆啦；
+</code></pre>
+
+<p> init,/etc/inittab,runlevel介绍</p>
+
+<p>在核心加载完毕、进行完硬件侦测与驱动程序加载后，此时你的主机硬件应该已经准备就绪了 (ready) ， 此时核心会主动的呼叫第一支程序，那就是 /sbin/init 罗。 init 的 PID 号码是一号啦。 /sbin/init 最主要的功能就是准备软件运行的环境，包括系统的主机名称、网络配置、语系处理、文件系统格式及其他服务的启动等。 而所有的动作都会透过 init 的配置档，亦即是 /etc/inittab 来规划，而 inittab 内还有一个很重要的配置项目，那就是默认的 runlevel (启动运行等级) 啦！
+Run level：运行等级有哪些？</p>
+
+<p>那么什么是 run level 呢？他有什么功用啊？其实很简单啦， Linux 就是藉由配置 run level 来规定系统使用不同的服务来启动，让 Linux 的使用环境不同。基本上，依据有无网络与有无 X Window 而将 run level 分为 7 个等级，分别是：</p>
+
+<pre><code>0 – halt (系统直接关机)
+1 – single user mode (单人维护模式，用在系统出问题时的维护)
+2 – Multi-user, without NFS (类似底下的 runlevel 3，但无 NFS 服务)
+3 – Full multi-user mode (完整含有网络功能的纯文字模式)
+4 – unused (系统保留功能)
+5 – X11 (与 runlevel 3 类似，但加载使用 X Window)
+6 – reboot (重新启动)
+</code></pre>
+
+<p>由於 run level 0, 4, 6 不是关机、重新启动就是系统保留的，所以：『 您当然不能将默认的 run level 配置为这三个值 』， 否则系统就会不断的自动关机或自动重新启动…. 好了，那么我们启动时，到底是如何取得系统的 run level 的？当然是 /etc/inittab 所配置的罗！ 那么 /etc/inittab 到底有什么资讯呢？我们先来看看这个文件的内容好了：
+/etc/inittab 的内容与语法
+复制代码</p>
+
+<p>[root@www ~]# vim /etc/inittab
+id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5</p>
+
+<p>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档</p>
+
+<p>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
+l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
+l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
+l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
+l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
+l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
+l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/</p>
+
+<p>ca::ctrlaltdel:/sbin/shutdown -t3 -r now</p>
+
+<p>pf::powerfail:/sbin/shutdown -f -h +2 &ldquo;Power Failure; System Shutting Down&rdquo;
+pr:12345:powerokwait:/sbin/shutdown -c &ldquo;Power Restored; Shutdown Cancelled&rdquo;</p>
+
+<p>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6</p>
+
+<p>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</p>
+
+<p>复制代码</p>
+
+<p>让我们解析一下这个文件吧！首先，这个文件的语法是利用冒号 (:) 将配置分隔成为四个栏位，每个栏位的意义与说明如下：</p>
+
+<pre><code>配置项目：最多四个字节，代表 init 的主要工作项目，只是一个简单的代表说明。
+run level：该项目在哪些 run level 底下进行的意思。如果是 35 则代表 runlevel 3 与 5 都会运行。
+init 的动作项目：主要可以进行的动作项目意义有：
+inittab 配置值   意义说明
+initdefault     代表默认的 run level 配置值
+sysinit     代表系统初始化的动作项目
+ctrlaltdel  代表 [ctrl]+[alt]+[del] 三个按键是否可以重新启动的配置
+wait    代表后面栏位配置的命令项目必须要运行完毕才能继续底下其他的动作
+respawn     代表后面栏位的命令可以无限制的再生 (重新启动)。举例来说， tty1 的 mingetty 产生的可登陆画面， 在你注销而结束后，系统会再开一个新的可登陆画面等待下一个登陆。
+
+更多的配置项目请参考 man inittab 的说明。
+命令项目：亦即应该可以进行的命令，通常是一些 script 罗。
+</code></pre>
+
+<p>init 的处理流程</p>
+
+<p>事实上 /etc/inittab 的配置也有点类似 shell script 啦，因为该文件内容的配置也是一行一行的从上往下处理的， 因此我们可以知道 CentOS 的 init 依据 inittab 配置的处理流程会是：</p>
+
+<pre><code>先取得 runlevel 亦即默认运行等级的相关等级 (以鸟哥的测试机为例，为 5 号)；
+使用 /etc/rc.d/rc.sysinit 进行系统初始化
+由於 runlevel 是 5 ，因此只进行『l5:5:wait:/etc/rc.d/rc 5』，其他行则略过
+配置好 [ctrl]+[alt]+[del] 这组的组合键功能
+配置不断电系统的 pf, pr 两种机制；
+启动 mingetty 的六个终端机 (tty1 ~ tty6)
+最终以 /etc/X11/perfdm -nodaemon 启动图形介面啦！
+</code></pre>
+
+<p>现在你可以知道为啥 [ctrl]+[alt]+[del] 可以重新启动而我们默认提供 6 个虚拟终端机 (tty1~tty6) 给你使用了吧！由於整个配置都是依据 /etc/inittab 来决定的，因此如果你想要修改任何细节的话， 可以这样做喔：</p>
+
+<pre><code>如果不想让使用者利用 [crtl]+[alt]+[del] 来重新启动系统，可以将『 ca::ctrlaltdel:/sbin/shutdown -t3 -r now 』加上注解 (#) 来取消该配置
+规定启动的默认 run level 是纯文字的 3 号或者是具有图形介面的 5 号 ，可经由 『 id:5:initdefault: 』那个数字来决定！ 以鸟哥自己这个文件为例，我是使用默认的图形介面。如果你想要关闭图形介面的话，将该行 5 改成 3 即可。
+如果不想要启动六个终端机 (tty1~tty6)，那么可以将『 6:2345:respawn:/sbin/mingetty tty6』关闭数个。但务必至少启动一个喔！
+</code></pre>
+
+<p>所以说，你现在会自行修改登陆时的默认 run level 配置值了吗？够简单的吧？ 一般来说，我们默认都是 3 或者是 5 来作为默认的 run level 的。但有时后可能需要进入 run level 1， 也就是单人维护模式的环境当中。这个 run level 1 有点像是 Windows 系统当中的『安全模式』啦， 专门用来处理当系统有问题时的操作环境。此外，当系统发现有问题时，举例来说，不正常关机造成 filesystem 的不一致现象时，系统会主动的进入单人维护模式呢！</p>
+
+<p>好了， init 在取得 run level 之后，接下来要干嘛？ 上面 /etc/inittab 文件内容不是有提到 sysinit 吗？准备初始化系统了吧！</p>
+
+<p>init 处理系统初始化流程 (/etc/rc.d/rc.sysinit)</p>
+
+<p>还记得上面提到 /etc/inittab 里头有这一句『 si::sysinit:/etc/rc.d/rc.sysinit 』吧？ 这表示：『我开始加载各项系统服务之前，得先做好整个系统环境，我主要利用 /etc/rc.d/rc.sysinit 这个 shell script 来配置好我的系统环境的。』够清楚了吧？ 所以，我想要知道到底 CentOS 启动的过程当中帮我进行了什么动作，就得要仔细的分析 /etc/rc.d/rc.sysinit 罗。</p>
+
+<p>如果你使用 vim 去查阅过 /etc/rc.d/rc.sysinit 的话，那么可以发现他主要的工作大抵有这几项：</p>
+
+<pre><code>取得网络环境与主机类型：
+读取网络配置档 /etc/sysconfig/network ，取得主机名称与默认通讯闸 (gateway) 等网络环境。
+测试与挂载内存装置 /proc 及 U盘 装置 /sys：
+除挂载内存装置 /proc 之外，还会主动侦测系统上是否具有 usb 的装置， 若有则会主动加载 usb 的驱动程序，并且尝试挂载 usb 的文件系统。
+决定是否启动 SELinux ：
+SELinux 在此时进行一些检测， 并且检测是否需要帮所有的文件重新编写标准的 SELinux 类型 (auto relabel)。
+启动系统的乱数产生器
+乱数产生器可以帮助系统进行一些口令加密演算的功能，在此需要启动两次乱数产生器。
+配置终端机 (console) 字形：
+配置显示於启动过程中的欢迎画面 (text banner)；
+配置系统时间 (clock) 与时区配置：需读入 /etc/sysconfig/clock 配置值
+周边设备的侦测与 Plug and Play (PnP) 参数的测试：
+根据核心在启动时侦测的结果 (/proc/sys/kernel/modprobe ) 开始进行 ide / scsi / 网络 / 音效 等周边设备的侦测，以及利用以加载的核心模块进行 PnP 装置的参数测试。
+使用者自订模块的加载
+使用者可以在 /etc/sysconfig/modules/*.modules 加入自订的模块，则此时会被加载到系统当中
+加载核心的相关配置：
+系统会主动去读取 /etc/sysctl.conf 这个文件的配置值，使核心功能成为我们想要的样子。
+配置主机名称与初始化电源管理模块 (ACPI)
+初始化软件磁盘阵列：主要是透过 /etc/mdadm.conf 来配置好的。
+初始化 LVM 的文件系统功能
+以 fsck 检验磁碟文件系统：会进行 filesystem check
+进行磁碟配额 quota 的转换 (非必要)：
+重新以可读写模式挂载系统磁碟：
+启动 quota 功能：所以我们不需要自订 quotaon 的动作
+启动系统虚拟乱数产生器 (pseudo-random)：
+清除启动过程当中的缓存文件：
+将启动相关资讯加载 /var/log/dmesg 文件中。
+</code></pre>
+
+<p>在 /etc/rc.d/rc.sysinit 将基本的系统配置数据都写好了，也将系统的数据配置完整！ 而如果你想要知道到底启动的过程中发生了什么事情呢？那么就运行『 dmesg 』吧。 另外，基本上，在这个文件当中所进行的很多工作的默认配置档，其实都在 /etc/sysconfig/ 当中呢！ 所以，请记得将 /etc/sysconfig/ 内的文件好好的瞧一瞧喔！ ^_^</p>
+
+<p>在这个过程当中，比较值得注意的是自订模块的加载！在 CentOS 当中，如果我们想要加载核心模块的话， 可以将整个模块写入到 /etc/sysconfig/modules/*.modules 当中，在该目录下， 只要记得档名最后是以 .modules 结尾即可。 这个过程是非必要的，因为我们目前的默认模块实在已经很够用了，除非是您的主机硬件实在太新了， 非要自己加载新的模块不可，否则，在经过 /etc/rc.d/rc.sysinit 的处理后， 你的主机系统应该是已经跑得很顺畅了啦！就等著你将系统相关的服务与网络服务启动罗！</p>
+
+<p>启动系统服务与相关启动配置档 (/etc/rc.d/rc N &amp; /etc/sysconfig)</p>
+
+<p>加载核心让整个系统准备接受命令来工作，再经过 /etc/rc.d/rc.sysinit 的系统模块与相关硬件资讯的初始化后，你的 CentOS 系统应该已经顺利工作了。 只是，我们还得要启动系统所需要的各项『服务』啊！这样主机才能提供我们相关的网络或者是主机功能嘛！ 这个时候，依据我们在 /etc/inittab 里面提到的 run level 配置值，就可以来决定启动的服务项目了。 举例来说，使用 run level 3 当然就不需要启动 X Window 的相关服务罗，您说是吧？</p>
+
+<p>那么各个不同的 run level 服务启动的各个 shell script 放在哪？还记得 /etc/inittab 里面提到的：
+复制代码</p>
+
+<p>l0:0:wait:/etc/rc.d/rc 0
+l1:1:wait:/etc/rc.d/rc 1
+l2:2:wait:/etc/rc.d/rc 2
+l3:3:wait:/etc/rc.d/rc 3
+l4:4:wait:/etc/rc.d/rc 4
+l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
+l6:6:wait:/etc/rc.d/rc 6</p>
+
+<p>复制代码</p>
+
+<p>上面提到的就是各个 run level 要运行的各项脚本放置处啦！主要是透过 /etc/rc.d/rc 这个命令来处理相关任务！ 由於鸟哥使用默认的 runlevel 5 ，因此我们主要针对上述特殊字体那行来解释好了： /etc/rc.d/rc 5 的意义是这样的 (建议您自行使用 vim 去观察一下 /etc/rc.d/rc 这个文件，你会更有概念！)：</p>
+
+<pre><code>透过外部第一号参数 ($1) 来取得想要运行的脚本目录。亦即由 /etc/rc.d/rc 5 可以取得 /etc/rc5.d/ 这个目录来准备处理相关的脚本程序；
+找到 /etc/rc5.d/K??* 开头的文件，并进行『 /etc/rc5.d/K??* stop 』的动作；
+找到 /etc/rc5.d/S??* 开头的文件，并进行『 /etc/rc5.d/S??* start 』的动作；
+</code></pre>
+
+<p>透过上面的说明我们可以知道所有的项目都与 /etc/rc5.d/ 有关，那么我们就来瞧瞧这个目录下有些什么玩意儿吧！
+复制代码</p>
+
+<p>[root@www ~]# ll /etc/rc5.d/
+lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd &ndash;> ../init.d/dhcdbd
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi &ndash;> ../init.d/capi
+lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl &ndash;> ../init.d/microcode_ctl
+lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor &ndash;> ../init.d/lvm2-monitor
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network &ndash;> ../init.d/network
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local &ndash;> ../rc.local
+lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
+&hellip;.(底下省略)&hellip;.</p>
+
+<p>复制代码</p>
+
+<p>在这个目录下的文件很有趣，主要具有几个特点：</p>
+
+<pre><code>档名全部以 Sxx 或 Kxx ，其中 xx 为数字，且这些数字在文件之间是有相关性的！
+全部是连结档，连结到 stand alone 服务启动的目录 /etc/init.d/ 去
+</code></pre>
+
+<p>服务的启动主要是以『/etc/init.d/服务档名 {start,stop}』 来启动与关闭的，那么透过刚刚 /etc/rc.d/rc 程序的解说，我们可以清楚的了解到了 /etc/rc5.d/[SK]xx 其实就是跑到 /etc/init.d/ 去找到相对应的服务脚本， 然后分别进行 start (Sxx) 或 stop (Kxx) 的动作而已啦！举例来说，以上述的表格内的 K91capi 及 S10network 为例好了， 透过 /etc/rc.d/rc 5 的运行，这两个文件会这样进行：</p>
+
+<pre><code>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
+/etc/rc5.d/S10network start –&gt; /etc/init.d/network start
+</code></pre>
+
+<p>所以说，你有想要启动该 runlevel 时就运行的服务，那么利用 Sxx 并指向 /etc/init.d/ 的特定服务启动脚本后， 该服务就能够在启动时启动啦！就这么简单！问题是，你需要自行处理这个 K, S 开头的连结档吗？ 并不需要的，chkconfig 就是在负责处理这个连结档啦！这样有没有跟第十八章的观念串在一起了呢？ ^_^</p>
+
+<p>那么为什么 K 与 S 后面要有数字呢？因为各不同的服务其实还是互有关系的。举例来说，如果要启动 WWW 服务，总是得要有网络吧？所以 /etc/init.d/network 就会比较先被启动啦！那么您就会知道在 S 或者是 K 后面接的数字是啥意思了吧？嘿嘿，那就是运行的顺序啦！那么哪个文件被最后运行呢？ 看到最后一个被运行的项目是啥？没错，就是 S99local ，亦即是：/etc/rc.d/rc.local 这个文件啦！</p>
+
+<p>使用者自订启动启动程序 (/etc/rc.d/rc.local)</p>
+
+<p>在完成默认 runlevel 指定的各项服务的启动后，如果我还有其他的动作想要完成时，举例来说， 我还想要寄一封 mail 给某个系统管理帐号，通知他，系统刚刚重新启动完毕，那么是否应该要制作一个 shell script 放置在 /etc/init.d/ 里面，然后再以连结方式连结到 /etc/rc5.d/ 里面呢？呵呵！当然不需要！还记得上一小节提到的 /etc/rc.d/rc.local 吧？ 这个文件就可以运行您自己想要运行的系统命令了。</p>
+
+<p>也就是说，我有任何想要在启动时就进行的工作时，直接将他写入 /etc/rc.d/rc.local ， 那么该工作就会在启动的时候自动被加载喔！而不必等我们登陆系统去启动呢！ 是否很方便啊！一般来说，鸟哥就很喜欢把自己制作的 shell script 完整档名写入 /etc/rc.d/rc.local ，如此一来，启动就会将我的 shell script 运行过，真是好棒那！</p>
+
+<p>根据 /etc/inittab 之配置，加载终端机或 X-Window 介面</p>
+
+<p>在完成了系统所有服务的启动后，接下来 Linux 就会启动终端机或者是 X Window 来等待使用者登陆啦！ 实际参考的项目是 /etc/inittab 内的这一段：
+复制代码</p>
+
+<p>1:2345:respawn:/sbin/mingetty tty1
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6
+x:5:respawn:/etc/X11/prefdm -nodaemon</p>
+
+<p>复制代码</p>
+
+<p>这一段代表，在 run level 2, 3, 4, 5 时，都会运行 /sbin/mingetty 这个咚咚， 而且运行六个，这也是为何我们 Linux 会提供『六个纯文字终端机』的配置所在啊！ 因为 mingetty 就是在启动终端机的命令说。</p>
+
+<p>要注意的是那个 respawn 的 init 动作项目，他代表『当后面的命令被终止 (terminal) 时， init 会主动的重新启动该项目。』这也是为何我们登陆 tty1 终端机介面后，以 exit 离开后， 系统还是会重新显示等待使用者输入的画面的原因啊！</p>
+
+<p>如果改天您不想要有六个终端机时，可以取消某些终端机介面吗？当然可以啊！ 就将上面表格当中的某些项目注解掉即可！例如不想要 tty5 与 tty6 ，就将那两行注解， 则下次重新启动后，您的 Linux 就只剩下『 F1 ~ F4 』有效而已，这样说，可以了解吧！！^_^</p>
+
+<p>至於如果我们使用的是 run level 5 呢？那么除了这六个终端机之外， init 还会运行 /etc/X11/prefdm -nodaemon 那个命令喔！ 他主要的功能就是在启动 X Window 啦！</p>
+
+<p>启动过程会用到的主要配置档</p>
+
+<p>我们在 /sbin/init 的运行过程中有谈到许多运行脚本，包括 /etc/rc.d/rc.sysinit 以及 /etc/rc.d/rc 等等， 其实这些脚本都会使用到相当多的系统配置档，这些启动过程会用到的配置档则大多放置在 /etc/sysconfig/ 目录下。 同时，由於核心还是需要加载一些驱动程序 (核心模块)，此时系统自订的装置与模块对应档 (/etc/modprobe.conf) 就显的挺重要了喔！
+关於模块： /etc/modprobe.conf</p>
+
+<p>/etc/rc.d/rc.sysinit 当中的加载使用者自订模块的地方吗？就是在 /etc/sysconfig/modules/ 目录下啊！ 虽然核心提供的默认模块已经很足够我们使用了，但是，某些条件下我们还是得对模块进行一些参数的规划， 此时就得要使用到 /etc/modprobe.conf 罗！举例来说，鸟哥的 CentOS 主机的 modprobe.conf 有点像这样：</p>
+
+<p>[root@www ~]# cat /etc/modprobe.conf
+alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
+alias scsi_hostadapter pata_sis
+alias snd-card-0 snd-trident
+options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
+options snd-trident index=0</p>
+
+<p>以上表的第一行为例，鸟哥使用螃蟹卡 (Realtek 的芯片组) 来作为我的网络卡，那螃蟹卡使用的模块就是 8139too 啦！这样看的懂了吧？当我要启动网络卡时，系统会跑到这个文件来查阅一下，然后加载 8139too 驱动程序来驱动网络卡罗！更多的相关说明，请 man modprobe.conf 喔！这个文件大多在指定系统内的硬件所使用的模块啦！这个文件通常系统是可以自行产生的，所以你不必手动去订正他！ 不过，如果系统捉到错误的驱动程序，或者是你想要使用升级的驱动程序来对应相关的硬件配备时， 你就得要自行手动的处理一下这个文件了。
+ /etc/sysconfig/*</p>
+
+<p>不说您也知道，整个启动的过程当中，老是读取的一些服务的相关配置档都是记录在 /etc/sysconfig 目录下的！那么该目录底下有些啥玩意儿？我们找几个重要的文件来谈谈：</p>
+
+<pre><code>authconfig：
+这个文件主要在规范使用者的身份认证的机 制，包括是否使用本机的 /etc/passwd, /etc/shadow 等， 以及 /etc/shadow 口令记录使用何种加密演算法，还有是否使用外部口令服务器提供的帐号验证 (NIS, LDAP) 等。 系统默认使用 MD5 加密演算法，并且不使用外部的身份验证机制；
+clock：
+此文件在配置 Linux 主机的时区，可以使用格林威治时间(GMT)，也可以使用台湾的本地时间 (local)。基本上，在 clock 文件内的配置项目『 ZONE 』所参考的时区位於 /usr/share/zoneinfo 目录下的相对路径中。而且要修改时区的话，还得将 /usr/share/zoneinfo/Asia/Taipei 这个文件复制成为 /etc/localtime 才行！
+i18n：
+i18n 在配置一些语系的使用方面，例如最麻烦的文字介面下的日期显示问题！ 如果你是以中文安装的，那么默认语系会被选择 zh_TW.UTF8 ，所以在纯文字介面之下， 你的文件日期显示可能就会呈现乱码！这个时候就需要更改一下这里啦！更动这个 i18n 的文件，将里面的 LC_TIME 改成 en 即可！
+keyboard &amp; mouse：
+keyboard 与 mouse 就是在配置键盘与鼠标的形式；
+network：
+network 可以配置是否要启动网络，以及配置主机名称还有通讯闸 (GATEWAY) 这两个重要资讯呢！
+network-scripts/：
+至於 network-scripts 里面的文件，则是主要用在配置网络卡～
+</code></pre>
+
+<p>总而言之一句话，这个目录下的文件很重要的啦！启动过程里面常常会读取到的！</p>
+
+<p>Run level 的切换</p>
+
+<p>在我们完成上面的所有资讯后，其实整个 Linux 主机就已经在等待我们使用者的登陆啦！ 但是，相信您应该还是会有一点疑问的地方，那就是：『我该如何切换 run level 呢？』会不会很难啊？不会啦！很简单～但是依据运行的时间而有不同的方式啊！</p>
+
+<p>事实上，与 run level 有关的启动其实是在 /etc/rc.d/rc.sysinit 运行完毕之后。也就是说，其实 run level 的不同仅是 /etc/rc[0-6].d 里面启动的服务不同而已。不过，依据启动是否自动进入不同 run level 的配置，我们可以说：</p>
+
+<pre><code>要每次启动都运行某个默认的 run level ，则需要修改 /etc/inittab 内的配置项目， 亦即是『 id:5:initdefault: 』里头的数字啊；
+如果仅只是暂时变更系统的 run level 时，则使用 init [0-6] 来进行 run level 的变更。 但下次重新启动时，依旧会是以 /etc/inittab 的配置为准。
+</code></pre>
+
+<p>假设原本我们是以 run level 5 登陆系统的，但是因为某些因素，想要切换成为 run level 3 时， 该怎么办呢？很简单啊，运行『 init 3 』即可切换。但是 init 3 这个动作到底做了什么呢？ 我们不是说了吗？事实上，不同的 run level 只是加载的服务不同罢了， 亦即是 /etc/rc5.d/ 还有 /etc/rc3.d 内的 Sxxname 与 Kxxname 有差异而已。 所以说，当运行 init 3 时，系统会：</p>
+
+<pre><code>先比对 /etc/rc3.d/ 及 /etc/rc5.d 内的 K 与 S 开头的文件；
+在新的 runlevel 亦即是 /etc/rc3.d/ 内有多的 K 开头文件，则予以关闭；
+在新的 runlevel 亦即是 /etc/rc3.d/ 内有多的 S 开头文件，则予以启动；
+</code></pre>
+
+<p>也就是说，两个 run level 都存在的服务就不会被关闭啦！如此一来，就很容易切换 run level 了， 而且还不需要重新启动呢！真方便。那我怎么知道目前的 run level 是多少呢？ 直接在 bash 当中输入 runlevel 即可啊！
+复制代码</p>
+
+<p>[root@www ~]# runlevel
+N 5</p>
+
+<h1>左边代表前一个 runlevel ，右边代表目前的 runlevel。</h1>
+
+<h1>由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)</h1>
+
+<h1>将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)</h1>
+
+<p>[root@www ~]# init 3
+NIT: Sending processes the TERM signal
+Applying Intel CPU microcode update:        [  OK  ]
+Starting background readahead:              [  OK  ]
+Starting irqbalance:                        [  OK  ]
+Starting httpd:                             [  OK  ]
+Starting anacron:                           [  OK  ]</p>
+
+<h1>这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务</h1>
+
+<p>[root@www ~]# runlevel
+5 3</p>
+
+<h1>看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</h1>
+
+<p>复制代码</p>
+
+<p>那么你能不能利用 init 来进行关机与重新启动呢？可以的啦！利用『 init 0 』就能够关机， 而『 init 6 』就能够重新启动！为什么？往前翻一下 runlevel 的定义即可了解吧！</p>
+
+<p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php#startup_init">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php#startup_init</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[shell]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/shell/"/>
+    <updated>2013-05-19T10:38:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/shell</id>
+    <content type="html"><![CDATA[<p>很多人误以为shell脚本只能在命令行下使用。其实shell也可以调用一些GUI组件， 例如菜单，警告框，进度条等等。你可以控制最终的输出，光标位置还有各种输出效果。下面我将介绍一些工具，帮助你创建强大的，互动的，用户友好的 Unix/Linux shell脚本。我在FreeBSD和Linux下测试过这些工具，不过其他UNIX系列的操作系统应该都支持的。</p>
+
+<ol>
+<li>notify-send 命令</li>
+</ol>
+
+
+<p>这个命令可以让你通过通知进程发送一个桌面通知给用户。这可以用来向用户发送提示，或者显示一些信息而不用打断用户工作。你需要安装如下软件包：
+PHP代码</p>
+
+<pre><code>$ sudo apt-get install libnotify-bin
+</code></pre>
+
+<p>下面这个例子展示了如何从命令行向桌面发送一个简单的消息：
+PHP代码</p>
+
+<pre><code>notify-send “rsnapshot done \”static/image/smiley/default/smile.gif\”" smilieid=”\”1\”" alt=”\”\”" border=”\”0\”"&gt;”
+</code></pre>
+
+<p>输出：</p>
+
+<p>下面是一个复杂一点的例子：
+PHP代码</p>
+
+<pre><code>….
+alert=18000
+live=$(lynx –dump http://money.rediff.com/ | grep ‘BSE LIVE’ | awk ‘{ print $5}’ | sed ‘s/,//g;s/\.[0-9]*//g’)
+[ $notify_counter -eq 0 ] &amp;&amp; [ $live -ge $alert ] &amp;&amp; { notify-send -t 5000 -u low -i  ”BSE Sensex touched 18k”;  notify_counter=1; }
+…
+</code></pre>
+
+<p>输出：</p>
+
+<p>这里的参数解释如下：</p>
+
+<pre><code>-t 5000：指定超时的时间，毫秒
+-u low：设置是否紧急
+-i gtk-dialog-info：通知图标，你可以指定图标 -i /path/to/your-icon.png
+</code></pre>
+
+<ol>
+<li>tput 命令</li>
+</ol>
+
+
+<p>这个命令是用来设置终端特性的：</p>
+
+<pre><code>  移动光标
+  获得终端信息
+  设置前景和背景色
+  设置粗体模式
+  设置反模式等等
+</code></pre>
+
+<p>举例：
+PHP代码</p>
+
+<pre><code>#!/bin/bash
+# clear the screen
+tput clear
+# Move cursor to screen location X,Y (top left is 0,0)
+tput cup 3 15
+# Set a foreground colour using ANSI escape
+tput setaf 3
+echo “XYX Corp LTD.”
+tput sgr0
+tput cup 5 17
+# Set reverse video mode
+tput rev
+echo “M A I N – M E N U”
+tput sgr0
+tput cup 7 15
+echo “1. User Management”
+tput cup 8 15
+echo “2. Service Management”
+tput cup 9 15
+echo “3. Process Management”
+tput cup 10 15
+echo “4. Backup”
+# Set bold mode
+tput bold
+tput cup 12 15
+read -p “Enter your choice [1-4] ” choice
+tput clear
+tput sgr0
+tput rc
+</code></pre>
+
+<p>输出：</p>
+
+<ol>
+<li>setleds 命令</li>
+</ol>
+
+
+<p>这个命令可以让你控制键盘灯，例如打开数字键盘灯：</p>
+
+<p>PHP代码</p>
+
+<pre><code>setleds -D +num
+</code></pre>
+
+<p>关闭数字键盘灯：</p>
+
+<p>PHP代码</p>
+
+<pre><code>setleds -D -num
+
+  -caps: 清除大写灯
+  +caps：打开大写灯
+  -scroll：清除滚动锁
+  +scroll：打开滚动锁
+</code></pre>
+
+<ol>
+<li>zenity 命令</li>
+</ol>
+
+
+<p>这个命令可以显示GTK+的对话框，然后返回用户的输入。你可以用这个命令在脚本中显示信息，并要求用户输入信息。下面这段代码就是域名的whois查询：
+PHP代码</p>
+
+<pre><code>#!/bin/bash
+# Get domain name
+_zenity=”/usr/bin/zenity”
+_out=”/tmp/whois.output.[    DISCUZ_CODE_4    ]quot;
+domain=$(${_zenity} –title  ”Enter domain” \
+      –entry –text “Enter the domain you would like to see whois info” )
+if [ $? -eq 0 ]
+then
+  # Display a progress dialog while searching whois database
+  whois $domain  | tee &gt;(${_zenity} –width=200 –height=100 \
+        –title=”whois” –progress \
+        –pulsate –text=”Searching domain info…” \
+            –auto-kill –auto-close \
+            –percentage=10) &gt;${_out}
+  # Display back output
+  ${_zenity} –width=800 –height=600  \
+    –title “Whois info for $domain” \
+    –text-info –filename=”${_out}”
+else
+  ${_zenity} –error \
+    –text=”No input provided”
+fi
+</code></pre>
+
+<p>输出：</p>
+
+<ol>
+<li>kdialog 命令</li>
+</ol>
+
+
+<p>这个命令和zenity很想，只不过它是为KDE/QT应用准备的。使用方法如下：
+PHP代码</p>
+
+<pre><code>kdialog –dontagain myscript:nofilemsg –msgbox “File: ‘~/.backup/config’ not found.”
+</code></pre>
+
+<p>输出</p>
+
+<ol>
+<li>Dialog</li>
+</ol>
+
+
+<p>这个命令可以在shell脚本中显示文本组件。它使用了curses和ncurses类库。示例代码：
+PHP代码</p>
+
+<pre><code>&gt;#!/bin/bash
+dialog –title “Delete file” \
+–backtitle “Linux Shell Script Tutorial Example” \
+–yesno “Are you sure you want to permanently delete \”/tmp/foo.txt\”?” 7 60
+# Get exit status
+# 0 means user hit [yes] button.
+# 1 means user hit [no] button.
+# 255 means user hit [Esc] key.
+response=$?
+case $response in
+  0) echo “File deleted.”;;
+  1) echo “File not deleted.”;;
+  255) echo “[ESC] key pressed.”;;
+esac
+</code></pre>
+
+<ol>
+<li>logger 命令</li>
+</ol>
+
+
+<p>这个命令可以让你写入系统日志例如 /var/log/messages：
+PHP代码</p>
+
+<pre><code>logger “MySQL database backup failed.”
+tail -f /var/log/messages
+logger -t mysqld -p daemon.error “Database Server failed”
+tail -f /var/log/syslog
+</code></pre>
+
+<p>输出：
+Apr 20 00:11:45 vivek-desktop kernel: [38600.515354] CPU0: Temperature/speed normal</p>
+
+<p>Apr 20 00:12:20 vivek-desktop mysqld: Database Server failed</p>
+
+<ol>
+<li>setterm 命令</li>
+</ol>
+
+
+<p>这个命令可以设置中断的属性。下面的例子是强制屏幕全黑15分钟，并且60分钟后把显示器设为待机状态：
+PHP代码</p>
+
+<pre><code>setterm -blank 15 -powersave powerdown -powerdown 60
+</code></pre>
+
+<p>下面这段命令可以在中断显示加下划线的文字：
+PHP代码</p>
+
+<pre><code>setterm -underline on;
+echo “Add Your Important Message Here”
+setterm -underline off
+</code></pre>
+
+<p>或者你可以关闭光标：
+PHP代码</p>
+
+<pre><code>setterm -cursor off
+</code></pre>
+
+<ol>
+<li>smbclient：向 MS-Windows 系统发送消息</li>
+</ol>
+
+
+<p>smbclient可以和 SMB/CIFS服务器通信。它可以向MS-Windows系统的指定用户发送消息：
+PHP代码</p>
+
+<pre><code>smbclient -M WinXPPro &lt;&lt;EOF
+Message 1
+Message 2
+…
+..
+EOF
+</code></pre>
+
+<p>或者
+PHP代码</p>
+
+<pre><code>echo “${Message}” | smbclient -M salesguy2
+</code></pre>
+
+<ol>
+<li>Bash Socket 编程</li>
+</ol>
+
+
+<p>你可以在bash中开启一个socket链接，并且传输数据。Bash有两个特殊的设备文件：</p>
+
+<pre><code>  /dev/tcp/host/port – 如果hostname，和port是合法的话，bash会尝试开启一个TCP连接。
+  /dev/udp/host/port – 如果hostname和port是合法的话，bash会开启一个UDP连接。
+</code></pre>
+
+<p>你可以利用这个技术来测试一台主机的端口是否是开启的，而不需要使用nmap或者port扫描器：
+PHP代码</p>
+
+<pre><code># find out if TCP port 25 open or not
+(echo &gt;/dev/tcp/localhost/25) &amp;&gt;/dev/null &amp;&amp; echo “TCP port 25 open” || echo “TCP port 25 close”
+</code></pre>
+
+<p>你可以 使用循环来查找开着的端口：
+PHP代码</p>
+
+<pre><code>echo “Scanning TCP ports…”
+for p in {1..1023}
+do
+  (echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo “$p open”
+done
+</code></pre>
+
+<p>输出：
+Scanning TCP ports…</p>
+
+<p>22 open</p>
+
+<p>53 open</p>
+
+<p>80 open</p>
+
+<p>139 open</p>
+
+<p>445 open</p>
+
+<p>631 open</p>
+
+<p>下面的这个例子让你的脚本扮演HTTP客户端：
+PHP代码</p>
+
+<pre><code>#!/bin/bash
+exec 3&lt;&gt; /dev/tcp/${1:-www.cyberciti.biz}/80
+printf “GET / HTTP/1.0\r\n” &gt;&amp;3
+printf “Accept: text/html, text/plain\r\n” &gt;&amp;3
+printf “Accept-Language: en\r\n” &gt;&amp;3
+printf “User-Agent: nixCraft_BashScript v.%s\r\n” “${BASH_VERSION}”  &gt;&amp;3
+printf “\r\n” &gt;&amp;3
+while read LINE &lt;&amp;3
+do
+  # do something on $LINE
+  # or send $LINE to grep or awk for grabbing data
+  # or simply display back data with echo command
+  echo $LINE
+done
+</code></pre>
+
+<p>关于GUITools和Cronjob</p>
+
+<p>如果你使用cronjob来调用你的脚本的话，你要通过“ export DISPLAY=[user&rsquo;s machine]:0”命令来设置本地的 display/input 服务。例如调用 /home/vivek/scripts/monitor.stock.sh脚本，它使用了 zenity 工具：
+PHP代码</p>
+
+<pre><code>@hourly DISPLAY=:0.0 /home/vivek/scripts/monitor.stock.sh
+</code></pre>
+
+<p>所有的命令你都可以通过“man”来查询详细的使用方式。</p>
+
+<p>文章转载自：<a href="http://www.oschina.net/question/28_39527">http://www.oschina.net/question/28_39527</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[网易笔试]]></title>
@@ -196,7 +1068,7 @@ return 0;
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#109;&#101;&#110;&#x67;&#100;&#x61;&#105;&#x6b;&#x75;&#110;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">&#109;&#101;&#x6e;&#x67;&#100;&#97;&#105;&#107;&#117;&#110;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#x6d;&#101;&#110;&#103;&#x64;&#97;&#105;&#107;&#x75;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x6d;&#101;&#x6e;&#x67;&#100;&#x61;&#105;&#x6b;&#x75;&#x6e;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -495,7 +1367,7 @@ passwd: password updated successfully</p>
 <p>代码 2.7: 从另一台电脑连到你的新机器</p>
 
 <p>（使用你新机器的IP地址）
-$ ssh <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#x2e;&#x31;&#46;&#49;&#x30;">&#x72;&#x6f;&#111;&#116;&#64;&#49;&#x39;&#50;&#46;&#x31;&#x36;&#56;&#46;&#49;&#46;&#49;&#x30;</a>
+$ ssh <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#114;&#x6f;&#x6f;&#x74;&#x40;&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#46;&#49;&#x2e;&#x31;&#x30;">&#114;&#111;&#111;&#116;&#64;&#49;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#49;&#x2e;&#x31;&#x30;</a>
 The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -799,7 +1671,7 @@ $ nano -w ~/.ssh/known_hosts
 （找出新机器的IP并删除那一行，保存并退出nano）</p>
 
 <p>（使用你新机器的IP地址）
-$ ssh <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#114;&#111;&#111;&#x74;&#64;&#49;&#57;&#50;&#x2e;&#49;&#54;&#x38;&#46;&#x31;&#46;&#x31;&#48;">&#x72;&#x6f;&#111;&#x74;&#x40;&#x31;&#57;&#50;&#46;&#49;&#x36;&#x38;&#x2e;&#49;&#x2e;&#x31;&#48;</a>
+$ ssh <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#114;&#x6f;&#111;&#x74;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#x31;&#x2e;&#49;&#x30;">&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x39;&#50;&#x2e;&#49;&#54;&#56;&#46;&#49;&#46;&#x31;&#48;</a>
 The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1535,7 +2407,7 @@ return 0;
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#109;&#101;&#110;&#x67;&#x64;&#97;&#105;&#x6b;&#x75;&#x6e;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#109;&#x65;&#110;&#103;&#100;&#97;&#105;&#x6b;&#x75;&#x6e;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x6d;&#101;&#x6e;&#103;&#x64;&#97;&#105;&#107;&#x75;&#110;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;">&#x6d;&#x65;&#x6e;&#x67;&#100;&#97;&#105;&#107;&#117;&#110;&#x40;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -1734,7 +2606,7 @@ int main()
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#109;&#x64;&#107;&#x40;&#115;&#x65;&#x72;&#x76;&#101;&#114;&#46;&#101;&#120;&#97;&#109;&#x70;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#109;&#x64;&#107;&#64;&#x73;&#101;&#x72;&#x76;&#101;&#114;&#46;&#101;&#x78;&#97;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#x6f;&#x6d;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#109;&#100;&#107;&#64;&#x73;&#101;&#114;&#118;&#101;&#114;&#46;&#x65;&#x78;&#97;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#x6d;">&#x6d;&#x64;&#x6b;&#x40;&#x73;&#x65;&#x72;&#118;&#101;&#x72;&#x2e;&#101;&#x78;&#97;&#109;&#x70;&#108;&#101;&#46;&#x63;&#111;&#x6d;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -1910,112 +2782,6 @@ int main()
 
 <pre><code>                                                 ~~仅以此篇祭拜我一年多来的青春
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[acm的触动]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong/"/>
-    <updated>2013-05-18T22:38:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/acmde-hong-dong</id>
-    <content type="html"><![CDATA[<p>致我热衷的acm:</p>
-
-<p>我真的希望
-大家加油！！！
-不是因为别的原因，因为我们都曾经迷惑，无助，我们没有别人那么强的教练，没有别人那么好的基础，但是，我们都绝对不能放弃。绝对不能，因为，当我们坐在赛场上的时候，不管你是不是愿意，在你上空飘动的始终是你的校旗，别误会，我不是说什么要“为了学校争光”，那种话是用来哄小孩子的。我只想问大家，如果是你，坐在电脑前~~，你的背后有多少人在看着你？你的身上寄托的是什么？
-是希望，是所有喜欢ACM的同学对你的希望，希望有这么一天，ACM也可以象其他的东西一样被其他的人所肯定，而不是什么需要被人怜悯的东西！！！！！！！！！</p>
-
-<p>如果，现在我们寄托了这些东西的话，谁还会告诉我：我们不该奋斗呢？
-如果可以，我宁愿安静的呆在一个不为人知的小角落，平平淡淡的过了这大学四年的生活，至少不会这么累。
-如果可以，我宁愿在开始的时候，就找一个可以依靠的地方，傻傻的什么都不想，幸福的过了这四年。
-如果可以，我宁愿只做一个ACM的看客，静静的品味他们成功的喜悦，分担失败的痛苦。
-如果可以，我宁愿早早的放弃着艰苦的训练，因为我实在不愿意再做这样一个噩梦。
-如果、可以…………
-但是，只是如果……
-而且，决不可以！！
-当我们弱校的人喜欢上ACM的时候，就应该有这种觉悟！
-如果，要后退，那么，就你就不要参加ACM，因为，你不适合。ACM比的并不仅仅是写程序的水平，而更多是三个人的综合素质。没有胆小的人可以赢得ACM的青睐，没有退缩的人可以赢得比赛的胜利。我们这些人，水平本来就有限，也没有什么很出色专业教练。那么如果我们连一拼的勇气都没有了。我们还剩下什么？
-如果可以，让我再次站在大一时候的海报前，我还是会小声的说：“去试试吧，也许很好玩呢~~”
-谢谢大家看了这么多，是不是烦了？呵呵，最后，我只希望大家能+U，同时弱校的队员，
-我希望我们能互相帮助。
-大家~~~~~~~~加油~~~~~~~~~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Bye world]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/bye-world/"/>
-    <updated>2013-05-18T20:12:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/bye-world</id>
-    <content type="html"><![CDATA[<p>c :</p>
-
-<h1>include&lt;stdio.h></h1>
-
-<p>int main()
-{</p>
-
-<pre><code>printf("bye world!\n");
-
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>c++ :</p>
-
-<h1>include<isotream></h1>
-
-<p>using namespace std;</p>
-
-<p>int main()
-{</p>
-
-<pre><code>cout&lt;&lt;"bye world!"&lt;&lt;endl;
-
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>pascal:</p>
-
-<p>begin:</p>
-
-<pre><code>writeln("bye world!");
-</code></pre>
-
-<p>end;</p>
-
-<p>bash:</p>
-
-<h1>!/bin/bash</h1>
-
-<p>echo &ldquo;bye world!&rdquo;</p>
-
-<p>python :</p>
-
-<h1>!/usr/bin/env python</h1>
-
-<p>print &ldquo;bye world&rdquo;</p>
-
-<p>perl:</p>
-
-<h1>!/usr/bin/perl</h1>
-
-<p>use strict;</p>
-
-<p>use warnings;</p>
-
-<p>print &ldquo;bye world\n&rdquo;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/hello-world/"/>
-    <updated>2013-05-18T19:55:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/hello-world</id>
-    <content type="html"><![CDATA[<p>hello world</p>
 ]]></content>
   </entry>
   

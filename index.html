@@ -9,8 +9,11 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="应该说网易的这个笔试对我来说很简单~有那么几个点可以写出来 mysql 一些基础的应用 linux操作系统 tcp/ip tcp/ip的三次握手过程~ vim/gcc/gdb的使用 进程线程端口号 文件的权限使用情况 大概就这么几点~总体难度不大的
-">
+  <meta name="description" content="转自:http://deepin.iteye.com/blog/711813
+1.删除0字节文件
+find -type f -size 0 -exec rm -rf {} \; 2.查看进程
+按内存从大到小排列
+ps -e -o “%C : %p : %z : %a”|sort -k5 -nr 3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +70,962 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/">运维的那些命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:42:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>转自:<a href="http://deepin.iteye.com/blog/711813">http://deepin.iteye.com/blog/711813</a>
+1.删除0字节文件
+find -type f -size 0 -exec rm -rf {} \;</p>
+
+<p>2.查看进程
+按内存从大到小排列
+ps -e   -o “%C   : %p : %z : %a”|sort -k5 -nr</p>
+
+<p>3.按cpu利用率从大到小排列
+ps -e   -o “%C   : %p : %z : %a”|sort   -nr</p>
+
+<p>4.打印说cache里的URL
+grep -r -a   jpg /data/cache/* | strings | grep “<a href="http:%E2%80%9D">http:%E2%80%9D</a> | awk -F’<a href="http:%E2%80%99">http:%E2%80%99</a> ‘{print “<a href="http:%E2%80%9D$2;">http:%E2%80%9D$2;</a>}’</p>
+
+<p>5.查看http的并发请求数及其TCP连接状态：
+netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</p>
+
+<ol>
+<li>sed -i ‘/Root/s/no/yes/’ /etc/ssh/sshd_config   sed在这个文里Root的一行，匹配Root一行，将no替换成yes.
+7.1.如何杀掉mysql进程：
+ps aux |grep mysql |grep -v grep  |awk ‘{print $2}’ |xargs kill -9 (从中了解到awk的用途)</li>
+</ol>
+
+
+<p>killall -TERM mysqld</p>
+
+<p>kill -9 <code>cat /usr/local/apache2/logs/httpd.pid</code>   试试查杀进程PID</p>
+
+<p>8.显示运行3级别开启的服务:
+ls /etc/rc3.d/S* |cut -c 15-   (从中了解到cut的用途，截取数据)</p>
+
+<p>9.如何在编写SHELL显示多个信息，用EOF
+cat &lt;&lt; EOF
++————————————————————–+
+|       === Welcome to Tunoff services ===                |
++————————————————————–+
+EOF</p>
+
+<ol>
+<li><p>for 的巧用(如给mysql建软链接)
+cd /usr/local/mysql/bin
+for i in *
+do ln /usr/local/mysql/bin/$i /usr/bin/$i
+done</p></li>
+<li><p>取IP地址：
+ifconfig eth0 |grep “inet addr:” |awk ‘{print $2}’|cut -c 6-   或者</p></li>
+</ol>
+
+
+<p>ifconfig   | grep ‘inet addr:’| grep -v ’127.0.0.1′ | cut -d: -f2 | awk ‘{ print $1}’</p>
+
+<p>12.内存的大小:
+free -m |grep “Mem” | awk ‘{print $2}’</p>
+
+<ol>
+<li><p>netstat -an -t | grep “:80″ | grep ESTABLISHED | awk ‘{printf “%s %s\n”,$5,$6}’ | sort</p></li>
+</ol>
+
+
+<p>14.查看Apache的并发请求数及其TCP连接状态：
+netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</p>
+
+<p>15.因为同事要统计一下服务器下面所有的jpg的文件的大小,写了个shell给他来统计.原来用xargs实现,但他一次处理一部分,搞的有多个总和….,下面的命令就能解决啦.
+find / -name *.jpg -exec wc -c {} \;|awk ‘{print $1}’|awk ‘{a+=$1}END{print a}’</p>
+
+<p>CPU的数量（多核算多个CPU，cat /proc/cpuinfo |grep -c processor）越多，系统负载越低，每秒能处理的请求数也越多。</p>
+
+<p>—————————————————————————————
+16   CPU负载   # cat /proc/loadavg
+检查前三个输出值是否超过了系统逻辑CPU的4倍。</p>
+
+<p>18   CPU负载   #mpstat 1 1
+检查%idle是否过低(比如小于5%)</p>
+
+<p>19   内存空间   # free
+检查free值是否过低   也可以用 # cat /proc/meminfo</p>
+
+<p>20   swap空间   # free
+检查swap used值是否过高   如果swap used值过高，进一步检查swap动作是否频繁：</p>
+
+<h1>vmstat 1 5</h1>
+
+<p>观察si和so值是否较大</p>
+
+<p>21   磁盘空间   # df -h
+检查是否有分区使用率(Use%)过高(比如超过90%)   如发现某个分区空间接近用尽，可以进入该分区的挂载点，用以下命令找出占用空间最多的文件或目录：</p>
+
+<h1>du -cks * | sort -rn | head -n 10</h1>
+
+<p>22   磁盘I/O负载   # iostat -x 1 2
+检查I/O使用率(%util)是否超过100%</p>
+
+<p>23   网络负载   # sar -n DEV
+检查网络流量(rxbyt/s, txbyt/s)是否过高</p>
+
+<p>24   网络错误   # netstat -i
+检查是否有网络错误(drop fifo colls carrier)   也可以用命令：# cat /proc/net/dev</p>
+
+<p>25 网络连接数目   # netstat -an | grep -E “<sup>tcp</sup>” | cut -c 68- | sort | uniq -c | sort -n</p>
+
+<p>26   进程总数   # ps aux | wc -l
+检查进程个数是否正常 (比如超过250)</p>
+
+<p>27   可运行进程数目   # vmwtat 1 5
+列给出的是可运行进程的数目，检查其是否超过系统逻辑CPU的4倍</p>
+
+<p>28   进程   # top -id 1
+观察是否有异常进程出现</p>
+
+<p>29   网络状态   检查DNS, 网关等是否可以正常连通</p>
+
+<p>30   用户   # who | wc -l
+检查登录用户是否过多 (比如超过50个)   也可以用命令：# uptime</p>
+
+<p>31   系统日志   # cat /var/log/rflogview/*errors
+检查是否有异常错误记录   也可以搜寻一些异常关键字，例如：</p>
+
+<h1>grep -i error /var/log/messages</h1>
+
+<h1>grep -i fail /var/log/messages</h1>
+
+<p>32   核心日志   # dmesg
+检查是否有异常错误记录</p>
+
+<p>33   系统时间   # date
+检查系统时间是否正确</p>
+
+<p>34   打开文件数目   # lsof | wc -l
+检查打开文件总数是否过多</p>
+
+<p>35   日志   # logwatch –print   配置/etc/log.d/logwatch.conf，将 Mailto 设置为自己的email 地址，启动mail服务 (sendmail或者postfix)，这样就可以每天收到日志报告了。
+缺省logwatch只报告昨天的日志，可以用# logwatch –print –range all 获得所有的日志分析结果。
+可以用# logwatch –print –detail high 获得更具体的日志分析结果(而不仅仅是出错日志)。</p>
+
+<p>36.杀掉80端口相关的进程
+lsof -i :80|grep -v “PID”|awk ‘{print “kill -9″,$2}’|sh</p>
+
+<p>37.清除僵死进程。
+ps -eal | awk ‘{ if ($2 == “Z”) {print $4}}’ | kill -9</p>
+
+<p>38.tcpdump 抓包 ，用来防止80端口被人攻击时可以分析数据</p>
+
+<h1>tcpdump -c 10000 -i eth0 -n dst port 80 > /root/pkts</h1>
+
+<p>39.然后检查IP的重复数 并从小到大排序 注意 “-t\ +0″   中间是两个空格</p>
+
+<h1>less pkts | awk {‘printf $3″\n”‘} | cut -d. -f 1-4 | sort | uniq -c | awk {‘printf $1″ “$2″\n”‘} | sort -n -t\ +0</h1>
+
+<p>40.查看有多少个活动的php-cgi进程
+netstat -anp | grep php-cgi | grep ^tcp | wc -l</p>
+
+<p>chkconfig –list | awk ‘{if ($5==”3:on”) print $1}’</p>
+
+<p>41.kudzu查看网卡型号
+kudzu –probe –class=network</p>
+
+<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]
+评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
+
+<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]
+评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
+
+<p>匹配空白行的正则表达式：\n\s*\r
+评注：可以用来删除空白行</p>
+
+<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^>]</em>>.<em>?&lt;/\1>|&lt;.</em>? />
+评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力</p>
+
+<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$
+评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
+
+<p>匹配Email地址的正则表达式：\w+([&ndash;+.]\w+)<em>@\w+([&ndash;.]\w+)</em>.\w+([&ndash;.]\w+)*
+评注：表单验证时很实用</p>
+
+<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*
+评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
+
+<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$
+评注：表单验证时很实用</p>
+
+<p>匹配国内电话号码：\d{3}&ndash;\d{8}|\d{4}&ndash;\d{7}
+评注：匹配形式如 0511-4405222 或 021-87888822</p>
+
+<p>匹配腾讯QQ号：[1-9][0-9]{4,}
+评注：腾讯QQ号从10000开始</p>
+
+<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)
+评注：中国邮政编码为6位数字</p>
+
+<p>匹配身份证：\d{15}|\d{18}
+评注：中国的身份证为15位或18位</p>
+
+<p>匹配ip地址：\d+.\d+.\d+.\d+</p>
+
+<p>评注：提取ip地址时有用</p>
+
+<p>匹配特定数字：
+^[1-9]\d<em>$　 　 //匹配正整数
+^&ndash;[1-9]\d</em>$ 　 //匹配负整数
+^&ndash;?[1-9]\d<em>$　　 //匹配整数
+^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）
+^&ndash;[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）
+^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数
+^&ndash;([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数
+^&ndash;?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数
+^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）
+^(&ndash;([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）
+评注：处理大量数据时有用，具体应用时注意修正</p>
+
+<p>匹配特定字符串：
+^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串
+^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串
+^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串
+^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串
+^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串
+评注：最基本也是最常用的一些表达式</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/centosqi-dong/">Centos启动</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:40:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>启动流程概览</p>
+
+<pre><code>在硬件驱动成功后，Kernel 会主动呼叫 init 程序，而 init 会取得 run-level 资讯；
+init 运行 /etc/rc.d/rc.sysinit 文件来准备软件运行的作业环境 (如网络、时区等)；
+init 运行 run-level 的各个服务之启动 (script 方式)；
+init 运行 /etc/rc.d/rc.local 文件；
+init 运行终端机模拟程序 mingetty 来启动 login 程序，最后就等待使用者登陆啦；
+</code></pre>
+
+<p> init,/etc/inittab,runlevel介绍</p>
+
+<p>在核心加载完毕、进行完硬件侦测与驱动程序加载后，此时你的主机硬件应该已经准备就绪了 (ready) ， 此时核心会主动的呼叫第一支程序，那就是 /sbin/init 罗。 init 的 PID 号码是一号啦。 /sbin/init 最主要的功能就是准备软件运行的环境，包括系统的主机名称、网络配置、语系处理、文件系统格式及其他服务的启动等。 而所有的动作都会透过 init 的配置档，亦即是 /etc/inittab 来规划，而 inittab 内还有一个很重要的配置项目，那就是默认的 runlevel (启动运行等级) 啦！
+Run level：运行等级有哪些？</p>
+
+<p>那么什么是 run level 呢？他有什么功用啊？其实很简单啦， Linux 就是藉由配置 run level 来规定系统使用不同的服务来启动，让 Linux 的使用环境不同。基本上，依据有无网络与有无 X Window 而将 run level 分为 7 个等级，分别是：</p>
+
+<pre><code>0 – halt (系统直接关机)
+1 – single user mode (单人维护模式，用在系统出问题时的维护)
+2 – Multi-user, without NFS (类似底下的 runlevel 3，但无 NFS 服务)
+3 – Full multi-user mode (完整含有网络功能的纯文字模式)
+4 – unused (系统保留功能)
+5 – X11 (与 runlevel 3 类似，但加载使用 X Window)
+6 – reboot (重新启动)
+</code></pre>
+
+<p>由於 run level 0, 4, 6 不是关机、重新启动就是系统保留的，所以：『 您当然不能将默认的 run level 配置为这三个值 』， 否则系统就会不断的自动关机或自动重新启动…. 好了，那么我们启动时，到底是如何取得系统的 run level 的？当然是 /etc/inittab 所配置的罗！ 那么 /etc/inittab 到底有什么资讯呢？我们先来看看这个文件的内容好了：
+/etc/inittab 的内容与语法
+复制代码</p>
+
+<p>[root@www ~]# vim /etc/inittab
+id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5</p>
+
+<p>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档</p>
+
+<p>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
+l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
+l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
+l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
+l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
+l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
+l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/</p>
+
+<p>ca::ctrlaltdel:/sbin/shutdown -t3 -r now</p>
+
+<p>pf::powerfail:/sbin/shutdown -f -h +2 &ldquo;Power Failure; System Shutting Down&rdquo;
+pr:12345:powerokwait:/sbin/shutdown -c &ldquo;Power Restored; Shutdown Cancelled&rdquo;</p>
+
+<p>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6</p>
+
+<p>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</p>
+
+<p>复制代码</p>
+
+<p>让我们解析一下这个文件吧！首先，这个文件的语法是利用冒号 (:) 将配置分隔成为四个栏位，每个栏位的意义与说明如下：</p>
+
+<pre><code>配置项目：最多四个字节，代表 init 的主要工作项目，只是一个简单的代表说明。
+run level：该项目在哪些 run level 底下进行的意思。如果是 35 则代表 runlevel 3 与 5 都会运行。
+init 的动作项目：主要可以进行的动作项目意义有：
+inittab 配置值   意义说明
+initdefault     代表默认的 run level 配置值
+sysinit     代表系统初始化的动作项目
+ctrlaltdel  代表 [ctrl]+[alt]+[del] 三个按键是否可以重新启动的配置
+wait    代表后面栏位配置的命令项目必须要运行完毕才能继续底下其他的动作
+respawn     代表后面栏位的命令可以无限制的再生 (重新启动)。举例来说， tty1 的 mingetty 产生的可登陆画面， 在你注销而结束后，系统会再开一个新的可登陆画面等待下一个登陆。
+
+更多的配置项目请参考 man inittab 的说明。
+命令项目：亦即应该可以进行的命令，通常是一些 script 罗。
+</code></pre>
+
+<p>init 的处理流程</p>
+
+<p>事实上 /etc/inittab 的配置也有点类似 shell script 啦，因为该文件内容的配置也是一行一行的从上往下处理的， 因此我们可以知道 CentOS 的 init 依据 inittab 配置的处理流程会是：</p>
+
+<pre><code>先取得 runlevel 亦即默认运行等级的相关等级 (以鸟哥的测试机为例，为 5 号)；
+使用 /etc/rc.d/rc.sysinit 进行系统初始化
+由於 runlevel 是 5 ，因此只进行『l5:5:wait:/etc/rc.d/rc 5』，其他行则略过
+配置好 [ctrl]+[alt]+[del] 这组的组合键功能
+配置不断电系统的 pf, pr 两种机制；
+启动 mingetty 的六个终端机 (tty1 ~ tty6)
+最终以 /etc/X11/perfdm -nodaemon 启动图形介面啦！
+</code></pre>
+
+<p>现在你可以知道为啥 [ctrl]+[alt]+[del] 可以重新启动而我们默认提供 6 个虚拟终端机 (tty1~tty6) 给你使用了吧！由於整个配置都是依据 /etc/inittab 来决定的，因此如果你想要修改任何细节的话， 可以这样做喔：</p>
+
+<pre><code>如果不想让使用者利用 [crtl]+[alt]+[del] 来重新启动系统，可以将『 ca::ctrlaltdel:/sbin/shutdown -t3 -r now 』加上注解 (#) 来取消该配置
+规定启动的默认 run level 是纯文字的 3 号或者是具有图形介面的 5 号 ，可经由 『 id:5:initdefault: 』那个数字来决定！ 以鸟哥自己这个文件为例，我是使用默认的图形介面。如果你想要关闭图形介面的话，将该行 5 改成 3 即可。
+如果不想要启动六个终端机 (tty1~tty6)，那么可以将『 6:2345:respawn:/sbin/mingetty tty6』关闭数个。但务必至少启动一个喔！
+</code></pre>
+
+<p>所以说，你现在会自行修改登陆时的默认 run level 配置值了吗？够简单的吧？ 一般来说，我们默认都是 3 或者是 5 来作为默认的 run level 的。但有时后可能需要进入 run level 1， 也就是单人维护模式的环境当中。这个 run level 1 有点像是 Windows 系统当中的『安全模式』啦， 专门用来处理当系统有问题时的操作环境。此外，当系统发现有问题时，举例来说，不正常关机造成 filesystem 的不一致现象时，系统会主动的进入单人维护模式呢！</p>
+
+<p>好了， init 在取得 run level 之后，接下来要干嘛？ 上面 /etc/inittab 文件内容不是有提到 sysinit 吗？准备初始化系统了吧！</p>
+
+<p>init 处理系统初始化流程 (/etc/rc.d/rc.sysinit)</p>
+
+<p>还记得上面提到 /etc/inittab 里头有这一句『 si::sysinit:/etc/rc.d/rc.sysinit 』吧？ 这表示：『我开始加载各项系统服务之前，得先做好整个系统环境，我主要利用 /etc/rc.d/rc.sysinit 这个 shell script 来配置好我的系统环境的。』够清楚了吧？ 所以，我想要知道到底 CentOS 启动的过程当中帮我进行了什么动作，就得要仔细的分析 /etc/rc.d/rc.sysinit 罗。</p>
+
+<p>如果你使用 vim 去查阅过 /etc/rc.d/rc.sysinit 的话，那么可以发现他主要的工作大抵有这几项：</p>
+
+<pre><code>取得网络环境与主机类型：
+读取网络配置档 /etc/sysconfig/network ，取得主机名称与默认通讯闸 (gateway) 等网络环境。
+测试与挂载内存装置 /proc 及 U盘 装置 /sys：
+除挂载内存装置 /proc 之外，还会主动侦测系统上是否具有 usb 的装置， 若有则会主动加载 usb 的驱动程序，并且尝试挂载 usb 的文件系统。
+决定是否启动 SELinux ：
+SELinux 在此时进行一些检测， 并且检测是否需要帮所有的文件重新编写标准的 SELinux 类型 (auto relabel)。
+启动系统的乱数产生器
+乱数产生器可以帮助系统进行一些口令加密演算的功能，在此需要启动两次乱数产生器。
+配置终端机 (console) 字形：
+配置显示於启动过程中的欢迎画面 (text banner)；
+配置系统时间 (clock) 与时区配置：需读入 /etc/sysconfig/clock 配置值
+周边设备的侦测与 Plug and Play (PnP) 参数的测试：
+根据核心在启动时侦测的结果 (/proc/sys/kernel/modprobe ) 开始进行 ide / scsi / 网络 / 音效 等周边设备的侦测，以及利用以加载的核心模块进行 PnP 装置的参数测试。
+使用者自订模块的加载
+使用者可以在 /etc/sysconfig/modules/*.modules 加入自订的模块，则此时会被加载到系统当中
+加载核心的相关配置：
+系统会主动去读取 /etc/sysctl.conf 这个文件的配置值，使核心功能成为我们想要的样子。
+配置主机名称与初始化电源管理模块 (ACPI)
+初始化软件磁盘阵列：主要是透过 /etc/mdadm.conf 来配置好的。
+初始化 LVM 的文件系统功能
+以 fsck 检验磁碟文件系统：会进行 filesystem check
+进行磁碟配额 quota 的转换 (非必要)：
+重新以可读写模式挂载系统磁碟：
+启动 quota 功能：所以我们不需要自订 quotaon 的动作
+启动系统虚拟乱数产生器 (pseudo-random)：
+清除启动过程当中的缓存文件：
+将启动相关资讯加载 /var/log/dmesg 文件中。
+</code></pre>
+
+<p>在 /etc/rc.d/rc.sysinit 将基本的系统配置数据都写好了，也将系统的数据配置完整！ 而如果你想要知道到底启动的过程中发生了什么事情呢？那么就运行『 dmesg 』吧。 另外，基本上，在这个文件当中所进行的很多工作的默认配置档，其实都在 /etc/sysconfig/ 当中呢！ 所以，请记得将 /etc/sysconfig/ 内的文件好好的瞧一瞧喔！ ^_^</p>
+
+<p>在这个过程当中，比较值得注意的是自订模块的加载！在 CentOS 当中，如果我们想要加载核心模块的话， 可以将整个模块写入到 /etc/sysconfig/modules/*.modules 当中，在该目录下， 只要记得档名最后是以 .modules 结尾即可。 这个过程是非必要的，因为我们目前的默认模块实在已经很够用了，除非是您的主机硬件实在太新了， 非要自己加载新的模块不可，否则，在经过 /etc/rc.d/rc.sysinit 的处理后， 你的主机系统应该是已经跑得很顺畅了啦！就等著你将系统相关的服务与网络服务启动罗！</p>
+
+<p>启动系统服务与相关启动配置档 (/etc/rc.d/rc N &amp; /etc/sysconfig)</p>
+
+<p>加载核心让整个系统准备接受命令来工作，再经过 /etc/rc.d/rc.sysinit 的系统模块与相关硬件资讯的初始化后，你的 CentOS 系统应该已经顺利工作了。 只是，我们还得要启动系统所需要的各项『服务』啊！这样主机才能提供我们相关的网络或者是主机功能嘛！ 这个时候，依据我们在 /etc/inittab 里面提到的 run level 配置值，就可以来决定启动的服务项目了。 举例来说，使用 run level 3 当然就不需要启动 X Window 的相关服务罗，您说是吧？</p>
+
+<p>那么各个不同的 run level 服务启动的各个 shell script 放在哪？还记得 /etc/inittab 里面提到的：
+复制代码</p>
+
+<p>l0:0:wait:/etc/rc.d/rc 0
+l1:1:wait:/etc/rc.d/rc 1
+l2:2:wait:/etc/rc.d/rc 2
+l3:3:wait:/etc/rc.d/rc 3
+l4:4:wait:/etc/rc.d/rc 4
+l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
+l6:6:wait:/etc/rc.d/rc 6</p>
+
+<p>复制代码</p>
+
+<p>上面提到的就是各个 run level 要运行的各项脚本放置处啦！主要是透过 /etc/rc.d/rc 这个命令来处理相关任务！ 由於鸟哥使用默认的 runlevel 5 ，因此我们主要针对上述特殊字体那行来解释好了： /etc/rc.d/rc 5 的意义是这样的 (建议您自行使用 vim 去观察一下 /etc/rc.d/rc 这个文件，你会更有概念！)：</p>
+
+<pre><code>透过外部第一号参数 ($1) 来取得想要运行的脚本目录。亦即由 /etc/rc.d/rc 5 可以取得 /etc/rc5.d/ 这个目录来准备处理相关的脚本程序；
+找到 /etc/rc5.d/K??* 开头的文件，并进行『 /etc/rc5.d/K??* stop 』的动作；
+找到 /etc/rc5.d/S??* 开头的文件，并进行『 /etc/rc5.d/S??* start 』的动作；
+</code></pre>
+
+<p>透过上面的说明我们可以知道所有的项目都与 /etc/rc5.d/ 有关，那么我们就来瞧瞧这个目录下有些什么玩意儿吧！
+复制代码</p>
+
+<p>[root@www ~]# ll /etc/rc5.d/
+lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd &ndash;> ../init.d/dhcdbd
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi &ndash;> ../init.d/capi
+lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl &ndash;> ../init.d/microcode_ctl
+lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor &ndash;> ../init.d/lvm2-monitor
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network &ndash;> ../init.d/network
+&hellip;.(中间省略)&hellip;.
+lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local &ndash;> ../rc.local
+lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
+&hellip;.(底下省略)&hellip;.</p>
+
+<p>复制代码</p>
+
+<p>在这个目录下的文件很有趣，主要具有几个特点：</p>
+
+<pre><code>档名全部以 Sxx 或 Kxx ，其中 xx 为数字，且这些数字在文件之间是有相关性的！
+全部是连结档，连结到 stand alone 服务启动的目录 /etc/init.d/ 去
+</code></pre>
+
+<p>服务的启动主要是以『/etc/init.d/服务档名 {start,stop}』 来启动与关闭的，那么透过刚刚 /etc/rc.d/rc 程序的解说，我们可以清楚的了解到了 /etc/rc5.d/[SK]xx 其实就是跑到 /etc/init.d/ 去找到相对应的服务脚本， 然后分别进行 start (Sxx) 或 stop (Kxx) 的动作而已啦！举例来说，以上述的表格内的 K91capi 及 S10network 为例好了， 透过 /etc/rc.d/rc 5 的运行，这两个文件会这样进行：</p>
+
+<pre><code>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
+/etc/rc5.d/S10network start –&gt; /etc/init.d/network start
+</code></pre>
+
+<p>所以说，你有想要启动该 runlevel 时就运行的服务，那么利用 Sxx 并指向 /etc/init.d/ 的特定服务启动脚本后， 该服务就能够在启动时启动啦！就这么简单！问题是，你需要自行处理这个 K, S 开头的连结档吗？ 并不需要的，chkconfig 就是在负责处理这个连结档啦！这样有没有跟第十八章的观念串在一起了呢？ ^_^</p>
+
+<p>那么为什么 K 与 S 后面要有数字呢？因为各不同的服务其实还是互有关系的。举例来说，如果要启动 WWW 服务，总是得要有网络吧？所以 /etc/init.d/network 就会比较先被启动啦！那么您就会知道在 S 或者是 K 后面接的数字是啥意思了吧？嘿嘿，那就是运行的顺序啦！那么哪个文件被最后运行呢？ 看到最后一个被运行的项目是啥？没错，就是 S99local ，亦即是：/etc/rc.d/rc.local 这个文件啦！</p>
+
+<p>使用者自订启动启动程序 (/etc/rc.d/rc.local)</p>
+
+<p>在完成默认 runlevel 指定的各项服务的启动后，如果我还有其他的动作想要完成时，举例来说， 我还想要寄一封 mail 给某个系统管理帐号，通知他，系统刚刚重新启动完毕，那么是否应该要制作一个 shell script 放置在 /etc/init.d/ 里面，然后再以连结方式连结到 /etc/rc5.d/ 里面呢？呵呵！当然不需要！还记得上一小节提到的 /etc/rc.d/rc.local 吧？ 这个文件就可以运行您自己想要运行的系统命令了。</p>
+
+<p>也就是说，我有任何想要在启动时就进行的工作时，直接将他写入 /etc/rc.d/rc.local ， 那么该工作就会在启动的时候自动被加载喔！而不必等我们登陆系统去启动呢！ 是否很方便啊！一般来说，鸟哥就很喜欢把自己制作的 shell script 完整档名写入 /etc/rc.d/rc.local ，如此一来，启动就会将我的 shell script 运行过，真是好棒那！</p>
+
+<p>根据 /etc/inittab 之配置，加载终端机或 X-Window 介面</p>
+
+<p>在完成了系统所有服务的启动后，接下来 Linux 就会启动终端机或者是 X Window 来等待使用者登陆啦！ 实际参考的项目是 /etc/inittab 内的这一段：
+复制代码</p>
+
+<p>1:2345:respawn:/sbin/mingetty tty1
+2:2345:respawn:/sbin/mingetty tty2
+3:2345:respawn:/sbin/mingetty tty3
+4:2345:respawn:/sbin/mingetty tty4
+5:2345:respawn:/sbin/mingetty tty5
+6:2345:respawn:/sbin/mingetty tty6
+x:5:respawn:/etc/X11/prefdm -nodaemon</p>
+
+<p>复制代码</p>
+
+<p>这一段代表，在 run level 2, 3, 4, 5 时，都会运行 /sbin/mingetty 这个咚咚， 而且运行六个，这也是为何我们 Linux 会提供『六个纯文字终端机』的配置所在啊！ 因为 mingetty 就是在启动终端机的命令说。</p>
+
+<p>要注意的是那个 respawn 的 init 动作项目，他代表『当后面的命令被终止 (terminal) 时， init 会主动的重新启动该项目。』这也是为何我们登陆 tty1 终端机介面后，以 exit 离开后， 系统还是会重新显示等待使用者输入的画面的原因啊！</p>
+
+<p>如果改天您不想要有六个终端机时，可以取消某些终端机介面吗？当然可以啊！ 就将上面表格当中的某些项目注解掉即可！例如不想要 tty5 与 tty6 ，就将那两行注解， 则下次重新启动后，您的 Linux 就只剩下『 F1 ~ F4 』有效而已，这样说，可以了解吧！！^_^</p>
+
+<p>至於如果我们使用的是 run level 5 呢？那么除了这六个终端机之外， init 还会运行 /etc/X11/prefdm -nodaemon 那个命令喔！ 他主要的功能就是在启动 X Window 啦！</p>
+
+<p>启动过程会用到的主要配置档</p>
+
+<p>我们在 /sbin/init 的运行过程中有谈到许多运行脚本，包括 /etc/rc.d/rc.sysinit 以及 /etc/rc.d/rc 等等， 其实这些脚本都会使用到相当多的系统配置档，这些启动过程会用到的配置档则大多放置在 /etc/sysconfig/ 目录下。 同时，由於核心还是需要加载一些驱动程序 (核心模块)，此时系统自订的装置与模块对应档 (/etc/modprobe.conf) 就显的挺重要了喔！
+关於模块： /etc/modprobe.conf</p>
+
+<p>/etc/rc.d/rc.sysinit 当中的加载使用者自订模块的地方吗？就是在 /etc/sysconfig/modules/ 目录下啊！ 虽然核心提供的默认模块已经很足够我们使用了，但是，某些条件下我们还是得对模块进行一些参数的规划， 此时就得要使用到 /etc/modprobe.conf 罗！举例来说，鸟哥的 CentOS 主机的 modprobe.conf 有点像这样：</p>
+
+<p>[root@www ~]# cat /etc/modprobe.conf
+alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
+alias scsi_hostadapter pata_sis
+alias snd-card-0 snd-trident
+options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
+options snd-trident index=0</p>
+
+<p>以上表的第一行为例，鸟哥使用螃蟹卡 (Realtek 的芯片组) 来作为我的网络卡，那螃蟹卡使用的模块就是 8139too 啦！这样看的懂了吧？当我要启动网络卡时，系统会跑到这个文件来查阅一下，然后加载 8139too 驱动程序来驱动网络卡罗！更多的相关说明，请 man modprobe.conf 喔！这个文件大多在指定系统内的硬件所使用的模块啦！这个文件通常系统是可以自行产生的，所以你不必手动去订正他！ 不过，如果系统捉到错误的驱动程序，或者是你想要使用升级的驱动程序来对应相关的硬件配备时， 你就得要自行手动的处理一下这个文件了。
+ /etc/sysconfig/*</p>
+
+<p>不说您也知道，整个启动的过程当中，老是读取的一些服务的相关配置档都是记录在 /etc/sysconfig 目录下的！那么该目录底下有些啥玩意儿？我们找几个重要的文件来谈谈：</p>
+
+<pre><code>authconfig：
+这个文件主要在规范使用者的身份认证的机 制，包括是否使用本机的 /etc/passwd, /etc/shadow 等， 以及 /etc/shadow 口令记录使用何种加密演算法，还有是否使用外部口令服务器提供的帐号验证 (NIS, LDAP) 等。 系统默认使用 MD5 加密演算法，并且不使用外部的身份验证机制；
+clock：
+此文件在配置 Linux 主机的时区，可以使用格林威治时间(GMT)，也可以使用台湾的本地时间 (local)。基本上，在 clock 文件内的配置项目『 ZONE 』所参考的时区位於 /usr/share/zoneinfo 目录下的相对路径中。而且要修改时区的话，还得将 /usr/share/zoneinfo/Asia/Taipei 这个文件复制成为 /etc/localtime 才行！
+i18n：
+i18n 在配置一些语系的使用方面，例如最麻烦的文字介面下的日期显示问题！ 如果你是以中文安装的，那么默认语系会被选择 zh_TW.UTF8 ，所以在纯文字介面之下， 你的文件日期显示可能就会呈现乱码！这个时候就需要更改一下这里啦！更动这个 i18n 的文件，将里面的 LC_TIME 改成 en 即可！
+keyboard &amp; mouse：
+keyboard 与 mouse 就是在配置键盘与鼠标的形式；
+network：
+network 可以配置是否要启动网络，以及配置主机名称还有通讯闸 (GATEWAY) 这两个重要资讯呢！
+network-scripts/：
+至於 network-scripts 里面的文件，则是主要用在配置网络卡～
+</code></pre>
+
+<p>总而言之一句话，这个目录下的文件很重要的啦！启动过程里面常常会读取到的！</p>
+
+<p>Run level 的切换</p>
+
+<p>在我们完成上面的所有资讯后，其实整个 Linux 主机就已经在等待我们使用者的登陆啦！ 但是，相信您应该还是会有一点疑问的地方，那就是：『我该如何切换 run level 呢？』会不会很难啊？不会啦！很简单～但是依据运行的时间而有不同的方式啊！</p>
+
+<p>事实上，与 run level 有关的启动其实是在 /etc/rc.d/rc.sysinit 运行完毕之后。也就是说，其实 run level 的不同仅是 /etc/rc[0-6].d 里面启动的服务不同而已。不过，依据启动是否自动进入不同 run level 的配置，我们可以说：</p>
+
+<pre><code>要每次启动都运行某个默认的 run level ，则需要修改 /etc/inittab 内的配置项目， 亦即是『 id:5:initdefault: 』里头的数字啊；
+如果仅只是暂时变更系统的 run level 时，则使用 init [0-6] 来进行 run level 的变更。 但下次重新启动时，依旧会是以 /etc/inittab 的配置为准。
+</code></pre>
+
+<p>假设原本我们是以 run level 5 登陆系统的，但是因为某些因素，想要切换成为 run level 3 时， 该怎么办呢？很简单啊，运行『 init 3 』即可切换。但是 init 3 这个动作到底做了什么呢？ 我们不是说了吗？事实上，不同的 run level 只是加载的服务不同罢了， 亦即是 /etc/rc5.d/ 还有 /etc/rc3.d 内的 Sxxname 与 Kxxname 有差异而已。 所以说，当运行 init 3 时，系统会：</p>
+
+<pre><code>先比对 /etc/rc3.d/ 及 /etc/rc5.d 内的 K 与 S 开头的文件；
+在新的 runlevel 亦即是 /etc/rc3.d/ 内有多的 K 开头文件，则予以关闭；
+在新的 runlevel 亦即是 /etc/rc3.d/ 内有多的 S 开头文件，则予以启动；
+</code></pre>
+
+<p>也就是说，两个 run level 都存在的服务就不会被关闭啦！如此一来，就很容易切换 run level 了， 而且还不需要重新启动呢！真方便。那我怎么知道目前的 run level 是多少呢？ 直接在 bash 当中输入 runlevel 即可啊！
+复制代码</p>
+
+<p>[root@www ~]# runlevel
+N 5</p>
+
+<h1>左边代表前一个 runlevel ，右边代表目前的 runlevel。</h1>
+
+<h1>由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)</h1>
+
+<h1>将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)</h1>
+
+<p>[root@www ~]# init 3
+NIT: Sending processes the TERM signal
+Applying Intel CPU microcode update:        [  OK  ]
+Starting background readahead:              [  OK  ]
+Starting irqbalance:                        [  OK  ]
+Starting httpd:                             [  OK  ]
+Starting anacron:                           [  OK  ]</p>
+
+<h1>这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务</h1>
+
+<p>[root@www ~]# runlevel
+5 3</p>
+
+<h1>看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</h1>
+
+<p>复制代码</p>
+
+<p>那么你能不能利用 init 来进行关机与重新启动呢？可以的啦！利用『 init 0 』就能够关机， 而『 init 6 』就能够重新启动！为什么？往前翻一下 runlevel 的定义即可了解吧！</p>
+
+<p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php#startup_init">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php#startup_init</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/shell/">Shell</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:38:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很多人误以为shell脚本只能在命令行下使用。其实shell也可以调用一些GUI组件， 例如菜单，警告框，进度条等等。你可以控制最终的输出，光标位置还有各种输出效果。下面我将介绍一些工具，帮助你创建强大的，互动的，用户友好的 Unix/Linux shell脚本。我在FreeBSD和Linux下测试过这些工具，不过其他UNIX系列的操作系统应该都支持的。</p>
+
+<ol>
+<li>notify-send 命令</li>
+</ol>
+
+
+<p>这个命令可以让你通过通知进程发送一个桌面通知给用户。这可以用来向用户发送提示，或者显示一些信息而不用打断用户工作。你需要安装如下软件包：
+PHP代码</p>
+
+<pre><code>$ sudo apt-get install libnotify-bin
+</code></pre>
+
+<p>下面这个例子展示了如何从命令行向桌面发送一个简单的消息：
+PHP代码</p>
+
+<pre><code>notify-send “rsnapshot done \”static/image/smiley/default/smile.gif\”" smilieid=”\”1\”" alt=”\”\”" border=”\”0\”"&gt;”
+</code></pre>
+
+<p>输出：</p>
+
+<p>下面是一个复杂一点的例子：
+PHP代码</p>
+
+<pre><code>….
+alert=18000
+live=$(lynx –dump http://money.rediff.com/ | grep ‘BSE LIVE’ | awk ‘{ print $5}’ | sed ‘s/,//g;s/\.[0-9]*//g’)
+[ $notify_counter -eq 0 ] &amp;&amp; [ $live -ge $alert ] &amp;&amp; { notify-send -t 5000 -u low -i  ”BSE Sensex touched 18k”;  notify_counter=1; }
+…
+</code></pre>
+
+<p>输出：</p>
+
+<p>这里的参数解释如下：</p>
+
+<pre><code>-t 5000：指定超时的时间，毫秒
+-u low：设置是否紧急
+-i gtk-dialog-info：通知图标，你可以指定图标 -i /path/to/your-icon.png
+</code></pre>
+
+<ol>
+<li>tput 命令</li>
+</ol>
+
+
+<p>这个命令是用来设置终端特性的：</p>
+
+<pre><code>  移动光标
+  获得终端信息
+  设置前景和背景色
+  设置粗体模式
+  设置反模式等等
+</code></pre>
+
+<p>举例：
+PHP代码</p>
+
+<pre><code>#!/bin/bash
+# clear the screen
+tput clear
+# Move cursor to screen location X,Y (top left is 0,0)
+tput cup 3 15
+# Set a foreground colour using ANSI escape
+tput setaf 3
+echo “XYX Corp LTD.”
+tput sgr0
+tput cup 5 17
+# Set reverse video mode
+tput rev
+echo “M A I N – M E N U”
+tput sgr0
+tput cup 7 15
+echo “1. User Management”
+tput cup 8 15
+echo “2. Service Management”
+tput cup 9 15
+echo “3. Process Management”
+tput cup 10 15
+echo “4. Backup”
+# Set bold mode
+tput bold
+tput cup 12 15
+read -p “Enter your choice [1-4] ” choice
+tput clear
+tput sgr0
+tput rc
+</code></pre>
+
+<p>输出：</p>
+
+<ol>
+<li>setleds 命令</li>
+</ol>
+
+
+<p>这个命令可以让你控制键盘灯，例如打开数字键盘灯：</p>
+
+<p>PHP代码</p>
+
+<pre><code>setleds -D +num
+</code></pre>
+
+<p>关闭数字键盘灯：</p>
+
+<p>PHP代码</p>
+
+<pre><code>setleds -D -num
+
+  -caps: 清除大写灯
+  +caps：打开大写灯
+  -scroll：清除滚动锁
+  +scroll：打开滚动锁
+</code></pre>
+
+<ol>
+<li>zenity 命令</li>
+</ol>
+
+
+<p>这个命令可以显示GTK+的对话框，然后返回用户的输入。你可以用这个命令在脚本中显示信息，并要求用户输入信息。下面这段代码就是域名的whois查询：
+PHP代码</p>
+
+<pre><code>#!/bin/bash
+# Get domain name
+_zenity=”/usr/bin/zenity”
+_out=”/tmp/whois.output.[    DISCUZ_CODE_4    ]quot;
+domain=$(${_zenity} –title  ”Enter domain” \
+      –entry –text “Enter the domain you would like to see whois info” )
+if [ $? -eq 0 ]
+then
+  # Display a progress dialog while searching whois database
+  whois $domain  | tee &gt;(${_zenity} –width=200 –height=100 \
+        –title=”whois” –progress \
+        –pulsate –text=”Searching domain info…” \
+            –auto-kill –auto-close \
+            –percentage=10) &gt;${_out}
+  # Display back output
+  ${_zenity} –width=800 –height=600  \
+    –title “Whois info for $domain” \
+    –text-info –filename=”${_out}”
+else
+  ${_zenity} –error \
+    –text=”No input provided”
+fi
+</code></pre>
+
+<p>输出：</p>
+
+<ol>
+<li>kdialog 命令</li>
+</ol>
+
+
+<p>这个命令和zenity很想，只不过它是为KDE/QT应用准备的。使用方法如下：
+PHP代码</p>
+
+<pre><code>kdialog –dontagain myscript:nofilemsg –msgbox “File: ‘~/.backup/config’ not found.”
+</code></pre>
+
+<p>输出</p>
+
+<ol>
+<li>Dialog</li>
+</ol>
+
+
+<p>这个命令可以在shell脚本中显示文本组件。它使用了curses和ncurses类库。示例代码：
+PHP代码</p>
+
+<pre><code>&gt;#!/bin/bash
+dialog –title “Delete file” \
+–backtitle “Linux Shell Script Tutorial Example” \
+–yesno “Are you sure you want to permanently delete \”/tmp/foo.txt\”?” 7 60
+# Get exit status
+# 0 means user hit [yes] button.
+# 1 means user hit [no] button.
+# 255 means user hit [Esc] key.
+response=$?
+case $response in
+  0) echo “File deleted.”;;
+  1) echo “File not deleted.”;;
+  255) echo “[ESC] key pressed.”;;
+esac
+</code></pre>
+
+<ol>
+<li>logger 命令</li>
+</ol>
+
+
+<p>这个命令可以让你写入系统日志例如 /var/log/messages：
+PHP代码</p>
+
+<pre><code>logger “MySQL database backup failed.”
+tail -f /var/log/messages
+logger -t mysqld -p daemon.error “Database Server failed”
+tail -f /var/log/syslog
+</code></pre>
+
+<p>输出：
+Apr 20 00:11:45 vivek-desktop kernel: [38600.515354] CPU0: Temperature/speed normal</p>
+
+<p>Apr 20 00:12:20 vivek-desktop mysqld: Database Server failed</p>
+
+<ol>
+<li>setterm 命令</li>
+</ol>
+
+
+<p>这个命令可以设置中断的属性。下面的例子是强制屏幕全黑15分钟，并且60分钟后把显示器设为待机状态：
+PHP代码</p>
+
+<pre><code>setterm -blank 15 -powersave powerdown -powerdown 60
+</code></pre>
+
+<p>下面这段命令可以在中断显示加下划线的文字：
+PHP代码</p>
+
+<pre><code>setterm -underline on;
+echo “Add Your Important Message Here”
+setterm -underline off
+</code></pre>
+
+<p>或者你可以关闭光标：
+PHP代码</p>
+
+<pre><code>setterm -cursor off
+</code></pre>
+
+<ol>
+<li>smbclient：向 MS-Windows 系统发送消息</li>
+</ol>
+
+
+<p>smbclient可以和 SMB/CIFS服务器通信。它可以向MS-Windows系统的指定用户发送消息：
+PHP代码</p>
+
+<pre><code>smbclient -M WinXPPro &lt;&lt;EOF
+Message 1
+Message 2
+…
+..
+EOF
+</code></pre>
+
+<p>或者
+PHP代码</p>
+
+<pre><code>echo “${Message}” | smbclient -M salesguy2
+</code></pre>
+
+<ol>
+<li>Bash Socket 编程</li>
+</ol>
+
+
+<p>你可以在bash中开启一个socket链接，并且传输数据。Bash有两个特殊的设备文件：</p>
+
+<pre><code>  /dev/tcp/host/port – 如果hostname，和port是合法的话，bash会尝试开启一个TCP连接。
+  /dev/udp/host/port – 如果hostname和port是合法的话，bash会开启一个UDP连接。
+</code></pre>
+
+<p>你可以利用这个技术来测试一台主机的端口是否是开启的，而不需要使用nmap或者port扫描器：
+PHP代码</p>
+
+<pre><code># find out if TCP port 25 open or not
+(echo &gt;/dev/tcp/localhost/25) &amp;&gt;/dev/null &amp;&amp; echo “TCP port 25 open” || echo “TCP port 25 close”
+</code></pre>
+
+<p>你可以 使用循环来查找开着的端口：
+PHP代码</p>
+
+<pre><code>echo “Scanning TCP ports…”
+for p in {1..1023}
+do
+  (echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo “$p open”
+done
+</code></pre>
+
+<p>输出：
+Scanning TCP ports…</p>
+
+<p>22 open</p>
+
+<p>53 open</p>
+
+<p>80 open</p>
+
+<p>139 open</p>
+
+<p>445 open</p>
+
+<p>631 open</p>
+
+<p>下面的这个例子让你的脚本扮演HTTP客户端：
+PHP代码</p>
+
+<pre><code>#!/bin/bash
+exec 3&lt;&gt; /dev/tcp/${1:-www.cyberciti.biz}/80
+printf “GET / HTTP/1.0\r\n” &gt;&amp;3
+printf “Accept: text/html, text/plain\r\n” &gt;&amp;3
+printf “Accept-Language: en\r\n” &gt;&amp;3
+printf “User-Agent: nixCraft_BashScript v.%s\r\n” “${BASH_VERSION}”  &gt;&amp;3
+printf “\r\n” &gt;&amp;3
+while read LINE &lt;&amp;3
+do
+  # do something on $LINE
+  # or send $LINE to grep or awk for grabbing data
+  # or simply display back data with echo command
+  echo $LINE
+done
+</code></pre>
+
+<p>关于GUITools和Cronjob</p>
+
+<p>如果你使用cronjob来调用你的脚本的话，你要通过“ export DISPLAY=[user&rsquo;s machine]:0”命令来设置本地的 display/input 服务。例如调用 /home/vivek/scripts/monitor.stock.sh脚本，它使用了 zenity 工具：
+PHP代码</p>
+
+<pre><code>@hourly DISPLAY=:0.0 /home/vivek/scripts/monitor.stock.sh
+</code></pre>
+
+<p>所有的命令你都可以通过“man”来查询详细的使用方式。</p>
+
+<p>文章转载自：<a href="http://www.oschina.net/question/28_39527">http://www.oschina.net/question/28_39527</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -387,7 +1346,7 @@ return 0;
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#109;&#101;&#110;&#x67;&#100;&#x61;&#105;&#x6b;&#x75;&#110;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">&#109;&#101;&#x6e;&#x67;&#100;&#97;&#105;&#107;&#117;&#110;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#x6d;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#x6d;&#101;&#110;&#103;&#x64;&#97;&#105;&#107;&#x75;&#x6e;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#x6d;">&#x6d;&#101;&#x6e;&#x67;&#100;&#x61;&#105;&#x6b;&#x75;&#x6e;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -742,7 +1701,7 @@ passwd: password updated successfully</p>
 <p>代码 2.7: 从另一台电脑连到你的新机器</p>
 
 <p>（使用你新机器的IP地址）
-$ ssh <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x39;&#x32;&#46;&#x31;&#x36;&#x38;&#x2e;&#x31;&#46;&#49;&#x30;">&#x72;&#x6f;&#111;&#116;&#64;&#49;&#x39;&#50;&#46;&#x31;&#x36;&#56;&#46;&#49;&#46;&#49;&#x30;</a>
+$ ssh <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#114;&#x6f;&#x6f;&#x74;&#x40;&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#46;&#49;&#x2e;&#x31;&#x30;">&#114;&#111;&#111;&#116;&#64;&#49;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#46;&#49;&#x2e;&#x31;&#x30;</a>
 The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1046,7 +2005,7 @@ $ nano -w ~/.ssh/known_hosts
 （找出新机器的IP并删除那一行，保存并退出nano）</p>
 
 <p>（使用你新机器的IP地址）
-$ ssh <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#114;&#111;&#111;&#x74;&#64;&#49;&#57;&#50;&#x2e;&#49;&#54;&#x38;&#46;&#x31;&#46;&#x31;&#48;">&#x72;&#x6f;&#111;&#x74;&#x40;&#x31;&#57;&#50;&#46;&#49;&#x36;&#x38;&#x2e;&#49;&#x2e;&#x31;&#48;</a>
+$ ssh <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#114;&#x6f;&#111;&#x74;&#x40;&#x31;&#57;&#x32;&#x2e;&#49;&#x36;&#x38;&#46;&#x31;&#x2e;&#49;&#x30;">&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x39;&#50;&#x2e;&#49;&#54;&#56;&#46;&#49;&#46;&#x31;&#48;</a>
 The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
 RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -1190,555 +2149,6 @@ sys   281m45.629s</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/yan-fa-yu-kai-fa/">研发与开发</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:47:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/c-plus-plus-xu-han-shu-ji-xu-han-shu-biao-jie-xi/">C++虚函数及虚函数表解析</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:47:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>转自:<a href="http://www.cnblogs.com/realyan/archive/2011/07/14/2106339.html">http://www.cnblogs.com/realyan/archive/2011/07/14/2106339.html</a>
-虚函数的定义：</p>
-
-<p>　　虚函数必须是类的非静态成员函数（且非构造函数），其访问权限是public（可以定义为private or proteceted， 但是对于多态来说，没有意义。），在基类的类定义中定义虚函数的一般形式：</p>
-
-<p>　　virtual 函数返回值类型 虚函数名（形参表）</p>
-
-<p>　　{ 函数体 }</p>
-
-<p>　　虚函数的作用是实现动态联编，也就是在程序的运行阶段动态地选择合适的成员函数，在定义了虚函数后，</p>
-
-<p>　　可以在基类的派生类中对虚函数重新定义（形式也 是：virtual 函数返回值类型 虚函数名（形参表）{ 函数体 }），在派生类中重新定义的函数应与虚函数具有相同的形参个数和形参类型。以实现统一的接口，不同定义过程。如果在派生类中没有对虚函数重新定义，则它继 承其基类的虚函数。当程序发现虚函数名前的关键字virtual后，会自动将其作为动态联编处理，即在程序运行时动态地选择合适的成员函数。</p>
-
-<p>　　实现动态联编需要三个条件：</p>
-
-<p>　　1、 必须把需要动态联编的行为定义为类的公共属性的虚函数。</p>
-
-<p>　　2、 类之间存在子类型关系，一般表现为一个类从另一个类公有派生而来。</p>
-
-<p>　　3、 必须先使用基类指针指向子类型的对象，然后直接或者间接使用基类指针调用虚函数。</p>
-
-<p>　　定义虚函数的限制：</p>
-
-<p>　　（1）非类的成员函数不能定义为虚函数，类的成员函数中静态 成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数。实际上，优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数 定义为虚函数后，当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。而不将析构函数定义为虚函数时，只调用基类的析 构函数。</p>
-
-<p>　　（2）只需要在声明函数的类体中使用关键字“virtual”将函数声明为虚函数，而定义函数时不需要使用关键字“virtual”。</p>
-
-<p>　　（3）如果声明了某个成员函数为虚函数，则在该类中不能出现和这个成员函数同名并且返回值、参数个数、参数类型都相同的非虚函数。在以该类为基类的派生类中，也不能出现这种非虚的同名同返回值同参数个数同参数类型函数。</p>
-
-<p>　　为什么虚函数必须是类的成员函数：</p>
-
-<p>　　虚函数诞生的目的就是为了实现多态，在类外定义虚函数毫无实际用处。</p>
-
-<p>　　为什么类的静态成员函数不能为虚函数：</p>
-
-<p>　　如果定义为虚函数，那么它就是动态绑定的，也就是在派生类中可以被覆盖的，这与静态成员函数的定义（：在内存中只有一份拷贝；通过类名或对象引用访问静态成员）本身就是相矛盾的。</p>
-
-<p>　　为什么构造函数不能为虚函数：</p>
-
-<p>　　因为如果构造函数为虚函数的话，它将在执行期间被构造，而执行期则需要对象已经建立，构造函数所完成的工作就 是为了建立合适的对象，因此在没有构建好的对象上不可能执行多态（虚函数的目的就在于实现多态性）的工作。在继承体系中，构造的顺序就是从基类到派生类， 其目的就在于确保对象能够成功地构建。构造函数同时承担着虚函数表的建立，如果它本身都是虚函数的话，如何确保vtbl的构建成功呢？</p>
-
-<p>　　注意：当基类的构造函数内部有虚函数时，会出现什么情况呢？ 结果是在构造函数中，虚函数机制不起作用了，调用虚函数如同调用一般的成员函数一样。当基类的析构函数内部有虚函数时，又如何工作呢？与构造函数相同，只 有“局部”的版本被调用。但是，行为相同，原因是不一样的。构造函数只能调用“局部”版本，是因为调用时还没有派生类版本的信息。析构函数则是因为派生类 版本的信息已经不可靠了。我们知道，析构函数的调用顺序与构造函数相反，是从派生类的析构函数到基类的析构函数。当某个类的析构函数被调用时，其派生类的 析构函数已经被调用了，相应的数据也已被丢失，如果再调用虚函数的派生类的版本，就相当于对一些不可靠的数据进行操作，这是非常危险的。因此，在析构函数 中，虚函数机制也是不起作用的。</p>
-
-<p>　　C++中的虚函数的作用主要是实现了多态的机制。关于多态， 简而言之就是用父类型别的指针指向其子类的实例，然后通过父类的指针调用实际子类的成员函数。这种技术可以让父类的指针有“多种形态”，这是一种泛型技 术。所谓泛型技术，说白了就是试图使用不变的代码（Or 不变的 接口）来实现可变的算法。比如：模板技术，RTTI技术，虚函数技术，要么是试图做到在编译时决议，要么试图做到运行时决议。</p>
-
-<p>　　关于虚函数的使用方法，我在这里不做过多的阐述。大家可以看看相关的C++的书籍。在这篇文章中，我只想从虚函数的实现机制上面为大家一个清晰的剖析。</p>
-
-<p>　　当然，相同的文章在网上也出现过一些了，但我总感觉这些文章不是很容易阅读，大段大段的代码，没有图片，没有详细的说明，没有比较，没有举一反三。不利于学习和阅读，所以这是我想写下这篇文章的原因。也希望大家多给我提意见</p>
-
-<p>言归正传，让我们一起进入虚函数的世界。</p>
-
-<p>　　虚函数表</p>
-
-<p>　　对C++ 了解的人都应该知道虚函数（Virtual Function）是通过一张虚函数表（Virtual Table）来实现的。简称为V-Table。在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。 这样，在有虚函数的类的实例（注：抽象类即有纯虚函数的类不能被实例化。）中这个表被分配在了这个实例的内存中（注：一个类的虚函数表是静态的，也就是说 对这个类的每个实例，他的虚函数表的是固定的，不会为每个实例生成一个相应的虚函数表。），所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表 就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。</p>
-
-<p>　　这里我们着重看一下这张虚函数表。在C++的标准规格说明书 中说到，编译器必需要保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证正确取到虚函数的偏移量）。这意味着我们通过对象实例的地址得到这张 虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。</p>
-
-<p>　　假设我们有这样的一个类：
-　　class Base { 　</p>
-
-<p>　　　public: 　　</p>
-
-<p>　　　　virtual void f() { cout &lt;&lt; “Base::f” &lt;&lt; endl; } 　</p>
-
-<p>　　　　virtual void g() { cout &lt;&lt; “Base::g” &lt;&lt; endl; } 　</p>
-
-<p>　　　　virtual void h() { cout &lt;&lt; “Base::h” &lt;&lt; endl; } 　</p>
-
-<p>　};</p>
-
-<p>　　按照上面的说法，我们可以通过Base的实例来得到Base的虚函数表。 下面是实际例程：
-　　{ 　　… 　　typedef void(*Fun)(void); 　　</p>
-
-<p>Base b; 　</p>
-
-<p>　　　Fun pFun = NULL;</p>
-
-<p>　　 　cout &lt;&lt; “虚函数表地址：” &lt;&lt; (int*)(&amp;b) &lt;&lt; endl; 　</p>
-
-<p>　　　cout &lt;&lt; “虚函数表 — 第一个函数地址：” &lt;&lt; (int<em>)</em>(int*)(&amp;b) &lt;&lt; endl; 　　// Invoke the first virtual function</p>
-
-<p>　　　pFun = (Fun)<em>((int</em>)<em>(int</em>)(&amp;b));</p>
-
-<p>　　　pFun(); 　　… 　</p>
-
-<p>　}</p>
-
-<p>　　实际运行经果如下(Windows XP+VS2003, Linux 2.6.22 + GCC 4.1.3) ：</p>
-
-<p>　　虚函数表地址：0012FED4</p>
-
-<p>　　虚函数表 — 第一个函数地址：0044F148</p>
-
-<p>　　Base::f</p>
-
-<p>　　通过这个示例，我们可以看到，我们可以通过强行 把&amp;b转成int <em>，取得虚函数表的地址，然后，再次取址就可以得到第一个虚函数的地址了，也就是Base::f()，这在上面的程序中得到了验证（把int</em> 强制转成了函数指针）。通过这个示例，我们就可以知道如果要调用Base::g()和Base::h()，其代码如下：</p>
-
-<p>　　(Fun)<em>((int</em>)<em>(int</em>)(&amp;b)+0); // Base::f()</p>
-
-<p>　　(Fun)<em>((int</em>)<em>(int</em>)(&amp;b)+1); // Base::g()</p>
-
-<p>　　(Fun)<em>((int</em>)<em>(int</em>)(&amp;b)+2); // Base::h()</p>
-
-<p>　　画个图解释一下。如下所示：</p>
-
-<p>　　注意：在上面这个图中，我在虚函数表的最后多加了一个结点，这是虚函数表的结束结点，就像字符串的结束符“\0”一样，其标志了虚函数表的结束。这个结束标志的值在不同的编译器下是不同的。</p>
-
-<p>　　在WinXP+VS2003下，这个值是NULL。</p>
-
-<p>　　而在Ubuntu 7.10 + Linux 2.6.22 + GCC 4.1.3下，这个值是如果1，表示还有下一个虚函数表，如果值是0，表示是最后一个虚函数表。</p>
-
-<p>　　下面，我将分别说明“无覆盖”和“有覆盖”时的子类虚函数表的样子。没有覆盖父类的虚函数是毫无意义的。我之所以要讲述没有覆盖的情况，主要目的是为了给一个对比。在比较之下，我们可以更加清楚地知道其内部的具体实现。</p>
-
-<p>一般继承（无虚函数覆盖）</p>
-
-<p>　　下面，再让我们来看看继承时的虚函数表是什么样的。假设有如下所示的一个继承关系：</p>
-
-<p>　　请注意，在这个继承关系中，子类没有重写任何父类的函数。那么，在派生类的实例的虚函数表如下所示：</p>
-
-<p>　　对于实例：Derive d; 的虚函数表如下： （overload（重载） 和 override（重写），重载就是所谓的名同而签名不同，重写就是对子类对虚函数的重新实现。）</p>
-
-<p>　　我们可以看到下面几点：</p>
-
-<p>　　1）虚函数按照其声明顺序放于表中。</p>
-
-<p>　　2）父类的虚函数在子类的虚函数前面。</p>
-
-<p>　　一般继承（有虚函数覆盖）</p>
-
-<p>　　覆盖父类的虚函数是很显然的事情，不然，虚函数就变得毫无意义。下面，我们来看一下，如果子类中有虚函数重载了父类的虚函数，会是一个什么样子？假设，我们有下面这样的一个继承关系。</p>
-
-<p>　　为了让大家看到被继承过后的效果，在这个类的设计中，我只覆盖了父类的一个函数：f()。那么，对于派生类的实例的虚函数表会是下面的样子：</p>
-
-<p>　　我们从表中可以看到下面几点，</p>
-
-<p>　　1）覆盖的f()函数被放到了子类虚函数表中原来父类虚函数的位置。</p>
-
-<p>　　2）没有被覆盖的函数依旧。</p>
-
-<p>　　这样，我们就可以看到对于下面这样的程序，</p>
-
-<p>　　Base *b = new Derive();</p>
-
-<p>　　b->f();</p>
-
-<p>　　由b所指的内存中的虚函数表（子类的虚函数表）的f()的位置已经被Derive::f()函数地址所取代，于是在实际调用发生时，是Derive::f()被调用了。这就实现了多态。</p>
-
-<p>多重继承（无虚函数覆盖）</p>
-
-<p>　　下面，再让我们来看看多重继承中的情况，假设有下面这样一个类的继承关系。注意：子类并没有覆盖父类的函数。</p>
-
-<p>　　对于子类实例中的虚函数表，是下面这个样子：</p>
-
-<p>　　我们可以看到：</p>
-
-<p>　　1） 每个父类都有自己的虚表。</p>
-
-<p>　　2） 子类的成员函数被放到了第一个父类的表中。（所谓的第一个父类是按照声明顺序来判断的）</p>
-
-<p>　　这样做就是为了解决不同的父类类型的指针指向同一个子类实例，而能够调用到实际的函数。</p>
-
-<p>　　多重继承（有虚函数覆盖）</p>
-
-<p>　　下面我们再来看看，如果发生虚函数覆盖的情况。</p>
-
-<p>　　下图中，我们在子类中覆盖了父类的f()函数。</p>
-
-<p>　　下面是对于子类实例中的虚函数表的图：</p>
-
-<p>　　我们可以看见，三个父类虚函数表中的f()的位置被替换成了子类的函数指针。这样，我们就可以用任一个父类指针来指向子类，并调用子类的f()了。如：</p>
-
-<p>　　　Derive d; 　</p>
-
-<p>　　　Base1 *b1 = &d; 　</p>
-
-<p>　　　Base2 *b2 = &d; 　　</p>
-
-<p>　　　Base3 *b3 = &d; 　</p>
-
-<p>　　　b1->f(); //Derive::f()</p>
-
-<p>　　　b2->f(); //Derive::f() 　</p>
-
-<p>　　　b3->f(); //Derive::f() 　　</p>
-
-<p>　　　b1->g(); //Base1::g() 　　</p>
-
-<p>　　　b2->g(); //Base2::g() 　</p>
-
-<p>　　　b3->g(); //Base3::g()</p>
-
-<p>安全性</p>
-
-<p>　　每次写C++的文章，总免不了要批判一下C++。这篇文章也不例外。通过上面的讲述，相信我们对虚函数表有一个比较细致的了解了。水可载舟，亦可覆舟。下面，让我们来看看我们可以用虚函数表来干点什么坏事吧。</p>
-
-<p>　　一、尝试：通过父类型的指针（指向子类对象）访问子类自己的虚函数</p>
-
-<p>　　我们知道，子类没有重载父类的虚函数是一件毫无意义的事情。因为多态也是要基于函数重载的。虽然在上面的图中我们可以看到子类的虚表中有Derive自己的虚函数，但我们根本不可能使用基类的指针来调用子类的自有虚函数：</p>
-
-<p>　　Base1 *b1 = new Derive();</p>
-
-<p>　　b1->f1(); //编译出错</p>
-
-<p>　　任何妄图使用父类指针想调用子类中的未覆盖父类的成员函数的行为都会被编译器视为非法，所以，这样的程序根本无法编译通过。</p>
-
-<p>　　但在运行时，我们可以通过指针的方式访问虚函数表来达到违反C++语义的行为。</p>
-
-<p>　　二、尝试：通过父类型的指针（指向子类对象）访问父类的non-public虚函数</p>
-
-<p>　　另外，如果父类的虚函数是private或是protected的，但这些非public的虚函数同样会存在于子类虚函数表中，所以我们同样可以使用访问虚函数表的方式来访问这些non-public的虚函数，这是很容易做到的。</p>
-
-<p>　　如：
-　　class Base { 　　private: 　　virtual void f() { cout &lt;&lt; “Base::f” &lt;&lt; endl; } 　　};</p>
-
-<p>　　class Derive : public Base{ 　　}; 　　</p>
-
-<p>　　typedef void(*Fun)(void); 　　</p>
-
-<p>　　void main()</p>
-
-<p>　　 { 　</p>
-
-<p>　　　Derive d; 　</p>
-
-<p>　　　Fun pFun = (Fun)<em>((int</em>)<em>(int</em>)(&amp;d)+0);</p>
-
-<p>　　　　pFun(); 　　</p>
-
-<p>　　}</p>
-
-<p>　　结束语</p>
-
-<p>　　C++这门语言是一门Magic的语言，对于程序员来说，我们似乎永远摸不清楚这门语言背着我们在干了什么。需要熟悉这门语言，我们就必需要了解C++里面的那些东西，需要去了解C++中那些危险的东西。不然，这是一种搬起石头砸自己脚的编程语言。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/c-plus-plus-zhong-de-xu-han-shu/">C++中的虚函数</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:46:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>转自:<a href="http://www.cnblogs.com/realyan/archive/2011/07/13/2105801.html">http://www.cnblogs.com/realyan/archive/2011/07/13/2105801.html</a></p>
-
-<p>一.简介</p>
-
-<p>虚函数是C++中用于实现多态(polymorphism)的机制。核心理念就是通过基类访问派生类定义的函数。假设我们有下面的类层次：</p>
-
-<p>class A {</p>
-
-<p>public: virtual void foo()</p>
-
-<p>{</p>
-
-<p>cout &lt;&lt; “A::foo() is called” &lt;&lt; endl;</p>
-
-<p>}</p>
-
-<p>};
-class B: public A</p>
-
-<p>{</p>
-
-<p>public: virtual void foo()</p>
-
-<p>{</p>
-
-<p>cout &lt;&lt; “B::foo() is called” &lt;&lt; endl;</p>
-
-<p>}</p>
-
-<p>};</p>
-
-<p>那么，在使用的时候，我们可以：　 A * a = new B();</p>
-
-<p>a->foo(); // 在这里，a虽然是指向A的指针，但是被调用的函数(foo)却是B的!</p>
-
-<p>这个例子是虚函数的一个典型应用，通过这个例子，也许你就对虚函数有了一些概念。它虚就虚在所谓“推迟联编”或者“动态联编”上，一个类函数的 调用并不是在编译时刻被确定的，而是在运行时刻被确定的。由于编写代码的时候并不能确定被调用的是基类的函数还是哪个派生类的函数，所以被成为“虚”函 数。
-虚函数只能借助于指针或者引用来达到多态的效果，如果是下面这样的代码，则虽然是虚函数，但它不是多态的：</p>
-
-<p>class A</p>
-
-<p>{</p>
-
-<p>public: virtual void foo();</p>
-
-<p>};</p>
-
-<p>class B: public A</p>
-
-<p>{</p>
-
-<p>virtual void foo();</p>
-
-<p>};
-void bar()</p>
-
-<p>{</p>
-
-<p>A a; a.foo(); // A::foo()被调用</p>
-
-<p>}</p>
-
-<p>1.1 多态　　在了解了虚函数的意思之后，再考虑什么是多态就很容易了。仍然针对上面的类层次，但是使用的方法变的复杂了一些：void bar(A * a)</p>
-
-<p>{ a->foo(); // 被调用的是A::foo() 还是B::foo()？ }</p>
-
-<p>因为foo()是个虚函数，所以在bar这个函数中，只根据这段代码，无从确定这里被调用的是A::foo()还是B::foo()，但是可以肯定的说：如果a指向的是A类的实例，则A::foo()被调用，如果a指向的是B类的实例，则B::foo()被调用。
-这种同一代码可以产生不同效果的特点，被称为“多态”。
-1.2 多态有什么用？ 　　多态这么神奇，但是能用来做什么呢？这个命题我难以用一两句话概括，一般的C++教程（或者其它面向对象语言的教程）都用一个画图的例子来展示多态的 用途，我就不再重复这个例子了，如果你不知道这个例子，随便找本书应该都有介绍。我试图从一个抽象的角度描述一下，回头再结合那个画图的例子，也许你就更 容易理解。
-在面向对象的编程中，首先会针对数据进行抽象（确定基类）和继承（确定派生类），构成类层次。这个类层次的使用者在使用它们的时 候，如果仍然在需要基类的时候写针对基类的代码，在需要派生类的时候写针对派生类的代码，就等于类层次完全暴露在使用者面前。如果这个类层次有任何的改变 （增加了新类），都需要使用者“知道”（针对新类写代码）。这样就增加了类层次与其使用者之间的耦合，有人把这种情况列为程序中的“bad smell”之一。
-多态可以使程序员脱离这种窘境。再回头看看1.1中的例子，bar()作为A-B这个类层次的使用者，它并不知道这个类层 次中有多少个类，每个类都叫什么，但是一样可以很好的工作，当有一个C类从A类派生出来后，bar()也不需要“知道”（修改）。这完全归功于多态–编 译器针对虚函数产生了可以在运行时刻确定被调用函数的代码。</p>
-
-<p>1.3 如何“动态联编” 　　编译器是如何针对虚函数产生可以再运行时刻确定被调用函数的代码呢？也就是说，虚函数实际上是如何被编译器处理的呢？Lippman在深度探索C++对象模型[1]中的不同章节讲到了几种方式，这里把“标准的”方式简单介绍一下。
-我所说的“标准”方式，也就是所谓的“VTABLE”机制。编译器发现一个类中有被声明为virtual的函数，就会为其搞一个虚函数表，也就是 VTABLE。VTABLE实际上是一个函数指针的数组，每个虚函数占用这个数组的一个slot。一个类只有一个VTABLE，不管它有多少个实例。派生 类有自己的VTABLE，但是派生类的VTABLE与基类的VTABLE有相同的函数排列顺序，同名的虚函数被放在两个数组的相同位置上。在创建类实例的 时候，编译器还会在每个实例的内存布局中增加一个vptr字段，该字段指向本类的VTABLE。通过这些手段，编译器在看到一个虚函数调用的时候，就会将 这个调用改写，针对1.1中的例子：</p>
-
-<p>void bar(A * a) { a->foo(); }</p>
-
-<p>会被改写为：</p>
-
-<p>void bar(A * a) { (a->vptr[1])(); }</p>
-
-<p>因为派生类和基类的foo()函数具有相同的VTABLE索引，而他们的vptr又指向不同的VTABLE，因此通过这样的方法可以在运行时刻决定调用哪个foo()函数。
-虽然实际情况远非这么简单，但是基本原理大致如此。
-1.4 overload和override 　　虚函数总是在派生类中被改写，这种改写被称为“override”。我经常混淆“overload”和“override”这两个单词。但是随着各类C++的书越来越多，后来的程序员也许不会再犯我犯过的错误了。但是我打算澄清一下：
-override是指派生类重写基类的虚函数，就象我们前面B类中重写了A类中的foo()函数。重写的函数必须有一致的参数表和返回值（C++标准允 许返回值不同的情况，这个我会在“语法”部分简单介绍，但是很少编译器支持这个feature）。这个单词好象一直没有什么合适的中文词汇来对应，有人译 为“覆盖”，还贴切一些。 overload约定成俗的被翻译为“重载”。是指编写一个与已有函数同名但是参数表不同的函数。例如一个函数即可以接受整型数作为参数，也可以接受浮点 数作为参数。
-二. 虚函数的语法 　　虚函数的标志是“virtual”关键字。
-2.1 使用virtual关键字　　考虑下面的类层次：</p>
-
-<p>class A { public: virtual void foo(); };
-class B: public A { public: void foo(); // 没有virtual关键字! };
-class C: public B // 从B继承，不是从A继承！ { public: void foo(); // 也没有virtual关键字！ };</p>
-
-<p>这种情况下，B::foo()是虚函数，C::foo()也同样是虚函数。因此，可以说，基类声明的虚函数，在派生类中也是虚函数，即使不再使用virtual关键字。
-2.2 纯虚函数　　如下声明表示一个函数为纯虚函数：</p>
-
-<p>class A { public: virtual void foo()=0; // =0标志一个虚函数为纯虚函数 };</p>
-
-<p>一个函数声明为纯虚后，纯虚函数的意思是：我是一个抽象类！不要把我实例化！纯虚函数用来规范派生类的行为，实际上就是所谓的“接口”。它告诉使用者，我的派生类都会有这个函数。
-2.3 虚析构函数　　析构函数也可以是虚的，甚至是纯虚的。例如：</p>
-
-<p>class A { public: virtual ~A()=0; // 纯虚析构函数 };</p>
-
-<p>当一个类打算被用作其它类的基类时，它的析构函数必须是虚的。考虑下面的例子：</p>
-
-<p>class A {</p>
-
-<p>public: A() { ptra_ = new char[10];}</p>
-
-<p>~A() { delete[] ptra_;} // 非虚析构函数</p>
-
-<p>private: char * ptra<em>; };
-class B: public A { public: B() { ptrb</em> = new char[20];}</p>
-
-<p>~B() { delete[] ptrb<em>;} private: char * ptrb</em>; };
-void foo() { A * a = new B; delete a; }</p>
-
-<p>在这个例子中，程序也许不会象你想象的那样运行，在执行delete a的时候，实际上只有A::~A()被调用了，而B类的析构函数并没有被调用！这是否有点儿可怕？
-如果将上面A::~A()改为virtual，就可以保证B::~B()也在delete a的时候被调用了。因此基类的析构函数都必须是virtual的。
-纯虚的析构函数并没有什么作用，是虚的就够了。通常只有在希望将一个类变成抽象类（不能实例化的类），而这个类又没有合适的函数可以被纯虚化的时候，可以使用纯虚的析构函数来达到目的。
-2.4 虚构造函数？ 　　构造函数不能是虚的。
-三. 虚函数使用技巧</p>
-
-<p>3.1 private的虚函数 　　考虑下面的例子：</p>
-
-<p>class A { public:</p>
-
-<p>void foo() { bar();}</p>
-
-<p>private:</p>
-
-<p>virtual void bar() { …}</p>
-
-<p>};
-class B: public A</p>
-
-<p>{</p>
-
-<p>private: virtual void bar() { …}</p>
-
-<p>};</p>
-
-<p>在这个例子中，虽然bar()在A类中是private的，但是仍然可以出现在派生类中，并仍然可以与public 或者protected的虚函数一样产生多态的效果。并不会因为它是private的，就发生A::foo()不能访问B::bar()的情况，也不会发 生B::bar()对A::bar()的override不起作用的情况。
-这种写法的语意是：A告诉B，你最好override我的bar()函数，但是你不要管它如何使用，也不要自己调用这个函数。
-3.2 构造函数和析构函数中的虚函数调用　　一个类的虚函数在它自己的构造函数和析构函数中被调用的时候，它们就变成普通函数了，不“虚”了。也就是说不能在构造函数和析构函数中让自己“多态”。例如：</p>
-
-<p>class A {</p>
-
-<p>public: A() { foo();} // 在这里，无论如何都是A::foo()被调用！</p>
-
-<p>~A() { foo();} // 同上</p>
-
-<p>virtual void foo();</p>
-
-<p>};
-class B: public A</p>
-
-<p>{</p>
-
-<p>public: virtual void foo();</p>
-
-<p>};
-void bar()</p>
-
-<p>{</p>
-
-<p>A * a = new B;</p>
-
-<p>delete a;</p>
-
-<p>}</p>
-
-<p>如果你希望delete a的时候，会导致B::foo()被调用，那么你就错了。同样，在new B的时候，A的构造函数被调用，但是在A的构造函数中，被调用的是A::foo()而不是B::foo()。
-3.3 多继承中的虚函数 3.4 什么时候使用虚函数 　　在你设计一个基类的时候，如果发现一个函数需要在派生类里有不同的表现，那么它就应该是虚的。从设计的角度讲，出现在基类中的虚函数是接口，出现在派生类中的虚函数是接口的具体实现。通过这样的方法，就可以将对象的行为抽象化。
-以设计模式[2]中Factory Method模式为例，Creator的factoryMethod()就是虚函数，派生类override这个函数后，产生不同的Product类，被 产生的Product类被基类的AnOperation()函数使用。基类的AnOperation()函数针对Product类进行操作，当然 Product类一定也有多态（虚函数）。</p>
-
-<p>另外一个例子就是集合操作，假设你有一个以A类为基类的类层次，又用了一个std::vector来保存这个类层次中不同类的实例指针，那么你一定希望在对这个集合中的类进行操作的时候，不要把每个指针再cast回到它原来的类型（派生类），而是希望对他们进行同样的操作。那么就应该将这个“一样的操作”声明为virtual。
-现实中，远不只我举的这两个例子，但是大的原则都是我前面说到的“如果发现一个函数需要在派生类里有不同的表现，那么它就应该是虚的”。这句话也可以反过来说：“如果你发现基类提供了虚函数，那么你最好override它”。</p>
-
-<p>附：C++中的虚函数和纯虚函数用法</p>
-
-<p>1.虚函数和纯虚函数可以定义在同一个类(class)中，含有纯虚函数的类被称为抽象类（abstract class），而只含有虚函数的类（class）不能被称为抽象类（abstract class）。
-2.虚函数可以被直接使用，也可以被子类（sub class）重载以后以多态的形式调用，而纯虚函数必须在子类（sub class）中实现该函数才可以使用，因为纯虚函数在基类（base class） 只有声明而没有定义。
-3.虚函数和纯虚函数都可以在子类（sub class）中被重载，以多态的形式被调用。
-　　4.虚函数和纯虚函数通常存在于抽象基类（abstract base class -ABC）之中，被继承的子类重载，目的是提供一个统一的接口。
-　　5. 虚函数的定义形式：virtual {method body} ；纯虚函数的定义形式：virtual { } = 0; 在虚函数和纯虚函数的定义中不能有static标识符，原因很简单，被static修饰的函数在编译时候要求前期bind,然而虚函数却是动态绑定 （run-time bind），而且被两者修饰的函数生命周期（life recycle）也不一样。</p>
-
-<p>6.如果一个类中含有纯虚函数，那么任何试图对该类进行实例化的语句都将导致错误的产生，因为抽象基类（ABC）是不能被直接调用的。必须被子类继承重载以后，根据要求调用其子类的方法。
-以下为一个简单的虚函数和纯虚寒数的使用演示，目的是抛砖引玉！</p>
-
-<p>class Virtualbase</p>
-
-<p>{</p>
-
-<p>public:</p>
-
-<p>virtual void Demon()= 0; //prue virtual function</p>
-
-<p>virtual void Base() {cout&lt;&lt;”this is farther class”&lt;}; //sub class</p>
-
-<p>void main() {  Virtualbase* inst = new SubVirtual(); //multstate pointer</p>
-
-<p>inst->Demon();</p>
-
-<p>inst->Base(); // inst = new Virtualbase(); // inst->Base()</p>
-
-<p>return ;</p>
-
-<p>}</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1754,23 +2164,23 @@ void bar()</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/">运维的那些命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/centosqi-dong/">Centos启动</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/shell/">Shell</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/19/wang-yi-bi-shi/">网易笔试</a>
       </li>
     
       <li class="post">
         <a href="/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi/">企鹅实习生笔试</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/19/zhe-san-tian/">这三天</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti/">多线程之生产者于消费者问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/18/xin-jiao-tong-gui-ze/">新交通规则</a>
       </li>
     
   </ul>
