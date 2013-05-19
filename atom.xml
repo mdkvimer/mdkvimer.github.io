@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T14:23:01+08:00</updated>
+  <updated>2013-05-19T14:26:33+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -432,7 +432,7 @@ create_module   创建可装载的模块项
 delete_module   删除可装载的模块项
 init_module     初始化模块
 query_module    查询模块信息
-*get_kernel_syms    取得核心符号,已被query_module代替
+get_kernel_syms     取得核心符号,已被query_module代替
  &#8220;`
 四、内存管理</p>
 
