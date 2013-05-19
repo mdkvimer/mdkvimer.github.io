@@ -9,7 +9,20 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="uname -a # 查看内核/操作系统/CPU信息 # head -n 1 /etc/issue # 查看操作系统版本 cat /proc/cpuinfo # 查看CPU信息 hostname # 查看计算机名 lspci -tv # 列出所有PCI设备 lsusb -tv # &hellip;">
+  <meta name="description" content="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+# uname -a # 查看内核/操作系统/CPU信息 # head -n 1 /etc/issue # 查看操作系统版本 # cat /proc/cpuinfo # 查看CPU信息 # hostname # 查看计算机名 # &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -97,35 +110,62 @@
   </header>
 
 
-<div class="entry-content"><h1>uname -a               # 查看内核/操作系统/CPU信息   # head -n 1 /etc/issue   # 查看操作系统版本</h1>
+<div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># uname -a               # 查看内核/操作系统/CPU信息   # head -n 1 /etc/issue   # 查看操作系统版本
+</span><span class='line'>
+</span><span class='line'># cat /proc/cpuinfo      # 查看CPU信息
+</span><span class='line'>
+</span><span class='line'># hostname               # 查看计算机名
+</span><span class='line'>
+</span><span class='line'># lspci -tv              # 列出所有PCI设备
+</span><span class='line'>
+</span><span class='line'># lsusb -tv              # 列出所有USB设备
+</span><span class='line'>
+</span><span class='line'># lsmod                  # 列出加载的内核模块
+</span><span class='line'>
+</span><span class='line'># env                    # 查看环境变量</span></code></pre></td></tr></table></div></figure>
 
-<h1>cat /proc/cpuinfo      # 查看CPU信息</h1>
-
-<h1>hostname               # 查看计算机名</h1>
-
-<h1>lspci -tv              # 列出所有PCI设备</h1>
-
-<h1>lsusb -tv              # 列出所有USB设备</h1>
-
-<h1>lsmod                  # 列出加载的内核模块</h1>
-
-<h1>env                    # 查看环境变量</h1>
 
 <p>资源</p>
 
-<h1>free -m                # 查看内存使用量和交换区使用量   # df -h                  # 查看各分区使用情况</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># free -m                # 查看内存使用量和交换区使用量   # df -h                  # 查看各分区使用情况
+</span><span class='line'>
+</span><span class='line'># du -sh &lt;目录名&gt;        # 查看指定目录的大小
+</span><span class='line'>
+</span><span class='line'># grep MemTotal /proc/meminfo   # 查看内存总量
+</span><span class='line'>
+</span><span class='line'># grep MemFree /proc/meminfo    # 查看空闲内存量
+</span><span class='line'>
+</span><span class='line'># uptime                 # 查看系统运行时间、用户数、负载
+</span><span class='line'>
+</span><span class='line'># cat /proc/loadavg      # 查看系统负载</span></code></pre></td></tr></table></div></figure>
 
-<h1>du -sh &lt;目录名&gt;        # 查看指定目录的大小</h1>
 
-<h1>grep MemTotal /proc/meminfo   # 查看内存总量</h1>
-
-<h1>grep MemFree /proc/meminfo    # 查看空闲内存量</h1>
-
-<h1>uptime                 # 查看系统运行时间、用户数、负载</h1>
-
-<h1>cat /proc/loadavg      # 查看系统负载</h1>
-
-<p>磁盘和分区</p>
+<p>磁盘和分区
+ &#8220;`</p>
 
 <h1>mount | column -t      # 查看挂接的分区状态   # fdisk -l               # 查看所有分区</h1>
 
@@ -135,11 +175,17 @@
 
 <h1>dmesg | grep IDE       # 查看启动时IDE设备检测状况</h1>
 
-<p>网络</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 网络
+</span><span class='line'> ```  
+</span><span class='line'># ifconfig               # 查看所有网络接口的属性   # iptables -L            # 查看防火墙设置
+</span><span class='line'>
+</span><span class='line'># route -n               # 查看路由表</span></code></pre></td></tr></table></div></figure>
 
-<h1>ifconfig               # 查看所有网络接口的属性   # iptables -L            # 查看防火墙设置</h1>
-
-<h1>route -n               # 查看路由表</h1>
 
 <h1>netstat -lntp          # 查看所有监听端口</h1>
 
@@ -147,12 +193,19 @@
 
 <h1>netstat -s             # 查看网络统计信息</h1>
 
-<p>进程
-1   2</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>进程</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <h1>ps -ef                 # 查看所有进程   # top                    # 实时显示进程状态</h1>
 
-<p>用户</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>用户</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <h1>w                      # 查看活动用户   # id &lt;用户名&gt;            # 查看指定用户信息</h1>
 
@@ -164,13 +217,20 @@
 
 <h1>crontab -l             # 查看当前用户的计划任务</h1>
 
-<p>服务</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>服务
+</span><span class='line'> ```
+</span><span class='line'># chkconfig –list       # 列出所有系统服务   # chkconfig –list | grep on    # 列出所有启动的系统服务</span></code></pre></td></tr></table></div></figure>
 
-<h1>chkconfig –list       # 列出所有系统服务   # chkconfig –list | grep on    # 列出所有启动的系统服务</h1>
 
-<p>程序</p>
+<p>程序
+ &#8220;`</p>
 
 <h1>rpm -qa                # 查看所有安装的软件包</h1>
+
+<p> &#8220;`</p>
 </div>
 
 

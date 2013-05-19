@@ -133,7 +133,7 @@ Boot Loader</p>
 <p>其实每个文件系统 (filesystem, 或者是 partition) 都会保留一块启动磁区 (boot sector) 提供操作系统安装 boot loader ， 而通常操作系统默认都会安装一份 loader 到他根目录所在的文件系统的 boot sector 上。如果我们在一部主机上面安装 Windows 与 Linux 后，该 boot sector, boot loader 与 MBR 的相关性会有点像下图：</p>
 
 <p>图 1.2.1、 boot loader 安装在 MBR, boot sector 与操作系统的关系
-如上图所示，每个操作系统默认是会安装一套 boot loader 到他自己的文件系统中 (就是每个 filesystem 左下角的方框)，而在 Linux 系统安装时，你可以选择将 boot loader 安装到 MBR 去，也可以选择不安装。 如果选择安装到 MBR 的话，那理论上你在 MBR 与 boot sector 都会保有一份 boot loader 程序的。 至於 Windows 安装时，他默认会主动的将 MBR 与 boot sector 都装上一份 boot loader！所以啦， 你会发现安装多重操作系统时，你的 MBR 常常会被不同的操作系统的 boot loader 所覆盖啦！ ^_^</p>
+如上图所示，每个操作系统默认是会安装一套 boot loader 到他自己的文件系统中 (就是每个 filesystem 左下角的方框)，而在 Linux 系统安装时，你可以选择将 boot loader 安装到 MBR 去，也可以选择不安装。 如果选择安装到 MBR 的话，那理论上你在 MBR 与 boot sector 都会保有一份 boot loader 程序的。 至於 Windows 安装时，他默认会主动的将 MBR 与 boot sector 都装上一份 boot loader！所以啦， 你会发现安装多重操作系统时，你的 MBR 常常会被不同的操作系统的 boot loader 所覆盖啦！ ^^</p>
 
 <p>我们刚刚提到的两个问题还是没有解决啊！虽然各个操作系统都可以安装一份 boot loader 到他们的 boot sector 中， 这样操作系统可以透过自己的 boot loader 来加载核心了。问题是系统的 MBR 只有一个哩！ 你要怎么运行 boot sector 里面的 loader 啊？</p>
 
@@ -155,12 +155,19 @@ Boot Loader</p>
 
 <p>当我们藉由 boot loader 的管理而开始读取核心文件后，接下来， Linux 就会将核心解压缩到主内存当中， 并且利用核心的功能，开始测试与驱动各个周边装置，包括储存装置、CPU、网络卡、声卡等等。 此时 Linux 核心会以自己的功能重新侦测一次硬件，而不一定会使用 BIOS 侦测到的硬件资讯喔！也就是说，核心此时才开始接管 BIOS 后的工作了。 那么核心文件在哪里啊？一般来说，他会被放置到 /boot 里面，并且取名为 /boot/vmlinuz 才对！</p>
 
-<p>[root@www ~]# ls &mdash;format=single-column -F /boot
-config-2.6.18-92.el5      &lt;==此版本核心被编译时选择的功能与模块配置档
-grub/                     &lt;==就是启动管理程序 grub 相关数据目录
-initrd-2.6.18-92.el5.img  &lt;==虚拟文件系统档！
-System.map-2.6.18-92.el5  &lt;==核心功能放置到内存位址的对应表
-vmlinuz-2.6.18-92.el5     &lt;==就是核心文件啦！最重要者！</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# ls --format=single-column -F /boot
+</span><span class='line'>config-2.6.18-92.el5      &lt;==此版本核心被编译时选择的功能与模块配置档
+</span><span class='line'>grub/                     &lt;==就是启动管理程序 grub 相关数据目录
+</span><span class='line'>initrd-2.6.18-92.el5.img  &lt;==虚拟文件系统档！
+</span><span class='line'>System.map-2.6.18-92.el5  &lt;==核心功能放置到内存位址的对应表
+</span><span class='line'>vmlinuz-2.6.18-92.el5     &lt;==就是核心文件啦！最重要者！</span></code></pre></td></tr></table></div></figure>
+
 
 <p>从上表我们也可以知道此版本的 Linux 核心为 2.6.18-92.el5 这个版本！为了硬件开发商与其他核心功能开发者的便利， 因此 Linux 核心是可以透过动态加载核心模块的 (就请想成驱动程序即可)，这些核心模块就放置在 /lib/modules/ 目录内。 由于模块放置到磁盘根目录内 (要记得 /lib 不可以与 / 分别放在不同的 partition ！)， 因此在启动的过程中核心必须要挂载根目录，这样才能够读取核心模块提供加载驱动程序的功能。 而且为了担心影响到磁碟内的文件系统，因此启动过程中根目录是以唯读的方式来挂载的喔。</p>
 
@@ -173,7 +180,8 @@ vmlinuz-2.6.18-92.el5     &lt;==就是核心文件啦！最重要者！</p>
 <p>如上图所示，boot loader 可以加载 kernel 与 initrd ，然后在内存中让 initrd 解压缩成为根目录， kernel 就能够藉此加载适当的驱动程序，最终释放虚拟文件系统，并挂载实际的根目录文件系统， 就能够开始后续的正常启动流程。更详细的 initrd 说明，你可以自行使用 man initrd 去查阅看看。 底下让我们来了解一下 CentOS 5.x 的 initrd 文件内容有什么吧！
 复制代码</p>
 
-<p>[root@www ~]# mkdir /tmp/initrd
+<p> &#8220;`
+[root@www ~]# mkdir /tmp/initrd
 [root@www ~]# cp /boot/initrd-2.6.18-92.el5.img /tmp/initrd/
 [root@www ~]# cd /tmp/initrd
 [root@www initrd]# file initrd-2.6.18-92.el5.img
@@ -195,9 +203,10 @@ drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 lib
 drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 proc
 lrwxrwxrwx 1 root root       3 Apr 10 02:05 sbin &ndash;> bin
 drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sys
-drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sysroot</p>
-
-<p>[root@www initrd]# cat init</p>
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sysroot
+ <code>
+</code>
+[root@www initrd]# cat init</p>
 
 <h1>!/bin/nash                  &lt;==使用类似 bash 的 shell 来运行</h1>
 
@@ -211,9 +220,9 @@ insmod /lib/ehci-hcd.ko      &lt;==加载各项核心模块，就是驱动程序
 &hellip;.(中间省略)&hellip;.
 echo Creating root device.
 mkrootdev -t ext3 -o defaults,ro hdc2 &lt;==尝试挂载根目录啦！
-&hellip;.(底下省略)&hellip;.</p>
-
-<p>复制代码</p>
+&hellip;.(底下省略)&hellip;.
+&#8220;`
+复制代码</p>
 
 <p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
 
@@ -267,47 +276,91 @@ mkrootdev -t ext3 -o defaults,ro hdc2 &lt;==尝试挂载根目录啦！
 <p>按照惯例，这个列表以man pages第2节，即系统调用节为蓝本。按照笔者的理解，对其作了大致的分类，同时也作了一些小小的修改，删去了几个仅供内核使用，不允许用户调用的系统调用，对个别本人稍觉不妥的地方作了一些小的修改，并对所有列出的系统调用附上简要注释。</p>
 
 <p>其中有一些函数的作用完全相同，只是参数不同。（可能很多熟悉C++朋友马上就能联想起函数重载，但是别忘了Linux核心是用C语言写的，所以只 能取成不同的函数名）。还有一些函数已经过时，被新的更好的函数所代替了（gcc在链接这些函数时会发出警告），但因为兼容的原因还保留着，这些函数我会 在前面标上“*”号以示区别。
-一、进程控制：
-fork    创建一个新进程
-clone   按指定条件创建子进程
-execve  运行可执行文件
-exit    中止进程
-_exit   立即中止当前进程
-getdtablesize   进程所能打开的最大文件数
-getpgid     获取指定进程组标识号
-setpgid     设置指定进程组标志号
-getpgrp     获取当前进程组标识号
-setpgrp     设置当前进程组标志号
-getpid  获取进程标识号
-getppid     获取父进程标识号
-getpriority     获取调度优先级
-setpriority     设置调度优先级
-modify_ldt  读写进程的本地描述表
-nanosleep   使进程睡眠指定的时间
-nice    改变分时进程的优先级
-pause   挂起进程，等待信号
-personality     设置进程运行域
-prctl   对进程进行特定操作
-ptrace  进程跟踪
-sched_get_priority_max  取得静态优先级的上限
-sched_get_priority_min  取得静态优先级的下限
-sched_getparam  取得进程的调度参数
-sched_getscheduler  取得指定进程的调度策略
-sched_rr_get_interval   取得按RR算法调度的实时进程的时间片长度
-sched_setparam  设置进程的调度参数
-sched_setscheduler  设置指定进程的调度策略和参数
-sched_yield     进程主动让出处理器,并将自己等候调度队列队尾
-vfork   创建一个子进程，以供执行新程序，常与execve等同时使用
-wait    等待子进程终止
-wait3   参见wait
-waitpid     等待指定子进程终止
-wait4   参见waitpid
-capget  获取进程权限
-capset  设置进程权限
-getsid  获取会晤标识号
-setsid  设置会晤标识号</p>
+一、进程控制：</p>
 
-<p>二、文件系统控制</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>fork     创建一个新进程
+</span><span class='line'>clone     按指定条件创建子进程
+</span><span class='line'>execve    运行可执行文件
+</span><span class='line'>exit  中止进程
+</span><span class='line'>_exit     立即中止当前进程
+</span><span class='line'>getdtablesize     进程所能打开的最大文件数
+</span><span class='line'>getpgid   获取指定进程组标识号
+</span><span class='line'>setpgid   设置指定进程组标志号
+</span><span class='line'>getpgrp   获取当前进程组标识号
+</span><span class='line'>setpgrp   设置当前进程组标志号
+</span><span class='line'>getpid    获取进程标识号
+</span><span class='line'>getppid   获取父进程标识号
+</span><span class='line'>getpriority   获取调度优先级
+</span><span class='line'>setpriority   设置调度优先级
+</span><span class='line'>modify_ldt    读写进程的本地描述表
+</span><span class='line'>nanosleep     使进程睡眠指定的时间
+</span><span class='line'>nice  改变分时进程的优先级
+</span><span class='line'>pause     挂起进程，等待信号
+</span><span class='line'>personality   设置进程运行域
+</span><span class='line'>prctl     对进程进行特定操作
+</span><span class='line'>ptrace    进程跟踪
+</span><span class='line'>sched_get_priority_max    取得静态优先级的上限
+</span><span class='line'>sched_get_priority_min    取得静态优先级的下限
+</span><span class='line'>sched_getparam    取得进程的调度参数
+</span><span class='line'>sched_getscheduler    取得指定进程的调度策略
+</span><span class='line'>sched_rr_get_interval     取得按RR算法调度的实时进程的时间片长度
+</span><span class='line'>sched_setparam    设置进程的调度参数
+</span><span class='line'>sched_setscheduler    设置指定进程的调度策略和参数
+</span><span class='line'>sched_yield   进程主动让出处理器,并将自己等候调度队列队尾
+</span><span class='line'>vfork     创建一个子进程，以供执行新程序，常与execve等同时使用
+</span><span class='line'>wait  等待子进程终止
+</span><span class='line'>wait3     参见wait
+</span><span class='line'>waitpid   等待指定子进程终止
+</span><span class='line'>wait4     参见waitpid
+</span><span class='line'>capget    获取进程权限
+</span><span class='line'>capset    设置进程权限
+</span><span class='line'>getsid    获取会晤标识号
+</span><span class='line'>setsid    设置会晤标识号
+</span><span class='line'>
+</span><span class='line'> ```
+</span><span class='line'>二、文件系统控制</span></code></pre></td></tr></table></div></figure>
+
 
 <p>1、文件读写操作
 fcntl   文件控制
@@ -331,8 +384,11 @@ ftruncate   参见truncate
 umask   设置文件权限掩码
 fsync   把文件在内存中的部分写回磁盘</p>
 
-<p>2、文件系统操作
-access  确定文件的可存取性
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2、文件系统操作</span></code></pre></td></tr></table></div></figure>
+
+
+<p>access  确定文件的可存取性
 chdir   改变当前工作目录
 fchdir  参见chdir
 chmod   改变文件方式
@@ -363,8 +419,13 @@ utime   改变文件的访问修改时间
 utimes  参见utime
 quotactl    控制磁盘配额</p>
 
-<p>三、系统控制
-ioctl   I/O总控制函数
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>三、系统控制</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ioctl   I/O总控制函数
 _sysctl     读/写系统参数
 acct    启用或禁止进程记账
 getrlimit   获取系统资源上限
@@ -399,8 +460,13 @@ init_module     初始化模块
 query_module    查询模块信息
 *get_kernel_syms    取得核心符号,已被query_module代替</p>
 
-<p>四、内存管理
-brk     改变数据段空间的分配
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>四、内存管理</span></code></pre></td></tr></table></div></figure>
+
+
+<p>brk     改变数据段空间的分配
 sbrk    参见brk
 mlock   内存页面加锁
 munlock     内存页面解锁
@@ -415,16 +481,26 @@ getpagesize     获取页面大小
 sync    将内存缓冲区数据写回硬盘
 cacheflush  将指定缓冲区中的内容写回磁盘</p>
 
-<p>五、网络管理
-getdomainname   取域名
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>五、网络管理</span></code></pre></td></tr></table></div></figure>
+
+
+<p>getdomainname   取域名
 setdomainname   设置域名
 gethostid   获取主机标识号
 sethostid   设置主机标识号
 gethostname     获取本主机名称
 sethostname     设置主机名称</p>
 
-<p>六、socket控制
-socketcall  socket系统调用
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>六、socket控制</span></code></pre></td></tr></table></div></figure>
+
+
+<p>socketcall  socket系统调用
 socket  建立socket
 bind    绑定socket到端口
 connect     连接远程主机
@@ -445,8 +521,11 @@ setsockopt  设置端口参数
 sendfile    在文件或端口间传输数据
 socketpair  创建一对已联接的无名socket</p>
 
-<p>七、用户管理
-getuid  获取用户标识号
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>七、用户管理</span></code></pre></td></tr></table></div></figure>
+
+
+<p>getuid  获取用户标识号
 setuid  设置用户标志号
 getgid  获取组标识号
 setgid  设置组标志号
@@ -465,12 +544,19 @@ setfsuid    设置文件系统检查时使用的用户标识号
 getgroups   获取后补组标志清单
 setgroups   设置后补组标志清单</p>
 
-<p>八、进程间通信</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>八、进程间通信</span></code></pre></td></tr></table></div></figure>
+
 
 <p>ipc     进程间通信总控制调用</p>
 
-<p>1、信号
-sigaction   设置对指定信号的处理方法
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1、信号</span></code></pre></td></tr></table></div></figure>
+
+
+<p>sigaction   设置对指定信号的处理方法
 sigprocmask     根据参数对信号集中的信号执行阻塞/解除阻塞等操作
 sigpending  为指定的被阻塞信号设置队列
 sigsuspend  挂起进程等待特定信号
@@ -484,25 +570,38 @@ kill    向进程或进程组发信号
 sigvec  为兼容BSD而设的信号处理函数,作用类似sigaction
 ssetmask    ANSI C的信号处理函数,作用类似sigaction</p>
 
-<p>2、消息
-msgctl  消息控制操作
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2、消息</span></code></pre></td></tr></table></div></figure>
+
+
+<p>msgctl  消息控制操作
 msgget  获取消息队列
 msgsnd  发消息
 msgrcv  取消息</p>
 
-<p>3、管道
-pipe    创建管道</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>3、管道</span></code></pre></td></tr></table></div></figure>
 
-<p>4、信号量
-semctl  信号量控制
+
+<p>pipe    创建管道</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>4、信号量</span></code></pre></td></tr></table></div></figure>
+
+
+<p>semctl  信号量控制
 semget  获取一组信号量
 semop   信号量操作</p>
 
-<p>5、共享内存
-shmctl  控制共享内存
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>5、共享内存</span></code></pre></td></tr></table></div></figure>
+
+
+<p>shmctl  控制共享内存
 shmget  获取共享内存
 shmat   连接共享内存
-shmdt   拆卸共享内存</p>
+shmdt   拆卸共享内存
+&#8220;`</p>
 
 <p>参考资料</p>
 
@@ -553,172 +652,339 @@ Advanced Programming in the UNIX Environment, W. Richard Stevens, 1993
 
 <p>3.显示内存分配情况</p>
 
-<p> #include&lt;stdio.h>
- #include&lt;unistd.h>
- #include&lt;stdlib.h>
- #include&lt;string.h>
- #include&lt;sys/wait.h>
- #include&lt;sys/typs.h>
- #define MEMSIZE 100 <br/>
- #define MINSIZE 2  <br/>
-typedef struct MemoryInformation{
-int start;<br/>
-int size;<br/>
-char info;<br/>
-}MEMINFO;
-MEMINFO MemList[MEMSIZE];
-void Display();
-void InitAll()
-{
-int i;
-MEMINFO temp={0,0,’e&#8217;};
-for(i=0;i&lt;MEMSIZE;i++)
-MemList[i]=temp;
-MemList[0].start = 0;
-MemList[0].size = MEMSIZE;
-MemList[0].info = ‘f’;
-}</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> #include&lt;stdio.h&gt;
+</span><span class='line'> #include&lt;unistd.h&gt;
+</span><span class='line'> #include&lt;stdlib.h&gt;
+</span><span class='line'> #include&lt;string.h&gt;
+</span><span class='line'> #include&lt;sys/wait.h&gt;
+</span><span class='line'> #include&lt;sys/typs.h&gt;
+</span><span class='line'> #define MEMSIZE 100   
+</span><span class='line'> #define MINSIZE 2    
+</span><span class='line'>typedef struct MemoryInformation{
+</span><span class='line'>int start;  
+</span><span class='line'>int size;  
+</span><span class='line'>char info;  
+</span><span class='line'>}MEMINFO;
+</span><span class='line'>MEMINFO MemList[MEMSIZE];
+</span><span class='line'>void Display();
+</span><span class='line'>void InitAll()
+</span><span class='line'>{
+</span><span class='line'>int i;
+</span><span class='line'>MEMINFO temp={0,0,’e'};
+</span><span class='line'>for(i=0;i&lt;MEMSIZE;i++)
+</span><span class='line'>MemList[i]=temp;
+</span><span class='line'>MemList[0].start = 0;
+</span><span class='line'>MemList[0].size = MEMSIZE;
+</span><span class='line'>MemList[0].info = ‘f’;
+</span><span class='line'>}
+</span><span class='line'> 
+</span><span class='line'>void FirstFit_new()
+</span><span class='line'>{
+</span><span class='line'>int i,j,size;
+</span><span class='line'>char temp[10];
+</span><span class='line'>printf(“How MAny MEMORY do you require?”);
+</span><span class='line'>scanf(“%d”,&size);
+</span><span class='line'>for(i=0;i &lt; MEMSIZE -1 && MemList[i].info!=’e';i++){
+</span><span class='line'>if(MemList[i].size &gt;= size && MemList[i].info==’f'){
+</span><span class='line'>if(MemList[i].size – size &lt;= MINSIZE)
+</span><span class='line'>MemList[i].info=’u';
+</span><span class='line'>else{
+</span><span class='line'>for(j=MEMSIZE – 2;j &gt; i;j–){
+</span><span class='line'>MemList[j+1] = MemList[j];
+</span><span class='line'>}
+</span><span class='line'>MemList[i+1].start = MemList[i].start + size;
+</span><span class='line'>MemList[i+1].size = MemList[i].size – size;
+</span><span class='line'>MemList[i+1].info = ‘f’;
+</span><span class='line'>MemList[i].size = size;
+</span><span class='line'>MemList[i].info = ‘u’;
+</span><span class='line'>}
+</span><span class='line'>break;
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>if(i == MEMSIZE – 1 || MemList[i].info == ‘e’){
+</span><span class='line'>printf(“NOT Enough Memory!\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>Display();
+</span><span class='line'>}
+</span><span class='line'>void BestFit_new()
+</span><span class='line'>{
+</span><span class='line'>int i,j,k,flag,size;
+</span><span class='line'>char temp[10];
+</span><span class='line'>printf(“How Many MEMORY require?”);
+</span><span class='line'>scanf(“%d”,&size);
+</span><span class='line'>j = 0;
+</span><span class='line'>flag = 0;
+</span><span class='line'>k = MEMSIZE;
+</span><span class='line'>for(i=0;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++){
+</span><span class='line'>if(MemList[i].size &gt;= size && MemList[i].info == ‘f’){
+</span><span class='line'>flag = 1;
+</span><span class='line'>if(MemList[i].size &lt; k){
+</span><span class='line'>k = MemList[i].size;
+</span><span class='line'>j = i;
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>i=j;
+</span><span class='line'>if(flag == 0)
+</span><span class='line'>{
+</span><span class='line'>printf(“NOT ENOUGH Memory!\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>else if(MemList[i].size – size &lt;= MINSIZE)
+</span><span class='line'>MemList[i].info = ‘u’;
+</span><span class='line'>else{
+</span><span class='line'>for(j=MEMSIZE-2;j &gt; i;j–){
+</span><span class='line'>MemList[j+1]=MemList[j];
+</span><span class='line'>}
+</span><span class='line'>MemList[i].start = MemList[i].start + size;
+</span><span class='line'>MemList[i].size = MemList[i].size – size;
+</span><span class='line'>MemList[i].info = ‘f’;
+</span><span class='line'>MemList[i].size = size;
+</span><span class='line'>MemList[i].info = ‘u’;
+</span><span class='line'>}
+</span><span class='line'>Display();
+</span><span class='line'>}
+</span><span class='line'>void del()
+</span><span class='line'>{
+</span><span class='line'>int i,number;
+</span><span class='line'>printf(“please input the NUMBER you want to delete:”);
+</span><span class='line'>scanf(“%d”,&number);
+</span><span class='line'>if(MemList[number].info == ‘u’){
+</span><span class='line'>MemList[number].info = ‘f’;
+</span><span class='line'>if(MemList[number+1].info==’f'){
+</span><span class='line'>MemList[number].size += MemList[number+1].size;
+</span><span class='line'>for(i=number+1;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++)
+</span><span class='line'>MemList[i]=MemList[i+1];
+</span><span class='line'>}
+</span><span class='line'>if(MemList[number - 1].info != ‘f’){
+</span><span class='line'>MemList[number -1].size += MemList[number].size;
+</span><span class='line'>for(i=number;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++)
+</span><span class='line'>MemList[i]=MemList[i+1];
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>else{
+</span><span class='line'>printf(“This number is NOT exits or is NOT sued!\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>Display();
+</span><span class='line'>}
+</span><span class='line'>void Display()
+</span><span class='line'>{
+</span><span class='line'>int i,used = 0;
+</span><span class='line'>printf(“\n——————————————\n”);
+</span><span class='line'>printf(“%5s %15s %15s”,”Number”,”Start”,”Size”,”info”);
+</span><span class='line'>printf(“\n——————————————\n”);
+</span><span class='line'>for(i=0;i&lt;MEMSIZE && MemList[i].info != ‘e’;i++){
+</span><span class='line'>if(MemList[i].info == ‘u’)
+</span><span class='line'>used+= MemList[i].size;
+</span><span class='line'>printf(“%5d %15d %15d %15s\n”,i,MemList[i].start,MemList[i].size,MemList[i].info == ‘u’?”USED”:”FREE”);
+</span><span class='line'>}
+</span><span class='line'>printf(“\n——————————————\n”);
+</span><span class='line'>printf(“TotalSize : %-10d Used: %-10d Free:%-10d\n”,MEMSIZE,used,MEMSIZE – used);
+</span><span class='line'>printf(“\n\nPress Any Key to Return\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>char ch;
+</span><span class='line'>InitAll();
+</span><span class='line'>while(1)
+</span><span class='line'>{
+</span><span class='line'>printf(“   Memory manager  \n”);
+</span><span class='line'>printf(“================================================\n”);
+</span><span class='line'>printf(“1. Get a block use the FIRSTFIT method\n”);
+</span><span class='line'>printf(“2. Get a block use the BESTFFIT method\n”);
+</span><span class='line'>printf(“3. Free or delete a block\n”);
+</span><span class='line'>printf(“4. Display Mem information\n”);
+</span><span class='line'>printf(“5. Exit\n”);
+</span><span class='line'>printf(“================================================\n”);
+</span><span class='line'>ch = getchar();
+</span><span class='line'>switch(ch){
+</span><span class='line'>case ’1′:
+</span><span class='line'>FirstFit_new();
+</span><span class='line'>break;
+</span><span class='line'>case ’2′:
+</span><span class='line'>BestFit_new();
+</span><span class='line'>break;
+</span><span class='line'>case ’3′:
+</span><span class='line'>del();
+</span><span class='line'>break;
+</span><span class='line'>case ’4′:
+</span><span class='line'>Display();
+</span><span class='line'>break;
+</span><span class='line'>case ’5′:
+</span><span class='line'>exit(0);
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<p>void FirstFit_new()
-{
-int i,j,size;
-char temp[10];
-printf(“How MAny MEMORY do you require?”);
-scanf(“%d”,&amp;size);
-for(i=0;i &lt; MEMSIZE -1 &amp;&amp; MemList[i].info!=’e&#8217;;i++){
-if(MemList[i].size >= size &amp;&amp; MemList[i].info==’f&#8217;){
-if(MemList[i].size – size &lt;= MINSIZE)
-MemList[i].info=’u&#8217;;
-else{
-for(j=MEMSIZE – 2;j > i;j–){
-MemList[j+1] = MemList[j];
-}
-MemList[i+1].start = MemList[i].start + size;
-MemList[i+1].size = MemList[i].size – size;
-MemList[i+1].info = ‘f’;
-MemList[i].size = size;
-MemList[i].info = ‘u’;
-}
-break;
-}
-}
-if(i == MEMSIZE – 1 || MemList[i].info == ‘e’){
-printf(“NOT Enough Memory!\n”);
-getchar();
-}
-Display();
-}
-void BestFit_new()
-{
-int i,j,k,flag,size;
-char temp[10];
-printf(“How Many MEMORY require?”);
-scanf(“%d”,&amp;size);
-j = 0;
-flag = 0;
-k = MEMSIZE;
-for(i=0;i<MEMSIZE – 1 && MemList[i].info!=’e';i++){
-if(MemList[i].size >= size &amp;&amp; MemList[i].info == ‘f’){
-flag = 1;
-if(MemList[i].size &lt; k){
-k = MemList[i].size;
-j = i;
-}
-}
-}
-i=j;
-if(flag == 0)
-{
-printf(“NOT ENOUGH Memory!\n”);
-getchar();
-}
-else if(MemList[i].size – size &lt;= MINSIZE)
-MemList[i].info = ‘u’;
-else{
-for(j=MEMSIZE-2;j > i;j–){
-MemList[j+1]=MemList[j];
-}
-MemList[i].start = MemList[i].start + size;
-MemList[i].size = MemList[i].size – size;
-MemList[i].info = ‘f’;
-MemList[i].size = size;
-MemList[i].info = ‘u’;
-}
-Display();
-}
-void del()
-{
-int i,number;
-printf(“please input the NUMBER you want to delete:”);
-scanf(“%d”,&amp;number);
-if(MemList[number].info == ‘u’){
-MemList[number].info = ‘f’;
-if(MemList[number+1].info==’f&#8217;){
-MemList[number].size += MemList[number+1].size;
-for(i=number+1;i&lt;MEMSIZE – 1 &amp;&amp; MemList[i].info!=’e&#8217;;i++)
-MemList[i]=MemList[i+1];
-}
-if(MemList[number &ndash; 1].info != ‘f’){
-MemList[number -1].size += MemList[number].size;
-for(i=number;i&lt;MEMSIZE – 1 &amp;&amp; MemList[i].info!=’e&#8217;;i++)
-MemList[i]=MemList[i+1];
-}
-}
-else{
-printf(“This number is NOT exits or is NOT sued!\n”);
-getchar();
-}
-Display();
-}
-void Display()
-{
-int i,used = 0;
-printf(“\n——————————————\n”);
-printf(“%5s %15s %15s”,”Number”,”Start”,”Size”,”info”);
-printf(“\n——————————————\n”);
-for(i=0;i&lt;MEMSIZE &amp;&amp; MemList[i].info != ‘e’;i++){
-if(MemList[i].info == ‘u’)
-used+= MemList[i].size;
-printf(“%5d %15d %15d %15s\n”,i,MemList[i].start,MemList[i].size,MemList[i].info == ‘u’?”USED”:”FREE”);
-}
-printf(“\n——————————————\n”);
-printf(“TotalSize : %-10d Used: %-10d Free:%-10d\n”,MEMSIZE,used,MEMSIZE – used);
-printf(“\n\nPress Any Key to Return\n”);
-getchar();
-}
-int main()
-{
-char ch;
-InitAll();
-while(1)
-{
-printf(“   Memory manager  \n”);
-printf(“================================================\n”);
-printf(“1. Get a block use the FIRSTFIT method\n”);
-printf(“2. Get a block use the BESTFFIT method\n”);
-printf(“3. Free or delete a block\n”);
-printf(“4. Display Mem information\n”);
-printf(“5. Exit\n”);
-printf(“================================================\n”);
-ch = getchar();
-switch(ch){
-case ’1′:
-FirstFit_new();
-break;
-case ’2′:
-BestFit_new();
-break;
-case ’3′:
-del();
-break;
-case ’4′:
-Display();
-break;
-case ’5′:
-exit(0);
-}
-}
-}</p>
 </div>
   
   
@@ -1046,27 +1312,35 @@ c.直连网络端点间的满载状态下的直线状态
 </ol>
 
 
-<p>svnadmin create –fs-type fsfs /usr/local/OJ</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svnadmin create –fs-type fsfs /usr/local/OJ</span></code></pre></td></tr></table></div></figure>
+
 
 <p>执行后在/usr/local/OJ/目录下生成一堆配置文件~主要文件还是conf/下的svnserve.conf文件，里面有关配置用户和匿名用户对版本库的使用权限设置 anon-access 和autho-access ,write对应的用户读写都可~read只可读</p>
 
 <p>2.刚建立的版本库没有项目需引入项目(在本地引入用file://)</p>
 
-<p>svn import hustoj2mdk file:///usr/local/OJ/project-oj -m “Initial import”</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svn import hustoj2mdk file:///usr/local/OJ/project-oj -m “Initial import”</span></code></pre></td></tr></table></div></figure>
+
 
 <p>即可将hustoj2mdk目录的内容引入到版本库的project-oj目录</p>
 
 <p>3.开启svnserve</p>
 
-<p>svnserve -d -r /usr/local/OJ</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svnserve -d -r /usr/local/OJ
+</span><span class='line'>
+</span><span class='line'>-d 以独立进程的方式开启 -r 便于svn 访问省略/usr/local/OJ  只用project-oj即可</span></code></pre></td></tr></table></div></figure>
 
-<p>-d 以独立进程的方式开启 -r 便于svn 访问省略/usr/local/OJ  只用project-oj即可</p>
 
-<p>ps aux|grep svn 即可查看到svnserve</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps aux|grep svn 即可查看到svnserve</span></code></pre></td></tr></table></div></figure>
+
 
 <p>到此一个的版本库的项目引入以完成~即可用 svn list/checkout等命令 svn://URL 取出版本库的相关项目(后期补上基于apche的svn)</p>
-
-<p>—by mdk-vimer</p>
 </div>
   
   
@@ -1103,35 +1377,62 @@ c.直连网络端点间的满载状态下的直线状态
   </header>
 
 
-  <div class="entry-content"><h1>uname -a               # 查看内核/操作系统/CPU信息   # head -n 1 /etc/issue   # 查看操作系统版本</h1>
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># uname -a               # 查看内核/操作系统/CPU信息   # head -n 1 /etc/issue   # 查看操作系统版本
+</span><span class='line'>
+</span><span class='line'># cat /proc/cpuinfo      # 查看CPU信息
+</span><span class='line'>
+</span><span class='line'># hostname               # 查看计算机名
+</span><span class='line'>
+</span><span class='line'># lspci -tv              # 列出所有PCI设备
+</span><span class='line'>
+</span><span class='line'># lsusb -tv              # 列出所有USB设备
+</span><span class='line'>
+</span><span class='line'># lsmod                  # 列出加载的内核模块
+</span><span class='line'>
+</span><span class='line'># env                    # 查看环境变量</span></code></pre></td></tr></table></div></figure>
 
-<h1>cat /proc/cpuinfo      # 查看CPU信息</h1>
-
-<h1>hostname               # 查看计算机名</h1>
-
-<h1>lspci -tv              # 列出所有PCI设备</h1>
-
-<h1>lsusb -tv              # 列出所有USB设备</h1>
-
-<h1>lsmod                  # 列出加载的内核模块</h1>
-
-<h1>env                    # 查看环境变量</h1>
 
 <p>资源</p>
 
-<h1>free -m                # 查看内存使用量和交换区使用量   # df -h                  # 查看各分区使用情况</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># free -m                # 查看内存使用量和交换区使用量   # df -h                  # 查看各分区使用情况
+</span><span class='line'>
+</span><span class='line'># du -sh &lt;目录名&gt;        # 查看指定目录的大小
+</span><span class='line'>
+</span><span class='line'># grep MemTotal /proc/meminfo   # 查看内存总量
+</span><span class='line'>
+</span><span class='line'># grep MemFree /proc/meminfo    # 查看空闲内存量
+</span><span class='line'>
+</span><span class='line'># uptime                 # 查看系统运行时间、用户数、负载
+</span><span class='line'>
+</span><span class='line'># cat /proc/loadavg      # 查看系统负载</span></code></pre></td></tr></table></div></figure>
 
-<h1>du -sh &lt;目录名&gt;        # 查看指定目录的大小</h1>
 
-<h1>grep MemTotal /proc/meminfo   # 查看内存总量</h1>
-
-<h1>grep MemFree /proc/meminfo    # 查看空闲内存量</h1>
-
-<h1>uptime                 # 查看系统运行时间、用户数、负载</h1>
-
-<h1>cat /proc/loadavg      # 查看系统负载</h1>
-
-<p>磁盘和分区</p>
+<p>磁盘和分区
+ &#8220;`</p>
 
 <h1>mount | column -t      # 查看挂接的分区状态   # fdisk -l               # 查看所有分区</h1>
 
@@ -1141,11 +1442,17 @@ c.直连网络端点间的满载状态下的直线状态
 
 <h1>dmesg | grep IDE       # 查看启动时IDE设备检测状况</h1>
 
-<p>网络</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 网络
+</span><span class='line'> ```  
+</span><span class='line'># ifconfig               # 查看所有网络接口的属性   # iptables -L            # 查看防火墙设置
+</span><span class='line'>
+</span><span class='line'># route -n               # 查看路由表</span></code></pre></td></tr></table></div></figure>
 
-<h1>ifconfig               # 查看所有网络接口的属性   # iptables -L            # 查看防火墙设置</h1>
-
-<h1>route -n               # 查看路由表</h1>
 
 <h1>netstat -lntp          # 查看所有监听端口</h1>
 
@@ -1153,12 +1460,19 @@ c.直连网络端点间的满载状态下的直线状态
 
 <h1>netstat -s             # 查看网络统计信息</h1>
 
-<p>进程
-1   2</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>进程</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <h1>ps -ef                 # 查看所有进程   # top                    # 实时显示进程状态</h1>
 
-<p>用户</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>用户</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <h1>w                      # 查看活动用户   # id &lt;用户名&gt;            # 查看指定用户信息</h1>
 
@@ -1170,13 +1484,20 @@ c.直连网络端点间的满载状态下的直线状态
 
 <h1>crontab -l             # 查看当前用户的计划任务</h1>
 
-<p>服务</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>服务
+</span><span class='line'> ```
+</span><span class='line'># chkconfig –list       # 列出所有系统服务   # chkconfig –list | grep on    # 列出所有启动的系统服务</span></code></pre></td></tr></table></div></figure>
 
-<h1>chkconfig –list       # 列出所有系统服务   # chkconfig –list | grep on    # 列出所有启动的系统服务</h1>
 
-<p>程序</p>
+<p>程序
+ &#8220;`</p>
 
 <h1>rpm -qa                # 查看所有安装的软件包</h1>
+
+<p> &#8220;`</p>
 </div>
   
   
@@ -1215,109 +1536,213 @@ c.直连网络端点间的满载状态下的直线状态
 
   <div class="entry-content"><p>平时用linux时，我有一个习惯就是把遇到的，比较有用，并且容易忘的命令，放到一个文本文件中，没事的时候可以拿出来看看，这样可以加深印象，时间长了这些命令的用法基本上都能掌握了。以下是100个用法,有什么不对，还请大家指正。</p>
 
-<p>1，echo “aa” > test.txt 和 echo “bb” >> test.txt //>将原文件清空，并且内容写入到文件中，>>将内容放到文件的尾部
-2，chmod go+w -R  /home/zhangy  //给组用户和其他用户添加写的权限
-3，tar -tzvf test.tar.gz        //列出归档内容
-4，du -ah  //查看文件列表大小
-5，du -sh  //查看所有文件的大小总和
-6，echo ’1+2′|bc -l //数学运算
-7，uname -a    //查看linux内核等的一些信息
-8，badblocks -s /dev/sda     //坏道扫描时显示进度
-9，time command     //查看命令的运行时间
-10,ls -lrt //按时间的倒序排序
-11,rsync -P  //同步时显示进度
-12.history -c //清楚历史命令
-13，cd – //返回上次目录
-14，tree     //显示目录树
-15，umount -n /mnt/hda2  //强制卸载
-16，echo ~/     //显示用户的home目录
-17，echo $[5<em>5]  //算术运算
-18，echo $((5</em>5)) //算术运算
-19，eval ls;ps aux|grep httpd //这二个命令都能执行
-20，free -m //有MB为单位显示内存
-21，uptime //显示系统已经运行了多长时间，它依次显示下列信息：现在时间、系统已经运行了多长时间、目前有多少登陆用户、系统在过去的1分钟、5分钟和15分钟内的平均负载
-22，加法运算
-[root@krlcgcms01 mytest]# let a=34+3;
-[root@krlcgcms01 mytest]# echo $a;
-23，export  //查看所有环境变量
-24，echo $PATH //查看单个变量
-25，cmp file1 file2   //文件内容比对
-26，clear   //清屏
-27，echo 23423 |awk –re-interval  ’/[0-9]{3,}/’  //如果不加re-interval的话，不显示
-28，cal  //得到一个整齐的日历格式
-29，wc -l //统计行数，wc -w 统计单词
-30，echo  ”AaDCbd23″ |tr “[A-Z]” “[a-z]” 大写变小写，echo  ”AaDCbdc23″ |tr -c b-d = 将b-d之外的字符串替换成=
-31，echo “ADSF” | iconv -f UTF8 -t GBK //把字符由utf8转成gbk -f是from和简写，-t好像terminal的简写
-32，cat -n file //内容的前面会显示行号
-33，chattr +i file  //只读，root用户也没法对其进行修改
-34，lsattr file //查看文件属性
-35，cat /etc/passwd |awk -F: ‘{print $1}’  //查看系统中所有用户
-36，cat /etc/group //查看系统中所有的组
-37，groups //查前当前用户所在的，所有组
-38，usermod -g 组名 用户   //这种方式是覆盖的方式，用的时候要小心，如果用户A性于mysql usermod -g php mysql这样的话只
-属于php了，
-39，usermod -G 组名 用户 //这种方式是增加的方式，如果用户A性于mysql usermod -g php mysql这样的话，mysql就属于2个组了
-40，bc  //进入数学计算中去
-41，umask 003 u权限是7,g权限是7，其他用户是4，也就是774，777-003=774
-42，mkfs -t vfat /dev/hda6 //将移动硬盘里面的一个分区格式化成vfat格式
-43，mount /dev/cdrom /media/cdrom  //挂载cdrom
-44，getent group 532 //通过组ID,来查找组信息
-45，last //登录成功用户记录
-46,lastb //登录不成功用户记录
-47，dump -S /dev/sda2 //查看一下要备份/dev/sda2所要的容量
-48，dump -0j -f /dev/hda2/sda2_bak.dump.bz2 /dev/sda2  //将sda2进行备份并压缩
-49，restore -t -f /dev/hda2/sda2_bak.dump  //查看备份信息
-50，restore -r -f /dev/hda2/sda2_bak.dump  //还原备份
-51，fc-list //查看系统中安装的字体
-52，find ./ -type f   -exec grep -q  ”root” {} \;  -exec echo {} \;  //查找目录下文件所包涵的字符串
-53，vmstat 5 //每5显示一下次系统信息，cpu,memory,i/o等
-54，top 后 在shift + P 所占进程的排序显示
-55，top 后 在shift + M 所占内存的排序显示
-56，iptraf -g  //查看各个接口的流量
-57，ostat -d -x /dev/sda2 2  //用iostat查看磁盘/dev/sda2的磁盘i/o情况，每两秒刷新一次
-58, paste -sd ‘|||\n’ test //文件的每4行转换成1行，并用|隔开。
-59，lsof -i :22 //知道22端口现在运行什么程序
-60，lsof -c abc //显示abc进程现在打开的文件
-61，lsof -p 12  //看进程号为12的进程打开了哪些文件
-63，route //查看路由信息
-64，ifup //开启网卡
-65，ifdown //关闭网卡
-66，route del -net 172.168.0.0 netmask 255.255.0.0 dev eth0 //删除 172.168这个网段
-67，route add -net 172.168.10.0 netmask 255.255.255.0 dev eth0 //增加一个路由
-68，netstat -tunl //列出监听的网络服务端口
-69，netstat -tun //列出已连接的网络服务端口
-70，nmap -sP 172.30.4.0/24  //在这个网段内有多少用户在我的主机上操作，一个不错的安全检查工具
-71，vgdisplay   //查看系统中的可用空间
-72，lvextend -L+20G /dev/tank/part1 //向part1这个分区增加20G的空间
-73，lvresize -L-10G /dev/tank/part2 //向part2这个分区减少10G的空间
-74，pvdisplay //查看磁盘信息
-75,mplayer -loop 10 /mnt/song/music/花儿开了.mp3  //循环播放10遍
-76,pacman -S firefox -nd  //nd去掉依赖
-77,wget -c //断点下载
-78,chroot  /mnt/ubuntu     //改变根目录到/mnt/ubuntu
-79,ctrl+a  //命令行下，光标称动到开头
-80,ctrl+e  //命令行下，光标移动结尾
-81,cut -d: -f 1-4 test  //用：分割文件，取分割后的1－4列
-82,file  /home/zhangy/test.php  //用于查看文件的一些基本信息
-83,touch test.txt //创建一个空文件 text.txt
-84,htpasswd -cbd /usr/local/nginx/conf/authfile  //创建访问控制文件
-85,df  //查看磁盘空间，和当前的磁盘数
-86,fdisk -l  //查看所有磁盘数
-87,alsamixer  //进入后，m键可以实现静音
-88,killall httpd  //把所有httpd进程杀掉
-89,killall -9 mysqld_safe  //有些进程超级用户也停止不了，-9是强制删除
-90,mirror /mysql //下载mysql目录
-91,mirror -R /mysql     //上传mysql目录
-92,rmmod pcspkr  //关掉tab提示音
-93,modprobe pcspkr  //开启tab提示音
-94,gpasswd -a zhangy wheel //将zhangy这个用户添加到wheel这个组
-95,dd if=/dev/zero of=/virtual/ubuntu.virt.img bs=1M count=4096  //创建一个4G的IMG镜像
-96，lspic //显示pci设备
-97，lsusb //显示usb设备
-98，history | less //less根more有点像，感觉less用着更舒服点
-99，ln -s //如果忘了-s就变成硬链接了
-100，tar zxvf test.tar.gz -C /home/zhangy //将内容解压到指定目录
-作者:海底苍鹰
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1，echo “aa” &gt; test.txt 和 echo “bb” &gt;&gt; test.txt //&gt;将原文件清空，并且内容写入到文件中，&gt;&gt;将内容放到文件的尾部
+</span><span class='line'>2，chmod go+w -R  /home/zhangy  //给组用户和其他用户添加写的权限
+</span><span class='line'>3，tar -tzvf test.tar.gz        //列出归档内容
+</span><span class='line'>4，du -ah  //查看文件列表大小
+</span><span class='line'>5，du -sh  //查看所有文件的大小总和
+</span><span class='line'>6，echo ’1+2′|bc -l //数学运算
+</span><span class='line'>7，uname -a    //查看linux内核等的一些信息
+</span><span class='line'>8，badblocks -s /dev/sda     //坏道扫描时显示进度
+</span><span class='line'>9，time command     //查看命令的运行时间
+</span><span class='line'>10,ls -lrt //按时间的倒序排序
+</span><span class='line'>11,rsync -P  //同步时显示进度
+</span><span class='line'>12.history -c //清楚历史命令
+</span><span class='line'>13，cd – //返回上次目录
+</span><span class='line'>14，tree     //显示目录树
+</span><span class='line'>15，umount -n /mnt/hda2  //强制卸载
+</span><span class='line'>16，echo ~/     //显示用户的home目录
+</span><span class='line'>17，echo $[5*5]  //算术运算
+</span><span class='line'>18，echo $((5*5)) //算术运算
+</span><span class='line'>19，eval ls;ps aux|grep httpd //这二个命令都能执行
+</span><span class='line'>20，free -m //有MB为单位显示内存
+</span><span class='line'>21，uptime //显示系统已经运行了多长时间，它依次显示下列信息：现在时间、系统已经运行了多长时间、目前有多少登陆用户、系统在过去的1分钟、5分钟和15分钟内的平均负载
+</span><span class='line'>22，加法运算
+</span><span class='line'>[root@krlcgcms01 mytest]# let a=34+3;
+</span><span class='line'>[root@krlcgcms01 mytest]# echo $a;
+</span><span class='line'>23，export  //查看所有环境变量
+</span><span class='line'>24，echo $PATH //查看单个变量
+</span><span class='line'>25，cmp file1 file2   //文件内容比对
+</span><span class='line'>26，clear   //清屏
+</span><span class='line'>27，echo 23423 |awk –re-interval  ’/[0-9]{3,}/’  //如果不加re-interval的话，不显示
+</span><span class='line'>28，cal  //得到一个整齐的日历格式
+</span><span class='line'>29，wc -l //统计行数，wc -w 统计单词
+</span><span class='line'>30，echo  ”AaDCbd23″ |tr “[A-Z]” “[a-z]” 大写变小写，echo  ”AaDCbdc23″ |tr -c b-d = 将b-d之外的字符串替换成=
+</span><span class='line'>31，echo “ADSF” | iconv -f UTF8 -t GBK //把字符由utf8转成gbk -f是from和简写，-t好像terminal的简写
+</span><span class='line'>32，cat -n file //内容的前面会显示行号
+</span><span class='line'>33，chattr +i file  //只读，root用户也没法对其进行修改
+</span><span class='line'>34，lsattr file //查看文件属性
+</span><span class='line'>35，cat /etc/passwd |awk -F: ‘{print $1}’  //查看系统中所有用户
+</span><span class='line'>36，cat /etc/group //查看系统中所有的组
+</span><span class='line'>37，groups //查前当前用户所在的，所有组
+</span><span class='line'>38，usermod -g 组名 用户   //这种方式是覆盖的方式，用的时候要小心，如果用户A性于mysql usermod -g php mysql这样的话只
+</span><span class='line'>属于php了，
+</span><span class='line'>39，usermod -G 组名 用户 //这种方式是增加的方式，如果用户A性于mysql usermod -g php mysql这样的话，mysql就属于2个组了
+</span><span class='line'>40，bc  //进入数学计算中去
+</span><span class='line'>41，umask 003 u权限是7,g权限是7，其他用户是4，也就是774，777-003=774
+</span><span class='line'>42，mkfs -t vfat /dev/hda6 //将移动硬盘里面的一个分区格式化成vfat格式
+</span><span class='line'>43，mount /dev/cdrom /media/cdrom  //挂载cdrom
+</span><span class='line'>44，getent group 532 //通过组ID,来查找组信息
+</span><span class='line'>45，last //登录成功用户记录
+</span><span class='line'>46,lastb //登录不成功用户记录
+</span><span class='line'>47，dump -S /dev/sda2 //查看一下要备份/dev/sda2所要的容量
+</span><span class='line'>48，dump -0j -f /dev/hda2/sda2_bak.dump.bz2 /dev/sda2  //将sda2进行备份并压缩
+</span><span class='line'>49，restore -t -f /dev/hda2/sda2_bak.dump  //查看备份信息
+</span><span class='line'>50，restore -r -f /dev/hda2/sda2_bak.dump  //还原备份
+</span><span class='line'>51，fc-list //查看系统中安装的字体
+</span><span class='line'>52，find ./ -type f   -exec grep -q  ”root” {} \;  -exec echo {} \;  //查找目录下文件所包涵的字符串
+</span><span class='line'>53，vmstat 5 //每5显示一下次系统信息，cpu,memory,i/o等
+</span><span class='line'>54，top 后 在shift + P 所占进程的排序显示
+</span><span class='line'>55，top 后 在shift + M 所占内存的排序显示
+</span><span class='line'>56，iptraf -g  //查看各个接口的流量
+</span><span class='line'>57，ostat -d -x /dev/sda2 2  //用iostat查看磁盘/dev/sda2的磁盘i/o情况，每两秒刷新一次
+</span><span class='line'>58, paste -sd ‘|||\n’ test //文件的每4行转换成1行，并用|隔开。
+</span><span class='line'>59，lsof -i :22 //知道22端口现在运行什么程序
+</span><span class='line'>60，lsof -c abc //显示abc进程现在打开的文件
+</span><span class='line'>61，lsof -p 12  //看进程号为12的进程打开了哪些文件
+</span><span class='line'>63，route //查看路由信息
+</span><span class='line'>64，ifup //开启网卡
+</span><span class='line'>65，ifdown //关闭网卡
+</span><span class='line'>66，route del -net 172.168.0.0 netmask 255.255.0.0 dev eth0 //删除 172.168这个网段
+</span><span class='line'>67，route add -net 172.168.10.0 netmask 255.255.255.0 dev eth0 //增加一个路由
+</span><span class='line'>68，netstat -tunl //列出监听的网络服务端口
+</span><span class='line'>69，netstat -tun //列出已连接的网络服务端口
+</span><span class='line'>70，nmap -sP 172.30.4.0/24  //在这个网段内有多少用户在我的主机上操作，一个不错的安全检查工具
+</span><span class='line'>71，vgdisplay   //查看系统中的可用空间
+</span><span class='line'>72，lvextend -L+20G /dev/tank/part1 //向part1这个分区增加20G的空间
+</span><span class='line'>73，lvresize -L-10G /dev/tank/part2 //向part2这个分区减少10G的空间
+</span><span class='line'>74，pvdisplay //查看磁盘信息
+</span><span class='line'>75,mplayer -loop 10 /mnt/song/music/花儿开了.mp3  //循环播放10遍
+</span><span class='line'>76,pacman -S firefox -nd  //nd去掉依赖
+</span><span class='line'>77,wget -c //断点下载
+</span><span class='line'>78,chroot  /mnt/ubuntu     //改变根目录到/mnt/ubuntu
+</span><span class='line'>79,ctrl+a  //命令行下，光标称动到开头
+</span><span class='line'>80,ctrl+e  //命令行下，光标移动结尾
+</span><span class='line'>81,cut -d: -f 1-4 test  //用：分割文件，取分割后的1－4列
+</span><span class='line'>82,file  /home/zhangy/test.php  //用于查看文件的一些基本信息
+</span><span class='line'>83,touch test.txt //创建一个空文件 text.txt
+</span><span class='line'>84,htpasswd -cbd /usr/local/nginx/conf/authfile  //创建访问控制文件
+</span><span class='line'>85,df  //查看磁盘空间，和当前的磁盘数
+</span><span class='line'>86,fdisk -l  //查看所有磁盘数
+</span><span class='line'>87,alsamixer  //进入后，m键可以实现静音
+</span><span class='line'>88,killall httpd  //把所有httpd进程杀掉
+</span><span class='line'>89,killall -9 mysqld_safe  //有些进程超级用户也停止不了，-9是强制删除
+</span><span class='line'>90,mirror /mysql //下载mysql目录
+</span><span class='line'>91,mirror -R /mysql     //上传mysql目录
+</span><span class='line'>92,rmmod pcspkr  //关掉tab提示音
+</span><span class='line'>93,modprobe pcspkr  //开启tab提示音
+</span><span class='line'>94,gpasswd -a zhangy wheel //将zhangy这个用户添加到wheel这个组
+</span><span class='line'>95,dd if=/dev/zero of=/virtual/ubuntu.virt.img bs=1M count=4096  //创建一个4G的IMG镜像
+</span><span class='line'>96，lspic //显示pci设备
+</span><span class='line'>97，lsusb //显示usb设备
+</span><span class='line'>98，history | less //less根more有点像，感觉less用着更舒服点
+</span><span class='line'>99，ln -s //如果忘了-s就变成硬链接了
+</span><span class='line'>100，tar zxvf test.tar.gz -C /home/zhangy //将内容解压到指定目录</span></code></pre></td></tr></table></div></figure>
+
+
+<p>作者:海底苍鹰
 文章来源:<a href="http://blog.51yip.com/linux/1213.html">http://blog.51yip.com/linux/1213.html</a></p>
 </div>
   
@@ -1357,23 +1782,35 @@ c.直连网络端点间的满载状态下的直线状态
 
   <div class="entry-content"><p>如下一些实例:</p>
 
-<p>tcpdump -i eth0</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -i eth0</span></code></pre></td></tr></table></div></figure>
+
 
 <p>其中，eth0为参数值，表示需要抓包的网口，这是个必需参数哦。</p>
 
 <p>tcpdump支持很多的关键字，下面先看几个例子：</p>
 
-<p>（例1）tcpdump -i eth0 host 192.168.0.250 —–在网口eth0上抓取主机地址为192.168.0.250的所有数据包。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（例1）tcpdump -i eth0 host 192.168.0.250 —–在网口eth0上抓取主机地址为192.168.0.250的所有数据包。
+</span><span class='line'>
+</span><span class='line'>（例2）tcpdump -i eth0 net 192.168.0.0/24 —— 在网口eth0上抓取网络地址为192.168.0.0/24的所有数据包
+</span><span class='line'>
+</span><span class='line'>（例3）tcpdump -i eth0 port 80 —— 在网口eth0上抓取端口为80的所有数据包(注意，这里不区分是源端口还是目的端口)</span></code></pre></td></tr></table></div></figure>
 
-<p>（例2）tcpdump -i eth0 net 192.168.0.0/24 —— 在网口eth0上抓取网络地址为192.168.0.0/24的所有数据包</p>
-
-<p>（例3）tcpdump -i eth0 port 80 —— 在网口eth0上抓取端口为80的所有数据包(注意，这里不区分是源端口还是目的端口)</p>
 
 <p>当然，我们也可以指定源端口或目的端口</p>
 
-<p>（例4）tcpdump -i eth0 src port 80 and dst port6100 — 在网口eth0上抓取源端口为80且目的端口为6100的数据包，这里用到了and逻辑运算符，后面再介绍</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（例4）tcpdump -i eth0 src port 80 and dst port6100 — 在网口eth0上抓取源端口为80且目的端口为6100的数据包，这里用到了and逻辑运算符，后面再介绍
+</span><span class='line'>
+</span><span class='line'>（例5）tcpdump -i eth0 icmp — 在网口eth0上抓取所有icmp协议的数据包</span></code></pre></td></tr></table></div></figure>
 
-<p>（例5）tcpdump -i eth0 icmp — 在网口eth0上抓取所有icmp协议的数据包</p>
 
 <p>以上几个例子，可以大致体现出tcpdump的基本用法。</p>
 
@@ -1413,15 +1850,21 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>OK，参数介绍先到这里，下面看几个具体例子</p>
 
-<p>tcpdump -i eth0 -s 1400 -nn host 192.168.0.250 and ! 192.168.0.74 and icmp -e</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -i eth0 -s 1400 -nn host 192.168.0.250 and ! 192.168.0.74 and icmp -e</span></code></pre></td></tr></table></div></figure>
+
 
 <p>抓取网口eth0上192.168.0.250与除192.168.0.74外的其他主机之间的icmp报文</p>
 
-<p>tcpdump -i eth0 -s 1400 -nn tcp and (host 192.168.0.250 and ! 192.168.0.74)</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -i eth0 -s 1400 -nn tcp and \(host 192.168.0.250 and ! 192.168.0.74\)</span></code></pre></td></tr></table></div></figure>
+
 
 <p>抓取网口eth0上192.168.0.250与除192.168.0.74外的所有tcp数据包，这里用到了括号，注意，在tcpdump中使用括号时必须用转义。</p>
 
-<p>tcpdump -i eth0 ether src or dst 00:21:85:6C:D9:A3</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tcpdump -i eth0 ether src or dst 00:21:85:6C:D9:A3</span></code></pre></td></tr></table></div></figure>
+
 
 <p>抓取网口eth0上源mac地址或目的mac地址为00:21:85:6C:D9:A3的所有数据包，注意，这里的mac地址格式必须以’:&lsquo;分隔。</p>
 
@@ -1449,31 +1892,57 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　－－－－－－－－－－－－－－－－－－－－－－－</p>
 
-<p>　　bash-2.02# tcpdump</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　bash-2.02# tcpdump
+</span><span class='line'>
+</span><span class='line'>　　tcpdump: listening on eth0
+</span><span class='line'>
+</span><span class='line'>　　11:58:47.873028 202.102.245.40.netbios-ns &gt; 202.102.245.127.netbios-ns: udp 50
+</span><span class='line'>
+</span><span class='line'>　　11:58:47.974331 0:10:7b:8:3a:56 &gt; 1:80:c2:0:0:0 802.1d ui/C len=43
+</span><span class='line'>
+</span><span class='line'>　　0000 0000 0080 0000 1007 cf08 0900 0000
+</span><span class='line'>
+</span><span class='line'>　　0e80 0000 902b 4695 0980 8701 0014 0002
+</span><span class='line'>
+</span><span class='line'>　　000f 0000 902b 4695 0008 00
+</span><span class='line'>
+</span><span class='line'>　　11:58:48.373134 0:0:e8:5b:6d:85 &gt; Broadcast sap e0 ui/C len=97
+</span><span class='line'>
+</span><span class='line'>　　ffff 0060 0004 ffff ffff ffff ffff ffff
+</span><span class='line'>
+</span><span class='line'>　　0452 ffff ffff 0000 e85b 6d85 4008 0002
+</span><span class='line'>
+</span><span class='line'>　　0640 4d41 5354 4552 5f57 4542 0000 0000
+</span><span class='line'>
+</span><span class='line'>　　0000 00
+</span><span class='line'>
+</span><span class='line'>　　^C</span></code></pre></td></tr></table></div></figure>
 
-<p>　　tcpdump: listening on eth0</p>
-
-<p>　　11:58:47.873028 202.102.245.40.netbios-ns > 202.102.245.127.netbios-ns: udp 50</p>
-
-<p>　　11:58:47.974331 0:10:7b:8:3a:56 > 1:80:c2:0:0:0 802.1d ui/C len=43</p>
-
-<p>　　0000 0000 0080 0000 1007 cf08 0900 0000</p>
-
-<p>　　0e80 0000 902b 4695 0980 8701 0014 0002</p>
-
-<p>　　000f 0000 902b 4695 0008 00</p>
-
-<p>　　11:58:48.373134 0:0:e8:5b:6d:85 > Broadcast sap e0 ui/C len=97</p>
-
-<p>　　ffff 0060 0004 ffff ffff ffff ffff ffff</p>
-
-<p>　　0452 ffff ffff 0000 e85b 6d85 4008 0002</p>
-
-<p>　　0640 4d41 5354 4552 5f57 4542 0000 0000</p>
-
-<p>　　0000 00</p>
-
-<p>　　<sup>C</sup></p>
 
 <p>　　－－－－－－－－－－－－－－－－－－－－－－－－</p>
 
@@ -1489,7 +1958,9 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　并且当网卡被设置为混杂模式时，系统会在控制台和日志文件中留下记录，提醒管理员留意这台系统是否被用作攻击同网络的其他计算机的跳板。</p>
 
-<p>　　May 15 16:27:20 host1 /kernel: fxp0: promiscuous mode enabled</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　May 15 16:27:20 host1 /kernel: fxp0: promiscuous mode enabled</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　虽然网络分析工具能将网络中传送的数据记录下来，但是网络中的数据流量相当大，如何对这些数据进行分析、分类统计、发现并报告错误却是更关键的问题。网络中的数据包属于不同的协议，而不同协议数据包的格式也不同。因此对捕获的数据进行解码，将包中的信息尽可能的展示出来，对于协议分析工具来讲更为重要。昂贵的商业分析工具的优势就在于它们能支持很多种类的应用层协议，而不仅仅只支持tcp、udp等低层协议。</p>
 
@@ -1503,23 +1974,33 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　-b 在数据-链路层上选择协议，包括ip、arp、rarp、ipx都是这一层的。</p>
 
-<p>　　例如：tcpdump -b arp 将只显示网络中的arp即地址转换协议信息。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　例如：tcpdump -b arp 将只显示网络中的arp即地址转换协议信息。</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　-i 选择过滤的网络接口，如果是作为路由器至少有两个网络接口，通过这个选项，就可以只过滤指定的接口上通过的数据。例如：</p>
 
-<p>　　tcpdump -i eth0 只显示通过eth0接口上的所有报头。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump -i eth0 只显示通过eth0接口上的所有报头。</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　src、dst、port、host、net、ether、gateway这几个选项又分别包含src、dst 、port、host、net、ehost等附加选项。他们用来分辨数据包的来源和去向，src host 192.168.0.1指定源主机IP地址是192.168.0.1，dst net 192.168.0.0/24指定目标是网络192.168.0.0。以此类推，host是与其指定主机相关无论它是源还是目的，net是与其指定网络相关的，ether后面跟的不是IP地址而是物理地址，而gateway则用于网关主机。可能有点复杂，看下面例子就知道了：</p>
 
-<p>　　tcpdump src host 192.168.0.1 and dst net 192.168.0.0/24</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump src host 192.168.0.1 and dst net 192.168.0.0/24</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　过滤的是源主机为192.168.0.1与目的网络为192.168.0.0的报头。</p>
 
-<p>　　tcpdump ether src 00:50:04:BA:9B and dst……</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump ether src 00:50:04:BA:9B and dst……</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　过滤源主机物理地址为XXX的报头（为什么ether src后面没有host或者net？物理地址当然不可能有网络喽）。</p>
 
-<p>　　Tcpdump src host 192.168.0.1 and dst port not telnet</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　Tcpdump src host 192.168.0.1 and dst port not telnet</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　过滤源主机192.168.0.1和目的端口不是telnet的报头。</p>
 
@@ -1527,11 +2008,15 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　例如：</p>
 
-<p>　　tcpdump ip src……</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump ip src……</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　只过滤数据-链路层上的IP报头。</p>
 
-<p>　　tcpdump udp and src host 192.168.0.1</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump udp and src host 192.168.0.1</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　只过滤源主机192.168.0.1的所有udp报头。</p>
 
@@ -1541,35 +2026,61 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　-l 可以将数据重定向。</p>
 
-<p>　　如tcpdump -l ＞tcpcap.txt将得到的数据存入tcpcap.txt文件中。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　如tcpdump -l ＞tcpcap.txt将得到的数据存入tcpcap.txt文件中。
+</span><span class='line'>
+</span><span class='line'>　　-n 不进行IP地址到主机名的转换。
+</span><span class='line'>
+</span><span class='line'>　　如果不使用这一项，当系统中存在某一主机的主机名时，TcpDump会把IP地址转换为主机名显示，就像这样：eth0 ＜ ntc9.1165＞ router.domain.net.telnet，使用-n后变成了：eth0 ＜ 192.168.0.9.1165 ＞ 192.168.0.1.telnet。
+</span><span class='line'>
+</span><span class='line'>　　-nn 不进行端口名称的转换。
+</span><span class='line'>
+</span><span class='line'>　　上面这条信息使用-nn后就变成了：eth0 ＜ ntc9.1165 ＞ router.domain.net.23。
+</span><span class='line'>
+</span><span class='line'>　　-N 不打印出默认的域名。
+</span><span class='line'>
+</span><span class='line'>　　还是这条信息-N 后就是：eth0 ＜ ntc9.1165 ＞ router.telnet。
+</span><span class='line'>
+</span><span class='line'>　　-O 不进行匹配代码的优化。
+</span><span class='line'>
+</span><span class='line'>　　-t 不打印UNIX时间戳，也就是不显示时间。
+</span><span class='line'>
+</span><span class='line'>　　-tt 打印原始的、未格式化过的时间。
+</span><span class='line'>
+</span><span class='line'>　　-v 详细的输出，也就比普通的多了个TTL和服务类型。</span></code></pre></td></tr></table></div></figure>
 
-<p>　　-n 不进行IP地址到主机名的转换。</p>
-
-<p>　　如果不使用这一项，当系统中存在某一主机的主机名时，TcpDump会把IP地址转换为主机名显示，就像这样：eth0 ＜ ntc9.1165＞ router.domain.net.telnet，使用-n后变成了：eth0 ＜ 192.168.0.9.1165 ＞ 192.168.0.1.telnet。</p>
-
-<p>　　-nn 不进行端口名称的转换。</p>
-
-<p>　　上面这条信息使用-nn后就变成了：eth0 ＜ ntc9.1165 ＞ router.domain.net.23。</p>
-
-<p>　　-N 不打印出默认的域名。</p>
-
-<p>　　还是这条信息-N 后就是：eth0 ＜ ntc9.1165 ＞ router.telnet。</p>
-
-<p>　　-O 不进行匹配代码的优化。</p>
-
-<p>　　-t 不打印UNIX时间戳，也就是不显示时间。</p>
-
-<p>　　-tt 打印原始的、未格式化过的时间。</p>
-
-<p>　　-v 详细的输出，也就比普通的多了个TTL和服务类型。</p>
 
 <p>　　［expression]的用法：</p>
 
 <p>　　expression是tcpdump最为有用的高级用法，可以利用它来匹配一些特殊的包。下面介绍一下expression的用法，主要是如何写出符合要求最为严格expression。如果tcpdump中没有expression,那么tcpdump会把网卡上的所有数据包输出，否则会将被expression匹配的包输出。</p>
 
-<p>　　expression 由一个或多个[primitives]组成，而[primitives]由一个或多个[qualitifer]加一个id(name)或数字组成，它们的结构如用正则表达式则可表示为：</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　expression 由一个或多个[primitives]组成，而[primitives]由一个或多个[qualitifer]加一个id(name)或数字组成，它们的结构如用正则表达式则可表示为：
+</span><span class='line'>
+</span><span class='line'>　　expression = ([qualitifer］+(id|number))+</span></code></pre></td></tr></table></div></figure>
 
-<p>　　expression = ([qualitifer］+(id|number))+</p>
 
 <p>　　依次看来，expression是一个复杂的条件表达式，其中[qualitifer］+(id|number)就是一个比较基本条件，qualitifer就表达一些的名称（项，变量），id或number则表示一个值（或常量）。</p>
 
@@ -1579,11 +2090,17 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　例子：</p>
 
-<p>　　host foo 此为一个简单的primitive，host为qualitifer, foo为id name</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　host foo 此为一个简单的primitive，host为qualitifer, foo为id name
+</span><span class='line'>
+</span><span class='line'>　　net 128.3 net为qualitifer, 128.3为number
+</span><span class='line'>
+</span><span class='line'>　　port 20</span></code></pre></td></tr></table></div></figure>
 
-<p>　　net 128.3 net为qualitifer, 128.3为number</p>
-
-<p>　　port 20</p>
 
 <p>　　等等</p>
 
@@ -1607,9 +2124,13 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　如：</p>
 
-<p>　　tcp src port 80</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcp src port 80
+</span><span class='line'>
+</span><span class='line'>　　ip dst host 192.168.1.1</span></code></pre></td></tr></table></div></figure>
 
-<p>　　ip dst host 192.168.1.1</p>
 
 <p>　　如果出现type的话，一定会出现id或num</p>
 
@@ -1623,27 +2144,41 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　匹配特定mac地址的数据包。</p>
 
-<p>　　tcpdump &lsquo;ether src 00:19:21:1D:75:E6&rsquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump 'ether src 00:19:21:1D:75:E6'</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　匹配源mac为00:19:21:1D:75:E6的数据包其中src可改为dst, src or dst来匹改变条件</p>
 
 <p>　　匹配ether广播包。ether广播包的特征是mac全1.故如下即可匹配：</p>
 
-<p>　　tcpdump &lsquo;ether dst ff:ff:ff:ff:ff:ff&rsquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump 'ether dst ff:ff:ff:ff:ff:ff'
+</span><span class='line'>
+</span><span class='line'>　　ylin@ylin:~$ sudo tcpdump -c 1 'ether dst ff:ff:ff:ff:ff:ff'
+</span><span class='line'>
+</span><span class='line'>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span class='line'>
+</span><span class='line'>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+</span><span class='line'>
+</span><span class='line'>　　10:47:57.784099 arp who-has 192.168.240.77 tell 192.168.240.189</span></code></pre></td></tr></table></div></figure>
 
-<p>　　ylin@ylin:~$ sudo tcpdump -c 1 &lsquo;ether dst ff:ff:ff:ff:ff:ff&rsquo;</p>
-
-<p>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</p>
-
-<p>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes</p>
-
-<p>　　10:47:57.784099 arp who-has 192.168.240.77 tell 192.168.240.189</p>
 
 <p>　　在此，只匹配1个包就退出了。第一个是arp请求包，arp请求包的是采用广播的方式发送的，被匹配那是当之无愧的。</p>
 
 <p>　　匹配ether组播包，ether的组播包的特征是mac的最高位为1，其它位用来表示组播组编号，如果你想匹配其的多播组，知道它的组MAC地址即可。如</p>
 
-<p>　　tcpdump &lsquo;ether dst &lt;Mac_Adrress>&rsquo; Mac_Address表示地址，填上适当的即可。如果想匹配所有的ether多播数据包，那么暂时请放下，下面会继续为你讲解更高级的应用。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump 'ether dst &lt;Mac_Adrress&gt;' Mac_Address表示地址，填上适当的即可。如果想匹配所有的ether多播数据包，那么暂时请放下，下面会继续为你讲解更高级的应用。</span></code></pre></td></tr></table></div></figure>
+
 
 <p>　　(2)匹配arp包</p>
 
@@ -1651,31 +2186,57 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　tcpdump &lsquo;arp&rsquo; 即可匹配网络上arp报文。</p>
 
-<p>　　ylin@ylin:~$ arping -c 4 192.168.240.1>/dev/null&amp; sudo tcpdump -p &lsquo;arp&rsquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　ylin@ylin:~$ arping -c 4 192.168.240.1&gt;/dev/null& sudo tcpdump -p 'arp'
+</span><span class='line'>
+</span><span class='line'>　　[1] 9293
+</span><span class='line'>
+</span><span class='line'>　　WARNING: interface is ignored: Operation not permitted
+</span><span class='line'>
+</span><span class='line'>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span class='line'>
+</span><span class='line'>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+</span><span class='line'>
+</span><span class='line'>　　11:09:25.042479 arp who-has 192.168.240.1 (00:03:d2:20:04:28 (oui Unknown)) tell ylin.local
+</span><span class='line'>
+</span><span class='line'>　　11:09:25.042702 arp reply 192.168.240.1 is-at 00:03:d2:20:04:28 (oui Unknown)
+</span><span class='line'>
+</span><span class='line'>　　11:09:26.050452 arp who-has 192.168.240.1 (00:03:d2:20:04:28 (oui Unknown)) tell ylin.local
+</span><span class='line'>
+</span><span class='line'>　　11:09:26.050765 arp reply 192.168.240.1 is-at 00:03:d2:20:04:28 (oui Unknown)
+</span><span class='line'>
+</span><span class='line'>　　11:09:27.058459 arp who-has 192.168.240.1 (00:03:d2:20:04:28 (oui Unknown)) tell ylin.local
+</span><span class='line'>
+</span><span class='line'>　　11:09:27.058701 arp reply 192.168.240.1 is-at 00:03:d2:20:04:28 (oui Unknown)
+</span><span class='line'>
+</span><span class='line'>　　11:09:33.646514 arp who-has ylin.local tell 192.168.240.1
+</span><span class='line'>
+</span><span class='line'>　　11:09:33.646532 arp reply ylin.local is-at 00:19:21:1d:75:e6 (oui Unknown)</span></code></pre></td></tr></table></div></figure>
 
-<p>　　[1] 9293</p>
-
-<p>　　WARNING: interface is ignored: Operation not permitted</p>
-
-<p>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</p>
-
-<p>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes</p>
-
-<p>　　11:09:25.042479 arp who-has 192.168.240.1 (00:03:d2:20:04:28 (oui Unknown)) tell ylin.local</p>
-
-<p>　　11:09:25.042702 arp reply 192.168.240.1 is-at 00:03:d2:20:04:28 (oui Unknown)</p>
-
-<p>　　11:09:26.050452 arp who-has 192.168.240.1 (00:03:d2:20:04:28 (oui Unknown)) tell ylin.local</p>
-
-<p>　　11:09:26.050765 arp reply 192.168.240.1 is-at 00:03:d2:20:04:28 (oui Unknown)</p>
-
-<p>　　11:09:27.058459 arp who-has 192.168.240.1 (00:03:d2:20:04:28 (oui Unknown)) tell ylin.local</p>
-
-<p>　　11:09:27.058701 arp reply 192.168.240.1 is-at 00:03:d2:20:04:28 (oui Unknown)</p>
-
-<p>　　11:09:33.646514 arp who-has ylin.local tell 192.168.240.1</p>
-
-<p>　　11:09:33.646532 arp reply ylin.local is-at 00:19:21:1d:75:e6 (oui Unknown)</p>
 
 <p>　　本例中使用arping -c 4 192.168.240.1产生arp请求和接收答应报文，而tcpdump -p ‘arp’匹配出来了。此处-p选项是使网络工作于正常模式（非混杂模式），这样是方便查看匹配结果。</p>
 
@@ -1685,41 +2246,75 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　对IP进行匹配</p>
 
-<p>　　tcpdump ‘ip src 192.168.240.69′</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump ‘ip src 192.168.240.69′
+</span><span class='line'>
+</span><span class='line'>　　ylin@ylin:~$ sudo tcpdump -c 3 ‘ip src 192.168.240.69′
+</span><span class='line'>
+</span><span class='line'>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span class='line'>
+</span><span class='line'>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+</span><span class='line'>
+</span><span class='line'>　　11:20:00.973605 IP ylin.local.51486 &gt; walnut.crossbeamsys.com.ssh: S 2706301341:2706301341(0) win 5840 &lt;mss 1460,sackOK,timestamp 1687608 0,nop,wscale 5&gt;
+</span><span class='line'>
+</span><span class='line'>　　11:20:00.974328 IP ylin.local.32849 &gt; 192.168.200.150.domain: 5858+ PTR? 20.200.168.192.in-addr.arpa. (45)
+</span><span class='line'>
+</span><span class='line'>　　11:20:01.243490 IP ylin.local.51486 &gt; walnut.crossbeamsys.com.ssh: . ack 2762262674 win 183 &lt;nop,nop,timestamp 1687676 4155416897&gt;</span></code></pre></td></tr></table></div></figure>
 
-<p>　　ylin@ylin:~$ sudo tcpdump -c 3 ‘ip src 192.168.240.69′</p>
-
-<p>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</p>
-
-<p>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes</p>
-
-<p>　　11:20:00.973605 IP ylin.local.51486 > walnut.crossbeamsys.com.ssh: S 2706301341:2706301341(0) win 5840 <mss 1460,sackOK,timestamp 1687608 0,nop,wscale 5></p>
-
-<p>　　11:20:00.974328 IP ylin.local.32849 > 192.168.200.150.domain: 5858+ PTR? 20.200.168.192.in-addr.arpa. (45)</p>
-
-<p>　　11:20:01.243490 IP ylin.local.51486 > walnut.crossbeamsys.com.ssh: . ack 2762262674 win 183 &lt;nop,nop,timestamp 1687676 4155416897></p>
 
 <p>　　IP广播组播数据包匹配：只需指明广播或组播地址即可</p>
 
-<p>　　tcpdump ‘ip dst 240.168.240.255′</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump ‘ip dst 240.168.240.255′
+</span><span class='line'>
+</span><span class='line'>　　ylin@ylin:~$ sudo tcpdump ‘ip dst 192.168.240.255′
+</span><span class='line'>
+</span><span class='line'>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span class='line'>
+</span><span class='line'>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+</span><span class='line'>
+</span><span class='line'>　　11:25:29.690658 IP dd.local &gt; 192.168.240.255: ICMP echo request, id 10022, seq 1, length 64
+</span><span class='line'>
+</span><span class='line'>　　11:25:30.694989 IP dd.local &gt; 192.168.240.255: ICMP echo request, id 10022, seq 2, length 64
+</span><span class='line'>
+</span><span class='line'>　　11:25:31.697954 IP dd.local &gt; 192.168.240.255: ICMP echo request, id 10022, seq 3, length 64
+</span><span class='line'>
+</span><span class='line'>　　11:25:32.697970 IP dd.local &gt; 192.168.240.255: ICMP echo request, id 10022, seq 4, length 64
+</span><span class='line'>
+</span><span class='line'>　　11:25:33.697970 IP dd.local &gt; 192.168.240.255: ICMP echo request, id 10022, seq 5, length 64
+</span><span class='line'>
+</span><span class='line'>　　11:25:34.697982 IP dd.local &gt; 192.168.240.255: ICMP echo request, id 10022, seq 6, length 64</span></code></pre></td></tr></table></div></figure>
 
-<p>　　ylin@ylin:~$ sudo tcpdump ‘ip dst 192.168.240.255′</p>
-
-<p>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</p>
-
-<p>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes</p>
-
-<p>　　11:25:29.690658 IP dd.local > 192.168.240.255: ICMP echo request, id 10022, seq 1, length 64</p>
-
-<p>　　11:25:30.694989 IP dd.local > 192.168.240.255: ICMP echo request, id 10022, seq 2, length 64</p>
-
-<p>　　11:25:31.697954 IP dd.local > 192.168.240.255: ICMP echo request, id 10022, seq 3, length 64</p>
-
-<p>　　11:25:32.697970 IP dd.local > 192.168.240.255: ICMP echo request, id 10022, seq 4, length 64</p>
-
-<p>　　11:25:33.697970 IP dd.local > 192.168.240.255: ICMP echo request, id 10022, seq 5, length 64</p>
-
-<p>　　11:25:34.697982 IP dd.local > 192.168.240.255: ICMP echo request, id 10022, seq 6, length 64</p>
 
 <p>　　此处匹配的是ICMP的广播包，要产生此包，只需要同一个局域网的另一台主机运行ping -b 192.168.240.255即可，当然还可产生组播包，由于没有适合的软件进行模拟产生，在此不举例子。</p>
 
@@ -1729,31 +2324,69 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　如果想匹配HTTP的通信数据，那只需指定匹配端口为80的条件即可</p>
 
-<p>　　tcpdump ‘tcp dst port 80′</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　tcpdump ‘tcp dst port 80′
+</span><span class='line'>
+</span><span class='line'>　　ylin@ylin:~$ wget http://www.baidu.com 2&gt;1 1 &gt;/dev/null & sudo tcpdump -c 5 ‘tcp port 80′
+</span><span class='line'>
+</span><span class='line'>　　[1] 10762
+</span><span class='line'>
+</span><span class='line'>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+</span><span class='line'>
+</span><span class='line'>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+</span><span class='line'>
+</span><span class='line'>　　12:02:47.549056 IP xd-22-43-a8.bta.net.cn.www &gt; ylin.local.47945: S 1202130469:1202130469(0) ack 1132882351 win 2896 &lt;mss 1460,sackOK,timestamp 3497190920 2329221,nop,wscale 2&gt;
+</span><span class='line'>
+</span><span class='line'>　　12:02:47.549085 IP ylin.local.47945 &gt; xd-22-43-a8.bta.net.cn.www: . ack 1 win 183 &lt;nop,nop,timestamp 2329258 3497190920&gt;
+</span><span class='line'>
+</span><span class='line'>　　12:02:47.549226 IP ylin.local.47945 &gt; xd-22-43-a8.bta.net.cn.www: P 1:102(101) ack 1 win 183 &lt;nop,nop,timestamp 2329258 3497190920&gt;
+</span><span class='line'>
+</span><span class='line'>　　12:02:47.688978 IP xd-22-43-a8.bta.net.cn.www &gt; ylin.local.47945: . ack 102 win 698 &lt;nop,nop,timestamp 3497190956 2329258&gt;
+</span><span class='line'>
+</span><span class='line'>　　12:02:47.693897 IP xd-22-43-a8.bta.net.cn.www &gt; ylin.local.47945: . 1:1409(1408) ack 102 win 724 &lt;nop,nop,timestamp 3497190957 2329258&gt;
+</span><span class='line'>
+</span><span class='line'> ```
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>
+</span><span class='line'>　　(5)匹配udp数据包
+</span><span class='line'>
+</span><span class='line'>　　udp是一种无连接的非可靠的用户数据报，因此udp的主要特征同样是端口，用如下方法可以匹配某一端口
+</span><span class='line'>
+</span><span class='line'>　　tcpdump ‘upd port 53′ 查看DNS的数据包</span></code></pre></td></tr></table></div></figure>
 
-<p>　　ylin@ylin:~$ wget <a href="http://www.baidu.com">http://www.baidu.com</a> 2>1 1 >/dev/null &amp; sudo tcpdump -c 5 ‘tcp port 80′</p>
-
-<p>　　[1] 10762</p>
-
-<p>　　tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</p>
-
-<p>　　listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes</p>
-
-<p>　　12:02:47.549056 IP xd-22-43-a8.bta.net.cn.www > ylin.local.47945: S 1202130469:1202130469(0) ack 1132882351 win 2896 <mss 1460,sackOK,timestamp 3497190920 2329221,nop,wscale 2></p>
-
-<p>　　12:02:47.549085 IP ylin.local.47945 > xd-22-43-a8.bta.net.cn.www: . ack 1 win 183 &lt;nop,nop,timestamp 2329258 3497190920></p>
-
-<p>　　12:02:47.549226 IP ylin.local.47945 > xd-22-43-a8.bta.net.cn.www: P 1:102(101) ack 1 win 183 &lt;nop,nop,timestamp 2329258 3497190920></p>
-
-<p>　　12:02:47.688978 IP xd-22-43-a8.bta.net.cn.www > ylin.local.47945: . ack 102 win 698 &lt;nop,nop,timestamp 3497190956 2329258></p>
-
-<p>　　12:02:47.693897 IP xd-22-43-a8.bta.net.cn.www > ylin.local.47945: . 1:1409(1408) ack 102 win 724 &lt;nop,nop,timestamp 3497190957 2329258></p>
-
-<p>　　(5)匹配udp数据包</p>
-
-<p>　　udp是一种无连接的非可靠的用户数据报，因此udp的主要特征同样是端口，用如下方法可以匹配某一端口</p>
-
-<p>　　tcpdump ‘upd port 53′ 查看DNS的数据包</p>
 
 <p>　　ylin@ylin:~$ ping -c 1 www.baidu.com > /dev/null&amp; sudo tcpdump -p udp port 53</p>
 
@@ -1775,13 +2408,21 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　12:28:14.755072 IP 192.168.200.150.domain > ylin.local.32854: 60693 NXDomain 0/1/0 (122)</p>
 
-<p>　　使用ping www.baidu.com目标是产生DNS请求和答应，53是DNS的端口号。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　使用ping www.baidu.com目标是产生DNS请求和答应，53是DNS的端口号。
+</span><span class='line'>
+</span><span class='line'>　　此外还有很多qualitifer是还没有提及的，下面是其它合法的primitive,在tcpdump中是可以直接使用的。
+</span><span class='line'>
+</span><span class='line'>　　gateway host
+</span><span class='line'>
+</span><span class='line'>　　匹配使用host作为网关的数据包，即数据报中mac地址（源或目的）为host，但IP报的源和目的地址不是host的数据包。</span></code></pre></td></tr></table></div></figure>
 
-<p>　　此外还有很多qualitifer是还没有提及的，下面是其它合法的primitive,在tcpdump中是可以直接使用的。</p>
-
-<p>　　gateway host</p>
-
-<p>　　匹配使用host作为网关的数据包，即数据报中mac地址（源或目的）为host，但IP报的源和目的地址不是host的数据包。</p>
 
 <p>　　dst net net</p>
 
@@ -1793,141 +2434,279 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p>　　net net/len</p>
 
-<p>　　匹配IPv4/v6地址为net网络的数据报。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　匹配IPv4/v6地址为net网络的数据报。
+</span><span class='line'>
+</span><span class='line'>　　其中net可以为192.168.0.0或192.168这两种形式。如net 192.168 或net 192.168.0.0
+</span><span class='line'>
+</span><span class='line'>　　net net mask netmask仅对IPv4数据包有效，如net 192.168.0.0 mask 255.255.0.0
+</span><span class='line'>
+</span><span class='line'>　　net net/len同样只对IPv4数据包有效，如net 192.168.0.0/16
+</span><span class='line'>
+</span><span class='line'>　　dst portrange port1-port2
+</span><span class='line'>
+</span><span class='line'>　　src portrange port1-port2
+</span><span class='line'>
+</span><span class='line'>　　portrange port1-port2
+</span><span class='line'>
+</span><span class='line'>　　匹配端口在port1-port2范围内的ip/tcp，ip/upd，ip6/tcp和ip6/udp数据包。dst, src分别指明源或目的。没有则表示src or dst
+</span><span class='line'>
+</span><span class='line'>　　less length 匹配长度少于等于length的报文。
+</span><span class='line'>
+</span><span class='line'>　　greater length 匹配长度大于等于length的报文。
+</span><span class='line'>
+</span><span class='line'>　　ip protochain protocol 匹配ip报文中protocol字段值为protocol的报文
+</span><span class='line'>
+</span><span class='line'>　　ip6 protochain protocol 匹配ipv6报文中protocol字段值为protocol的报文
+</span><span class='line'>
+</span><span class='line'>　　如tcpdump ‘ip protochain 6 匹配ipv4网络中的TCP报文，与tcpdump ‘ip && tcp’用法一样，这里的&&连接两个primitive。6是TCP协议在IP报文中的编号。
+</span><span class='line'>
+</span><span class='line'>　　ether broadcast
+</span><span class='line'>
+</span><span class='line'>　　匹配以太网广播报文
+</span><span class='line'>
+</span><span class='line'>　　ether multicast
+</span><span class='line'>
+</span><span class='line'>　　匹配以太网多播报文
+</span><span class='line'>
+</span><span class='line'>　　ip broadcast
+</span><span class='line'>
+</span><span class='line'>　　匹配IPv4的广播报文。也即IP地址中主机号为全0或全1的IPv4报文。
+</span><span class='line'>
+</span><span class='line'>　　ip multicast
+</span><span class='line'>
+</span><span class='line'>　　匹配IPv4多播报文，也就是IP地址为多播地址的报文。
+</span><span class='line'>
+</span><span class='line'>　　ip6 multicast
+</span><span class='line'>
+</span><span class='line'>　　匹配IPv6多播报文，即IP地址为多播地址的报文。
+</span><span class='line'>
+</span><span class='line'>　　vlan vlan_id
+</span><span class='line'>
+</span><span class='line'>　　匹配为vlan报文 ，且vlan号为vlan_id的报文
+</span><span class='line'>
+</span><span class='line'>　　到些为此，我们一直在介绍primitive是如何使用的，也即expression只有一个primitive。通过学会写好每个primtive，我们就很容易把多个primitive组成一个expression，方法很简单，通过逻辑运算符连接起来就可以了，逻辑运算符有以下三个：
+</span><span class='line'>
+</span><span class='line'>　　“&&” 或”and”
+</span><span class='line'>
+</span><span class='line'>　　“||” 或“or”
+</span><span class='line'>
+</span><span class='line'>　　“!” 或“not”
+</span><span class='line'>
+</span><span class='line'>　　并且可通过()进行复杂的连接运算。
+</span><span class='line'>
+</span><span class='line'>　　如tcpdump ‘ip && tcp’</span></code></pre></td></tr></table></div></figure>
 
-<p>　　其中net可以为192.168.0.0或192.168这两种形式。如net 192.168 或net 192.168.0.0</p>
-
-<p>　　net net mask netmask仅对IPv4数据包有效，如net 192.168.0.0 mask 255.255.0.0</p>
-
-<p>　　net net/len同样只对IPv4数据包有效，如net 192.168.0.0/16</p>
-
-<p>　　dst portrange port1-port2</p>
-
-<p>　　src portrange port1-port2</p>
-
-<p>　　portrange port1-port2</p>
-
-<p>　　匹配端口在port1-port2范围内的ip/tcp，ip/upd，ip6/tcp和ip6/udp数据包。dst, src分别指明源或目的。没有则表示src or dst</p>
-
-<p>　　less length 匹配长度少于等于length的报文。</p>
-
-<p>　　greater length 匹配长度大于等于length的报文。</p>
-
-<p>　　ip protochain protocol 匹配ip报文中protocol字段值为protocol的报文</p>
-
-<p>　　ip6 protochain protocol 匹配ipv6报文中protocol字段值为protocol的报文</p>
-
-<p>　　如tcpdump ‘ip protochain 6 匹配ipv4网络中的TCP报文，与tcpdump ‘ip &amp;&amp; tcp’用法一样，这里的&amp;&amp;连接两个primitive。6是TCP协议在IP报文中的编号。</p>
-
-<p>　　ether broadcast</p>
-
-<p>　　匹配以太网广播报文</p>
-
-<p>　　ether multicast</p>
-
-<p>　　匹配以太网多播报文</p>
-
-<p>　　ip broadcast</p>
-
-<p>　　匹配IPv4的广播报文。也即IP地址中主机号为全0或全1的IPv4报文。</p>
-
-<p>　　ip multicast</p>
-
-<p>　　匹配IPv4多播报文，也就是IP地址为多播地址的报文。</p>
-
-<p>　　ip6 multicast</p>
-
-<p>　　匹配IPv6多播报文，即IP地址为多播地址的报文。</p>
-
-<p>　　vlan vlan_id</p>
-
-<p>　　匹配为vlan报文 ，且vlan号为vlan_id的报文</p>
-
-<p>　　到些为此，我们一直在介绍primitive是如何使用的，也即expression只有一个primitive。通过学会写好每个primtive，我们就很容易把多个primitive组成一个expression，方法很简单，通过逻辑运算符连接起来就可以了，逻辑运算符有以下三个：</p>
-
-<p>　　“&amp;&amp;” 或”and”</p>
-
-<p>　　“||” 或“or”</p>
-
-<p>　　“!” 或“not”</p>
-
-<p>　　并且可通过()进行复杂的连接运算。</p>
-
-<p>　　如tcpdump ‘ip &amp;&amp; tcp’</p>
 
 <p>　　tcpdump ‘ host 192.168.240.3 &amp;&amp;( tcp port 80 || tcp port 443)’</p>
 
-<p>　　通过上面的各种primitive，我们可以写出很丰富的条件，如ip, tcp, udp,vlan等等。如IP，可以按址址进行匹，tcp/udp可以按端口匹配。但是，如果我想匹配更细的条件呢？如tcp中只含syn标志，fin标志的报文呢？上面的primitive恐怕无能为力了。不用怕，tcpdump为你提供最后一个功能最强大的primitive，记住是primitive，而不是expression。你可以用多个这个的primitive组成更复杂的 expression.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>　　通过上面的各种primitive，我们可以写出很丰富的条件，如ip, tcp, udp,vlan等等。如IP，可以按址址进行匹，tcp/udp可以按端口匹配。但是，如果我想匹配更细的条件呢？如tcp中只含syn标志，fin标志的报文呢？上面的primitive恐怕无能为力了。不用怕，tcpdump为你提供最后一个功能最强大的primitive，记住是primitive，而不是expression。你可以用多个这个的primitive组成更复杂的 expression.
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>
+</span><span class='line'>　　最后一个primitive形式为 expr relop expr
+</span><span class='line'>
+</span><span class='line'>　　若把这个形式记为A，那么你可这样写tcpdump ‘A1 && A2 && ip src 192.168.200.1′，等等。
+</span><span class='line'>
+</span><span class='line'>　　下面我们就来分析A这个形式，看看这是如何强大，如果你觉得很乱的话，建议你先用用上面的知识来实际操作几次，要不然就会很乱的，因为expression太复杂了。
+</span><span class='line'>
+</span><span class='line'>　　形式：expr relop expr
+</span><span class='line'>
+</span><span class='line'>　　relop表示关系操作符，可以为&gt;, &lt; ,&gt;=,&lt;=, =, !=之一，
+</span><span class='line'>
+</span><span class='line'>　　expr是一个算术表达式，由整数组成和二元运算符（＋，－，＊，/，＆，|, &lt;&lt;, &gt;&gt;)，长度操作，报文数据访问子。同时所有的整数都是无符号的，即0×80000000 和 0xffffffff &gt; 0。为了访问报文中的数据，可使用如下方式：
+</span><span class='line'>
+</span><span class='line'>　　proto [ expr : size ]
+</span><span class='line'>
+</span><span class='line'>　　proto表示该问的报文，expr的结果表示该报文的偏移，size为可选的，表示从expr偏移量起的szie个字节，整个表达式为proto报文 中,expr起的szie字节的内容（无符号整数）
+</span><span class='line'>
+</span><span class='line'>　　下面是expr relop expr这种形式primitive的例子：
+</span><span class='line'>
+</span><span class='line'>　　’ether[0] & 1 !=0′ ether报文中第0个bit为1，即以太网广播或组播的primtive。
+</span><span class='line'>
+</span><span class='line'>　　通过这种方式，我们可以对报文的任何一个字节进行匹配了，因此它的功能是十分强大的。
+</span><span class='line'>
+</span><span class='line'>　　‘ip[0] = 4’ ip报文中的第一个字节为version，即匹配IPv4的报文，
+</span><span class='line'>
+</span><span class='line'>　　如果我们想匹配一个syn报文，可以使用：’tcp[13] = 2′，因为tcp的标志位为TCP报文的第13个字节，而syn在这个字节的低1位，故匹配只有syn标志的报文,上述条件是可满要求的，并且比较严格。
+</span><span class='line'>
+</span><span class='line'>　　如果想匹配ping命令的请求报文，可以使用’icmp[0]=8′，因为icmp报文的第0字符表示类型，当类型值为8时表示为回显示请求。
+</span><span class='line'>
+</span><span class='line'>　　对于TCP和ICMP中常用的字节，如TCP中的标志位，ICMP中的类型，这个些偏移量有时会忘记。不过tcpdump为你提供更方便的用法，你不用记位这些数字，用字符就可以代替了.
+</span><span class='line'>
+</span><span class='line'>　　对于ICMP报文，类型字节可以icmptype来表示它的偏称量，上面的primitive可改为’icmp[icmptype] =8′，如果8也记不住怎么办？tcpdump还为该字节的值也提供了字符表示，如’icmp[icmptype] = icmp-echo’。
+</span><span class='line'>
+</span><span class='line'>　　下面是tcpdump提供的字符偏移量：
+</span><span class='line'>
+</span><span class='line'>　　icmptype：表示icmp报文中类弄字节的偏移量
+</span><span class='line'>
+</span><span class='line'>　　icmpcode:表示icmp报文中编码字节的偏移量
+</span><span class='line'>
+</span><span class='line'>　　tcpflags:表示TCP报文中标志位字节的偏移量
+</span><span class='line'>
+</span><span class='line'>　　此外，还提供了很多值来对应上面的偏移字节：
+</span><span class='line'>
+</span><span class='line'>　　ICMP中类型字节的值可以是：
+</span><span class='line'>
+</span><span class='line'>　　icmp-echoreply, icmp-unreach, icmp-sourcequench, icmp-redi‐rect, icmp-echo, icmp-routeradvert, icmp-routersolicit,
+</span><span class='line'>
+</span><span class='line'>　　icmp-timxceed, icmp-paramprob, icmp-tstamp, icmp-tstam‐preply, icmp-ireq, icmp-ireqreply, icmp-maskreq, icmp-maskreply.
+</span><span class='line'>
+</span><span class='line'>　　TCP中标志位字节的值可以是：
+</span><span class='line'>
+</span><span class='line'>　　tcp-fin, tcp-syn, tcp-rst, tcp-push, tcp-ack, tcp-urg.
+</span><span class='line'>
+</span><span class='line'>　　通过上面的字符表示，我们可以写出下面的primitive
+</span><span class='line'>
+</span><span class='line'>　　’tcp[tcpflags] = tcp-syn’ 匹配只有syn标志设置为1的 tcp报文
+</span><span class='line'>
+</span><span class='line'>　　’tcp[tcpflags] & (tcp-syn |tcp-ack |tcp-fin) !=0′ 匹配含有syn，或ack或fin标志位的TCP报文
+</span><span class='line'>
+</span><span class='line'>　　对于IP报文，没有提供字符支持，如果想匹配更细的条件，直接使用数字指字偏移量就可以了，不过要对IP报文有更深入的了解才可以。
+</span><span class='line'>
+</span><span class='line'>　　学会写primitive后，expression就是小菜一碟了，由一个或多个primitive组成，并且逻辑连接符组成即可：</span></code></pre></td></tr></table></div></figure>
 
-<p>　　最后一个primitive形式为 expr relop expr</p>
-
-<p>　　若把这个形式记为A，那么你可这样写tcpdump ‘A1 &amp;&amp; A2 &amp;&amp; ip src 192.168.200.1′，等等。</p>
-
-<p>　　下面我们就来分析A这个形式，看看这是如何强大，如果你觉得很乱的话，建议你先用用上面的知识来实际操作几次，要不然就会很乱的，因为expression太复杂了。</p>
-
-<p>　　形式：expr relop expr</p>
-
-<p>　　relop表示关系操作符，可以为>, &lt; ,>=,&lt;=, =, !=之一，</p>
-
-<p>　　expr是一个算术表达式，由整数组成和二元运算符（＋，－，＊，/，＆，|, &lt;&lt;, >>)，长度操作，报文数据访问子。同时所有的整数都是无符号的，即0×80000000 和 0xffffffff > 0。为了访问报文中的数据，可使用如下方式：</p>
-
-<p>　　proto [ expr : size ]</p>
-
-<p>　　proto表示该问的报文，expr的结果表示该报文的偏移，size为可选的，表示从expr偏移量起的szie个字节，整个表达式为proto报文 中,expr起的szie字节的内容（无符号整数）</p>
-
-<p>　　下面是expr relop expr这种形式primitive的例子：</p>
-
-<p>　　’ether[0] &amp; 1 !=0′ ether报文中第0个bit为1，即以太网广播或组播的primtive。</p>
-
-<p>　　通过这种方式，我们可以对报文的任何一个字节进行匹配了，因此它的功能是十分强大的。</p>
-
-<p>　　‘ip[0] = 4’ ip报文中的第一个字节为version，即匹配IPv4的报文，</p>
-
-<p>　　如果我们想匹配一个syn报文，可以使用：’tcp[13] = 2′，因为tcp的标志位为TCP报文的第13个字节，而syn在这个字节的低1位，故匹配只有syn标志的报文,上述条件是可满要求的，并且比较严格。</p>
-
-<p>　　如果想匹配ping命令的请求报文，可以使用’icmp[0]=8′，因为icmp报文的第0字符表示类型，当类型值为8时表示为回显示请求。</p>
-
-<p>　　对于TCP和ICMP中常用的字节，如TCP中的标志位，ICMP中的类型，这个些偏移量有时会忘记。不过tcpdump为你提供更方便的用法，你不用记位这些数字，用字符就可以代替了.</p>
-
-<p>　　对于ICMP报文，类型字节可以icmptype来表示它的偏称量，上面的primitive可改为’icmp[icmptype] =8′，如果8也记不住怎么办？tcpdump还为该字节的值也提供了字符表示，如’icmp[icmptype] = icmp-echo’。</p>
-
-<p>　　下面是tcpdump提供的字符偏移量：</p>
-
-<p>　　icmptype：表示icmp报文中类弄字节的偏移量</p>
-
-<p>　　icmpcode:表示icmp报文中编码字节的偏移量</p>
-
-<p>　　tcpflags:表示TCP报文中标志位字节的偏移量</p>
-
-<p>　　此外，还提供了很多值来对应上面的偏移字节：</p>
-
-<p>　　ICMP中类型字节的值可以是：</p>
-
-<p>　　icmp-echoreply, icmp-unreach, icmp-sourcequench, icmp-redi‐rect, icmp-echo, icmp-routeradvert, icmp-routersolicit,</p>
-
-<p>　　icmp-timxceed, icmp-paramprob, icmp-tstamp, icmp-tstam‐preply, icmp-ireq, icmp-ireqreply, icmp-maskreq, icmp-maskreply.</p>
-
-<p>　　TCP中标志位字节的值可以是：</p>
-
-<p>　　tcp-fin, tcp-syn, tcp-rst, tcp-push, tcp-ack, tcp-urg.</p>
-
-<p>　　通过上面的字符表示，我们可以写出下面的primitive</p>
-
-<p>　　’tcp[tcpflags] = tcp-syn’ 匹配只有syn标志设置为1的 tcp报文</p>
-
-<p>　　’tcp[tcpflags] &amp; (tcp-syn |tcp-ack |tcp-fin) !=0′ 匹配含有syn，或ack或fin标志位的TCP报文</p>
-
-<p>　　对于IP报文，没有提供字符支持，如果想匹配更细的条件，直接使用数字指字偏移量就可以了，不过要对IP报文有更深入的了解才可以。</p>
-
-<p>　　学会写primitive后，expression就是小菜一碟了，由一个或多个primitive组成，并且逻辑连接符组成即可：</p>
 
 <p>　　tcpdump ‘host 192.168.240.91 &amp;&amp; icmp[icmptype] = icmp-echo’</p>
 
 <p>　　tcpdump ‘host 192.168.1.100 &amp;&amp; vrrp’</p>
 
-<p>　　tcpdump ‘ether src 00:00:00:00:00:02 &amp;&amp; ether[0] &amp; 1 !=0′</p>
-
-<p>　　让你随心所欲地使用tcpdump，将不用再从复杂的输出中去挑报文了！</p>
+<p>　　tcpdump ‘ether src 00:00:00:00:00:02 &amp;&amp; ether[0] &amp; 1 !=0′
+&#8220;`
+　　让你随心所欲地使用tcpdump，将不用再从复杂的输出中去挑报文了！</p>
 
 <p>　　如此，我们可以写出更复杂的表达式来匹配报文，如IP或TCP中的报文id，IP是中的分段标志，ICMP中类型和代码等。</p>
 
@@ -2018,7 +2797,9 @@ c.直连网络端点间的满载状态下的直线状态
 <pre><code>总之,再多的原因都是我在自说自话.路是错是对反正已经走到了这一步,定要认认真真,踏踏实实的走下去.说起”踏踏实实”,这也是我这些年来感悟最多的一个词.不管友情,亲情,爱情都不是该用语言来诠释的东西.用心去做,心中自泯~冷暖自知的便好.
 写了好多也说了好多~这些年来经历也算不少了~今天看了自己大一写的那些计划~发现自己写的那些东西居然跟自己如今的行径大体相同~不论如何~世界末日已过~~新纪元开始了~~这也算是给自己新纪元的新的风向标吧~想说的太多了~~以后再说吧~~
 
-                                                                                                          –by 2012-12-22 mdk-vimer
+```                                                                                                         
+                                                                                                                                –by 2012-12-22 mdk-vimer
+```
 </code></pre>
 </div>
   

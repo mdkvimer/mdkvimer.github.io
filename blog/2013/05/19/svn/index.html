@@ -106,27 +106,35 @@
 </ol>
 
 
-<p>svnadmin create –fs-type fsfs /usr/local/OJ</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svnadmin create –fs-type fsfs /usr/local/OJ</span></code></pre></td></tr></table></div></figure>
+
 
 <p>执行后在/usr/local/OJ/目录下生成一堆配置文件~主要文件还是conf/下的svnserve.conf文件，里面有关配置用户和匿名用户对版本库的使用权限设置 anon-access 和autho-access ,write对应的用户读写都可~read只可读</p>
 
 <p>2.刚建立的版本库没有项目需引入项目(在本地引入用file://)</p>
 
-<p>svn import hustoj2mdk file:///usr/local/OJ/project-oj -m “Initial import”</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svn import hustoj2mdk file:///usr/local/OJ/project-oj -m “Initial import”</span></code></pre></td></tr></table></div></figure>
+
 
 <p>即可将hustoj2mdk目录的内容引入到版本库的project-oj目录</p>
 
 <p>3.开启svnserve</p>
 
-<p>svnserve -d -r /usr/local/OJ</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svnserve -d -r /usr/local/OJ
+</span><span class='line'>
+</span><span class='line'>-d 以独立进程的方式开启 -r 便于svn 访问省略/usr/local/OJ  只用project-oj即可</span></code></pre></td></tr></table></div></figure>
 
-<p>-d 以独立进程的方式开启 -r 便于svn 访问省略/usr/local/OJ  只用project-oj即可</p>
 
-<p>ps aux|grep svn 即可查看到svnserve</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps aux|grep svn 即可查看到svnserve</span></code></pre></td></tr></table></div></figure>
+
 
 <p>到此一个的版本库的项目引入以完成~即可用 svn list/checkout等命令 svn://URL 取出版本库的相关项目(后期补上基于apche的svn)</p>
-
-<p>—by mdk-vimer</p>
 </div>
 
 

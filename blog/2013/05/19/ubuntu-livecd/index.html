@@ -9,7 +9,10 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="将现有的ubuntu系统打造成LiveCD ~下载Live Ubuntu Backup V2.2 (lub) 将所有环境装好后分别执行: 将lub放到家目录 1.sudo chmod 777 /home/lub 2.sudo /home/lub -b 然后按e或c来选择是英文提示，还是中文提示。 &hellip;">
+  <meta name="description" content="将现有的ubuntu系统打造成LiveCD ~下载Live Ubuntu Backup V2.2 (lub) 将所有环境装好后分别执行: 将lub放到家目录 1
+2
+3
+1.sudo chmod 777 /home/lub 2.sudo /home/lub -b 然后按e或c来选择是英文提示， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -101,9 +104,13 @@
 
 <p>将所有环境装好后分别执行: 将lub放到家目录</p>
 
-<p>1.sudo chmod 777 /home/lub</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.sudo chmod 777 /home/lub
+</span><span class='line'>
+</span><span class='line'>2.sudo /home/lub -b</span></code></pre></td></tr></table></div></figure>
 
-<p>2.sudo /home/lub -b</p>
 
 <p>然后按e或c来选择是英文提示，还是中文提示。第一次执行时，可能会提示需要安装lupin-casper和squashfs-tools，其中 lupin-casper可以忽略，而squashfs-tools必须安装，运行$sudo apt-get install squashfs-tools即可</p>
 
@@ -111,17 +118,36 @@
 
 <p>3.将ubuntu-11.10-desktop.i386.iso拷贝到/home.acmer/下:</p>
 
-<p>执行:sudo /home/acmer/mnt &amp;&amp; sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</p>
+<p>执行:</p>
 
-<p>4.sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo /home/acmer/mnt && sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</span></code></pre></td></tr></table></div></figure>
 
-<p>执行: $sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd</p>
+
+<ol>
+<li></li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd </span></code></pre></td></tr></table></div></figure>
+
 
 <p>5.对/home/acmer/livecd/casper/目录下的filesystem.squashfs、 filesystem.manifest、filesystem.manifest-desktop这三个文件进行操作，由于它们只有读权限，所以先执行$sudo chmod o+w /home/acmer/livecd/casper/filesystem.*</p>
 
 <p>将刚才lub生成的那个backup-2013.01.02.squashfs文件，拷贝成/home/acmer/livecd/casper/filesystem.squashfs</p>
 
-<p>执行： $sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</p>
+<p>执行：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li></li>
@@ -130,9 +156,13 @@
 
 <p>此外，还要更新/home/acmer/livecd/casper/目录下的filesystem.manifest和filesystem.manifest-remove，这两个文件实际上是系统所装包的列表，通过以下方式更新</p>
 
-<p>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ >/home/acmer/livecd/casper/filesystem.manifest</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ &gt;/home/acmer/livecd/casper/filesystem.manifest
+</span><span class='line'>
+</span><span class='line'>$sudo dpkg -l | grep ii | awk {print$2,$3}’&gt; /home/acmer/livecd/casper/filesystem.manifes-remove</span></code></pre></td></tr></table></div></figure>
 
-<p>$sudo dpkg -l | grep ii | awk {print$2,$3}’> /home/acmer/livecd/casper/filesystem.manifes-remove</p>
 
 <ol>
 <li></li>
@@ -141,9 +171,17 @@
 
 <p>退回的LiveCD的工作目录 /home/acmer/livecd 下，</p>
 
-<p>执行$sudo rm md5sum.txt</p>
+<p>执行</p>
 
-<p>再执行$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo rm md5sum.txt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再执行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</span></code></pre></td></tr></table></div></figure>
+
 
 <p>更新原来的md5sum</p>
 
@@ -154,9 +192,17 @@
 
 <p>将工作目录下的内容打包成ISO</p>
 
-<p>先运行$sudo apt-get install mkisofs 安装ISO打包工具，</p>
+<p>先运行</p>
 
-<p>执行$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo apt-get install mkisofs 安装ISO打包工具，</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</span></code></pre></td></tr></table></div></figure>
+
 
 <p>打包iso时最后一定加 . 来表示目前目录</p>
 

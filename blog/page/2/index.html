@@ -158,9 +158,13 @@
 
 <p>将所有环境装好后分别执行: 将lub放到家目录</p>
 
-<p>1.sudo chmod 777 /home/lub</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.sudo chmod 777 /home/lub
+</span><span class='line'>
+</span><span class='line'>2.sudo /home/lub -b</span></code></pre></td></tr></table></div></figure>
 
-<p>2.sudo /home/lub -b</p>
 
 <p>然后按e或c来选择是英文提示，还是中文提示。第一次执行时，可能会提示需要安装lupin-casper和squashfs-tools，其中 lupin-casper可以忽略，而squashfs-tools必须安装，运行$sudo apt-get install squashfs-tools即可</p>
 
@@ -168,17 +172,36 @@
 
 <p>3.将ubuntu-11.10-desktop.i386.iso拷贝到/home.acmer/下:</p>
 
-<p>执行:sudo /home/acmer/mnt &amp;&amp; sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</p>
+<p>执行:</p>
 
-<p>4.sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo /home/acmer/mnt && sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</span></code></pre></td></tr></table></div></figure>
 
-<p>执行: $sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd</p>
+
+<ol>
+<li></li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd </span></code></pre></td></tr></table></div></figure>
+
 
 <p>5.对/home/acmer/livecd/casper/目录下的filesystem.squashfs、 filesystem.manifest、filesystem.manifest-desktop这三个文件进行操作，由于它们只有读权限，所以先执行$sudo chmod o+w /home/acmer/livecd/casper/filesystem.*</p>
 
 <p>将刚才lub生成的那个backup-2013.01.02.squashfs文件，拷贝成/home/acmer/livecd/casper/filesystem.squashfs</p>
 
-<p>执行： $sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</p>
+<p>执行：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li></li>
@@ -187,9 +210,13 @@
 
 <p>此外，还要更新/home/acmer/livecd/casper/目录下的filesystem.manifest和filesystem.manifest-remove，这两个文件实际上是系统所装包的列表，通过以下方式更新</p>
 
-<p>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ >/home/acmer/livecd/casper/filesystem.manifest</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ &gt;/home/acmer/livecd/casper/filesystem.manifest
+</span><span class='line'>
+</span><span class='line'>$sudo dpkg -l | grep ii | awk {print$2,$3}’&gt; /home/acmer/livecd/casper/filesystem.manifes-remove</span></code></pre></td></tr></table></div></figure>
 
-<p>$sudo dpkg -l | grep ii | awk {print$2,$3}’> /home/acmer/livecd/casper/filesystem.manifes-remove</p>
 
 <ol>
 <li></li>
@@ -198,9 +225,17 @@
 
 <p>退回的LiveCD的工作目录 /home/acmer/livecd 下，</p>
 
-<p>执行$sudo rm md5sum.txt</p>
+<p>执行</p>
 
-<p>再执行$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo rm md5sum.txt</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再执行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</span></code></pre></td></tr></table></div></figure>
+
 
 <p>更新原来的md5sum</p>
 
@@ -211,9 +246,17 @@
 
 <p>将工作目录下的内容打包成ISO</p>
 
-<p>先运行$sudo apt-get install mkisofs 安装ISO打包工具，</p>
+<p>先运行</p>
 
-<p>执行$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo apt-get install mkisofs 安装ISO打包工具，</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</span></code></pre></td></tr></table></div></figure>
+
 
 <p>打包iso时最后一定加 . 来表示目前目录</p>
 
@@ -535,32 +578,65 @@ Run level：运行等级有哪些？</p>
 /etc/inittab 的内容与语法
 复制代码</p>
 
-<p>[root@www ~]# vim /etc/inittab
-id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# vim /etc/inittab
+</span><span class='line'>id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5 
+</span><span class='line'>
+</span><span class='line'>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
+</span><span class='line'>l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
+</span><span class='line'>l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
+</span><span class='line'>l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
+</span><span class='line'>l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
+</span><span class='line'>l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
+</span><span class='line'>l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>ca::ctrlaltdel:/sbin/shutdown -t3 -r now
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>pf::powerfail:/sbin/shutdown -f -h +2 "Power Failure; System Shutting Down"
+</span><span class='line'>pr:12345:powerokwait:/sbin/shutdown -c "Power Restored; Shutdown Cancelled"</span></code></pre></td></tr></table></div></figure>
 
-<p>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档</p>
 
-<p>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
-l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
-l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
-l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
-l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
-l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
-l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
+</span><span class='line'>2:2345:respawn:/sbin/mingetty tty2
+</span><span class='line'>3:2345:respawn:/sbin/mingetty tty3
+</span><span class='line'>4:2345:respawn:/sbin/mingetty tty4
+</span><span class='line'>5:2345:respawn:/sbin/mingetty tty5
+</span><span class='line'>6:2345:respawn:/sbin/mingetty tty6
+</span><span class='line'>
+</span><span class='line'>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</span></code></pre></td></tr></table></div></figure>
 
-<p>ca::ctrlaltdel:/sbin/shutdown -t3 -r now</p>
-
-<p>pf::powerfail:/sbin/shutdown -f -h +2 &ldquo;Power Failure; System Shutting Down&rdquo;
-pr:12345:powerokwait:/sbin/shutdown -c &ldquo;Power Restored; Shutdown Cancelled&rdquo;</p>
-
-<p>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
-2:2345:respawn:/sbin/mingetty tty2
-3:2345:respawn:/sbin/mingetty tty3
-4:2345:respawn:/sbin/mingetty tty4
-5:2345:respawn:/sbin/mingetty tty5
-6:2345:respawn:/sbin/mingetty tty6</p>
-
-<p>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</p>
 
 <p>复制代码</p>
 
@@ -650,13 +726,21 @@ SELinux 在此时进行一些检测， 并且检测是否需要帮所有的文�
 <p>那么各个不同的 run level 服务启动的各个 shell script 放在哪？还记得 /etc/inittab 里面提到的：
 复制代码</p>
 
-<p>l0:0:wait:/etc/rc.d/rc 0
-l1:1:wait:/etc/rc.d/rc 1
-l2:2:wait:/etc/rc.d/rc 2
-l3:3:wait:/etc/rc.d/rc 3
-l4:4:wait:/etc/rc.d/rc 4
-l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
-l6:6:wait:/etc/rc.d/rc 6</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>l0:0:wait:/etc/rc.d/rc 0
+</span><span class='line'>l1:1:wait:/etc/rc.d/rc 1
+</span><span class='line'>l2:2:wait:/etc/rc.d/rc 2
+</span><span class='line'>l3:3:wait:/etc/rc.d/rc 3
+</span><span class='line'>l4:4:wait:/etc/rc.d/rc 4
+</span><span class='line'>l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
+</span><span class='line'>l6:6:wait:/etc/rc.d/rc 6</span></code></pre></td></tr></table></div></figure>
+
 
 <p>复制代码</p>
 
@@ -670,18 +754,31 @@ l6:6:wait:/etc/rc.d/rc 6</p>
 <p>透过上面的说明我们可以知道所有的项目都与 /etc/rc5.d/ 有关，那么我们就来瞧瞧这个目录下有些什么玩意儿吧！
 复制代码</p>
 
-<p>[root@www ~]# ll /etc/rc5.d/
-lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd &ndash;> ../init.d/dhcdbd
-&hellip;.(中间省略)&hellip;.
-lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi &ndash;> ../init.d/capi
-lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl &ndash;> ../init.d/microcode_ctl
-lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor &ndash;> ../init.d/lvm2-monitor
-&hellip;.(中间省略)&hellip;.
-lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network &ndash;> ../init.d/network
-&hellip;.(中间省略)&hellip;.
-lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local &ndash;> ../rc.local
-lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
-&hellip;.(底下省略)&hellip;.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# ll /etc/rc5.d/
+</span><span class='line'>lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd -&gt; ../init.d/dhcdbd
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi -&gt; ../init.d/capi
+</span><span class='line'>lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl -&gt; ../init.d/microcode_ctl
+</span><span class='line'>lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor -&gt; ../init.d/lvm2-monitor
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network -&gt; ../init.d/network
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local -&gt; ../rc.local
+</span><span class='line'>lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd -&gt; ../init.d/smartd
+</span><span class='line'>....(底下省略)....</span></code></pre></td></tr></table></div></figure>
+
 
 <p>复制代码</p>
 
@@ -693,9 +790,11 @@ lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
 
 <p>服务的启动主要是以『/etc/init.d/服务档名 {start,stop}』 来启动与关闭的，那么透过刚刚 /etc/rc.d/rc 程序的解说，我们可以清楚的了解到了 /etc/rc5.d/[SK]xx 其实就是跑到 /etc/init.d/ 去找到相对应的服务脚本， 然后分别进行 start (Sxx) 或 stop (Kxx) 的动作而已啦！举例来说，以上述的表格内的 K91capi 及 S10network 为例好了， 透过 /etc/rc.d/rc 5 的运行，这两个文件会这样进行：</p>
 
-<pre><code>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
-/etc/rc5.d/S10network start –&gt; /etc/init.d/network start
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
+</span><span class='line'>/etc/rc5.d/S10network start –&gt; /etc/init.d/network start</span></code></pre></td></tr></table></div></figure>
+
 
 <p>所以说，你有想要启动该 runlevel 时就运行的服务，那么利用 Sxx 并指向 /etc/init.d/ 的特定服务启动脚本后， 该服务就能够在启动时启动啦！就这么简单！问题是，你需要自行处理这个 K, S 开头的连结档吗？ 并不需要的，chkconfig 就是在负责处理这个连结档啦！这样有没有跟第十八章的观念串在一起了呢？ ^_^</p>
 
@@ -712,13 +811,21 @@ lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
 <p>在完成了系统所有服务的启动后，接下来 Linux 就会启动终端机或者是 X Window 来等待使用者登陆啦！ 实际参考的项目是 /etc/inittab 内的这一段：
 复制代码</p>
 
-<p>1:2345:respawn:/sbin/mingetty tty1
-2:2345:respawn:/sbin/mingetty tty2
-3:2345:respawn:/sbin/mingetty tty3
-4:2345:respawn:/sbin/mingetty tty4
-5:2345:respawn:/sbin/mingetty tty5
-6:2345:respawn:/sbin/mingetty tty6
-x:5:respawn:/etc/X11/prefdm -nodaemon</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1:2345:respawn:/sbin/mingetty tty1
+</span><span class='line'>2:2345:respawn:/sbin/mingetty tty2
+</span><span class='line'>3:2345:respawn:/sbin/mingetty tty3
+</span><span class='line'>4:2345:respawn:/sbin/mingetty tty4
+</span><span class='line'>5:2345:respawn:/sbin/mingetty tty5
+</span><span class='line'>6:2345:respawn:/sbin/mingetty tty6
+</span><span class='line'>x:5:respawn:/etc/X11/prefdm -nodaemon</span></code></pre></td></tr></table></div></figure>
+
 
 <p>复制代码</p>
 
@@ -737,12 +844,19 @@ x:5:respawn:/etc/X11/prefdm -nodaemon</p>
 
 <p>/etc/rc.d/rc.sysinit 当中的加载使用者自订模块的地方吗？就是在 /etc/sysconfig/modules/ 目录下啊！ 虽然核心提供的默认模块已经很足够我们使用了，但是，某些条件下我们还是得对模块进行一些参数的规划， 此时就得要使用到 /etc/modprobe.conf 罗！举例来说，鸟哥的 CentOS 主机的 modprobe.conf 有点像这样：</p>
 
-<p>[root@www ~]# cat /etc/modprobe.conf
-alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
-alias scsi_hostadapter pata_sis
-alias snd-card-0 snd-trident
-options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
-options snd-trident index=0</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# cat /etc/modprobe.conf
+</span><span class='line'>alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
+</span><span class='line'>alias scsi_hostadapter pata_sis
+</span><span class='line'>alias snd-card-0 snd-trident
+</span><span class='line'>options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
+</span><span class='line'>options snd-trident index=0</span></code></pre></td></tr></table></div></figure>
+
 
 <p>以上表的第一行为例，鸟哥使用螃蟹卡 (Realtek 的芯片组) 来作为我的网络卡，那螃蟹卡使用的模块就是 8139too 啦！这样看的懂了吧？当我要启动网络卡时，系统会跑到这个文件来查阅一下，然后加载 8139too 驱动程序来驱动网络卡罗！更多的相关说明，请 man modprobe.conf 喔！这个文件大多在指定系统内的硬件所使用的模块啦！这个文件通常系统是可以自行产生的，所以你不必手动去订正他！ 不过，如果系统捉到错误的驱动程序，或者是你想要使用升级的驱动程序来对应相关的硬件配备时， 你就得要自行手动的处理一下这个文件了。
  /etc/sysconfig/*</p>
@@ -785,29 +899,43 @@ network-scripts/：
 <p>也就是说，两个 run level 都存在的服务就不会被关闭啦！如此一来，就很容易切换 run level 了， 而且还不需要重新启动呢！真方便。那我怎么知道目前的 run level 是多少呢？ 直接在 bash 当中输入 runlevel 即可啊！
 复制代码</p>
 
-<p>[root@www ~]# runlevel
-N 5</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# runlevel
+</span><span class='line'>N 5
+</span><span class='line'># 左边代表前一个 runlevel ，右边代表目前的 runlevel。
+</span><span class='line'># 由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)
+</span><span class='line'>
+</span><span class='line'># 将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)
+</span><span class='line'>[root@www ~]# init 3
+</span><span class='line'>NIT: Sending processes the TERM signal
+</span><span class='line'>Applying Intel CPU microcode update:        [  OK  ]
+</span><span class='line'>Starting background readahead:              [  OK  ]
+</span><span class='line'>Starting irqbalance:                        [  OK  ]
+</span><span class='line'>Starting httpd:                             [  OK  ]
+</span><span class='line'>Starting anacron:                           [  OK  ]
+</span><span class='line'># 这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务
+</span><span class='line'>
+</span><span class='line'>[root@www ~]# runlevel
+</span><span class='line'>5 3
+</span><span class='line'># 看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</span></code></pre></td></tr></table></div></figure>
 
-<h1>左边代表前一个 runlevel ，右边代表目前的 runlevel。</h1>
-
-<h1>由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)</h1>
-
-<h1>将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)</h1>
-
-<p>[root@www ~]# init 3
-NIT: Sending processes the TERM signal
-Applying Intel CPU microcode update:        [  OK  ]
-Starting background readahead:              [  OK  ]
-Starting irqbalance:                        [  OK  ]
-Starting httpd:                             [  OK  ]
-Starting anacron:                           [  OK  ]</p>
-
-<h1>这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务</h1>
-
-<p>[root@www ~]# runlevel
-5 3</p>
-
-<h1>看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</h1>
 
 <p>复制代码</p>
 
@@ -860,26 +988,33 @@ Starting anacron:                           [  OK  ]</p>
 <p>这个命令可以让你通过通知进程发送一个桌面通知给用户。这可以用来向用户发送提示，或者显示一些信息而不用打断用户工作。你需要安装如下软件包：
 PHP代码</p>
 
-<pre><code>$ sudo apt-get install libnotify-bin
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install libnotify-bin</span></code></pre></td></tr></table></div></figure>
+
 
 <p>下面这个例子展示了如何从命令行向桌面发送一个简单的消息：
 PHP代码</p>
 
-<pre><code>notify-send “rsnapshot done \”static/image/smiley/default/smile.gif\”" smilieid=”\”1\”" alt=”\”\”" border=”\”0\”"&gt;”
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>notify-send “rsnapshot done \”static/image/smiley/default/smile.gif\”" smilieid=”\”1\”" alt=”\”\”" border=”\”0\”"&gt;”</span></code></pre></td></tr></table></div></figure>
+
 
 <p>输出：</p>
 
 <p>下面是一个复杂一点的例子：
 PHP代码</p>
 
-<pre><code>….
-alert=18000
-live=$(lynx –dump http://money.rediff.com/ | grep ‘BSE LIVE’ | awk ‘{ print $5}’ | sed ‘s/,//g;s/\.[0-9]*//g’)
-[ $notify_counter -eq 0 ] &amp;&amp; [ $live -ge $alert ] &amp;&amp; { notify-send -t 5000 -u low -i  ”BSE Sensex touched 18k”;  notify_counter=1; }
-…
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>….
+</span><span class='line'>alert=18000
+</span><span class='line'>live=$(lynx –dump http://money.rediff.com/ | grep ‘BSE LIVE’ | awk ‘{ print $5}’ | sed ‘s/,//g;s/\.[0-9]*//g’)
+</span><span class='line'>[ $notify_counter -eq 0 ] && [ $live -ge $alert ] && { notify-send -t 5000 -u low -i  ”BSE Sensex touched 18k”;  notify_counter=1; }
+</span><span class='line'>…</span></code></pre></td></tr></table></div></figure>
+
 
 <p>输出：</p>
 
@@ -907,36 +1042,65 @@ live=$(lynx –dump http://money.rediff.com/ | grep ‘BSE LIVE’ | awk ‘{ pr
 <p>举例：
 PHP代码</p>
 
-<pre><code>#!/bin/bash
-# clear the screen
-tput clear
-# Move cursor to screen location X,Y (top left is 0,0)
-tput cup 3 15
-# Set a foreground colour using ANSI escape
-tput setaf 3
-echo “XYX Corp LTD.”
-tput sgr0
-tput cup 5 17
-# Set reverse video mode
-tput rev
-echo “M A I N – M E N U”
-tput sgr0
-tput cup 7 15
-echo “1. User Management”
-tput cup 8 15
-echo “2. Service Management”
-tput cup 9 15
-echo “3. Process Management”
-tput cup 10 15
-echo “4. Backup”
-# Set bold mode
-tput bold
-tput cup 12 15
-read -p “Enter your choice [1-4] ” choice
-tput clear
-tput sgr0
-tput rc
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'># clear the screen
+</span><span class='line'>tput clear
+</span><span class='line'># Move cursor to screen location X,Y (top left is 0,0)
+</span><span class='line'>tput cup 3 15
+</span><span class='line'># Set a foreground colour using ANSI escape
+</span><span class='line'>tput setaf 3
+</span><span class='line'>echo “XYX Corp LTD.”
+</span><span class='line'>tput sgr0
+</span><span class='line'>tput cup 5 17
+</span><span class='line'># Set reverse video mode
+</span><span class='line'>tput rev
+</span><span class='line'>echo “M A I N – M E N U”
+</span><span class='line'>tput sgr0
+</span><span class='line'>tput cup 7 15
+</span><span class='line'>echo “1. User Management”
+</span><span class='line'>tput cup 8 15
+</span><span class='line'>echo “2. Service Management”
+</span><span class='line'>tput cup 9 15
+</span><span class='line'>echo “3. Process Management”
+</span><span class='line'>tput cup 10 15
+</span><span class='line'>echo “4. Backup”
+</span><span class='line'># Set bold mode
+</span><span class='line'>tput bold
+</span><span class='line'>tput cup 12 15
+</span><span class='line'>read -p “Enter your choice [1-4] ” choice
+</span><span class='line'>tput clear
+</span><span class='line'>tput sgr0
+</span><span class='line'>tput rc</span></code></pre></td></tr></table></div></figure>
+
 
 <p>输出：</p>
 
@@ -949,20 +1113,27 @@ tput rc
 
 <p>PHP代码</p>
 
-<pre><code>setleds -D +num
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>setleds -D +num</span></code></pre></td></tr></table></div></figure>
+
 
 <p>关闭数字键盘灯：</p>
 
 <p>PHP代码</p>
 
-<pre><code>setleds -D -num
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>setleds -D -num
+</span><span class='line'>
+</span><span class='line'>  -caps: 清除大写灯
+</span><span class='line'>  +caps：打开大写灯
+</span><span class='line'>  -scroll：清除滚动锁
+</span><span class='line'>  +scroll：打开滚动锁</span></code></pre></td></tr></table></div></figure>
 
-  -caps: 清除大写灯
-  +caps：打开大写灯
-  -scroll：清除滚动锁
-  +scroll：打开滚动锁
-</code></pre>
 
 <ol>
 <li>zenity 命令</li>
@@ -972,29 +1143,51 @@ tput rc
 <p>这个命令可以显示GTK+的对话框，然后返回用户的输入。你可以用这个命令在脚本中显示信息，并要求用户输入信息。下面这段代码就是域名的whois查询：
 PHP代码</p>
 
-<pre><code>#!/bin/bash
-# Get domain name
-_zenity=”/usr/bin/zenity”
-_out=”/tmp/whois.output.[    DISCUZ_CODE_4    ]quot;
-domain=$(${_zenity} –title  ”Enter domain” \
-      –entry –text “Enter the domain you would like to see whois info” )
-if [ $? -eq 0 ]
-then
-  # Display a progress dialog while searching whois database
-  whois $domain  | tee &gt;(${_zenity} –width=200 –height=100 \
-        –title=”whois” –progress \
-        –pulsate –text=”Searching domain info…” \
-            –auto-kill –auto-close \
-            –percentage=10) &gt;${_out}
-  # Display back output
-  ${_zenity} –width=800 –height=600  \
-    –title “Whois info for $domain” \
-    –text-info –filename=”${_out}”
-else
-  ${_zenity} –error \
-    –text=”No input provided”
-fi
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'># Get domain name
+</span><span class='line'>_zenity=”/usr/bin/zenity”
+</span><span class='line'>_out=”/tmp/whois.output.[    DISCUZ_CODE_4    ]quot;
+</span><span class='line'>domain=$(${_zenity} –title  ”Enter domain” \
+</span><span class='line'>      –entry –text “Enter the domain you would like to see whois info” )
+</span><span class='line'>if [ $? -eq 0 ]
+</span><span class='line'>then
+</span><span class='line'>  # Display a progress dialog while searching whois database
+</span><span class='line'>  whois $domain  | tee &gt;(${_zenity} –width=200 –height=100 \
+</span><span class='line'>        –title=”whois” –progress \
+</span><span class='line'>        –pulsate –text=”Searching domain info…” \
+</span><span class='line'>            –auto-kill –auto-close \
+</span><span class='line'>            –percentage=10) &gt;${_out}
+</span><span class='line'>  # Display back output
+</span><span class='line'>  ${_zenity} –width=800 –height=600  \
+</span><span class='line'>    –title “Whois info for $domain” \
+</span><span class='line'>    –text-info –filename=”${_out}”
+</span><span class='line'>else
+</span><span class='line'>  ${_zenity} –error \
+</span><span class='line'>    –text=”No input provided”
+</span><span class='line'>fi</span></code></pre></td></tr></table></div></figure>
+
 
 <p>输出：</p>
 
@@ -1006,8 +1199,9 @@ fi
 <p>这个命令和zenity很想，只不过它是为KDE/QT应用准备的。使用方法如下：
 PHP代码</p>
 
-<pre><code>kdialog –dontagain myscript:nofilemsg –msgbox “File: ‘~/.backup/config’ not found.”
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>kdialog –dontagain myscript:nofilemsg –msgbox “File: ‘~/.backup/config’ not found.”</span></code></pre></td></tr></table></div></figure>
+
 
 <p>输出</p>
 
@@ -1019,21 +1213,35 @@ PHP代码</p>
 <p>这个命令可以在shell脚本中显示文本组件。它使用了curses和ncurses类库。示例代码：
 PHP代码</p>
 
-<pre><code>&gt;#!/bin/bash
-dialog –title “Delete file” \
-–backtitle “Linux Shell Script Tutorial Example” \
-–yesno “Are you sure you want to permanently delete \”/tmp/foo.txt\”?” 7 60
-# Get exit status
-# 0 means user hit [yes] button.
-# 1 means user hit [no] button.
-# 255 means user hit [Esc] key.
-response=$?
-case $response in
-  0) echo “File deleted.”;;
-  1) echo “File not deleted.”;;
-  255) echo “[ESC] key pressed.”;;
-esac
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;#!/bin/bash
+</span><span class='line'>dialog –title “Delete file” \
+</span><span class='line'>–backtitle “Linux Shell Script Tutorial Example” \
+</span><span class='line'>–yesno “Are you sure you want to permanently delete \”/tmp/foo.txt\”?” 7 60
+</span><span class='line'># Get exit status
+</span><span class='line'># 0 means user hit [yes] button.
+</span><span class='line'># 1 means user hit [no] button.
+</span><span class='line'># 255 means user hit [Esc] key.
+</span><span class='line'>response=$?
+</span><span class='line'>case $response in
+</span><span class='line'>  0) echo “File deleted.”;;
+</span><span class='line'>  1) echo “File not deleted.”;;
+</span><span class='line'>  255) echo “[ESC] key pressed.”;;
+</span><span class='line'>esac</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>logger 命令</li>
@@ -1043,16 +1251,25 @@ esac
 <p>这个命令可以让你写入系统日志例如 /var/log/messages：
 PHP代码</p>
 
-<pre><code>logger “MySQL database backup failed.”
-tail -f /var/log/messages
-logger -t mysqld -p daemon.error “Database Server failed”
-tail -f /var/log/syslog
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>logger “MySQL database backup failed.”
+</span><span class='line'>tail -f /var/log/messages
+</span><span class='line'>logger -t mysqld -p daemon.error “Database Server failed”
+</span><span class='line'>tail -f /var/log/syslog</span></code></pre></td></tr></table></div></figure>
 
-<p>输出：
-Apr 20 00:11:45 vivek-desktop kernel: [38600.515354] CPU0: Temperature/speed normal</p>
 
-<p>Apr 20 00:12:20 vivek-desktop mysqld: Database Server failed</p>
+<p>输出：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Apr 20 00:11:45 vivek-desktop kernel: [38600.515354] CPU0: Temperature/speed normal
+</span><span class='line'>
+</span><span class='line'>Apr 20 00:12:20 vivek-desktop mysqld: Database Server failed</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>setterm 命令</li>
@@ -1062,22 +1279,27 @@ Apr 20 00:11:45 vivek-desktop kernel: [38600.515354] CPU0: Temperature/speed nor
 <p>这个命令可以设置中断的属性。下面的例子是强制屏幕全黑15分钟，并且60分钟后把显示器设为待机状态：
 PHP代码</p>
 
-<pre><code>setterm -blank 15 -powersave powerdown -powerdown 60
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>setterm -blank 15 -powersave powerdown -powerdown 60</span></code></pre></td></tr></table></div></figure>
+
 
 <p>下面这段命令可以在中断显示加下划线的文字：
 PHP代码</p>
 
-<pre><code>setterm -underline on;
-echo “Add Your Important Message Here”
-setterm -underline off
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>setterm -underline on;
+</span><span class='line'>echo “Add Your Important Message Here”
+</span><span class='line'>setterm -underline off</span></code></pre></td></tr></table></div></figure>
+
 
 <p>或者你可以关闭光标：
 PHP代码</p>
 
-<pre><code>setterm -cursor off
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>setterm -cursor off</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>smbclient：向 MS-Windows 系统发送消息</li>
@@ -1087,19 +1309,27 @@ PHP代码</p>
 <p>smbclient可以和 SMB/CIFS服务器通信。它可以向MS-Windows系统的指定用户发送消息：
 PHP代码</p>
 
-<pre><code>smbclient -M WinXPPro &lt;&lt;EOF
-Message 1
-Message 2
-…
-..
-EOF
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>smbclient -M WinXPPro &lt;&lt;EOF
+</span><span class='line'>Message 1
+</span><span class='line'>Message 2
+</span><span class='line'>…
+</span><span class='line'>..
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
 
 <p>或者
 PHP代码</p>
 
-<pre><code>echo “${Message}” | smbclient -M salesguy2
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo “${Message}” | smbclient -M salesguy2
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>Bash Socket 编程</li>
@@ -1108,60 +1338,98 @@ PHP代码</p>
 
 <p>你可以在bash中开启一个socket链接，并且传输数据。Bash有两个特殊的设备文件：</p>
 
-<pre><code>  /dev/tcp/host/port – 如果hostname，和port是合法的话，bash会尝试开启一个TCP连接。
-  /dev/udp/host/port – 如果hostname和port是合法的话，bash会开启一个UDP连接。
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  /dev/tcp/host/port – 如果hostname，和port是合法的话，bash会尝试开启一个TCP连接。
+</span><span class='line'>  /dev/udp/host/port – 如果hostname和port是合法的话，bash会开启一个UDP连接。</span></code></pre></td></tr></table></div></figure>
+
 
 <p>你可以利用这个技术来测试一台主机的端口是否是开启的，而不需要使用nmap或者port扫描器：
 PHP代码</p>
 
-<pre><code># find out if TCP port 25 open or not
-(echo &gt;/dev/tcp/localhost/25) &amp;&gt;/dev/null &amp;&amp; echo “TCP port 25 open” || echo “TCP port 25 close”
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># find out if TCP port 25 open or not
+</span><span class='line'>(echo &gt;/dev/tcp/localhost/25) &&gt;/dev/null && echo “TCP port 25 open” || echo “TCP port 25 close”</span></code></pre></td></tr></table></div></figure>
+
 
 <p>你可以 使用循环来查找开着的端口：
 PHP代码</p>
 
-<pre><code>echo “Scanning TCP ports…”
-for p in {1..1023}
-do
-  (echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&amp;1 &amp;&amp; echo “$p open”
-done
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo “Scanning TCP ports…”
+</span><span class='line'>for p in {1..1023}
+</span><span class='line'>do
+</span><span class='line'>  (echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&1 && echo “$p open”
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
 
-<p>输出：
-Scanning TCP ports…</p>
 
-<p>22 open</p>
+<p>输出：</p>
 
-<p>53 open</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Scanning TCP ports…
+</span><span class='line'>
+</span><span class='line'>22 open
+</span><span class='line'>
+</span><span class='line'>53 open
+</span><span class='line'>
+</span><span class='line'>80 open
+</span><span class='line'>
+</span><span class='line'>139 open
+</span><span class='line'>
+</span><span class='line'>445 open
+</span><span class='line'>
+</span><span class='line'>631 open</span></code></pre></td></tr></table></div></figure>
 
-<p>80 open</p>
-
-<p>139 open</p>
-
-<p>445 open</p>
-
-<p>631 open</p>
 
 <p>下面的这个例子让你的脚本扮演HTTP客户端：
 PHP代码</p>
 
-<pre><code>#!/bin/bash
-exec 3&lt;&gt; /dev/tcp/${1:-www.cyberciti.biz}/80
-printf “GET / HTTP/1.0\r\n” &gt;&amp;3
-printf “Accept: text/html, text/plain\r\n” &gt;&amp;3
-printf “Accept-Language: en\r\n” &gt;&amp;3
-printf “User-Agent: nixCraft_BashScript v.%s\r\n” “${BASH_VERSION}”  &gt;&amp;3
-printf “\r\n” &gt;&amp;3
-while read LINE &lt;&amp;3
-do
-  # do something on $LINE
-  # or send $LINE to grep or awk for grabbing data
-  # or simply display back data with echo command
-  echo $LINE
-done
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
+</span><span class='line'>exec 3&lt;&gt; /dev/tcp/${1:-www.cyberciti.biz}/80
+</span><span class='line'>printf “GET / HTTP/1.0\r\n” &gt;&3
+</span><span class='line'>printf “Accept: text/html, text/plain\r\n” &gt;&3
+</span><span class='line'>printf “Accept-Language: en\r\n” &gt;&3
+</span><span class='line'>printf “User-Agent: nixCraft_BashScript v.%s\r\n” “${BASH_VERSION}”  &gt;&3
+</span><span class='line'>printf “\r\n” &gt;&3
+</span><span class='line'>while read LINE &lt;&3
+</span><span class='line'>do
+</span><span class='line'>  # do something on $LINE
+</span><span class='line'>  # or send $LINE to grep or awk for grabbing data
+</span><span class='line'>  # or simply display back data with echo command
+</span><span class='line'>  echo $LINE
+</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
+
 
 <p>关于GUITools和Cronjob</p>
 
@@ -1343,115 +1611,203 @@ PHP代码</p>
 
   <div class="entry-content"><p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的</p>
 
-<h1>include&lt;stdio.h></h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;stdlib.h&gt;
+</span><span class='line'>#include&lt;string.h&gt;
+</span><span class='line'>#include&lt;sys/wait.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>#include&lt;pthread.h&gt;
+</span><span class='line'>#include&lt;time.h&gt;
+</span><span class='line'>#include&lt;math.h&gt;
+</span><span class='line'>#define BUFFER_SIZE 8
+</span><span class='line'>
+</span><span class='line'>struct prodcons {
+</span><span class='line'>int buffer[BUFFER_SIZE];
+</span><span class='line'>pthread_mutex_t lock;
+</span><span class='line'>int readpos,writepos;
+</span><span class='line'>pthread_cond_t notempty;
+</span><span class='line'>pthread_cond_t notfull;
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>void init(struct prodcons *b)
+</span><span class='line'>{
+</span><span class='line'>pthread_mutex_init(&b-&gt;lock,NULL);
+</span><span class='line'>pthread_cond_init(&b-&gt;notempty,NULL);
+</span><span class='line'>pthread_cond_init(&b-&gt;notfull,NULL);
+</span><span class='line'>b-&gt;readpos = 0 ;
+</span><span class='line'>b-&gt;writepos = 0 ;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void put(struct prodcons *b,int data)
+</span><span class='line'>{
+</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
+</span><span class='line'>if((b-&gt;writepos + 1)%BUFFER_SIZE == b-&gt;readpos)
+</span><span class='line'>{
+</span><span class='line'>pthread_cond_wait(&b-&gt;notfull,&b-&gt;lock);
+</span><span class='line'>}
+</span><span class='line'>b-&gt;buffer[b-&gt;writepos] = data;
+</span><span class='line'>b-&gt;writepos++;
+</span><span class='line'>if(b-&gt;writepos &gt;= BUFFER_SIZE)
+</span><span class='line'>b-&gt;writepos = 0;
+</span><span class='line'>pthread_cond_signal(&b-&gt;notempty);
+</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int get(struct prodcons *b)
+</span><span class='line'>{
+</span><span class='line'>int data;
+</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
+</span><span class='line'>if(b-&gt;writepos == b-&gt;readpos)
+</span><span class='line'>{
+</span><span class='line'>pthread_cond_wait(&b-&gt;notempty,&b-&gt;lock);
+</span><span class='line'>}
+</span><span class='line'>data = b-&gt;buffer[b-&gt;readpos];
+</span><span class='line'>b-&gt;readpos++;
+</span><span class='line'>
+</span><span class='line'>if(b-&gt;readpos &gt;= BUFFER_SIZE)
+</span><span class='line'>b-&gt;readpos = 0;
+</span><span class='line'>
+</span><span class='line'>pthread_cond_signal(&b-&gt;notfull);
+</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
+</span><span class='line'>return data;
+</span><span class='line'>}
+</span><span class='line'>#define OVER (-1)
+</span><span class='line'>struct prodcons buffer;
+</span><span class='line'>void *producer(void *data)
+</span><span class='line'>{
+</span><span class='line'>int n;
+</span><span class='line'>for(n = 0 ; n &lt; 50 ; n++)
+</span><span class='line'>{
+</span><span class='line'>printf(“%d\t”,n);
+</span><span class='line'>put(&buffer,n);
+</span><span class='line'>}
+</span><span class='line'>put(&buffer,OVER);
+</span><span class='line'>return NULL;
+</span><span class='line'>}
+</span><span class='line'>void *consumer(void *data)
+</span><span class='line'>{
+</span><span class='line'>int d;
+</span><span class='line'>while(1)
+</span><span class='line'>{
+</span><span class='line'>d = get(&buffer);
+</span><span class='line'>if(d == OVER)
+</span><span class='line'>break;
+</span><span class='line'>printf(“%d\t”,d);
+</span><span class='line'>}
+</span><span class='line'>return NULL;
+</span><span class='line'>}
+</span><span class='line'>int main(void)
+</span><span class='line'>{
+</span><span class='line'>pthread_t th_a,th_b;
+</span><span class='line'>void *retval;
+</span><span class='line'>init(&buffer);
+</span><span class='line'>pthread_create(&th_a,NULL,producer,0);
+</span><span class='line'>pthread_create(&th_b,NULL,consumer,0);
+</span><span class='line'>pthread_join(th_a,&retval);
+</span><span class='line'>pthread_join(th_b,&retval);
+</span><span class='line'>printf(“\n”);
+</span><span class='line'>return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<h1>include&lt;stdlib.h></h1>
-
-<h1>include&lt;string.h></h1>
-
-<h1>include&lt;sys/wait.h></h1>
-
-<h1>include&lt;sys/types.h></h1>
-
-<h1>include&lt;unistd.h></h1>
-
-<h1>include&lt;pthread.h></h1>
-
-<h1>include&lt;time.h></h1>
-
-<h1>include&lt;math.h></h1>
-
-<h1>define BUFFER_SIZE 8</h1>
-
-<p>struct prodcons {
-int buffer[BUFFER_SIZE];
-pthread_mutex_t lock;
-int readpos,writepos;
-pthread_cond_t notempty;
-pthread_cond_t notfull;
-};</p>
-
-<p>void init(struct prodcons *b)
-{
-pthread_mutex_init(&amp;b->lock,NULL);
-pthread_cond_init(&amp;b->notempty,NULL);
-pthread_cond_init(&amp;b->notfull,NULL);
-b->readpos = 0 ;
-b->writepos = 0 ;
-}</p>
-
-<p>void put(struct prodcons *b,int data)
-{
-pthread_mutex_lock(&amp;b->lock);
-if((b->writepos + 1)%BUFFER_SIZE == b->readpos)
-{
-pthread_cond_wait(&amp;b->notfull,&amp;b->lock);
-}
-b->buffer[b->writepos] = data;
-b->writepos++;
-if(b->writepos >= BUFFER_SIZE)
-b->writepos = 0;
-pthread_cond_signal(&amp;b->notempty);
-pthread_mutex_unlock(&amp;b->lock);
-}</p>
-
-<p>int get(struct prodcons *b)
-{
-int data;
-pthread_mutex_lock(&amp;b->lock);
-if(b->writepos == b->readpos)
-{
-pthread_cond_wait(&amp;b->notempty,&amp;b->lock);
-}
-data = b->buffer[b->readpos];
-b->readpos++;</p>
-
-<p>if(b->readpos >= BUFFER_SIZE)
-b->readpos = 0;</p>
-
-<p>pthread_cond_signal(&amp;b->notfull);
-pthread_mutex_unlock(&amp;b->lock);
-return data;
-}</p>
-
-<h1>define OVER (-1)</h1>
-
-<p>struct prodcons buffer;
-void <em>producer(void </em>data)
-{
-int n;
-for(n = 0 ; n &lt; 50 ; n++)
-{
-printf(“%d\t”,n);
-put(&amp;buffer,n);
-}
-put(&amp;buffer,OVER);
-return NULL;
-}
-void <em>consumer(void </em>data)
-{
-int d;
-while(1)
-{
-d = get(&amp;buffer);
-if(d == OVER)
-break;
-printf(“%d\t”,d);
-}
-return NULL;
-}
-int main(void)
-{
-pthread_t th_a,th_b;
-void *retval;
-init(&amp;buffer);
-pthread_create(&amp;th_a,NULL,producer,0);
-pthread_create(&amp;th_b,NULL,consumer,0);
-pthread_join(th_a,&amp;retval);
-pthread_join(th_b,&amp;retval);
-printf(“\n”);
-return 0;
-}</p>
 </div>
   
   

@@ -128,32 +128,65 @@ Run level：运行等级有哪些？</p>
 /etc/inittab 的内容与语法
 复制代码</p>
 
-<p>[root@www ~]# vim /etc/inittab
-id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# vim /etc/inittab
+</span><span class='line'>id:5:initdefault:                 &lt;==默认的 runlevel 配置, 此 runlevel 为 5 
+</span><span class='line'>
+</span><span class='line'>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
+</span><span class='line'>l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
+</span><span class='line'>l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
+</span><span class='line'>l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
+</span><span class='line'>l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
+</span><span class='line'>l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
+</span><span class='line'>l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>ca::ctrlaltdel:/sbin/shutdown -t3 -r now
+</span><span class='line'>
+</span><span class='line'> 
+</span><span class='line'>pf::powerfail:/sbin/shutdown -f -h +2 "Power Failure; System Shutting Down"
+</span><span class='line'>pr:12345:powerokwait:/sbin/shutdown -c "Power Restored; Shutdown Cancelled"</span></code></pre></td></tr></table></div></figure>
 
-<p>si::sysinit:/etc/rc.d/rc.sysinit  &lt;==准备系统软件运行的环境的脚本运行档</p>
 
-<p>l0:0:wait:/etc/rc.d/rc 0    &lt;==runlevel 0 在 /etc/rc.d/rc0.d/
-l1:1:wait:/etc/rc.d/rc 1    &lt;==runlevel 1 在 /etc/rc.d/rc1.d/
-l2:2:wait:/etc/rc.d/rc 2    &lt;==runlevel 2 在 /etc/rc.d/rc2.d/
-l3:3:wait:/etc/rc.d/rc 3    &lt;==runlevel 3 在 /etc/rc.d/rc3.d/
-l4:4:wait:/etc/rc.d/rc 4    &lt;==runlevel 4 在 /etc/rc.d/rc4.d/
-l5:5:wait:/etc/rc.d/rc 5    &lt;==runlevel 5 在 /etc/rc.d/rc5.d/
-l6:6:wait:/etc/rc.d/rc 6    &lt;==runlevel 6 在 /etc/rc.d/rc6.d/</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
+</span><span class='line'>2:2345:respawn:/sbin/mingetty tty2
+</span><span class='line'>3:2345:respawn:/sbin/mingetty tty3
+</span><span class='line'>4:2345:respawn:/sbin/mingetty tty4
+</span><span class='line'>5:2345:respawn:/sbin/mingetty tty5
+</span><span class='line'>6:2345:respawn:/sbin/mingetty tty6
+</span><span class='line'>
+</span><span class='line'>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</span></code></pre></td></tr></table></div></figure>
 
-<p>ca::ctrlaltdel:/sbin/shutdown -t3 -r now</p>
-
-<p>pf::powerfail:/sbin/shutdown -f -h +2 &ldquo;Power Failure; System Shutting Down&rdquo;
-pr:12345:powerokwait:/sbin/shutdown -c &ldquo;Power Restored; Shutdown Cancelled&rdquo;</p>
-
-<p>1:2345:respawn:/sbin/mingetty tty1  &lt;==其实 tty1~tty6 是由底下这六行决定的。
-2:2345:respawn:/sbin/mingetty tty2
-3:2345:respawn:/sbin/mingetty tty3
-4:2345:respawn:/sbin/mingetty tty4
-5:2345:respawn:/sbin/mingetty tty5
-6:2345:respawn:/sbin/mingetty tty6</p>
-
-<p>x:5:respawn:/etc/X11/prefdm -nodaemon &lt;==X window 则是这行决定的！</p>
 
 <p>复制代码</p>
 
@@ -243,13 +276,21 @@ SELinux 在此时进行一些检测， 并且检测是否需要帮所有的文�
 <p>那么各个不同的 run level 服务启动的各个 shell script 放在哪？还记得 /etc/inittab 里面提到的：
 复制代码</p>
 
-<p>l0:0:wait:/etc/rc.d/rc 0
-l1:1:wait:/etc/rc.d/rc 1
-l2:2:wait:/etc/rc.d/rc 2
-l3:3:wait:/etc/rc.d/rc 3
-l4:4:wait:/etc/rc.d/rc 4
-l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
-l6:6:wait:/etc/rc.d/rc 6</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>l0:0:wait:/etc/rc.d/rc 0
+</span><span class='line'>l1:1:wait:/etc/rc.d/rc 1
+</span><span class='line'>l2:2:wait:/etc/rc.d/rc 2
+</span><span class='line'>l3:3:wait:/etc/rc.d/rc 3
+</span><span class='line'>l4:4:wait:/etc/rc.d/rc 4
+</span><span class='line'>l5:5:wait:/etc/rc.d/rc 5  &lt;==本例中，以此项目来解释
+</span><span class='line'>l6:6:wait:/etc/rc.d/rc 6</span></code></pre></td></tr></table></div></figure>
+
 
 <p>复制代码</p>
 
@@ -263,18 +304,31 @@ l6:6:wait:/etc/rc.d/rc 6</p>
 <p>透过上面的说明我们可以知道所有的项目都与 /etc/rc5.d/ 有关，那么我们就来瞧瞧这个目录下有些什么玩意儿吧！
 复制代码</p>
 
-<p>[root@www ~]# ll /etc/rc5.d/
-lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd &ndash;> ../init.d/dhcdbd
-&hellip;.(中间省略)&hellip;.
-lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi &ndash;> ../init.d/capi
-lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl &ndash;> ../init.d/microcode_ctl
-lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor &ndash;> ../init.d/lvm2-monitor
-&hellip;.(中间省略)&hellip;.
-lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network &ndash;> ../init.d/network
-&hellip;.(中间省略)&hellip;.
-lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local &ndash;> ../rc.local
-lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
-&hellip;.(底下省略)&hellip;.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# ll /etc/rc5.d/
+</span><span class='line'>lrwxrwxrwx 1 root root 16 Sep  4  2008 K02dhcdbd -&gt; ../init.d/dhcdbd
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>lrwxrwxrwx 1 root root 14 Sep  4  2008 K91capi -&gt; ../init.d/capi
+</span><span class='line'>lrwxrwxrwx 1 root root 23 Sep  4  2008 S00microcode_ctl -&gt; ../init.d/microcode_ctl
+</span><span class='line'>lrwxrwxrwx 1 root root 22 Sep  4  2008 S02lvm2-monitor -&gt; ../init.d/lvm2-monitor
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>lrwxrwxrwx 1 root root 17 Sep  4  2008 S10network -&gt; ../init.d/network
+</span><span class='line'>....(中间省略)....
+</span><span class='line'>lrwxrwxrwx 1 root root 11 Sep  4  2008 S99local -&gt; ../rc.local
+</span><span class='line'>lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd -&gt; ../init.d/smartd
+</span><span class='line'>....(底下省略)....</span></code></pre></td></tr></table></div></figure>
+
 
 <p>复制代码</p>
 
@@ -286,9 +340,11 @@ lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
 
 <p>服务的启动主要是以『/etc/init.d/服务档名 {start,stop}』 来启动与关闭的，那么透过刚刚 /etc/rc.d/rc 程序的解说，我们可以清楚的了解到了 /etc/rc5.d/[SK]xx 其实就是跑到 /etc/init.d/ 去找到相对应的服务脚本， 然后分别进行 start (Sxx) 或 stop (Kxx) 的动作而已啦！举例来说，以上述的表格内的 K91capi 及 S10network 为例好了， 透过 /etc/rc.d/rc 5 的运行，这两个文件会这样进行：</p>
 
-<pre><code>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
-/etc/rc5.d/S10network start –&gt; /etc/init.d/network start
-</code></pre>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/etc/rc5.d/K91capi stop –&gt; /etc/init.d/capi stop
+</span><span class='line'>/etc/rc5.d/S10network start –&gt; /etc/init.d/network start</span></code></pre></td></tr></table></div></figure>
+
 
 <p>所以说，你有想要启动该 runlevel 时就运行的服务，那么利用 Sxx 并指向 /etc/init.d/ 的特定服务启动脚本后， 该服务就能够在启动时启动啦！就这么简单！问题是，你需要自行处理这个 K, S 开头的连结档吗？ 并不需要的，chkconfig 就是在负责处理这个连结档啦！这样有没有跟第十八章的观念串在一起了呢？ ^_^</p>
 
@@ -305,13 +361,21 @@ lrwxrwxrwx 1 root root 16 Sep  4  2008 S99smartd &ndash;> ../init.d/smartd
 <p>在完成了系统所有服务的启动后，接下来 Linux 就会启动终端机或者是 X Window 来等待使用者登陆啦！ 实际参考的项目是 /etc/inittab 内的这一段：
 复制代码</p>
 
-<p>1:2345:respawn:/sbin/mingetty tty1
-2:2345:respawn:/sbin/mingetty tty2
-3:2345:respawn:/sbin/mingetty tty3
-4:2345:respawn:/sbin/mingetty tty4
-5:2345:respawn:/sbin/mingetty tty5
-6:2345:respawn:/sbin/mingetty tty6
-x:5:respawn:/etc/X11/prefdm -nodaemon</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1:2345:respawn:/sbin/mingetty tty1
+</span><span class='line'>2:2345:respawn:/sbin/mingetty tty2
+</span><span class='line'>3:2345:respawn:/sbin/mingetty tty3
+</span><span class='line'>4:2345:respawn:/sbin/mingetty tty4
+</span><span class='line'>5:2345:respawn:/sbin/mingetty tty5
+</span><span class='line'>6:2345:respawn:/sbin/mingetty tty6
+</span><span class='line'>x:5:respawn:/etc/X11/prefdm -nodaemon</span></code></pre></td></tr></table></div></figure>
+
 
 <p>复制代码</p>
 
@@ -330,12 +394,19 @@ x:5:respawn:/etc/X11/prefdm -nodaemon</p>
 
 <p>/etc/rc.d/rc.sysinit 当中的加载使用者自订模块的地方吗？就是在 /etc/sysconfig/modules/ 目录下啊！ 虽然核心提供的默认模块已经很足够我们使用了，但是，某些条件下我们还是得对模块进行一些参数的规划， 此时就得要使用到 /etc/modprobe.conf 罗！举例来说，鸟哥的 CentOS 主机的 modprobe.conf 有点像这样：</p>
 
-<p>[root@www ~]# cat /etc/modprobe.conf
-alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
-alias scsi_hostadapter pata_sis
-alias snd-card-0 snd-trident
-options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
-options snd-trident index=0</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# cat /etc/modprobe.conf
+</span><span class='line'>alias eth0 8139too               &lt;==让 eth0 使用 8139too 的模块
+</span><span class='line'>alias scsi_hostadapter pata_sis
+</span><span class='line'>alias snd-card-0 snd-trident
+</span><span class='line'>options snd-card-0 index=0       &lt;==额外指定 snd-card-0 的参数功能
+</span><span class='line'>options snd-trident index=0</span></code></pre></td></tr></table></div></figure>
+
 
 <p>以上表的第一行为例，鸟哥使用螃蟹卡 (Realtek 的芯片组) 来作为我的网络卡，那螃蟹卡使用的模块就是 8139too 啦！这样看的懂了吧？当我要启动网络卡时，系统会跑到这个文件来查阅一下，然后加载 8139too 驱动程序来驱动网络卡罗！更多的相关说明，请 man modprobe.conf 喔！这个文件大多在指定系统内的硬件所使用的模块啦！这个文件通常系统是可以自行产生的，所以你不必手动去订正他！ 不过，如果系统捉到错误的驱动程序，或者是你想要使用升级的驱动程序来对应相关的硬件配备时， 你就得要自行手动的处理一下这个文件了。
  /etc/sysconfig/*</p>
@@ -378,29 +449,43 @@ network-scripts/：
 <p>也就是说，两个 run level 都存在的服务就不会被关闭啦！如此一来，就很容易切换 run level 了， 而且还不需要重新启动呢！真方便。那我怎么知道目前的 run level 是多少呢？ 直接在 bash 当中输入 runlevel 即可啊！
 复制代码</p>
 
-<p>[root@www ~]# runlevel
-N 5</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# runlevel
+</span><span class='line'>N 5
+</span><span class='line'># 左边代表前一个 runlevel ，右边代表目前的 runlevel。
+</span><span class='line'># 由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)
+</span><span class='line'>
+</span><span class='line'># 将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)
+</span><span class='line'>[root@www ~]# init 3
+</span><span class='line'>NIT: Sending processes the TERM signal
+</span><span class='line'>Applying Intel CPU microcode update:        [  OK  ]
+</span><span class='line'>Starting background readahead:              [  OK  ]
+</span><span class='line'>Starting irqbalance:                        [  OK  ]
+</span><span class='line'>Starting httpd:                             [  OK  ]
+</span><span class='line'>Starting anacron:                           [  OK  ]
+</span><span class='line'># 这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务
+</span><span class='line'>
+</span><span class='line'>[root@www ~]# runlevel
+</span><span class='line'>5 3
+</span><span class='line'># 看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</span></code></pre></td></tr></table></div></figure>
 
-<h1>左边代表前一个 runlevel ，右边代表目前的 runlevel。</h1>
-
-<h1>由於之前并没有切换过 runlevel ，因此前一个 runlevel 不存在 (N)</h1>
-
-<h1>将目前的 runlevel 切换成为 3 (注意， tty7 的数据会消失！)</h1>
-
-<p>[root@www ~]# init 3
-NIT: Sending processes the TERM signal
-Applying Intel CPU microcode update:        [  OK  ]
-Starting background readahead:              [  OK  ]
-Starting irqbalance:                        [  OK  ]
-Starting httpd:                             [  OK  ]
-Starting anacron:                           [  OK  ]</p>
-
-<h1>这代表，新的 runlevel 亦即是 runlevel3 比前一个 runlevel 多出了上述 5 个服务</h1>
-
-<p>[root@www ~]# runlevel
-5 3</p>
-
-<h1>看吧！前一个是 runlevel 5 ，目前的是 runlevel 3 啦！</h1>
 
 <p>复制代码</p>
 

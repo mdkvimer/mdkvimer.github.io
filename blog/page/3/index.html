@@ -104,71 +104,109 @@
 
 <p>myserver.c:</p>
 
-<p>/<em>
- </em>socket server
- * */</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/*
+</span><span class='line'> *socket server
+</span><span class='line'> * */
+</span><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;stdlib.h&gt;
+</span><span class='line'>#include&lt;errno.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;netinet/in.h&gt;
+</span><span class='line'>#include&lt;sys/socket.h&gt;
+</span><span class='line'>#include&lt;sys/wait.h&gt;
+</span><span class='line'>#define SERVERPORT 3333
+</span><span class='line'>#define BACKLOG 10
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>    int sockfd,clientfd;
+</span><span class='line'>    struct sockaddr_in my_addr;
+</span><span class='line'>    struct sockaddr_in remote_addr;
+</span><span class='line'>    if((sockfd = socket(AF_INET , SOCK_STREAM ,0))== -1){
+</span><span class='line'>    perror(“socket create error !!!”);
+</span><span class='line'>    exit(1);
+</span><span class='line'>    }
+</span><span class='line'>    my_addr.sin_family = AF_INET;
+</span><span class='line'>    my_addr.sin_port = htons(SERVERPORT);
+</span><span class='line'>    my_addr.sin_addr.s_addr = INADDR_ANY;
+</span><span class='line'>    bzero(&(my_addr.sin_zero),8);
+</span><span class='line'>    if(bind(sockfd,(struct sockaddr *)&my_addr,sizeof(struct sockaddr)) == -1){
+</span><span class='line'>     perror(“bind error….”);
+</span><span class='line'>     exit(1);
+</span><span class='line'>    }
+</span><span class='line'>    if(listen(sockfd,BACKLOG) == -1)
+</span><span class='line'>    {
+</span><span class='line'>     perror(“listen error ..”);
+</span><span class='line'>     exit(1);
+</span><span class='line'>    }
+</span><span class='line'>    while(1){
+</span><span class='line'>     int sin_size = sizeof(struct sockaddr_in);
+</span><span class='line'>     if((clientfd = accept(sockfd,(struct sockaddr *)&remote_addr,&sin_size))==-1){
+</span><span class='line'>     perror(“accept error…”);
+</span><span class='line'>     continue;
+</span><span class='line'>     }
+</span><span class='line'>     printf(“Receied a connection from %s\n”,inet_ntoa(remote_addr.sin_addr));
+</span><span class='line'>     if(!fork()){
+</span><span class='line'>      if(send(clientfd,”Hello,you are connected!\n”,26,0) == -1)
+</span><span class='line'>      perror(“send error…”);
+</span><span class='line'>      close(clientfd);
+</span><span class='line'>      exit(0);
+</span><span class='line'>     }
+</span><span class='line'>     close(clientfd);
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<h1>include&lt;stdio.h></h1>
-
-<h1>include&lt;stdlib.h></h1>
-
-<h1>include&lt;errno.h></h1>
-
-<h1>include&lt;unistd.h></h1>
-
-<h1>include&lt;sys/types.h></h1>
-
-<h1>include&lt;netinet/in.h></h1>
-
-<h1>include&lt;sys/socket.h></h1>
-
-<h1>include&lt;sys/wait.h></h1>
-
-<h1>define SERVERPORT 3333</h1>
-
-<h1>define BACKLOG 10</h1>
-
-<p>int main()
-{</p>
-
-<pre><code>int sockfd,clientfd;
-struct sockaddr_in my_addr;
-struct sockaddr_in remote_addr;
-if((sockfd = socket(AF_INET , SOCK_STREAM ,0))== -1){
-perror(“socket create error !!!”);
-exit(1);
-}
-my_addr.sin_family = AF_INET;
-my_addr.sin_port = htons(SERVERPORT);
-my_addr.sin_addr.s_addr = INADDR_ANY;
-bzero(&amp;(my_addr.sin_zero),8);
-if(bind(sockfd,(struct sockaddr *)&amp;my_addr,sizeof(struct sockaddr)) == -1){
- perror(“bind error….”);
- exit(1);
-}
-if(listen(sockfd,BACKLOG) == -1)
-{
- perror(“listen error ..”);
- exit(1);
-}
-while(1){
- int sin_size = sizeof(struct sockaddr_in);
- if((clientfd = accept(sockfd,(struct sockaddr *)&amp;remote_addr,&amp;sin_size))==-1){
- perror(“accept error…”);
- continue;
- }
- printf(“Receied a connection from %s\n”,inet_ntoa(remote_addr.sin_addr));
- if(!fork()){
-  if(send(clientfd,”Hello,you are connected!\n”,26,0) == -1)
-  perror(“send error…”);
-  close(clientfd);
-  exit(0);
- }
- close(clientfd);
-}
-</code></pre>
-
-<p>}</p>
 
 <p>客户端通过服务器域名获得服务器的ip,然后新建一个socket调用connect与服务器连接，连接成功后接收从服务器发送过来的数据，最后关闭socket</p>
 
@@ -176,72 +214,113 @@ while(1){
 
 <p>myclient.c:</p>
 
-<p>/<em>
- </em>socket client
- * */</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/*
+</span><span class='line'> *socket client
+</span><span class='line'> * */
+</span><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;stdlib.h&gt;
+</span><span class='line'>#include&lt;string.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>#include&lt;errno.h&gt;
+</span><span class='line'>#include&lt;netdb.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;sys/wait.h&gt;
+</span><span class='line'>#include&lt;sys/socket.h&gt;
+</span><span class='line'>#include&lt;netinet/in.h&gt;
+</span><span class='line'>#define SERVERPORT 3333
+</span><span class='line'>#define MAXDATASIZE 100
+</span><span class='line'>int main(int argc,char *argv[])
+</span><span class='line'>{
+</span><span class='line'>  int sockfd,recvbytes;
+</span><span class='line'>  char buf[MAXDATASIZE];
+</span><span class='line'>  struct hostent *host;
+</span><span class='line'>  struct sockaddr_in serv_addr;
+</span><span class='line'>  if(argc &lt; 2)
+</span><span class='line'>  {
+</span><span class='line'>   fprintf(stderr,”Please enter the server’hostname!\n”);
+</span><span class='line'>   exit(1);
+</span><span class='line'>  }
+</span><span class='line'>  if((host= gethostbyname(argv[1])) == NULL){
+</span><span class='line'>   perror(“gethostbyname error…”);
+</span><span class='line'>   exit(1);
+</span><span class='line'>  }
+</span><span class='line'>  if((sockfd=socket(AF_INET,SOCK_STREAM ,0)) == -1)
+</span><span class='line'>  {
+</span><span class='line'>   perror(“socket error…”);
+</span><span class='line'>   exit(1);
+</span><span class='line'>  }
+</span><span class='line'>  serv_addr.sin_family = AF_INET ;
+</span><span class='line'>  serv_addr.sin_port = htons(SERVERPORT);
+</span><span class='line'>  serv_addr.sin_addr = *((struct in_addr *)host-&gt;h_addr);
+</span><span class='line'>  bzero(&(serv_addr.sin_zero),8);
+</span><span class='line'>  if(connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(struct sockaddr)) == -1)
+</span><span class='line'>  {
+</span><span class='line'>  perror(“connext error…”);
+</span><span class='line'>  exit(1);
+</span><span class='line'>  }
+</span><span class='line'>  if((recvbytes=recv(sockfd,buf,MAXDATASIZE,0)) == -1)
+</span><span class='line'>  {
+</span><span class='line'>   perror(“recv error ….”);
+</span><span class='line'>   exit(1);
+</span><span class='line'>  }
+</span><span class='line'>  buf[recvbytes]=’\0′;
+</span><span class='line'>  printf(“REceived:%s \n”,buf);
+</span><span class='line'>  close(sockfd);
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<h1>include&lt;stdio.h></h1>
-
-<h1>include&lt;stdlib.h></h1>
-
-<h1>include&lt;string.h></h1>
-
-<h1>include&lt;unistd.h></h1>
-
-<h1>include&lt;errno.h></h1>
-
-<h1>include&lt;netdb.h></h1>
-
-<h1>include&lt;sys/types.h></h1>
-
-<h1>include&lt;sys/wait.h></h1>
-
-<h1>include&lt;sys/socket.h></h1>
-
-<h1>include&lt;netinet/in.h></h1>
-
-<h1>define SERVERPORT 3333</h1>
-
-<h1>define MAXDATASIZE 100</h1>
-
-<p>int main(int argc,char <em>argv[])
-{
-  int sockfd,recvbytes;
-  char buf[MAXDATASIZE];
-  struct hostent </em>host;
-  struct sockaddr_in serv_addr;
-  if(argc &lt; 2)
-  {
-   fprintf(stderr,”Please enter the server’hostname!\n”);
-   exit(1);
-  }
-  if((host= gethostbyname(argv[1])) == NULL){
-   perror(“gethostbyname error…”);
-   exit(1);
-  }
-  if((sockfd=socket(AF_INET,SOCK_STREAM ,0)) == -1)
-  {
-   perror(“socket error…”);
-   exit(1);
-  }
-  serv_addr.sin_family = AF_INET ;
-  serv_addr.sin_port = htons(SERVERPORT);
-  serv_addr.sin_addr = <em>((struct in_addr </em>)host->h_addr);
-  bzero(&amp;(serv_addr.sin_zero),8);
-  if(connect(sockfd,(struct sockaddr *)&amp;serv_addr,sizeof(struct sockaddr)) == -1)
-  {
-  perror(“connext error…”);
-  exit(1);
-  }
-  if((recvbytes=recv(sockfd,buf,MAXDATASIZE,0)) == -1)
-  {
-   perror(“recv error ….”);
-   exit(1);
-  }
-  buf[recvbytes]=’\0′;
-  printf(“REceived:%s \n”,buf);
-  close(sockfd);
-}</p>
 </div>
   
   

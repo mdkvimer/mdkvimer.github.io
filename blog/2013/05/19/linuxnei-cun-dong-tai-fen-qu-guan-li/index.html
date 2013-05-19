@@ -9,7 +9,42 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="1.分别使用首次适应算法,最佳适应算法分配内存空间 2.实现对内存空间的释放 3.显示内存分配情况 #include&lt;stdio.h> #include&lt;unistd.h> #include&lt;stdlib.h> #include&lt;string.h> #include&lt; &hellip;">
+  <meta name="description" content="1.分别使用首次适应算法,最佳适应算法分配内存空间 2.实现对内存空间的释放 3.显示内存分配情况 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,172 +138,339 @@
 
 <p>3.显示内存分配情况</p>
 
-<p> #include&lt;stdio.h>
- #include&lt;unistd.h>
- #include&lt;stdlib.h>
- #include&lt;string.h>
- #include&lt;sys/wait.h>
- #include&lt;sys/typs.h>
- #define MEMSIZE 100 <br/>
- #define MINSIZE 2  <br/>
-typedef struct MemoryInformation{
-int start;<br/>
-int size;<br/>
-char info;<br/>
-}MEMINFO;
-MEMINFO MemList[MEMSIZE];
-void Display();
-void InitAll()
-{
-int i;
-MEMINFO temp={0,0,’e&#8217;};
-for(i=0;i&lt;MEMSIZE;i++)
-MemList[i]=temp;
-MemList[0].start = 0;
-MemList[0].size = MEMSIZE;
-MemList[0].info = ‘f’;
-}</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> #include&lt;stdio.h&gt;
+</span><span class='line'> #include&lt;unistd.h&gt;
+</span><span class='line'> #include&lt;stdlib.h&gt;
+</span><span class='line'> #include&lt;string.h&gt;
+</span><span class='line'> #include&lt;sys/wait.h&gt;
+</span><span class='line'> #include&lt;sys/typs.h&gt;
+</span><span class='line'> #define MEMSIZE 100   
+</span><span class='line'> #define MINSIZE 2    
+</span><span class='line'>typedef struct MemoryInformation{
+</span><span class='line'>int start;  
+</span><span class='line'>int size;  
+</span><span class='line'>char info;  
+</span><span class='line'>}MEMINFO;
+</span><span class='line'>MEMINFO MemList[MEMSIZE];
+</span><span class='line'>void Display();
+</span><span class='line'>void InitAll()
+</span><span class='line'>{
+</span><span class='line'>int i;
+</span><span class='line'>MEMINFO temp={0,0,’e'};
+</span><span class='line'>for(i=0;i&lt;MEMSIZE;i++)
+</span><span class='line'>MemList[i]=temp;
+</span><span class='line'>MemList[0].start = 0;
+</span><span class='line'>MemList[0].size = MEMSIZE;
+</span><span class='line'>MemList[0].info = ‘f’;
+</span><span class='line'>}
+</span><span class='line'> 
+</span><span class='line'>void FirstFit_new()
+</span><span class='line'>{
+</span><span class='line'>int i,j,size;
+</span><span class='line'>char temp[10];
+</span><span class='line'>printf(“How MAny MEMORY do you require?”);
+</span><span class='line'>scanf(“%d”,&size);
+</span><span class='line'>for(i=0;i &lt; MEMSIZE -1 && MemList[i].info!=’e';i++){
+</span><span class='line'>if(MemList[i].size &gt;= size && MemList[i].info==’f'){
+</span><span class='line'>if(MemList[i].size – size &lt;= MINSIZE)
+</span><span class='line'>MemList[i].info=’u';
+</span><span class='line'>else{
+</span><span class='line'>for(j=MEMSIZE – 2;j &gt; i;j–){
+</span><span class='line'>MemList[j+1] = MemList[j];
+</span><span class='line'>}
+</span><span class='line'>MemList[i+1].start = MemList[i].start + size;
+</span><span class='line'>MemList[i+1].size = MemList[i].size – size;
+</span><span class='line'>MemList[i+1].info = ‘f’;
+</span><span class='line'>MemList[i].size = size;
+</span><span class='line'>MemList[i].info = ‘u’;
+</span><span class='line'>}
+</span><span class='line'>break;
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>if(i == MEMSIZE – 1 || MemList[i].info == ‘e’){
+</span><span class='line'>printf(“NOT Enough Memory!\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>Display();
+</span><span class='line'>}
+</span><span class='line'>void BestFit_new()
+</span><span class='line'>{
+</span><span class='line'>int i,j,k,flag,size;
+</span><span class='line'>char temp[10];
+</span><span class='line'>printf(“How Many MEMORY require?”);
+</span><span class='line'>scanf(“%d”,&size);
+</span><span class='line'>j = 0;
+</span><span class='line'>flag = 0;
+</span><span class='line'>k = MEMSIZE;
+</span><span class='line'>for(i=0;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++){
+</span><span class='line'>if(MemList[i].size &gt;= size && MemList[i].info == ‘f’){
+</span><span class='line'>flag = 1;
+</span><span class='line'>if(MemList[i].size &lt; k){
+</span><span class='line'>k = MemList[i].size;
+</span><span class='line'>j = i;
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>i=j;
+</span><span class='line'>if(flag == 0)
+</span><span class='line'>{
+</span><span class='line'>printf(“NOT ENOUGH Memory!\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>else if(MemList[i].size – size &lt;= MINSIZE)
+</span><span class='line'>MemList[i].info = ‘u’;
+</span><span class='line'>else{
+</span><span class='line'>for(j=MEMSIZE-2;j &gt; i;j–){
+</span><span class='line'>MemList[j+1]=MemList[j];
+</span><span class='line'>}
+</span><span class='line'>MemList[i].start = MemList[i].start + size;
+</span><span class='line'>MemList[i].size = MemList[i].size – size;
+</span><span class='line'>MemList[i].info = ‘f’;
+</span><span class='line'>MemList[i].size = size;
+</span><span class='line'>MemList[i].info = ‘u’;
+</span><span class='line'>}
+</span><span class='line'>Display();
+</span><span class='line'>}
+</span><span class='line'>void del()
+</span><span class='line'>{
+</span><span class='line'>int i,number;
+</span><span class='line'>printf(“please input the NUMBER you want to delete:”);
+</span><span class='line'>scanf(“%d”,&number);
+</span><span class='line'>if(MemList[number].info == ‘u’){
+</span><span class='line'>MemList[number].info = ‘f’;
+</span><span class='line'>if(MemList[number+1].info==’f'){
+</span><span class='line'>MemList[number].size += MemList[number+1].size;
+</span><span class='line'>for(i=number+1;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++)
+</span><span class='line'>MemList[i]=MemList[i+1];
+</span><span class='line'>}
+</span><span class='line'>if(MemList[number - 1].info != ‘f’){
+</span><span class='line'>MemList[number -1].size += MemList[number].size;
+</span><span class='line'>for(i=number;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++)
+</span><span class='line'>MemList[i]=MemList[i+1];
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>else{
+</span><span class='line'>printf(“This number is NOT exits or is NOT sued!\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>Display();
+</span><span class='line'>}
+</span><span class='line'>void Display()
+</span><span class='line'>{
+</span><span class='line'>int i,used = 0;
+</span><span class='line'>printf(“\n——————————————\n”);
+</span><span class='line'>printf(“%5s %15s %15s”,”Number”,”Start”,”Size”,”info”);
+</span><span class='line'>printf(“\n——————————————\n”);
+</span><span class='line'>for(i=0;i&lt;MEMSIZE && MemList[i].info != ‘e’;i++){
+</span><span class='line'>if(MemList[i].info == ‘u’)
+</span><span class='line'>used+= MemList[i].size;
+</span><span class='line'>printf(“%5d %15d %15d %15s\n”,i,MemList[i].start,MemList[i].size,MemList[i].info == ‘u’?”USED”:”FREE”);
+</span><span class='line'>}
+</span><span class='line'>printf(“\n——————————————\n”);
+</span><span class='line'>printf(“TotalSize : %-10d Used: %-10d Free:%-10d\n”,MEMSIZE,used,MEMSIZE – used);
+</span><span class='line'>printf(“\n\nPress Any Key to Return\n”);
+</span><span class='line'>getchar();
+</span><span class='line'>}
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>char ch;
+</span><span class='line'>InitAll();
+</span><span class='line'>while(1)
+</span><span class='line'>{
+</span><span class='line'>printf(“   Memory manager  \n”);
+</span><span class='line'>printf(“================================================\n”);
+</span><span class='line'>printf(“1. Get a block use the FIRSTFIT method\n”);
+</span><span class='line'>printf(“2. Get a block use the BESTFFIT method\n”);
+</span><span class='line'>printf(“3. Free or delete a block\n”);
+</span><span class='line'>printf(“4. Display Mem information\n”);
+</span><span class='line'>printf(“5. Exit\n”);
+</span><span class='line'>printf(“================================================\n”);
+</span><span class='line'>ch = getchar();
+</span><span class='line'>switch(ch){
+</span><span class='line'>case ’1′:
+</span><span class='line'>FirstFit_new();
+</span><span class='line'>break;
+</span><span class='line'>case ’2′:
+</span><span class='line'>BestFit_new();
+</span><span class='line'>break;
+</span><span class='line'>case ’3′:
+</span><span class='line'>del();
+</span><span class='line'>break;
+</span><span class='line'>case ’4′:
+</span><span class='line'>Display();
+</span><span class='line'>break;
+</span><span class='line'>case ’5′:
+</span><span class='line'>exit(0);
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<p>void FirstFit_new()
-{
-int i,j,size;
-char temp[10];
-printf(“How MAny MEMORY do you require?”);
-scanf(“%d”,&amp;size);
-for(i=0;i &lt; MEMSIZE -1 &amp;&amp; MemList[i].info!=’e&#8217;;i++){
-if(MemList[i].size >= size &amp;&amp; MemList[i].info==’f&#8217;){
-if(MemList[i].size – size &lt;= MINSIZE)
-MemList[i].info=’u&#8217;;
-else{
-for(j=MEMSIZE – 2;j > i;j–){
-MemList[j+1] = MemList[j];
-}
-MemList[i+1].start = MemList[i].start + size;
-MemList[i+1].size = MemList[i].size – size;
-MemList[i+1].info = ‘f’;
-MemList[i].size = size;
-MemList[i].info = ‘u’;
-}
-break;
-}
-}
-if(i == MEMSIZE – 1 || MemList[i].info == ‘e’){
-printf(“NOT Enough Memory!\n”);
-getchar();
-}
-Display();
-}
-void BestFit_new()
-{
-int i,j,k,flag,size;
-char temp[10];
-printf(“How Many MEMORY require?”);
-scanf(“%d”,&amp;size);
-j = 0;
-flag = 0;
-k = MEMSIZE;
-for(i=0;i<MEMSIZE – 1 && MemList[i].info!=’e';i++){
-if(MemList[i].size >= size &amp;&amp; MemList[i].info == ‘f’){
-flag = 1;
-if(MemList[i].size &lt; k){
-k = MemList[i].size;
-j = i;
-}
-}
-}
-i=j;
-if(flag == 0)
-{
-printf(“NOT ENOUGH Memory!\n”);
-getchar();
-}
-else if(MemList[i].size – size &lt;= MINSIZE)
-MemList[i].info = ‘u’;
-else{
-for(j=MEMSIZE-2;j > i;j–){
-MemList[j+1]=MemList[j];
-}
-MemList[i].start = MemList[i].start + size;
-MemList[i].size = MemList[i].size – size;
-MemList[i].info = ‘f’;
-MemList[i].size = size;
-MemList[i].info = ‘u’;
-}
-Display();
-}
-void del()
-{
-int i,number;
-printf(“please input the NUMBER you want to delete:”);
-scanf(“%d”,&amp;number);
-if(MemList[number].info == ‘u’){
-MemList[number].info = ‘f’;
-if(MemList[number+1].info==’f&#8217;){
-MemList[number].size += MemList[number+1].size;
-for(i=number+1;i&lt;MEMSIZE – 1 &amp;&amp; MemList[i].info!=’e&#8217;;i++)
-MemList[i]=MemList[i+1];
-}
-if(MemList[number &ndash; 1].info != ‘f’){
-MemList[number -1].size += MemList[number].size;
-for(i=number;i&lt;MEMSIZE – 1 &amp;&amp; MemList[i].info!=’e&#8217;;i++)
-MemList[i]=MemList[i+1];
-}
-}
-else{
-printf(“This number is NOT exits or is NOT sued!\n”);
-getchar();
-}
-Display();
-}
-void Display()
-{
-int i,used = 0;
-printf(“\n——————————————\n”);
-printf(“%5s %15s %15s”,”Number”,”Start”,”Size”,”info”);
-printf(“\n——————————————\n”);
-for(i=0;i&lt;MEMSIZE &amp;&amp; MemList[i].info != ‘e’;i++){
-if(MemList[i].info == ‘u’)
-used+= MemList[i].size;
-printf(“%5d %15d %15d %15s\n”,i,MemList[i].start,MemList[i].size,MemList[i].info == ‘u’?”USED”:”FREE”);
-}
-printf(“\n——————————————\n”);
-printf(“TotalSize : %-10d Used: %-10d Free:%-10d\n”,MEMSIZE,used,MEMSIZE – used);
-printf(“\n\nPress Any Key to Return\n”);
-getchar();
-}
-int main()
-{
-char ch;
-InitAll();
-while(1)
-{
-printf(“   Memory manager  \n”);
-printf(“================================================\n”);
-printf(“1. Get a block use the FIRSTFIT method\n”);
-printf(“2. Get a block use the BESTFFIT method\n”);
-printf(“3. Free or delete a block\n”);
-printf(“4. Display Mem information\n”);
-printf(“5. Exit\n”);
-printf(“================================================\n”);
-ch = getchar();
-switch(ch){
-case ’1′:
-FirstFit_new();
-break;
-case ’2′:
-BestFit_new();
-break;
-case ’3′:
-del();
-break;
-case ’4′:
-Display();
-break;
-case ’5′:
-exit(0);
-}
-}
-}</p>
 </div>
 
 

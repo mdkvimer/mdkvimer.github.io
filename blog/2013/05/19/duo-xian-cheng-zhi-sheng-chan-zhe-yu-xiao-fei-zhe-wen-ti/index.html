@@ -99,115 +99,203 @@
 
 <div class="entry-content"><p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的</p>
 
-<h1>include&lt;stdio.h></h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;stdlib.h&gt;
+</span><span class='line'>#include&lt;string.h&gt;
+</span><span class='line'>#include&lt;sys/wait.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>#include&lt;pthread.h&gt;
+</span><span class='line'>#include&lt;time.h&gt;
+</span><span class='line'>#include&lt;math.h&gt;
+</span><span class='line'>#define BUFFER_SIZE 8
+</span><span class='line'>
+</span><span class='line'>struct prodcons {
+</span><span class='line'>int buffer[BUFFER_SIZE];
+</span><span class='line'>pthread_mutex_t lock;
+</span><span class='line'>int readpos,writepos;
+</span><span class='line'>pthread_cond_t notempty;
+</span><span class='line'>pthread_cond_t notfull;
+</span><span class='line'>};
+</span><span class='line'>
+</span><span class='line'>void init(struct prodcons *b)
+</span><span class='line'>{
+</span><span class='line'>pthread_mutex_init(&b-&gt;lock,NULL);
+</span><span class='line'>pthread_cond_init(&b-&gt;notempty,NULL);
+</span><span class='line'>pthread_cond_init(&b-&gt;notfull,NULL);
+</span><span class='line'>b-&gt;readpos = 0 ;
+</span><span class='line'>b-&gt;writepos = 0 ;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void put(struct prodcons *b,int data)
+</span><span class='line'>{
+</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
+</span><span class='line'>if((b-&gt;writepos + 1)%BUFFER_SIZE == b-&gt;readpos)
+</span><span class='line'>{
+</span><span class='line'>pthread_cond_wait(&b-&gt;notfull,&b-&gt;lock);
+</span><span class='line'>}
+</span><span class='line'>b-&gt;buffer[b-&gt;writepos] = data;
+</span><span class='line'>b-&gt;writepos++;
+</span><span class='line'>if(b-&gt;writepos &gt;= BUFFER_SIZE)
+</span><span class='line'>b-&gt;writepos = 0;
+</span><span class='line'>pthread_cond_signal(&b-&gt;notempty);
+</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int get(struct prodcons *b)
+</span><span class='line'>{
+</span><span class='line'>int data;
+</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
+</span><span class='line'>if(b-&gt;writepos == b-&gt;readpos)
+</span><span class='line'>{
+</span><span class='line'>pthread_cond_wait(&b-&gt;notempty,&b-&gt;lock);
+</span><span class='line'>}
+</span><span class='line'>data = b-&gt;buffer[b-&gt;readpos];
+</span><span class='line'>b-&gt;readpos++;
+</span><span class='line'>
+</span><span class='line'>if(b-&gt;readpos &gt;= BUFFER_SIZE)
+</span><span class='line'>b-&gt;readpos = 0;
+</span><span class='line'>
+</span><span class='line'>pthread_cond_signal(&b-&gt;notfull);
+</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
+</span><span class='line'>return data;
+</span><span class='line'>}
+</span><span class='line'>#define OVER (-1)
+</span><span class='line'>struct prodcons buffer;
+</span><span class='line'>void *producer(void *data)
+</span><span class='line'>{
+</span><span class='line'>int n;
+</span><span class='line'>for(n = 0 ; n &lt; 50 ; n++)
+</span><span class='line'>{
+</span><span class='line'>printf(“%d\t”,n);
+</span><span class='line'>put(&buffer,n);
+</span><span class='line'>}
+</span><span class='line'>put(&buffer,OVER);
+</span><span class='line'>return NULL;
+</span><span class='line'>}
+</span><span class='line'>void *consumer(void *data)
+</span><span class='line'>{
+</span><span class='line'>int d;
+</span><span class='line'>while(1)
+</span><span class='line'>{
+</span><span class='line'>d = get(&buffer);
+</span><span class='line'>if(d == OVER)
+</span><span class='line'>break;
+</span><span class='line'>printf(“%d\t”,d);
+</span><span class='line'>}
+</span><span class='line'>return NULL;
+</span><span class='line'>}
+</span><span class='line'>int main(void)
+</span><span class='line'>{
+</span><span class='line'>pthread_t th_a,th_b;
+</span><span class='line'>void *retval;
+</span><span class='line'>init(&buffer);
+</span><span class='line'>pthread_create(&th_a,NULL,producer,0);
+</span><span class='line'>pthread_create(&th_b,NULL,consumer,0);
+</span><span class='line'>pthread_join(th_a,&retval);
+</span><span class='line'>pthread_join(th_b,&retval);
+</span><span class='line'>printf(“\n”);
+</span><span class='line'>return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<h1>include&lt;stdlib.h></h1>
-
-<h1>include&lt;string.h></h1>
-
-<h1>include&lt;sys/wait.h></h1>
-
-<h1>include&lt;sys/types.h></h1>
-
-<h1>include&lt;unistd.h></h1>
-
-<h1>include&lt;pthread.h></h1>
-
-<h1>include&lt;time.h></h1>
-
-<h1>include&lt;math.h></h1>
-
-<h1>define BUFFER_SIZE 8</h1>
-
-<p>struct prodcons {
-int buffer[BUFFER_SIZE];
-pthread_mutex_t lock;
-int readpos,writepos;
-pthread_cond_t notempty;
-pthread_cond_t notfull;
-};</p>
-
-<p>void init(struct prodcons *b)
-{
-pthread_mutex_init(&amp;b->lock,NULL);
-pthread_cond_init(&amp;b->notempty,NULL);
-pthread_cond_init(&amp;b->notfull,NULL);
-b->readpos = 0 ;
-b->writepos = 0 ;
-}</p>
-
-<p>void put(struct prodcons *b,int data)
-{
-pthread_mutex_lock(&amp;b->lock);
-if((b->writepos + 1)%BUFFER_SIZE == b->readpos)
-{
-pthread_cond_wait(&amp;b->notfull,&amp;b->lock);
-}
-b->buffer[b->writepos] = data;
-b->writepos++;
-if(b->writepos >= BUFFER_SIZE)
-b->writepos = 0;
-pthread_cond_signal(&amp;b->notempty);
-pthread_mutex_unlock(&amp;b->lock);
-}</p>
-
-<p>int get(struct prodcons *b)
-{
-int data;
-pthread_mutex_lock(&amp;b->lock);
-if(b->writepos == b->readpos)
-{
-pthread_cond_wait(&amp;b->notempty,&amp;b->lock);
-}
-data = b->buffer[b->readpos];
-b->readpos++;</p>
-
-<p>if(b->readpos >= BUFFER_SIZE)
-b->readpos = 0;</p>
-
-<p>pthread_cond_signal(&amp;b->notfull);
-pthread_mutex_unlock(&amp;b->lock);
-return data;
-}</p>
-
-<h1>define OVER (-1)</h1>
-
-<p>struct prodcons buffer;
-void <em>producer(void </em>data)
-{
-int n;
-for(n = 0 ; n &lt; 50 ; n++)
-{
-printf(“%d\t”,n);
-put(&amp;buffer,n);
-}
-put(&amp;buffer,OVER);
-return NULL;
-}
-void <em>consumer(void </em>data)
-{
-int d;
-while(1)
-{
-d = get(&amp;buffer);
-if(d == OVER)
-break;
-printf(“%d\t”,d);
-}
-return NULL;
-}
-int main(void)
-{
-pthread_t th_a,th_b;
-void *retval;
-init(&amp;buffer);
-pthread_create(&amp;th_a,NULL,producer,0);
-pthread_create(&amp;th_b,NULL,consumer,0);
-pthread_join(th_a,&amp;retval);
-pthread_join(th_b,&amp;retval);
-printf(“\n”);
-return 0;
-}</p>
 </div>
 
 
