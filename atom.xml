@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T12:16:15+08:00</updated>
+  <updated>2013-05-19T12:39:32+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -2830,25 +2830,41 @@ return 0;
     <link href="http://mdkvimer.github.io/blog/2013/05/18/xin-jiao-tong-gui-ze/"/>
     <updated>2013-05-18T22:49:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/18/xin-jiao-tong-gui-ze</id>
-    <content type="html"><![CDATA[<p>   //before</p>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>   //before
+</span><span class='line'>    if(light == “green”){
+</span><span class='line'>      run();
+</span><span class='line'>    }else if(light == “red”){
+</span><span class='line'>      stop();
+</span><span class='line'>    }else if(light == “yellow”){
+</span><span class='line'>      holdOn();
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    //now
+</span><span class='line'>    if(light == “green”){
+</span><span class='line'>      run();
+</span><span class='line'>    }else if(light == “red”){
+</span><span class='line'>      stop();
+</span><span class='line'>    }else if(light == “yellow”){
+</span><span class='line'>      stop();
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>if(light == “green”){
-  run();
-}else if(light == “red”){
-  stop();
-}else if(light == “yellow”){
-  holdOn();
-}
-
-//now
-if(light == “green”){
-  run();
-}else if(light == “red”){
-  stop();
-}else if(light == “yellow”){
-  stop();
-}
-</code></pre>
 ]]></content>
   </entry>
   
