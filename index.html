@@ -1564,7 +1564,9 @@ c.直连网络端点间的满载状态下的直线状态
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># uname -a               # 查看内核/操作系统/CPU信息   # head -n 1 /etc/issue   # 查看操作系统版本
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># uname -a               # 查看内核/操作系统/CPU信息  
+</span><span class='line'># head -n 1 /etc/issue   # 查看操作系统版本
 </span><span class='line'>
 </span><span class='line'># cat /proc/cpuinfo      # 查看CPU信息
 </span><span class='line'>
@@ -1592,7 +1594,9 @@ c.直连网络端点间的满载状态下的直线状态
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># free -m                # 查看内存使用量和交换区使用量   # df -h                  # 查看各分区使用情况
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># free -m                # 查看内存使用量和交换区使用量 
+</span><span class='line'># df -h                  # 查看各分区使用情况
 </span><span class='line'>
 </span><span class='line'># du -sh &lt;目录名&gt;        # 查看指定目录的大小
 </span><span class='line'>
@@ -1605,25 +1609,34 @@ c.直连网络端点间的满载状态下的直线状态
 </span><span class='line'># cat /proc/loadavg      # 查看系统负载</span></code></pre></td></tr></table></div></figure>
 
 
-<p>磁盘和分区
- &#8220;`</p>
-
-<h1>mount | column -t      # 查看挂接的分区状态   # fdisk -l               # 查看所有分区</h1>
-
-<h1>swapon -s              # 查看所有交换分区</h1>
-
-<h1>hdparm -i /dev/hda     # 查看磁盘参数(仅适用于IDE设备)</h1>
-
-<h1>dmesg | grep IDE       # 查看启动时IDE设备检测状况</h1>
+<p>磁盘和分区</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> 网络
-</span><span class='line'> ```  
-</span><span class='line'># ifconfig               # 查看所有网络接口的属性   # iptables -L            # 查看防火墙设置
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mount | column -t      # 查看挂接的分区状态   
+</span><span class='line'># fdisk -l               # 查看所有分区
+</span><span class='line'>
+</span><span class='line'># swapon -s              # 查看所有交换分区
+</span><span class='line'>
+</span><span class='line'># hdparm -i /dev/hda     # 查看磁盘参数(仅适用于IDE设备)
+</span><span class='line'>
+</span><span class='line'># dmesg | grep IDE       # 查看启动时IDE设备检测状况</span></code></pre></td></tr></table></div></figure>
+
+
+<p> 网络</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># ifconfig               # 查看所有网络接口的属性   
+</span><span class='line'># iptables -L            # 查看防火墙设置
 </span><span class='line'>
 </span><span class='line'># route -n               # 查看路由表</span></code></pre></td></tr></table></div></figure>
 
@@ -1640,7 +1653,9 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p></p>
 
-<h1>ps -ef                 # 查看所有进程   # top                    # 实时显示进程状态</h1>
+<h1>ps -ef                 # 查看所有进程</h1>
+
+<h1>top                    # 实时显示进程状态</h1>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>用户</span></code></pre></td></tr></table></div></figure>
@@ -1648,7 +1663,9 @@ c.直连网络端点间的满载状态下的直线状态
 
 <p></p>
 
-<h1>w                      # 查看活动用户   # id &lt;用户名&gt;            # 查看指定用户信息</h1>
+<h1>w                      # 查看活动用户</h1>
+
+<h1>id &lt;用户名&gt;            # 查看指定用户信息</h1>
 
 <h1>last                   # 查看用户登录日志</h1>
 
@@ -1659,19 +1676,20 @@ c.直连网络端点间的满载状态下的直线状态
 <h1>crontab -l             # 查看当前用户的计划任务</h1>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>服务
-</span><span class='line'> ```
-</span><span class='line'># chkconfig –list       # 列出所有系统服务   # chkconfig –list | grep on    # 列出所有启动的系统服务</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>服务</span></code></pre></td></tr></table></div></figure>
 
 
-<p>程序
- &#8220;`</p>
+<h1>chkconfig –list       # 列出所有系统服务</h1>
+
+<h1>chkconfig –list | grep on    # 列出所有启动的系统服务</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>程序</span></code></pre></td></tr></table></div></figure>
+
 
 <h1>rpm -qa                # 查看所有安装的软件包</h1>
 
-<p> &#8220;`</p>
+<p>&#8220;`</p>
 </div>
   
   
