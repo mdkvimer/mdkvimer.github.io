@@ -9,7 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="1.分别使用首次适应算法,最佳适应算法分配内存空间 2.实现对内存空间的释放 3.显示内存分配情况 #include&lt;stdio.h> #include&lt;unistd.h> #include&lt;stdlib.h> #include&lt;string.h> #include&lt; &hellip;">
+  <meta name="description" content="启动流程一览 既然启动是很严肃的一件事，那我们就来了解一下整个启动的过程吧！ 好让大家比较容易发现启动过程里面可能会发生问题的地方，以及出现问题后的解决之道！ 不过，由於启动的过程中，那个启动管理程序 (Boot Loader) 使用的软件可能不一样，例如目前各大 Linux &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,453 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/linuxnei-he-qi-dong-liu-cheng/">Linux内核启动流程</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T11:09:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>启动流程一览</p>
+
+<p>既然启动是很严肃的一件事，那我们就来了解一下整个启动的过程吧！ 好让大家比较容易发现启动过程里面可能会发生问题的地方，以及出现问题后的解决之道！ 不过，由於启动的过程中，那个启动管理程序 (Boot Loader) 使用的软件可能不一样，例如目前各大 Linux distributions 的主流为 grub，但早期 Linux 默认是使用 LILO 。 但无论如何，我们总是得要了解整个 boot loader 的工作情况，才能了解为何进行多重启动的配置时， 老是听人家讲要先安装 Windows 再安装 Linux 的原因～</p>
+
+<p>假设以个人计算机架设的 Linux 主机为例 ， 当你按下电源按键后计算机硬件会主动的读取 BIOS 来加载硬件资讯及进行硬件系统的自我测试， 之后系统会主动的去读取第一个可启动的装置 (由 BIOS 配置的) ，此时就可以读入启动管理程序了。</p>
+
+<p>启动管理程序可以指定使用哪个核心文件来启动，并实际加载核心到内存当中解压缩与运行， 此时核心就能够开始在内存内活动，并侦测所有硬件资讯与加载适当的驱动程序来使整部主机开始运行， 等到核心侦测硬件与加载驱动程序完毕后，一个最阳春的操作系统就开始在你的 PC 上面跑了。</p>
+
+<p>主机系统开始运行后，此时 Linux 才会呼叫外部程序开始准备软件运行的环境， 并且实际的加载所有系统运行所需要的软件程序哩！最后系统就会开始等待你的登陆与操作啦！ 简单来说，系统启动的经过可以汇整成底下的流程的：</p>
+
+<pre><code>加载 BIOS 的硬件资讯与进行自我测试，并依据配置取得第一个可启动的装置；
+读取并运行第一个启动装置内 MBR 的 boot Loader (亦即是 grub, spfdisk 等程序)；
+依据 boot loader 的配置加载 Kernel ，Kernel 会开始侦测硬件与加载驱动程序；
+</code></pre>
+
+<p>BIOS, 启动自我测试与 MBR</p>
+
+<p>在个人计算机架构下，你想要启动整部系统首先就得要让系统去加载 BIOS (Basic Input Output System)，并透过 BIOS 程序去加载 CMOS 的资讯，并且藉由 CMOS 内的配置值取得主机的各项硬件配置， 例如 CPU 与周边设备的沟通时脉啊、启动装置的搜寻顺序啊、硬盘的大小与类型啊、 系统时间啊、各周边汇流排的是否启动 Plug and Play (PnP, 随插即用装置) 啊、 各周边设备的 I/O 位址啊、以及与 CPU 沟通的 IRQ 岔断等等的资讯。</p>
+
+<p>在取得这些资讯后，BIOS 还会进行启动自我测试 (Power-on Self Test, POST) 。 然后开始运行硬件侦测的初始化，并配置 PnP 装置，之后再定义出可启动的装置顺序， 接下来就会开始进行启动装置的数据读取了 (MBR 相关的任务开始)。</p>
+
+<p>由於我们的系统软件大多放置到硬盘中嘛！所以 BIOS 会指定启动的装置好让我们可以读取磁碟中的操作系统核心文件。 但由於不同的操作系统他的文件系统格式不相同，因此我们必须要以一个启动管理程序来处理核心文件加载 (load) 的问题， 因此这个启动管理程序就被称为 Boot Loader 了。那这个 Boot Loader 程序安装在哪里呢？就在启动装置的第一个磁区 (sector) 内，也就是我们一直谈到的 MBR (Master Boot Record, 主要启动记录区)。</p>
+
+<p>那你会不会觉得很奇怪啊？既然核心文件需要 loader 来读取，那每个操作系统的 loader 都不相同， 这样的话 BIOS 又是如何读取 MBR 内的 loader 呢？很有趣的问题吧！其实 BIOS 是透过硬件的 INT 13 中断功能来读取 MBR 的，也就是说，只要 BIOS 能够侦测的到你的磁碟 (不论该磁碟是 SATA 还是 IDE 介面)，那他就有办法透过 INT 13 这条通道来读取该磁碟的第一个磁区内的 MBR 啦！这样 boot loader 也就能够被运行罗！</p>
+
+<p>我们知道每颗硬盘的第一个磁区内含有 446 bytes的 MBR 区域，那么如果我的主机上面有两颗硬盘的话， 系统会去哪颗硬盘的 MBR 读取 boot loader 呢？这个就得要看 BIOS 的配置了。 基本上，我们常常讲的『系统的 MBR』其实指的是 第一个启动装置的 MBR 才对！ 所以，改天如果你要将启动管理程序安装到某颗硬盘的 MBR 时， 要特别注意当时系统的『第一个启动装置』是哪个，否则会安装到错误的硬盘上面的 MBR 喔！
+Boot Loader</p>
+
+<p>刚刚说到 Loader 的最主要功能是要认识操作系统的文件格式并据以加载核心到主内存中去运行。 由於不同操作系统的文件格式不一致，因此每种操作系统都有自己的 boot loader 啦！用自己的 loader 才有办法加载核心文件嘛！那问题就来啦，你应该有听说过多重操作系统吧？也就是在一部主机上面安装多种不同的操作系统。 既然你 (1)必须要使用自己的 loader 才能够加载属於自己的操作系统核心，而 (2)系统的 MBR 只有一个，那你怎么会有办法同时在一部主机上面安装 Windows 与 Linux 呢？</p>
+
+<p>其实每个文件系统 (filesystem, 或者是 partition) 都会保留一块启动磁区 (boot sector) 提供操作系统安装 boot loader ， 而通常操作系统默认都会安装一份 loader 到他根目录所在的文件系统的 boot sector 上。如果我们在一部主机上面安装 Windows 与 Linux 后，该 boot sector, boot loader 与 MBR 的相关性会有点像下图：</p>
+
+<p>图 1.2.1、 boot loader 安装在 MBR, boot sector 与操作系统的关系
+如上图所示，每个操作系统默认是会安装一套 boot loader 到他自己的文件系统中 (就是每个 filesystem 左下角的方框)，而在 Linux 系统安装时，你可以选择将 boot loader 安装到 MBR 去，也可以选择不安装。 如果选择安装到 MBR 的话，那理论上你在 MBR 与 boot sector 都会保有一份 boot loader 程序的。 至於 Windows 安装时，他默认会主动的将 MBR 与 boot sector 都装上一份 boot loader！所以啦， 你会发现安装多重操作系统时，你的 MBR 常常会被不同的操作系统的 boot loader 所覆盖啦！ ^_^</p>
+
+<p>我们刚刚提到的两个问题还是没有解决啊！虽然各个操作系统都可以安装一份 boot loader 到他们的 boot sector 中， 这样操作系统可以透过自己的 boot loader 来加载核心了。问题是系统的 MBR 只有一个哩！ 你要怎么运行 boot sector 里面的 loader 啊？</p>
+
+<p>boot loader 主要的功能如下：</p>
+
+<pre><code>提供菜单：使用者可以选择不同的启动项目，这也是多重启动的重要功能！
+加载核心文件：直接指向可启动的程序区段来开始操作系统；
+转交其他 loader：将启动管理功能转交给其他 loader 负责。
+</code></pre>
+
+<p>由於具有菜单功能，因此我们可以选择不同的核心来启动。而由於具有控制权转交的功能，因此我们可以加载其他 boot sector 内的 loader 啦！不过 Windows 的 loader 默认不具有控制权转交的功能，因此你不能使用 Windows 的 loader 来加载 Linux 的 loader 喔！这也是为啥第三章谈到 MBR 与多重启动时，会特别强调先装 Windows 再装 Linux 的缘故。 我们将上述的三个功能以底下的图示来解释你就看的懂了！(与第三章的图示也非常类似啦！)</p>
+
+<p>图 1.2.2、 启动管理程序的菜单功能与控制权转交功能示意图
+如上图所示，我的 MBR 使用 Linux 的 grub 这个启动管理程序，并且里面假设已经有了三个菜单， 第一个菜单可以直接指向 Linux 的核心文件并且直接加载核心来启动；第二个菜单可以将启动管理程序控制权交给 Windows 来管理，此时 Windows 的 loader 会接管启动流程，这个时候他就能够启动 windows 了。第三个菜单则是使用 Linux 在 boot sector 内的启动管理程序，此时就会跳出另一个 grub 的菜单啦！了解了吗？</p>
+
+<p>而最终 boot loader 的功能就是『加载 kernel 文件』啦！</p>
+
+<p>加载核心侦测硬件与 initrd</p>
+
+<p>当我们藉由 boot loader 的管理而开始读取核心文件后，接下来， Linux 就会将核心解压缩到主内存当中， 并且利用核心的功能，开始测试与驱动各个周边装置，包括储存装置、CPU、网络卡、声卡等等。 此时 Linux 核心会以自己的功能重新侦测一次硬件，而不一定会使用 BIOS 侦测到的硬件资讯喔！也就是说，核心此时才开始接管 BIOS 后的工作了。 那么核心文件在哪里啊？一般来说，他会被放置到 /boot 里面，并且取名为 /boot/vmlinuz 才对！</p>
+
+<p>[root@www ~]# ls &mdash;format=single-column -F /boot
+config-2.6.18-92.el5      &lt;==此版本核心被编译时选择的功能与模块配置档
+grub/                     &lt;==就是启动管理程序 grub 相关数据目录
+initrd-2.6.18-92.el5.img  &lt;==虚拟文件系统档！
+System.map-2.6.18-92.el5  &lt;==核心功能放置到内存位址的对应表
+vmlinuz-2.6.18-92.el5     &lt;==就是核心文件啦！最重要者！</p>
+
+<p>从上表我们也可以知道此版本的 Linux 核心为 2.6.18-92.el5 这个版本！为了硬件开发商与其他核心功能开发者的便利， 因此 Linux 核心是可以透过动态加载核心模块的 (就请想成驱动程序即可)，这些核心模块就放置在 /lib/modules/ 目录内。 由于模块放置到磁盘根目录内 (要记得 /lib 不可以与 / 分别放在不同的 partition ！)， 因此在启动的过程中核心必须要挂载根目录，这样才能够读取核心模块提供加载驱动程序的功能。 而且为了担心影响到磁碟内的文件系统，因此启动过程中根目录是以唯读的方式来挂载的喔。</p>
+
+<p>一般来说，非必要的功能且可以编译成为模块的核心功能，目前的 Linux distributions 都会将他编译成为模块。 因此 U盘, SATA, SCSI… 等磁碟装置的驱动程序通常都是以模块的方式来存在的。 现在来思考一种情况，假设你的 linux 是安装在 SATA 磁碟上面的，你可以透过 BIOS 的 INT 13 取得 boot loader 与 kernel 文件来启动，然后 kernel 会开始接管系统并且侦测硬件及尝试挂载根目录来取得额外的驱动程序。</p>
+
+<p>问题是，核心根本不认识 SATA 磁碟，所以需要加载 SATA 磁碟的驱动程序， 否则根本就无法挂载根目录。但是 SATA 的驱动程序在 /lib/modules 内，你根本无法挂载根目录又怎么读取到 /lib/modules/ 内的驱动程序？是吧！非常的两难吧！在这个情况之下，你的 Linux 是无法顺利启动的！ 那怎办？没关系，我们可以透过虚拟文件系统来处理这个问题。</p>
+
+<p>虚拟文件系统 (Initial RAM Disk) 一般使用的档名为 /boot/initrd ，这个文件的特色是，他也能够透过 boot loader 来加载到内存中， 然后这个文件会被解压缩并且在内存当中模拟成一个根目录， 且此模拟在内存当中的文件系统能够提供一支可运行的程序，透过该程序来加载启动过程中所最需要的核心模块， 通常这些模块就是 U盘, RAID, LVM, SCSI 等文件系统与磁碟介面的驱动程序啦！等加载完成后， 会帮助核心重新呼叫 /sbin/init 来开始后续的正常启动流程。</p>
+
+<p>如上图所示，boot loader 可以加载 kernel 与 initrd ，然后在内存中让 initrd 解压缩成为根目录， kernel 就能够藉此加载适当的驱动程序，最终释放虚拟文件系统，并挂载实际的根目录文件系统， 就能够开始后续的正常启动流程。更详细的 initrd 说明，你可以自行使用 man initrd 去查阅看看。 底下让我们来了解一下 CentOS 5.x 的 initrd 文件内容有什么吧！
+复制代码</p>
+
+<p>[root@www ~]# mkdir /tmp/initrd
+[root@www ~]# cp /boot/initrd-2.6.18-92.el5.img /tmp/initrd/
+[root@www ~]# cd /tmp/initrd
+[root@www initrd]# file initrd-2.6.18-92.el5.img
+initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
+
+<p>[root@www initrd]# mv initrd-2.6.18-92.el5.img initrd-2.6.18-92.el5.gz
+[root@www initrd]# gzip -d initrd-2.6.18-92.el5.gz
+[root@www initrd]# file initrd-2.6.18-92.el5
+initrd-2.6.18-92.el5: ASCII cpio archive (SVR4 with no CRC)</p>
+
+<p>[root@www initrd]# cpio -ivcdu &lt; initrd-2.6.18-92.el5
+[root@www initrd]# ll
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 bin
+drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 dev
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 etc
+-rwx&mdash;&mdash;&mdash; 1 root root    1888 Apr 10 02:05 init
+-rw&mdash;&mdash;&mdash;&ndash; 1 root root 5408768 Apr 10 02:00 initrd-2.6.18-92.el5
+drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 lib
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 proc
+lrwxrwxrwx 1 root root       3 Apr 10 02:05 sbin &ndash;> bin
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sys
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sysroot</p>
+
+<p>[root@www initrd]# cat init</p>
+
+<h1>!/bin/nash                  &lt;==使用类似 bash 的 shell 来运行</h1>
+
+<p>mount -t proc /proc /proc    &lt;==挂载内存的虚拟文件系统
+&hellip;.(中间省略)&hellip;.
+echo Creating initial device nodes
+mknod /dev/null c 1 3        &lt;==创建系统所需要的各项装置！
+&hellip;.(中间省略)&hellip;.
+echo &ldquo;Loading ehci-hcd.ko module&rdquo;
+insmod /lib/ehci-hcd.ko      &lt;==加载各项核心模块，就是驱动程序！
+&hellip;.(中间省略)&hellip;.
+echo Creating root device.
+mkrootdev -t ext3 -o defaults,ro hdc2 &lt;==尝试挂载根目录啦！
+&hellip;.(底下省略)&hellip;.</p>
+
+<p>复制代码</p>
+
+<p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
+
+<p>是否没有 initrd 就无法顺利启动？
+答：
+不见得的！需要 initrd 最重要的原因是，当启动时无法挂载根目录的情况下， 此时就一定需要 initrd ，例如你的根目录在特殊的磁碟介面 (U盘, SATA, SCSI) ， 或者是你的文件系统较为特殊 (LVM, RAID) 等等，才会需要 initrd。</p>
+
+<p>如果你的 Linux 是安装在 IDE 介面的磁碟上，并且使用默认的 ext2/ext3 文件系统， 那么不需要 initrd 也能够顺利的启动进入 Linux 的！</p>
+
+<p>在核心完整的加载后，您的主机应该就开始正确的运行了</p>
+
+<p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/linuxxi-tong-diao-yong-lie-biao/">Linux系统调用列表</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T11:08:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>以下是Linux系统调用的一个列表，包含了大部分常用系统调用和由系统调用派生出的的函数。这可能是你在互联网上所能看到的唯一一篇中文注释的Linux系统调用列表，即使是简单的字母序英文列表，能做到这么完全也是很罕见的。</p>
+
+<p>按照惯例，这个列表以man pages第2节，即系统调用节为蓝本。按照笔者的理解，对其作了大致的分类，同时也作了一些小小的修改，删去了几个仅供内核使用，不允许用户调用的系统调用，对个别本人稍觉不妥的地方作了一些小的修改，并对所有列出的系统调用附上简要注释。</p>
+
+<p>其中有一些函数的作用完全相同，只是参数不同。（可能很多熟悉C++朋友马上就能联想起函数重载，但是别忘了Linux核心是用C语言写的，所以只 能取成不同的函数名）。还有一些函数已经过时，被新的更好的函数所代替了（gcc在链接这些函数时会发出警告），但因为兼容的原因还保留着，这些函数我会 在前面标上“*”号以示区别。
+一、进程控制：
+fork    创建一个新进程
+clone   按指定条件创建子进程
+execve  运行可执行文件
+exit    中止进程
+_exit   立即中止当前进程
+getdtablesize   进程所能打开的最大文件数
+getpgid     获取指定进程组标识号
+setpgid     设置指定进程组标志号
+getpgrp     获取当前进程组标识号
+setpgrp     设置当前进程组标志号
+getpid  获取进程标识号
+getppid     获取父进程标识号
+getpriority     获取调度优先级
+setpriority     设置调度优先级
+modify_ldt  读写进程的本地描述表
+nanosleep   使进程睡眠指定的时间
+nice    改变分时进程的优先级
+pause   挂起进程，等待信号
+personality     设置进程运行域
+prctl   对进程进行特定操作
+ptrace  进程跟踪
+sched_get_priority_max  取得静态优先级的上限
+sched_get_priority_min  取得静态优先级的下限
+sched_getparam  取得进程的调度参数
+sched_getscheduler  取得指定进程的调度策略
+sched_rr_get_interval   取得按RR算法调度的实时进程的时间片长度
+sched_setparam  设置进程的调度参数
+sched_setscheduler  设置指定进程的调度策略和参数
+sched_yield     进程主动让出处理器,并将自己等候调度队列队尾
+vfork   创建一个子进程，以供执行新程序，常与execve等同时使用
+wait    等待子进程终止
+wait3   参见wait
+waitpid     等待指定子进程终止
+wait4   参见waitpid
+capget  获取进程权限
+capset  设置进程权限
+getsid  获取会晤标识号
+setsid  设置会晤标识号</p>
+
+<p>二、文件系统控制</p>
+
+<p>1、文件读写操作
+fcntl   文件控制
+open    打开文件
+creat   创建新文件
+close   关闭文件描述字
+read    读文件
+write   写文件
+readv   从文件读入数据到缓冲数组中
+writev  将缓冲数组里的数据写入文件
+pread   对文件随机读
+pwrite  对文件随机写
+lseek   移动文件指针
+_llseek     在64位地址空间里移动文件指针
+dup     复制已打开的文件描述字
+dup2    按指定条件复制文件描述字
+flock   文件加/解锁
+poll    I/O多路转换
+truncate    截断文件
+ftruncate   参见truncate
+umask   设置文件权限掩码
+fsync   把文件在内存中的部分写回磁盘</p>
+
+<p>2、文件系统操作
+access  确定文件的可存取性
+chdir   改变当前工作目录
+fchdir  参见chdir
+chmod   改变文件方式
+fchmod  参见chmod
+chown   改变文件的属主或用户组
+fchown  参见chown
+lchown  参见chown
+chroot  改变根目录
+stat    取文件状态信息
+lstat   参见stat
+fstat   参见stat
+statfs  取文件系统信息
+fstatfs     参见statfs
+readdir     读取目录项
+getdents    读取目录项
+mkdir   创建目录
+mknod   创建索引节点
+rmdir   删除目录
+rename  文件改名
+link    创建链接
+symlink     创建符号链接
+unlink  删除链接
+readlink    读符号链接的值
+mount   安装文件系统
+umount  卸下文件系统
+ustat   取文件系统信息
+utime   改变文件的访问修改时间
+utimes  参见utime
+quotactl    控制磁盘配额</p>
+
+<p>三、系统控制
+ioctl   I/O总控制函数
+_sysctl     读/写系统参数
+acct    启用或禁止进程记账
+getrlimit   获取系统资源上限
+setrlimit   设置系统资源上限
+getrusage   获取系统资源使用情况
+uselib  选择要使用的二进制函数库
+ioperm  设置端口I/O权限
+iopl    改变进程I/O权限级别
+outb    低级端口操作
+reboot  重新启动
+swapon  打开交换文件和设备
+swapoff     关闭交换文件和设备
+bdflush     控制bdflush守护进程
+sysfs   取核心支持的文件系统类型
+sysinfo     取得系统信息
+adjtimex    调整系统时钟
+alarm   设置进程的闹钟
+getitimer   获取计时器值
+setitimer   设置计时器值
+gettimeofday    取时间和时区
+settimeofday    设置时间和时区
+stime   设置系统日期和时间
+time    取得系统时间
+times   取进程运行时间
+uname   获取当前UNIX系统的名称、版本和主机等信息
+vhangup     挂起当前终端
+nfsservctl  对NFS守护进程进行控制
+vm86    进入模拟8086模式
+create_module   创建可装载的模块项
+delete_module   删除可装载的模块项
+init_module     初始化模块
+query_module    查询模块信息
+*get_kernel_syms    取得核心符号,已被query_module代替</p>
+
+<p>四、内存管理
+brk     改变数据段空间的分配
+sbrk    参见brk
+mlock   内存页面加锁
+munlock     内存页面解锁
+mlockall    调用进程所有内存页面加锁
+munlockall  调用进程所有内存页面解锁
+mmap    映射虚拟内存页
+munmap  去除内存页映射
+mremap  重新映射虚拟内存地址
+msync   将映射内存中的数据写回磁盘
+mprotect    设置内存映像保护
+getpagesize     获取页面大小
+sync    将内存缓冲区数据写回硬盘
+cacheflush  将指定缓冲区中的内容写回磁盘</p>
+
+<p>五、网络管理
+getdomainname   取域名
+setdomainname   设置域名
+gethostid   获取主机标识号
+sethostid   设置主机标识号
+gethostname     获取本主机名称
+sethostname     设置主机名称</p>
+
+<p>六、socket控制
+socketcall  socket系统调用
+socket  建立socket
+bind    绑定socket到端口
+connect     连接远程主机
+accept  响应socket连接请求
+send    通过socket发送信息
+sendto  发送UDP信息
+sendmsg     参见send
+recv    通过socket接收信息
+recvfrom    接收UDP信息
+recvmsg     参见recv
+listen  监听socket端口
+select  对多路同步I/O进行轮询
+shutdown    关闭socket上的连接
+getsockname     取得本地socket名字
+getpeername     获取通信对方的socket名字
+getsockopt  取端口设置
+setsockopt  设置端口参数
+sendfile    在文件或端口间传输数据
+socketpair  创建一对已联接的无名socket</p>
+
+<p>七、用户管理
+getuid  获取用户标识号
+setuid  设置用户标志号
+getgid  获取组标识号
+setgid  设置组标志号
+getegid     获取有效组标识号
+setegid     设置有效组标识号
+geteuid     获取有效用户标识号
+seteuid     设置有效用户标识号
+setregid    分别设置真实和有效的的组标识号
+setreuid    分别设置真实和有效的用户标识号
+getresgid   分别获取真实的,有效的和保存过的组标识号
+setresgid   分别设置真实的,有效的和保存过的组标识号
+getresuid   分别获取真实的,有效的和保存过的用户标识号
+setresuid   分别设置真实的,有效的和保存过的用户标识号
+setfsgid    设置文件系统检查时使用的组标识号
+setfsuid    设置文件系统检查时使用的用户标识号
+getgroups   获取后补组标志清单
+setgroups   设置后补组标志清单</p>
+
+<p>八、进程间通信</p>
+
+<p>ipc     进程间通信总控制调用</p>
+
+<p>1、信号
+sigaction   设置对指定信号的处理方法
+sigprocmask     根据参数对信号集中的信号执行阻塞/解除阻塞等操作
+sigpending  为指定的被阻塞信号设置队列
+sigsuspend  挂起进程等待特定信号
+signal  参见signal
+kill    向进程或进程组发信号
+<em>sigblock   向被阻塞信号掩码中添加信号,已被sigprocmask代替
+</em>siggetmask     取得现有阻塞信号掩码,已被sigprocmask代替
+<em>sigsetmask     用给定信号掩码替换现有阻塞信号掩码,已被sigprocmask代替
+</em>sigmask    将给定的信号转化为掩码,已被sigprocmask代替
+*sigpause   作用同sigsuspend,已被sigsuspend代替
+sigvec  为兼容BSD而设的信号处理函数,作用类似sigaction
+ssetmask    ANSI C的信号处理函数,作用类似sigaction</p>
+
+<p>2、消息
+msgctl  消息控制操作
+msgget  获取消息队列
+msgsnd  发消息
+msgrcv  取消息</p>
+
+<p>3、管道
+pipe    创建管道</p>
+
+<p>4、信号量
+semctl  信号量控制
+semget  获取一组信号量
+semop   信号量操作</p>
+
+<p>5、共享内存
+shmctl  控制共享内存
+shmget  获取共享内存
+shmat   连接共享内存
+shmdt   拆卸共享内存</p>
+
+<p>参考资料</p>
+
+<pre><code>Linux man pages
+Advanced Programming in the UNIX Environment, W. Richard Stevens, 1993
+</code></pre>
+
+<p>转自:<a href="http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html">http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1576,160 +2023,6 @@ c.直连网络端点间的满载状态下的直线状态
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/you-de-shi-hou/">有的时候</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T10:46:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>  有的时候喜欢不吃不喝，一个人走过饭堂门口，感觉不饿，想想，再绕回来；
-  有的时候喜欢让自己很忙，累到心里都感觉到疲惫了，蒙起头就睡，不让自己伤神再想起别的事来；
-  有的时候醒来会想起某些人，曾经还以为，少了谁都不会怎样，生活还不是一样要过。－－其实不是这样，想念有的时候会让人痛彻心扉；
-  有的时候话特别多，喜欢喊着讲，不一定是高兴才这样，也不全是难过非要发泄，可能只是单纯的想而已；
-  有的时候喜欢某一首歌，单曲循环，反复听着，像是听着自己的心声那样，比如“十年”：十年之前你不认识我，我也不认识你…十年之后我们是朋友，还可以问候…一路走来，再走下去，遇人无数，谁会是谁的过客，谁又会是谁的知己；
-  有的时候很沉默，喜欢一句话都不说，一个人走到某个角落，渐渐的，把某些事想开来，刹那间，让自己找到奋斗下去的勇气；
-  有的时候喜欢逛逛朋友的空间，不怎么留痕迹，感觉你们快乐就好；
-  有的时候会和别人说，其实我很内向，只是喜欢在你们面前“聒噪”而已，经常某些人会瞪着眼睛反回来，“少来了你，就你这样还内向呢…”有点不知所措，笑笑，无所谓吧，我们一起快乐就好；
-  有的时候想着去联系某个人，拿起电话的时候才知道，其实不懂要说什么，总是会突然怀念一些朋友，在心里的问候，也许你们不懂；
-  有的时候很多人在一起，感觉很开心，只是自己不怎么喜欢讲话，喜欢听别人讲那些自己经历过或不曾经历过的事，经常在心里感慨：哇，人家见识好广，懂得很多；
-  有的时候渴望和我们家族的人在一起，不做什么，一起聊聊天，听听他们唱歌，也会觉得很温馨，偶尔有的时候玩真心话大冒险，会把小丑弄得很委屈，呵呵…其实我也挨她整得很无语过；
-  有的时候会很想去某个地方，比如说南宁，不为什么，只是有好多同学在那，会很想他们，我的青春，他们加入过，曾经我们一起努力过，奋斗过。或者走在街上，还会遇到某张熟悉的面孔，打招呼的时候也许会这样说：真巧，你也在这；
-  有的时候感觉心里有些不好过，因为大大小小的考试太多，有些顾不上朋友，他们会以为我变了，冷落了他们，其实不是这样，可是很多时候不懂怎么说，害怕他们这样回我，人家读大学都很多课余时间，难道就只有你忙吗；</p>
-
-<p>  有的时候会很想家，想家里人的时候很温馨，也很有动力，常常有这样的感觉，我可以努力去做很多事，只要他们健康、快乐就好；
-  有的时候还会为久违的问候而感动，人家说，我不想知道你的主角是谁，我只是想看看你的文字而已…傻啊，你怎么不说你是想看看我的心情，想知道我过得好不好呢；
-  有的时候…有的时候也想问某个人，如果你也听说，我把自己的生活过成这样，会不会你也开始有那么一点心疼我？
-  有的时候，每个人都有很多个“有的时候”吧，只是不同的时候不同的心情，不同的感慨而已。我不知道你在想什么，不知道你在做什么，也许吃饭，也许～～</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/ubuntu-livecd/">Ubuntu Livecd</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T10:45:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>将现有的ubuntu系统打造成LiveCD ~下载Live Ubuntu Backup V2.2 (lub)</p>
-
-<p>将所有环境装好后分别执行: 将lub放到家目录</p>
-
-<p>1.sudo chmod 777 /home/lub</p>
-
-<p>2.sudo /home/lub -b</p>
-
-<p>然后按e或c来选择是英文提示，还是中文提示。第一次执行时，可能会提示需要安装lupin-casper和squashfs-tools，其中 lupin-casper可以忽略，而squashfs-tools必须安装，运行$sudo apt-get install squashfs-tools即可</p>
-
-<p>之后再次运行$sudo /home/lub -b，依提示运行，就能在用户文件夹下生成一个backup-2013.01.02的目录了，其中有的backup-2013.01.02.squashfs文件就是我们想要的</p>
-
-<p>3.将ubuntu-11.10-desktop.i386.iso拷贝到/home.acmer/下:</p>
-
-<p>执行:sudo /home/acmer/mnt &amp;&amp; sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</p>
-
-<p>4.sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</p>
-
-<p>执行: $sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd</p>
-
-<p>5.对/home/acmer/livecd/casper/目录下的filesystem.squashfs、 filesystem.manifest、filesystem.manifest-desktop这三个文件进行操作，由于它们只有读权限，所以先执行$sudo chmod o+w /home/acmer/livecd/casper/filesystem.*</p>
-
-<p>将刚才lub生成的那个backup-2013.01.02.squashfs文件，拷贝成/home/acmer/livecd/casper/filesystem.squashfs</p>
-
-<p>执行： $sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</p>
-
-<ol>
-<li></li>
-</ol>
-
-
-<p>此外，还要更新/home/acmer/livecd/casper/目录下的filesystem.manifest和filesystem.manifest-remove，这两个文件实际上是系统所装包的列表，通过以下方式更新</p>
-
-<p>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ >/home/acmer/livecd/casper/filesystem.manifest</p>
-
-<p>$sudo dpkg -l | grep ii | awk {print$2,$3}’> /home/acmer/livecd/casper/filesystem.manifes-remove</p>
-
-<ol>
-<li></li>
-</ol>
-
-
-<p>退回的LiveCD的工作目录 /home/acmer/livecd 下，</p>
-
-<p>执行$sudo rm md5sum.txt</p>
-
-<p>再执行$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</p>
-
-<p>更新原来的md5sum</p>
-
-<ol>
-<li></li>
-</ol>
-
-
-<p>将工作目录下的内容打包成ISO</p>
-
-<p>先运行$sudo apt-get install mkisofs 安装ISO打包工具，</p>
-
-<p>执行$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</p>
-
-<p>打包iso时最后一定加 . 来表示目前目录</p>
-
-<p>参照文章来源（有删节）:<a href="http://www.linuxidc.com/Linux/2011-04/34097.htm">http://www.linuxidc.com/Linux/2011-04/34097.htm</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1745,6 +2038,14 @@ c.直连网络端点间的满载状态下的直线状态
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/19/linuxnei-he-qi-dong-liu-cheng/">Linux内核启动流程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/linuxxi-tong-diao-yong-lie-biao/">Linux系统调用列表</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li/">Linux内存动态分区管理</a>
       </li>
     
@@ -1754,14 +2055,6 @@ c.直连网络端点间的满载状态下的直线状态
     
       <li class="post">
         <a href="/blog/2013/05/19/svn/">Svn</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/19/chang-yong-de-ming-ling-2/">常用的命令2</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/19/chang-yong-de-ming-ling/">常用的命令</a>
       </li>
     
   </ul>

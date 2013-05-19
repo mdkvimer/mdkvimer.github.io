@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T11:06:55+08:00</updated>
+  <updated>2013-05-19T11:11:02+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,397 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[linux内核启动流程]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/linuxnei-he-qi-dong-liu-cheng/"/>
+    <updated>2013-05-19T11:09:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/linuxnei-he-qi-dong-liu-cheng</id>
+    <content type="html"><![CDATA[<p>启动流程一览</p>
+
+<p>既然启动是很严肃的一件事，那我们就来了解一下整个启动的过程吧！ 好让大家比较容易发现启动过程里面可能会发生问题的地方，以及出现问题后的解决之道！ 不过，由於启动的过程中，那个启动管理程序 (Boot Loader) 使用的软件可能不一样，例如目前各大 Linux distributions 的主流为 grub，但早期 Linux 默认是使用 LILO 。 但无论如何，我们总是得要了解整个 boot loader 的工作情况，才能了解为何进行多重启动的配置时， 老是听人家讲要先安装 Windows 再安装 Linux 的原因～</p>
+
+<p>假设以个人计算机架设的 Linux 主机为例 ， 当你按下电源按键后计算机硬件会主动的读取 BIOS 来加载硬件资讯及进行硬件系统的自我测试， 之后系统会主动的去读取第一个可启动的装置 (由 BIOS 配置的) ，此时就可以读入启动管理程序了。</p>
+
+<p>启动管理程序可以指定使用哪个核心文件来启动，并实际加载核心到内存当中解压缩与运行， 此时核心就能够开始在内存内活动，并侦测所有硬件资讯与加载适当的驱动程序来使整部主机开始运行， 等到核心侦测硬件与加载驱动程序完毕后，一个最阳春的操作系统就开始在你的 PC 上面跑了。</p>
+
+<p>主机系统开始运行后，此时 Linux 才会呼叫外部程序开始准备软件运行的环境， 并且实际的加载所有系统运行所需要的软件程序哩！最后系统就会开始等待你的登陆与操作啦！ 简单来说，系统启动的经过可以汇整成底下的流程的：</p>
+
+<pre><code>加载 BIOS 的硬件资讯与进行自我测试，并依据配置取得第一个可启动的装置；
+读取并运行第一个启动装置内 MBR 的 boot Loader (亦即是 grub, spfdisk 等程序)；
+依据 boot loader 的配置加载 Kernel ，Kernel 会开始侦测硬件与加载驱动程序；
+</code></pre>
+
+<p>BIOS, 启动自我测试与 MBR</p>
+
+<p>在个人计算机架构下，你想要启动整部系统首先就得要让系统去加载 BIOS (Basic Input Output System)，并透过 BIOS 程序去加载 CMOS 的资讯，并且藉由 CMOS 内的配置值取得主机的各项硬件配置， 例如 CPU 与周边设备的沟通时脉啊、启动装置的搜寻顺序啊、硬盘的大小与类型啊、 系统时间啊、各周边汇流排的是否启动 Plug and Play (PnP, 随插即用装置) 啊、 各周边设备的 I/O 位址啊、以及与 CPU 沟通的 IRQ 岔断等等的资讯。</p>
+
+<p>在取得这些资讯后，BIOS 还会进行启动自我测试 (Power-on Self Test, POST) 。 然后开始运行硬件侦测的初始化，并配置 PnP 装置，之后再定义出可启动的装置顺序， 接下来就会开始进行启动装置的数据读取了 (MBR 相关的任务开始)。</p>
+
+<p>由於我们的系统软件大多放置到硬盘中嘛！所以 BIOS 会指定启动的装置好让我们可以读取磁碟中的操作系统核心文件。 但由於不同的操作系统他的文件系统格式不相同，因此我们必须要以一个启动管理程序来处理核心文件加载 (load) 的问题， 因此这个启动管理程序就被称为 Boot Loader 了。那这个 Boot Loader 程序安装在哪里呢？就在启动装置的第一个磁区 (sector) 内，也就是我们一直谈到的 MBR (Master Boot Record, 主要启动记录区)。</p>
+
+<p>那你会不会觉得很奇怪啊？既然核心文件需要 loader 来读取，那每个操作系统的 loader 都不相同， 这样的话 BIOS 又是如何读取 MBR 内的 loader 呢？很有趣的问题吧！其实 BIOS 是透过硬件的 INT 13 中断功能来读取 MBR 的，也就是说，只要 BIOS 能够侦测的到你的磁碟 (不论该磁碟是 SATA 还是 IDE 介面)，那他就有办法透过 INT 13 这条通道来读取该磁碟的第一个磁区内的 MBR 啦！这样 boot loader 也就能够被运行罗！</p>
+
+<p>我们知道每颗硬盘的第一个磁区内含有 446 bytes的 MBR 区域，那么如果我的主机上面有两颗硬盘的话， 系统会去哪颗硬盘的 MBR 读取 boot loader 呢？这个就得要看 BIOS 的配置了。 基本上，我们常常讲的『系统的 MBR』其实指的是 第一个启动装置的 MBR 才对！ 所以，改天如果你要将启动管理程序安装到某颗硬盘的 MBR 时， 要特别注意当时系统的『第一个启动装置』是哪个，否则会安装到错误的硬盘上面的 MBR 喔！
+Boot Loader</p>
+
+<p>刚刚说到 Loader 的最主要功能是要认识操作系统的文件格式并据以加载核心到主内存中去运行。 由於不同操作系统的文件格式不一致，因此每种操作系统都有自己的 boot loader 啦！用自己的 loader 才有办法加载核心文件嘛！那问题就来啦，你应该有听说过多重操作系统吧？也就是在一部主机上面安装多种不同的操作系统。 既然你 (1)必须要使用自己的 loader 才能够加载属於自己的操作系统核心，而 (2)系统的 MBR 只有一个，那你怎么会有办法同时在一部主机上面安装 Windows 与 Linux 呢？</p>
+
+<p>其实每个文件系统 (filesystem, 或者是 partition) 都会保留一块启动磁区 (boot sector) 提供操作系统安装 boot loader ， 而通常操作系统默认都会安装一份 loader 到他根目录所在的文件系统的 boot sector 上。如果我们在一部主机上面安装 Windows 与 Linux 后，该 boot sector, boot loader 与 MBR 的相关性会有点像下图：</p>
+
+<p>图 1.2.1、 boot loader 安装在 MBR, boot sector 与操作系统的关系
+如上图所示，每个操作系统默认是会安装一套 boot loader 到他自己的文件系统中 (就是每个 filesystem 左下角的方框)，而在 Linux 系统安装时，你可以选择将 boot loader 安装到 MBR 去，也可以选择不安装。 如果选择安装到 MBR 的话，那理论上你在 MBR 与 boot sector 都会保有一份 boot loader 程序的。 至於 Windows 安装时，他默认会主动的将 MBR 与 boot sector 都装上一份 boot loader！所以啦， 你会发现安装多重操作系统时，你的 MBR 常常会被不同的操作系统的 boot loader 所覆盖啦！ ^_^</p>
+
+<p>我们刚刚提到的两个问题还是没有解决啊！虽然各个操作系统都可以安装一份 boot loader 到他们的 boot sector 中， 这样操作系统可以透过自己的 boot loader 来加载核心了。问题是系统的 MBR 只有一个哩！ 你要怎么运行 boot sector 里面的 loader 啊？</p>
+
+<p>boot loader 主要的功能如下：</p>
+
+<pre><code>提供菜单：使用者可以选择不同的启动项目，这也是多重启动的重要功能！
+加载核心文件：直接指向可启动的程序区段来开始操作系统；
+转交其他 loader：将启动管理功能转交给其他 loader 负责。
+</code></pre>
+
+<p>由於具有菜单功能，因此我们可以选择不同的核心来启动。而由於具有控制权转交的功能，因此我们可以加载其他 boot sector 内的 loader 啦！不过 Windows 的 loader 默认不具有控制权转交的功能，因此你不能使用 Windows 的 loader 来加载 Linux 的 loader 喔！这也是为啥第三章谈到 MBR 与多重启动时，会特别强调先装 Windows 再装 Linux 的缘故。 我们将上述的三个功能以底下的图示来解释你就看的懂了！(与第三章的图示也非常类似啦！)</p>
+
+<p>图 1.2.2、 启动管理程序的菜单功能与控制权转交功能示意图
+如上图所示，我的 MBR 使用 Linux 的 grub 这个启动管理程序，并且里面假设已经有了三个菜单， 第一个菜单可以直接指向 Linux 的核心文件并且直接加载核心来启动；第二个菜单可以将启动管理程序控制权交给 Windows 来管理，此时 Windows 的 loader 会接管启动流程，这个时候他就能够启动 windows 了。第三个菜单则是使用 Linux 在 boot sector 内的启动管理程序，此时就会跳出另一个 grub 的菜单啦！了解了吗？</p>
+
+<p>而最终 boot loader 的功能就是『加载 kernel 文件』啦！</p>
+
+<p>加载核心侦测硬件与 initrd</p>
+
+<p>当我们藉由 boot loader 的管理而开始读取核心文件后，接下来， Linux 就会将核心解压缩到主内存当中， 并且利用核心的功能，开始测试与驱动各个周边装置，包括储存装置、CPU、网络卡、声卡等等。 此时 Linux 核心会以自己的功能重新侦测一次硬件，而不一定会使用 BIOS 侦测到的硬件资讯喔！也就是说，核心此时才开始接管 BIOS 后的工作了。 那么核心文件在哪里啊？一般来说，他会被放置到 /boot 里面，并且取名为 /boot/vmlinuz 才对！</p>
+
+<p>[root@www ~]# ls &mdash;format=single-column -F /boot
+config-2.6.18-92.el5      &lt;==此版本核心被编译时选择的功能与模块配置档
+grub/                     &lt;==就是启动管理程序 grub 相关数据目录
+initrd-2.6.18-92.el5.img  &lt;==虚拟文件系统档！
+System.map-2.6.18-92.el5  &lt;==核心功能放置到内存位址的对应表
+vmlinuz-2.6.18-92.el5     &lt;==就是核心文件啦！最重要者！</p>
+
+<p>从上表我们也可以知道此版本的 Linux 核心为 2.6.18-92.el5 这个版本！为了硬件开发商与其他核心功能开发者的便利， 因此 Linux 核心是可以透过动态加载核心模块的 (就请想成驱动程序即可)，这些核心模块就放置在 /lib/modules/ 目录内。 由于模块放置到磁盘根目录内 (要记得 /lib 不可以与 / 分别放在不同的 partition ！)， 因此在启动的过程中核心必须要挂载根目录，这样才能够读取核心模块提供加载驱动程序的功能。 而且为了担心影响到磁碟内的文件系统，因此启动过程中根目录是以唯读的方式来挂载的喔。</p>
+
+<p>一般来说，非必要的功能且可以编译成为模块的核心功能，目前的 Linux distributions 都会将他编译成为模块。 因此 U盘, SATA, SCSI… 等磁碟装置的驱动程序通常都是以模块的方式来存在的。 现在来思考一种情况，假设你的 linux 是安装在 SATA 磁碟上面的，你可以透过 BIOS 的 INT 13 取得 boot loader 与 kernel 文件来启动，然后 kernel 会开始接管系统并且侦测硬件及尝试挂载根目录来取得额外的驱动程序。</p>
+
+<p>问题是，核心根本不认识 SATA 磁碟，所以需要加载 SATA 磁碟的驱动程序， 否则根本就无法挂载根目录。但是 SATA 的驱动程序在 /lib/modules 内，你根本无法挂载根目录又怎么读取到 /lib/modules/ 内的驱动程序？是吧！非常的两难吧！在这个情况之下，你的 Linux 是无法顺利启动的！ 那怎办？没关系，我们可以透过虚拟文件系统来处理这个问题。</p>
+
+<p>虚拟文件系统 (Initial RAM Disk) 一般使用的档名为 /boot/initrd ，这个文件的特色是，他也能够透过 boot loader 来加载到内存中， 然后这个文件会被解压缩并且在内存当中模拟成一个根目录， 且此模拟在内存当中的文件系统能够提供一支可运行的程序，透过该程序来加载启动过程中所最需要的核心模块， 通常这些模块就是 U盘, RAID, LVM, SCSI 等文件系统与磁碟介面的驱动程序啦！等加载完成后， 会帮助核心重新呼叫 /sbin/init 来开始后续的正常启动流程。</p>
+
+<p>如上图所示，boot loader 可以加载 kernel 与 initrd ，然后在内存中让 initrd 解压缩成为根目录， kernel 就能够藉此加载适当的驱动程序，最终释放虚拟文件系统，并挂载实际的根目录文件系统， 就能够开始后续的正常启动流程。更详细的 initrd 说明，你可以自行使用 man initrd 去查阅看看。 底下让我们来了解一下 CentOS 5.x 的 initrd 文件内容有什么吧！
+复制代码</p>
+
+<p>[root@www ~]# mkdir /tmp/initrd
+[root@www ~]# cp /boot/initrd-2.6.18-92.el5.img /tmp/initrd/
+[root@www ~]# cd /tmp/initrd
+[root@www initrd]# file initrd-2.6.18-92.el5.img
+initrd-2.6.18-92.el5.img: gzip compressed data, &hellip;</p>
+
+<p>[root@www initrd]# mv initrd-2.6.18-92.el5.img initrd-2.6.18-92.el5.gz
+[root@www initrd]# gzip -d initrd-2.6.18-92.el5.gz
+[root@www initrd]# file initrd-2.6.18-92.el5
+initrd-2.6.18-92.el5: ASCII cpio archive (SVR4 with no CRC)</p>
+
+<p>[root@www initrd]# cpio -ivcdu &lt; initrd-2.6.18-92.el5
+[root@www initrd]# ll
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 bin
+drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 dev
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 etc
+-rwx&mdash;&mdash;&mdash; 1 root root    1888 Apr 10 02:05 init
+-rw&mdash;&mdash;&mdash;&ndash; 1 root root 5408768 Apr 10 02:00 initrd-2.6.18-92.el5
+drwx&mdash;&mdash;&mdash; 3 root root    4096 Apr 10 02:05 lib
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 proc
+lrwxrwxrwx 1 root root       3 Apr 10 02:05 sbin &ndash;> bin
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sys
+drwx&mdash;&mdash;&mdash; 2 root root    4096 Apr 10 02:05 sysroot</p>
+
+<p>[root@www initrd]# cat init</p>
+
+<h1>!/bin/nash                  &lt;==使用类似 bash 的 shell 来运行</h1>
+
+<p>mount -t proc /proc /proc    &lt;==挂载内存的虚拟文件系统
+&hellip;.(中间省略)&hellip;.
+echo Creating initial device nodes
+mknod /dev/null c 1 3        &lt;==创建系统所需要的各项装置！
+&hellip;.(中间省略)&hellip;.
+echo &ldquo;Loading ehci-hcd.ko module&rdquo;
+insmod /lib/ehci-hcd.ko      &lt;==加载各项核心模块，就是驱动程序！
+&hellip;.(中间省略)&hellip;.
+echo Creating root device.
+mkrootdev -t ext3 -o defaults,ro hdc2 &lt;==尝试挂载根目录啦！
+&hellip;.(底下省略)&hellip;.</p>
+
+<p>复制代码</p>
+
+<p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
+
+<p>是否没有 initrd 就无法顺利启动？
+答：
+不见得的！需要 initrd 最重要的原因是，当启动时无法挂载根目录的情况下， 此时就一定需要 initrd ，例如你的根目录在特殊的磁碟介面 (U盘, SATA, SCSI) ， 或者是你的文件系统较为特殊 (LVM, RAID) 等等，才会需要 initrd。</p>
+
+<p>如果你的 Linux 是安装在 IDE 介面的磁碟上，并且使用默认的 ext2/ext3 文件系统， 那么不需要 initrd 也能够顺利的启动进入 Linux 的！</p>
+
+<p>在核心完整的加载后，您的主机应该就开始正确的运行了</p>
+
+<p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[linux系统调用列表]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/linuxxi-tong-diao-yong-lie-biao/"/>
+    <updated>2013-05-19T11:08:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/linuxxi-tong-diao-yong-lie-biao</id>
+    <content type="html"><![CDATA[<p>以下是Linux系统调用的一个列表，包含了大部分常用系统调用和由系统调用派生出的的函数。这可能是你在互联网上所能看到的唯一一篇中文注释的Linux系统调用列表，即使是简单的字母序英文列表，能做到这么完全也是很罕见的。</p>
+
+<p>按照惯例，这个列表以man pages第2节，即系统调用节为蓝本。按照笔者的理解，对其作了大致的分类，同时也作了一些小小的修改，删去了几个仅供内核使用，不允许用户调用的系统调用，对个别本人稍觉不妥的地方作了一些小的修改，并对所有列出的系统调用附上简要注释。</p>
+
+<p>其中有一些函数的作用完全相同，只是参数不同。（可能很多熟悉C++朋友马上就能联想起函数重载，但是别忘了Linux核心是用C语言写的，所以只 能取成不同的函数名）。还有一些函数已经过时，被新的更好的函数所代替了（gcc在链接这些函数时会发出警告），但因为兼容的原因还保留着，这些函数我会 在前面标上“*”号以示区别。
+一、进程控制：
+fork    创建一个新进程
+clone   按指定条件创建子进程
+execve  运行可执行文件
+exit    中止进程
+_exit   立即中止当前进程
+getdtablesize   进程所能打开的最大文件数
+getpgid     获取指定进程组标识号
+setpgid     设置指定进程组标志号
+getpgrp     获取当前进程组标识号
+setpgrp     设置当前进程组标志号
+getpid  获取进程标识号
+getppid     获取父进程标识号
+getpriority     获取调度优先级
+setpriority     设置调度优先级
+modify_ldt  读写进程的本地描述表
+nanosleep   使进程睡眠指定的时间
+nice    改变分时进程的优先级
+pause   挂起进程，等待信号
+personality     设置进程运行域
+prctl   对进程进行特定操作
+ptrace  进程跟踪
+sched_get_priority_max  取得静态优先级的上限
+sched_get_priority_min  取得静态优先级的下限
+sched_getparam  取得进程的调度参数
+sched_getscheduler  取得指定进程的调度策略
+sched_rr_get_interval   取得按RR算法调度的实时进程的时间片长度
+sched_setparam  设置进程的调度参数
+sched_setscheduler  设置指定进程的调度策略和参数
+sched_yield     进程主动让出处理器,并将自己等候调度队列队尾
+vfork   创建一个子进程，以供执行新程序，常与execve等同时使用
+wait    等待子进程终止
+wait3   参见wait
+waitpid     等待指定子进程终止
+wait4   参见waitpid
+capget  获取进程权限
+capset  设置进程权限
+getsid  获取会晤标识号
+setsid  设置会晤标识号</p>
+
+<p>二、文件系统控制</p>
+
+<p>1、文件读写操作
+fcntl   文件控制
+open    打开文件
+creat   创建新文件
+close   关闭文件描述字
+read    读文件
+write   写文件
+readv   从文件读入数据到缓冲数组中
+writev  将缓冲数组里的数据写入文件
+pread   对文件随机读
+pwrite  对文件随机写
+lseek   移动文件指针
+_llseek     在64位地址空间里移动文件指针
+dup     复制已打开的文件描述字
+dup2    按指定条件复制文件描述字
+flock   文件加/解锁
+poll    I/O多路转换
+truncate    截断文件
+ftruncate   参见truncate
+umask   设置文件权限掩码
+fsync   把文件在内存中的部分写回磁盘</p>
+
+<p>2、文件系统操作
+access  确定文件的可存取性
+chdir   改变当前工作目录
+fchdir  参见chdir
+chmod   改变文件方式
+fchmod  参见chmod
+chown   改变文件的属主或用户组
+fchown  参见chown
+lchown  参见chown
+chroot  改变根目录
+stat    取文件状态信息
+lstat   参见stat
+fstat   参见stat
+statfs  取文件系统信息
+fstatfs     参见statfs
+readdir     读取目录项
+getdents    读取目录项
+mkdir   创建目录
+mknod   创建索引节点
+rmdir   删除目录
+rename  文件改名
+link    创建链接
+symlink     创建符号链接
+unlink  删除链接
+readlink    读符号链接的值
+mount   安装文件系统
+umount  卸下文件系统
+ustat   取文件系统信息
+utime   改变文件的访问修改时间
+utimes  参见utime
+quotactl    控制磁盘配额</p>
+
+<p>三、系统控制
+ioctl   I/O总控制函数
+_sysctl     读/写系统参数
+acct    启用或禁止进程记账
+getrlimit   获取系统资源上限
+setrlimit   设置系统资源上限
+getrusage   获取系统资源使用情况
+uselib  选择要使用的二进制函数库
+ioperm  设置端口I/O权限
+iopl    改变进程I/O权限级别
+outb    低级端口操作
+reboot  重新启动
+swapon  打开交换文件和设备
+swapoff     关闭交换文件和设备
+bdflush     控制bdflush守护进程
+sysfs   取核心支持的文件系统类型
+sysinfo     取得系统信息
+adjtimex    调整系统时钟
+alarm   设置进程的闹钟
+getitimer   获取计时器值
+setitimer   设置计时器值
+gettimeofday    取时间和时区
+settimeofday    设置时间和时区
+stime   设置系统日期和时间
+time    取得系统时间
+times   取进程运行时间
+uname   获取当前UNIX系统的名称、版本和主机等信息
+vhangup     挂起当前终端
+nfsservctl  对NFS守护进程进行控制
+vm86    进入模拟8086模式
+create_module   创建可装载的模块项
+delete_module   删除可装载的模块项
+init_module     初始化模块
+query_module    查询模块信息
+*get_kernel_syms    取得核心符号,已被query_module代替</p>
+
+<p>四、内存管理
+brk     改变数据段空间的分配
+sbrk    参见brk
+mlock   内存页面加锁
+munlock     内存页面解锁
+mlockall    调用进程所有内存页面加锁
+munlockall  调用进程所有内存页面解锁
+mmap    映射虚拟内存页
+munmap  去除内存页映射
+mremap  重新映射虚拟内存地址
+msync   将映射内存中的数据写回磁盘
+mprotect    设置内存映像保护
+getpagesize     获取页面大小
+sync    将内存缓冲区数据写回硬盘
+cacheflush  将指定缓冲区中的内容写回磁盘</p>
+
+<p>五、网络管理
+getdomainname   取域名
+setdomainname   设置域名
+gethostid   获取主机标识号
+sethostid   设置主机标识号
+gethostname     获取本主机名称
+sethostname     设置主机名称</p>
+
+<p>六、socket控制
+socketcall  socket系统调用
+socket  建立socket
+bind    绑定socket到端口
+connect     连接远程主机
+accept  响应socket连接请求
+send    通过socket发送信息
+sendto  发送UDP信息
+sendmsg     参见send
+recv    通过socket接收信息
+recvfrom    接收UDP信息
+recvmsg     参见recv
+listen  监听socket端口
+select  对多路同步I/O进行轮询
+shutdown    关闭socket上的连接
+getsockname     取得本地socket名字
+getpeername     获取通信对方的socket名字
+getsockopt  取端口设置
+setsockopt  设置端口参数
+sendfile    在文件或端口间传输数据
+socketpair  创建一对已联接的无名socket</p>
+
+<p>七、用户管理
+getuid  获取用户标识号
+setuid  设置用户标志号
+getgid  获取组标识号
+setgid  设置组标志号
+getegid     获取有效组标识号
+setegid     设置有效组标识号
+geteuid     获取有效用户标识号
+seteuid     设置有效用户标识号
+setregid    分别设置真实和有效的的组标识号
+setreuid    分别设置真实和有效的用户标识号
+getresgid   分别获取真实的,有效的和保存过的组标识号
+setresgid   分别设置真实的,有效的和保存过的组标识号
+getresuid   分别获取真实的,有效的和保存过的用户标识号
+setresuid   分别设置真实的,有效的和保存过的用户标识号
+setfsgid    设置文件系统检查时使用的组标识号
+setfsuid    设置文件系统检查时使用的用户标识号
+getgroups   获取后补组标志清单
+setgroups   设置后补组标志清单</p>
+
+<p>八、进程间通信</p>
+
+<p>ipc     进程间通信总控制调用</p>
+
+<p>1、信号
+sigaction   设置对指定信号的处理方法
+sigprocmask     根据参数对信号集中的信号执行阻塞/解除阻塞等操作
+sigpending  为指定的被阻塞信号设置队列
+sigsuspend  挂起进程等待特定信号
+signal  参见signal
+kill    向进程或进程组发信号
+<em>sigblock   向被阻塞信号掩码中添加信号,已被sigprocmask代替
+</em>siggetmask     取得现有阻塞信号掩码,已被sigprocmask代替
+<em>sigsetmask     用给定信号掩码替换现有阻塞信号掩码,已被sigprocmask代替
+</em>sigmask    将给定的信号转化为掩码,已被sigprocmask代替
+*sigpause   作用同sigsuspend,已被sigsuspend代替
+sigvec  为兼容BSD而设的信号处理函数,作用类似sigaction
+ssetmask    ANSI C的信号处理函数,作用类似sigaction</p>
+
+<p>2、消息
+msgctl  消息控制操作
+msgget  获取消息队列
+msgsnd  发消息
+msgrcv  取消息</p>
+
+<p>3、管道
+pipe    创建管道</p>
+
+<p>4、信号量
+semctl  信号量控制
+semget  获取一组信号量
+semop   信号量操作</p>
+
+<p>5、共享内存
+shmctl  控制共享内存
+shmget  获取共享内存
+shmat   连接共享内存
+shmdt   拆卸共享内存</p>
+
+<p>参考资料</p>
+
+<pre><code>Linux man pages
+Advanced Programming in the UNIX Environment, W. Richard Stevens, 1993
+</code></pre>
+
+<p>转自:<a href="http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html">http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[linux内存动态分区管理]]></title>
@@ -2451,7 +2842,7 @@ return 0;
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#109;&#x65;&#x6e;&#x67;&#100;&#97;&#x69;&#x6b;&#x75;&#x6e;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x6d;&#101;&#110;&#103;&#x64;&#97;&#105;&#x6b;&#x75;&#x6e;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x6d;&#101;&#110;&#x67;&#100;&#x61;&#x69;&#107;&#x75;&#x6e;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#99;&#111;&#109;">&#x6d;&#101;&#x6e;&#x67;&#x64;&#x61;&#105;&#107;&#x75;&#110;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================
@@ -2486,711 +2877,6 @@ return 0;
 </code></pre>
 
 <p>}</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[unix socket server&amp;client]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/unix-socket-server-and-client/"/>
-    <updated>2013-05-18T22:48:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/unix-socket-server-and-client</id>
-    <content type="html"><![CDATA[<p>socket()函数创建一个socket,然后调用bind()函数将其与本机的地址以及一个本地端口绑定~然后利用listen()在相应的socket上监听，当accept()接收到一个连接的服务请求时，服务器将显示客户机的ip地址,并通过新的socket向客户端发送字符串”Hello,you are connected!”最后关闭socket</p>
-
-<p>myserver.c:</p>
-
-<p>/<em>
- </em>socket server
- * */</p>
-
-<h1>include&lt;stdio.h></h1>
-
-<h1>include&lt;stdlib.h></h1>
-
-<h1>include&lt;errno.h></h1>
-
-<h1>include&lt;unistd.h></h1>
-
-<h1>include&lt;sys/types.h></h1>
-
-<h1>include&lt;netinet/in.h></h1>
-
-<h1>include&lt;sys/socket.h></h1>
-
-<h1>include&lt;sys/wait.h></h1>
-
-<h1>define SERVERPORT 3333</h1>
-
-<h1>define BACKLOG 10</h1>
-
-<p>int main()
-{</p>
-
-<pre><code>int sockfd,clientfd;
-struct sockaddr_in my_addr;
-struct sockaddr_in remote_addr;
-if((sockfd = socket(AF_INET , SOCK_STREAM ,0))== -1){
-perror(“socket create error !!!”);
-exit(1);
-}
-my_addr.sin_family = AF_INET;
-my_addr.sin_port = htons(SERVERPORT);
-my_addr.sin_addr.s_addr = INADDR_ANY;
-bzero(&amp;(my_addr.sin_zero),8);
-if(bind(sockfd,(struct sockaddr *)&amp;my_addr,sizeof(struct sockaddr)) == -1){
- perror(“bind error….”);
- exit(1);
-}
-if(listen(sockfd,BACKLOG) == -1)
-{
- perror(“listen error ..”);
- exit(1);
-}
-while(1){
- int sin_size = sizeof(struct sockaddr_in);
- if((clientfd = accept(sockfd,(struct sockaddr *)&amp;remote_addr,&amp;sin_size))==-1){
- perror(“accept error…”);
- continue;
- }
- printf(“Receied a connection from %s\n”,inet_ntoa(remote_addr.sin_addr));
- if(!fork()){
-  if(send(clientfd,”Hello,you are connected!\n”,26,0) == -1)
-  perror(“send error…”);
-  close(clientfd);
-  exit(0);
- }
- close(clientfd);
-}
-</code></pre>
-
-<p>}</p>
-
-<p>客户端通过服务器域名获得服务器的ip,然后新建一个socket调用connect与服务器连接，连接成功后接收从服务器发送过来的数据，最后关闭socket</p>
-
-<p>gethostbyname()是完成域名转换的 struct hostent <em>gethostbyname(const char </em>name)</p>
-
-<p>myclient.c:</p>
-
-<p>/<em>
- </em>socket client
- * */</p>
-
-<h1>include&lt;stdio.h></h1>
-
-<h1>include&lt;stdlib.h></h1>
-
-<h1>include&lt;string.h></h1>
-
-<h1>include&lt;unistd.h></h1>
-
-<h1>include&lt;errno.h></h1>
-
-<h1>include&lt;netdb.h></h1>
-
-<h1>include&lt;sys/types.h></h1>
-
-<h1>include&lt;sys/wait.h></h1>
-
-<h1>include&lt;sys/socket.h></h1>
-
-<h1>include&lt;netinet/in.h></h1>
-
-<h1>define SERVERPORT 3333</h1>
-
-<h1>define MAXDATASIZE 100</h1>
-
-<p>int main(int argc,char <em>argv[])
-{
-  int sockfd,recvbytes;
-  char buf[MAXDATASIZE];
-  struct hostent </em>host;
-  struct sockaddr_in serv_addr;
-  if(argc &lt; 2)
-  {
-   fprintf(stderr,”Please enter the server’hostname!\n”);
-   exit(1);
-  }
-  if((host= gethostbyname(argv[1])) == NULL){
-   perror(“gethostbyname error…”);
-   exit(1);
-  }
-  if((sockfd=socket(AF_INET,SOCK_STREAM ,0)) == -1)
-  {
-   perror(“socket error…”);
-   exit(1);
-  }
-  serv_addr.sin_family = AF_INET ;
-  serv_addr.sin_port = htons(SERVERPORT);
-  serv_addr.sin_addr = <em>((struct in_addr </em>)host->h_addr);
-  bzero(&amp;(serv_addr.sin_zero),8);
-  if(connect(sockfd,(struct sockaddr *)&amp;serv_addr,sizeof(struct sockaddr)) == -1)
-  {
-  perror(“connext error…”);
-  exit(1);
-  }
-  if((recvbytes=recv(sockfd,buf,MAXDATASIZE,0)) == -1)
-  {
-   perror(“recv error ….”);
-   exit(1);
-  }
-  buf[recvbytes]=’\0′;
-  printf(“REceived:%s \n”,buf);
-  close(sockfd);
-}</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[gentoo最小化安装]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang/"/>
-    <updated>2013-05-18T22:48:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang</id>
-    <content type="html"><![CDATA[<p>转载自有删减<a href="http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml">http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml</a>
-代码 1.1: 测试机器的规格</p>
-
-<p>（下述配置和耗时情况帮你粗略估计完成整个安装过程大概需要的时间）</p>
-
-<h1>grep bogo /proc/cpuinfo</h1>
-
-<p>bogomips       : 3337.81</p>
-
-<h1>hdparm -tT /dev/sda</h1>
-
-<p>/dev/sda:
- Timing cached reads:   1100 MB in  2.00 seconds = 549.97 MB/sec
- Timing buffered disk reads:  224 MB in  3.01 seconds =  74.36 MB/sec</p>
-
-<h1>grep MemTotal /proc/meminfo</h1>
-
-<p>MemTotal:       509248 kB</p>
-
-<ol>
-<li>快速安装指南</li>
-</ol>
-
-
-<p>安装介质</p>
-
-<p>从我们的镜像下载一张光盘。可以在releases/x86/current-iso/中找到最小光盘的ISO文件。最小安装光盘只适用于有网络环境的安装。本指南将使用最小光盘。</p>
-
-<p>刻制光盘，用它引导机器。</p>
-
-<p>从光盘启动</p>
-
-<p>启动时按下F2查看有哪些引导选项。你可以启动gentoo或者gentoo-nofb，后者禁用帧缓冲。如果你用LiveCD引导，别忘了添上nox选项以防止启动X图形环境。有好几个选项可用于启用或禁用一些特性。正常情况下会检测出你的硬件并装载所有模块。如果内核无法正确引导或是在引导过程中挂机，你可能不得不尝试不同的配置。最安全的办法大概是使用nodetect选项，然后显式地载入需要的模块。</p>
-
-<p>代码 2.1: 引导最小光盘</p>
-
-<p>Gentoo Linux Installation LiveCD                     <a href="http://www.gentoo.org">http://www.gentoo.org</a>
-Enter to Boot; F1 for kernels  F2 for options.
-boot: gentoo-nofb
-（或在有问题的情况下）
-boot: gentoo-nofb nodetect</p>
-
-<p>可选：装载模块</p>
-
-<p>如果使用了nodetect选项，就要在启动后载入必要的模块。你还要配置好网络并拥有访问磁盘的权限。lspci命令能帮助你确认硬件信息。</p>
-
-<p>代码 2.2: 载入必要的模块</p>
-
-<p>livecd root # lspci
-（根据lspci的输出查看需要哪些模块）</p>
-
-<p>（以下只是个例子，实际以具体硬件为准）
-livecd root # modprobe 3w-9xxx
-livecd root # modprobe r8169</p>
-
-<p>网络配置</p>
-
-<p>如果还没开启网络，可以用net-setup来配置网络。配置之前可能要先用modprobe为网卡载入支持模块。如果你有ADSL，请使用pppoe-setup和pppoe-start。要支持PPTP，首先编辑/etc/ppp/chap-secrets和/etc/ppp/options.pptp，然后使用pptp <server ip>。</p>
-
-<p>如果是无线连接，用iwconfig设置无线连接参数，然后再次执行net-setup或者手动运行ifconfig、dhcpcd和/或route。</p>
-
-<p>如果你用代理，不要忘了使用export http_proxy、ftp_proxy和RSYNC_PROXY初始化系统环境。</p>
-
-<p>代码 2.3: 通过向导配置网络</p>
-
-<p>livecd root # net-setup eth0</p>
-
-<p>或者，你也可以手动打开网络。下面的例子把你电脑的IP地址配置为192.168.1.10，并把网关和域名服务器设为192.168.1.1。</p>
-
-<p>代码 2.4: 手动配置网络</p>
-
-<p>livecd root # ifconfig eth0 192.168.1.10/24
-livecd root # route add default gw 192.168.1.1
-livecd root # echo nameserver 192.168.1.1 > /etc/resolv.conf</p>
-
-<p>安装盘允许你启动一个sshd服务，添加用户，运行irssi（一个命令行的客户端聊天工具），还可以使用links进行网上冲浪。</p>
-
-<p>可选：通过ssh连接到你的新机器</p>
-
-<p>最有趣的功能当然是sshd。启动这个服务，从另一台机器连过来，然后从本指南复制/粘贴命令。</p>
-
-<p>代码 2.5: 启动sshd</p>
-
-<p>livecd root # time /etc/init.d/sshd start
- * Generating hostkey &hellip;
-（sshd生成密钥并显示更多输出）
- * starting sshd &hellip;                            [ok]</p>
-
-<p>real   0m13.688s
-user   0m9.420s
-sys    0m0.090s</p>
-
-<p>现在设置一下安装盘的root密码，使你能通过另一台电脑连接。请注意正常情况下不推荐你允许root通过ssh连接。如果你的本地网络不太可靠，请设一个又长又复杂的密码。它只能使用一次，因为机器重启后就没掉了。</p>
-
-<p>代码 2.6: 设置root密码</p>
-
-<p>livecd root # passwd
-New UNIX password: 输入密码
-Retype new UNIX password: 输入密码
-passwd: password updated successfully</p>
-
-<p>现在就可以在另一台电脑上打开一个终端并连接到你的新机器，在新的窗口中继续本指南接下去的内容，复制/粘贴文中的命令。</p>
-
-<p>代码 2.7: 从另一台电脑连到你的新机器</p>
-
-<p>（使用你新机器的IP地址）
-$ ssh <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#114;&#x6f;&#x6f;&#x74;&#x40;&#x31;&#57;&#x32;&#x2e;&#x31;&#x36;&#56;&#x2e;&#49;&#x2e;&#x31;&#x30;">&#114;&#x6f;&#111;&#x74;&#64;&#49;&#57;&#x32;&#x2e;&#49;&#54;&#x38;&#46;&#49;&#46;&#x31;&#x30;</a>
-The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
-RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &lsquo;192.168.1.10&rsquo; (RSA) to the list of known hosts.
-Password: 输入密码</p>
-
-<p>准备磁盘</p>
-
-<p>使用fdisk或者cfdisk创建分区规划。至少需要一个交换分区（类别为82）和一个Linux分区（类别为83）。下面是我们的手册选用的方案，创建包括一个/boot分区，一个交换分区和一个主分区。将/dev/sda替换为你自己的磁盘。大多数系统忽略启动标志，但有的系统需要它。使用fdisk的a命令在启动分区上设置这个标志。</p>
-
-<p>代码 2.8: 创建分区</p>
-
-<p>livecd ~ # fdisk /dev/sda</p>
-
-<p>（本手册接下去使用以下分区规划）
-livecd ~ # fdisk -l /dev/sda</p>
-
-<p>Disk /dev/sda: 599.9 GB, 599978409984 bytes
-255 heads, 63 sectors/track, 72943 cylinders
-Units = cylinders of 16065 * 512 = 8225280 bytes</p>
-
-<p>   Device Boot      Start         End      Blocks   Id  System
-/dev/sda1   *           1          12       96358+  83  Linux
-/dev/sda2              13         110      787185   82  Linux swap / Solaris
-/dev/sda3             111       72943   585031072+  83  Linux</p>
-
-<p>使用mke2fs，mke2fs -j，mkreiserfs，mkfs.xfs和mkfs.jfs建立Linux分区的文件系统。使用mkswap和swapon初始化交换分区。</p>
-
-<p>代码 2.9: 创建文件系统并激活交换分区</p>
-
-<p>（ext2完全满足/boot分区的需要）
-livecd ~ # mke2fs /dev/sda1</p>
-
-<p>（主分区就用ext3吧）
-livecd ~ # mke2fs -j /dev/sda3</p>
-
-<p>（创建并激活交换分区）
-livecd ~ # mkswap /dev/sda2 &amp;&amp; swapon /dev/sda2</p>
-
-<p>把新建的文件系统挂载到/mnt/gentoo。如果需要其他挂载点（如/mnt/gentoo/boot），也要为它们创建目录并挂载好。</p>
-
-<p>代码 2.10: 挂载文件系统</p>
-
-<p>livecd ~ # mount /dev/sda3 /mnt/gentoo
-livecd ~ # mkdir /mnt/gentoo/boot
-livecd ~ # mount /dev/sda1 /mnt/gentoo/boot
-livecd ~ # cd /mnt/gentoo</p>
-
-<p>安装Stage</p>
-
-<p>首先确保正确设置了日期和时间。执行date MMDDhhmmYYYY，使用UTC时间。</p>
-
-<p>代码 2.11: 设定日期和UTC时间</p>
-
-<p>（查看时钟）
-livecd gentoo # date
-Mon Mar  6 00:14:13 UTC 2006</p>
-
-<p>（设置当前日期和时间，如果需要的话）
-livecd gentoo # date 030600162006 （格式为MMDDhhmmYYYY）
-Mon Mar  6 00:16:00 UTC 2006</p>
-
-<p>接下来，从我们的镜像下载一份stage包：</p>
-
-<p>代码 2.12: 下载一份stage3压缩包</p>
-
-<p>livecd gentoo # links <a href="http://www.gentoo.org/main/en/mirrors.xml">http://www.gentoo.org/main/en/mirrors.xml</a>
-（选一个镜像，进入releases/x86/current-stage3/目录，高亮显示你需要的stage3包，
-即i686 stage3，按下D键下载）</p>
-
-<p>进入/mnt/gentoo，执行tar xjpf <stage3 tarball>解压stage包。</p>
-
-<p>代码 2.13: 解开stage3压缩包</p>
-
-<p>livecd gentoo # time tar xjpf stage3*</p>
-
-<p>real  1m14.157s
-user  1m2.920s
-sys   0m7.530s</p>
-
-<p>安装最新的Portage快照。跟下载stage3压缩包一样：从我们的列表选择一个最近的镜像，下载最新的快照并解压。</p>
-
-<p>代码 2.14: 下载最新的Portage快照</p>
-
-<p>livecd gentoo # cd /mnt/gentoo/usr
-livecd usr # wget <a href="http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2">http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2</a></p>
-
-<p>代码 2.15: 解开Portage快照</p>
-
-<p>livecd usr # time tar xjf portage-lat*</p>
-
-<p>real  0m40.523s
-user  0m28.280s
-sys   0m8.240s</p>
-
-<p>切换系统</p>
-
-<p>挂载/proc &amp; /dev文件系统，拷贝/etc/resolv.conf文件，然后chroot到你的Gentoo环境。</p>
-
-<p>代码 2.16: Chroot</p>
-
-<p>livecd usr # cd /
-livecd / # mount -t proc proc /mnt/gentoo/proc
-livecd / # mount -o bind /dev /mnt/gentoo/dev
-livecd / # cp -L /etc/resolv.conf /mnt/gentoo/etc/
-livecd / # chroot /mnt/gentoo /bin/bash
-livecd / # env-update &amp;&amp; source /etc/profile</p>
-
-<blockquote><blockquote><blockquote><p>Regenerating /etc/ld.so.cache&hellip;</p></blockquote></blockquote></blockquote>
-
-<p>设定时区</p>
-
-<p>设置你的时区信息：使用/usr/share/zoneinfo中的正确条目。</p>
-
-<p>代码 2.17: 设置时区</p>
-
-<p>livecd / # ls /usr/share/zoneinfo
-（以上海为例）
-livecd / # cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-livecd / # date
-Thu Aug 30 11:03:16 CST 2007</p>
-
-<p>设定主机名和域名</p>
-
-<p>在/etc/conf.d/hostname和/etc/hosts中设置主机名。以下例子中我们用mybox作为主机名，用at.myplace作为域名。可以用nano编辑这些配置文件，或者使用下面的命令：</p>
-
-<p>代码 2.18: 设置主机名和域名</p>
-
-<p>livecd / # cd /etc
-livecd etc # echo &ldquo;127.0.0.1 mdk-server.vim.myplace mybox localhost&rdquo; > hosts
-livecd etc # sed -i -e &rsquo;s/HOSTNAME.*/HOSTNAME=&ldquo;mdk-server&rdquo;/&lsquo; conf.d/hostname
-（使用指定的主机名并检查）
-livecd etc # hostname mdk-server
-livecd etc # hostname -f
-mdk-server.vim.myplace</p>
-
-<p>内核配置</p>
-
-<p>安装一个内核源码包（通常为gentoo-sources），配置、编译并拷贝arch/i386/boot/bzImage文件到/boot。</p>
-
-<p>代码 2.19: 安装内核源码包，编译和安装内核</p>
-
-<p>livecd etc # time emerge gentoo-sources</p>
-
-<p>real  2m51.435s
-user  0m58.220s
-sys   0m29.890s
-livecd etc # cd /usr/src/linux
-livecd linux # make menuconfig
-（配置内核）
-livecd linux # time make -j2</p>
-
-<p>（所花的时间很大程度上决定于你所选的选项）
-real  3m51.962s
-user  3m27.060s
-sys   0m24.310s</p>
-
-<p>livecd linux # make modules_install
-livecd linux # cp arch/i386/boot/bzImage /boot/kernel</p>
-
-<p>配置系统</p>
-
-<p>编辑/etc/fstab，用实际的分区名代替BOOT、ROOT和SWAP。记得确认一下文件系统是否与所安装的相匹配。</p>
-
-<p>代码 2.20: fstab范例</p>
-
-<p>livecd linux # cd /etc
-livecd etc # nano -w fstab
-/dev/sda1   /boot     ext2    noauto,noatime     1 2
-/dev/sda3   /         ext3    noatime            0 1
-/dev/sda2   none      swap    sw                 0 0</p>
-
-<p>在/etc/conf.d/net中配置网络。把net.eth0启动脚本添加到默认运行级别。如果有多张网卡，分别为它们建立符号链接到net.eth0启动脚本，并一起添加到默认运行级别。用nano编辑/etc/conf.d/net，或者使用如下命令：</p>
-
-<p>代码 2.21: 配置网络</p>
-
-<p>livecd etc # cd conf.d
-livecd conf.d # echo &lsquo;config_eth0=( &ldquo;192.168.1.10/24&rdquo; )&rsquo; >> net
-livecd conf.d # echo &lsquo;routes_eth0=( &ldquo;default via 192.168.1.1&rdquo; )&rsquo; >> net
-livecd conf.d # rc-update add net.eth0 default
-（如果你把网卡驱动编译为模块，
-需要将它添加到/etc/modules.autoload.d/kernel-2.6）
-livecd conf.d # echo r8169 >> /etc/modules.autoload.d/kernel-2.6
-（如果希望重启后通过ssh重新连接到新机器）
-livecd conf.d # rc-update add sshd default</p>
-
-<p>注意: 如果需要支持PCMCIA卡，请emerge pcmciautils。</p>
-
-<p>执行passwd设置root密码。</p>
-
-<p>代码 2.22: 设置root密码</p>
-
-<p>livecd conf.d # passwd
-New UNIX password: 输入密码
-Retype new UNIX password: 再输入密码
-passwd: password updated successfully</p>
-
-<p>编辑/etc/conf.d/clock以定义前面所使用的时区。</p>
-
-<p>代码 2.23: 编辑/etc/conf.d/clock</p>
-
-<p>livecd conf.d # nano -w /etc/conf.d/clock
-TIMEZONE=&ldquo;Asia/Shanghai&rdquo;</p>
-
-<p>检查系统配置，查看并编辑这些配置文件：/etc/rc.conf， /etc/conf.d/rc，/etc/conf.d/keymaps。</p>
-
-<p>代码 2.24: 可选：编辑一些配置文件</p>
-
-<p>livecd conf.d # nano -w /etc/rc.conf
-livecd conf.d # nano -w /etc/conf.d/rc
-livecd conf.d # nano -w /etc/conf.d/keymaps</p>
-
-<p>安装系统工具</p>
-
-<p>安装一个系统日志如syslog-ng和一个cron守护进程如vixie-cron，并把它们添加到默认运行级别。
-注意: Cron守护进程依赖于MTA。mail-mta/ssmtp会因依赖性而被一起安装。如果你想使用一种更高级的MTA，可以现在安装它。要是现在没空，暂时先安装ssmtp，以后再卸载并安装你要的MTA。</p>
-
-<p>代码 2.25: 安装系统日志和cron守护进程</p>
-
-<p>livecd conf.d # time emerge syslog-ng vixie-cron</p>
-
-<p>real  1m54.099s
-user  1m2.630s
-sys   0m34.620s
-livecd conf.d # rc-update add syslog-ng default
-livecd conf.d # rc-update add vixie-cron default</p>
-
-<p>安装必要的文件系统工具（xfsprogs，reiserfsprogs或jfsutils）和网络工具（dhcpcd或ppp）。</p>
-
-<p>代码 2.26: 安装其它工具</p>
-
-<p>livecd conf.d # emerge xfsprogs       （如果使用XFS文件系统）
-livecd conf.d # emerge jfsutils       （如果使用JFS文件系统）
-livecd conf.d # emerge reiserfsprogs  （如果使用Reiser文件系统）
-livecd conf.d # emerge dhcpcd         （如果使用DHCP客户端）
-livecd conf.d # emerge ppp            （如果使用PPPoE ADSL连接）</p>
-
-<p>配置引导程序</p>
-
-<p>安装并配置grub。</p>
-
-<p>代码 2.27: Emerge grub并编辑它的配置文件</p>
-
-<p>livecd conf.d # time emerge grub</p>
-
-<p>real  1m4.634s
-user  0m39.460s
-sys   0m15.280s
-livecd conf.d # nano -w /boot/grub/grub.conf</p>
-
-<p>代码 2.28: grub.conf范例</p>
-
-<p>default 0
-timeout 10</p>
-
-<p>title Gentoo
-root (hd0,0)
-kernel /boot/kernel root=/dev/sda3</p>
-
-<p>代码 2.29: 安装grub</p>
-
-<p>livecd conf.d # grub
-Probing devices to guess BIOS drives. This may take a long time.</p>
-
-<p>grub> root (hd0,0)
- Filesystem type is ext2fs, partition type 0xfd</p>
-
-<p>grub> setup (hd0)
- Checking if &ldquo;/boot/grub/stage1&rdquo; exists&hellip; yes
- Checking if &ldquo;/boot/grub/stage2&rdquo; exists&hellip; yes
- Checking if &ldquo;/boot/grub/e2fs_stage1_5&rdquo; exists&hellip; yes
- Running &ldquo;embed /boot/grub/e2fs_stage1_5 (hd0)&rdquo;&hellip;  16 sectors are embedded.
-succeeded
- Running &ldquo;install /boot/grub/stage1 (hd0) (hd0)1+16 p (hd0,0)/boot/grub/stage2 /boot/
-grub/menu.lst&rdquo;&hellip; succeeded
-Done.</p>
-
-<p>grub> quit</p>
-
-<p>重启</p>
-
-<p>退出chroot环境，卸载所有文件系统并重启：</p>
-
-<p>代码 2.30: 重启</p>
-
-<p>livecd conf.d # exit
-livecd / # umount /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo/boot /mnt/gentoo
-livecd / # reboot
-（别忘了取出光盘）</p>
-
-<p>完成安装
-注意: 在我们这台测试机器上，从minimal CD启动显示boot提示符开始，到重启后显示登录提示符， 总用时为00:42:31 。没错，不到一个小时！注意这个时间还包含了stage3包、Portage快照和一些软件包的下载时间，以及配置内核所花的时间。</p>
-
-<p>以root身份登录，用useradd添加一个或多个用户，作为日常使用。</p>
-
-<p>代码 2.31: 从另一台电脑连到你的新机器</p>
-
-<p>（清理known_hosts文件中的内容，因为你的新机器已生成一个新的
-通用主机密钥）
-$ nano -w ~/.ssh/known_hosts
-（找出新机器的IP并删除那一行，保存并退出nano）</p>
-
-<p>（使用你新机器的IP地址）
-$ ssh <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#x72;&#111;&#x6f;&#x74;&#x40;&#49;&#x39;&#x32;&#x2e;&#x31;&#x36;&#56;&#46;&#x31;&#x2e;&#x31;&#48;">&#x72;&#111;&#111;&#116;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#x36;&#56;&#46;&#x31;&#x2e;&#49;&#x30;</a>
-The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
-RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &lsquo;192.168.1.10&rsquo; (RSA) to the list of known hosts.
-Password: 输入密码</p>
-
-<p>代码 2.32: 添加一个新用户</p>
-
-<p>mybox ~ # adduser -g users -G lp,wheel,audio,cdrom,portage,cron -m john
-mybox ~ # passwd john
-New UNIX password: 设置John的密码
-Retype new UNIX password: 再次输入John的密码
-passwd: password updated successfully</p>
-
-<p>最后涉及的配置</p>
-
-<p>开始选择最近的镜像，在/etc/make.conf中定义SYNC变量和GENTOO_MIRRORS变量，或者也可以使用mirrorselect。此时你还可以定义并行编译的进程数。</p>
-
-<p>代码 2.33: 使用mirrorselect并设置MAKEOPTS</p>
-
-<p>mybox ~ # emerge mirrorselect
-mybox ~ # mirrorselect -i -o >> /etc/make.conf
-mybox ~ # mirrorselect -i -r -o >> /etc/make.conf
-（通常，一个较好的值为处理器数加一）
-mybox ~ # echo &lsquo;MAKEOPTS=&ldquo;-j2&rdquo;&rsquo; >> /etc/make.conf</p>
-
-<p>现在是启用或禁用一些USE标记的好时机。运行emerge -vpe world，列出所有当前已安装的软件包以及它们被启用和禁用的USE标记。编辑/etc/make.conf或使用下列命令定义USE变量：</p>
-
-<p>代码 2.34: 查看当前使用的USE标记并启用或禁用一些</p>
-
-<p>mybox ~ # emerge -vpe world
-（Portage列出软件包和它们的USE标记。作为例子，让我们禁用ipv6和fortran，
-并启用unicode）
-mybox ~ # echo &lsquo;USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode&rdquo;&rsquo; >> /etc/make.conf</p>
-
-<p>新版本的glibc使用/etc/locale.gen来定义语言环境。</p>
-
-<p>代码 2.35: 定义语言环境</p>
-
-<p>mybox ~ # cd /etc
-mybox etc # nano -w locale.gen
-mybox etc # locale-gen</p>
-
-<p>最后但并非最轻松的，你可能想修改/etc/make.conf中的CFLAGS变量来优化编码，以满足你的特定需要。请注意极少需要一长串的标记列表，那样甚至可能导致系统崩溃。建议通过march选项指定处理器类型并赋上-O2 -pipe。</p>
-
-<p>可能你还想转到 ~x86。只有当你能够对付那些脆弱不良的ebuild和软件包时才能这么做。如果你倾向于保持系统的稳定性，请不要添加ACCEPT_KEYWORDS变量。添加FEATURES=”ccache”却是个好主意。</p>
-
-<p>代码 2.36: 为make.conf作最后的修改</p>
-
-<p>mybox etc # nano -w make.conf
-（在CFLAGS中将-march设为你的CPU类型）
-CFLAGS=&ldquo;-O2 -march=athlon-xp -pipe&rdquo;
-（添加下面一行）
-FEATURES=&ldquo;ccache&rdquo;
-（只有清楚自己在干什么才添加下面一行）
-ACCEPT_KEYWORDS=&ldquo;~x86&rdquo;</p>
-
-<p>可能你会想重编译整个系统两次，以使你所作的最新配置完全生效。这要花很长的时间来完成，而只能得到微小的速度提升。你可以让系统自己随着以后新软件包的发布而逐步完成优化。不过，站在保持系统一致性的立场来看，重编译仍不失为一个好主意。请参考文档Gentoo GCC升级指南，其中讨论了如何搭建一个具有良好一致性的system和world，以及这样做的好处。</p>
-
-<p>只重编译那些因你应用了新的USE标记或受此影响而需要升级的软件包，也要花费不少时间。可能还必须卸载会阻止你升级的软件包。在emerge -vpuD –newuse world的输出中寻找“[blocks B ]”，用emerge -C卸载它们。</p>
-
-<p>代码 2.37: 升级软件包</p>
-
-<p>（安装ccache）
-mybox etc # emerge ccache</p>
-
-<p>（请注意转到~x86会导致很多软件包要升级）
-mybox etc # emerge -vpuD &mdash;newuse world
-（好好看一看软件包列表和它们的USE标记，
-有阻止的包就先卸载，然后启动漫长的过程）
-mybox etc # time emerge -vuD &mdash;newuse world
-（（重）编译了79个软件包）</p>
-
-<p>real  180m13.276s
-user  121m22.905s
-sys   36m31.472s</p>
-
-<p>（重编译libtool以避免一些潜在的问题）
-mybox etc # emerge &mdash;oneshot libtool</p>
-
-<p>（更新配置文件，确保不要让dispatch-conf更新你配置好的文件）
-mybox etc # dispatch-conf</p>
-
-<p>（如果升级了perl，应该执行perl-cleaner脚本）
-mybox etc # time perl-cleaner all
-real  1m6.495s
-user  0m42.699s
-sys   0m10.641s</p>
-
-<p>（如果升级了python的主要软件包，应该执行python-updater脚本）
-mybox etc # python-updater</p>
-
-<p>接下来该做什么</p>
-
-<p>想安装服务器应用程序还是一个桌面系统，取决于你打算让你的新Gentoo做什么。以下仅作为一个例子，统计了emerge gnome和emerge kde在~x86系统（按之前的描述安装的）上所花费的时间。两者是在同一起点开始安装的。</p>
-
-<p>去看看我们的文档目录，研究一下如何安装和配置你挑选的软件。
-重要: 以下只是举个例子，并不意味着就作为推荐设置。</p>
-
-<p>代码 2.38: Emerge GNOME</p>
-
-<p>mybox etc # emerge -vp gnome
-（查看软件包列表和它们的USE标记，
-如果需要请编辑make.conf
-mybox etc # nano -w /etc/make.conf
-（定义了以下USE标记）
-USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode svg hal dbus \</p>
-
-<pre><code> -kde -qt4 -arts -eds -esd gnome gstreamer gtk firefox"
-</code></pre>
-
-<p>mybox etc # time emerge gnome
-（安装了326个软件包）</p>
-
-<p>real  520m44.532s
-user  339m21.144s
-sys   146m22.337s</p>
-
-<p>代码 2.39: Emerge KDE</p>
-
-<p>mybox etc # emerge -vp kde-meta
-（查看软件包列表和它们的USE标记，
-如果需要请编辑make.conf
-mybox etc # nano -w /etc/make.conf
-定义了以下USE标记）
-USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode svg hal dbus \</p>
-
-<pre><code> kde qt4 -arts -eds -esd -gnome -gstreamer -gtk -firefox"
-</code></pre>
-
-<p>mybox etc # time emerge kde-meta
-（安装了391个软件包）</p>
-
-<p>real  1171m25.318s
-user  851m26.393s
-sys   281m45.629s</p>
 ]]></content>
   </entry>
   
