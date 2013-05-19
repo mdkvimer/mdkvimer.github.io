@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T18:43:24+08:00</updated>
+  <updated>2013-05-19T18:59:25+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,353 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[myvimrc]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/myvimrc/"/>
+    <updated>2013-05-19T18:55:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/myvimrc</id>
+    <content type="html"><![CDATA[<p>```
+set syntax=on</p>
+
+<p>set noeb</p>
+
+<p>set confirm</p>
+
+<p>set autoindent
+set cindent</p>
+
+<p>set tabstop=4</p>
+
+<p>set softtabstop=4
+set shiftwidth=4</p>
+
+<p>set noexpandtab</p>
+
+<p>set smarttab</p>
+
+<p>set number
+set history=1000</p>
+
+<p>set nobackup
+set noswapfile</p>
+
+<p>set ignorecase</p>
+
+<p>set hlsearch
+set incsearch</p>
+
+<p>set gdefault</p>
+
+<p>set enc=utf-8
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936</p>
+
+<p>set langmenu=zh_CN.UTF-8
+set helplang=cn</p>
+
+<p>set statusline=%F%m%r%h%w\ [FORMAT=%{&amp;ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\&ldquo;%d/%m/%y\ &ndash;\ %H:%M\&rdquo;)}
+&ldquo;set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]</p>
+
+<p>set laststatus=2</p>
+
+<p>set ruler</p>
+
+<p>set cmdheight=2</p>
+
+<p>filetype on</p>
+
+<p>filetype plugin on</p>
+
+<p>filetype indent on</p>
+
+<p>set viminfo+=!</p>
+
+<p>set iskeyword+=_,$,@,%,#,&ndash;</p>
+
+<p>set linespace=0</p>
+
+<p>set wildmenu</p>
+
+<p>set backspace=2</p>
+
+<p>set whichwrap+=&lt;,>,h,l</p>
+
+<p>set mouse=a
+set selection=exclusive
+set selectmode=mouse,key</p>
+
+<p>set report=0</p>
+
+<p>set shortmess=atI</p>
+
+<p>set fillchars=vert:\ ,stl:\ ,stlnc:\</p>
+
+<p>set showmatch</p>
+
+<p>set matchtime=5</p>
+
+<p>set scrolloff=3</p>
+
+<p>set smartindent</p>
+
+<p>if has(&ldquo;autocmd&rdquo;)
+   autocmd FileType xml,html,c,cs,java,perl,shell,bash,cpp,python,vim,php,ruby set number
+   autocmd FileType xml,html vmap &lt;C-o> <ESC>&lsquo;&lt;i<!--<ESC>o<ESC>&rsquo;>o&mdash;>
+   autocmd FileType java,c,cpp,cs vmap &lt;C-o> <ESC>&lsquo;&lt;o/<em><ESC>&rsquo;>o</em>/
+   autocmd FileType html,text,php,vim,c,java,xml,bash,shell,perl,python setlocal textwidth=100
+   autocmd Filetype html,xml,xsl source $VIMRUNTIME/plugin/closetag.vim
+   autocmd BufReadPost *</p>
+
+<pre><code>  \ if line("'\"") &gt; 0 &amp;&amp; line("'\"") &lt;= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+</code></pre>
+
+<p>endif &ldquo; has("autocmd&rdquo;)</p>
+
+<p>&ldquo; F5±àÒëºÍÔËÐÐC³ÌÐò£¬F6±àÒëºÍÔËÐÐC++³ÌÐò
+&rdquo; Çë×¢Òâ£¬ÏÂÊöŽúÂëÔÚwindowsÏÂÊ¹ÓÃ»á±šŽí
+&ldquo; ÐèÒªÈ¥µô./ÕâÁœžö×Ö·û</p>
+
+<p>&ldquo; CµÄ±àÒëºÍÔËÐÐ
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+exec "w&rdquo;
+exec &ldquo;!gcc % -o %&lt;&rdquo;
+exec &ldquo;! ./%&lt;&rdquo;
+endfunc</p>
+
+<p>&ldquo; C++µÄ±àÒëºÍÔËÐÐ
+map <F6> :call CompileRunGpp()<CR>
+func! CompileRunGpp()
+exec "w&rdquo;
+exec &ldquo;!g++ % -o %&lt;&rdquo;
+exec &ldquo;! ./%&lt;&rdquo;
+endfunc</p>
+
+<p>&ldquo; <F7> ÔËÐÐpython³ÌÐò<br/>
+map <F7> :w<cr>:!python %<cr></p>
+
+<p>&ldquo; <F8> ÔËÐÐshell³ÌÐò<br/>
+map <F8> :call CompileRunSH()<CR><br/>
+func! CompileRunSH()<br/>
+exec "w"<br/>
+exec &rdquo;!chmod u+x %&ldquo;<br/>
+exec &rdquo;!./%&ldquo;<br/>
+endfunc</p>
+
+<p>&ldquo;<F9>  gdbµ÷ÊÔ<br/>
+map <F9> :call Debug()<CR><br/>
+func!  Debug()<br/>
+exec "w"<br/>
+exec &rdquo;!gcc % -o %&lt; -gstabs+&ldquo;<br/>
+exec &rdquo;!gdb %&lt;&ldquo;
+endfunc</p>
+
+<p>&ldquo; ÄÜ¹»Æ¯ÁÁµØÏÔÊŸ.NFOÎÄŒþ
+set encoding=utf-8
+function! SetFileEncodings(encodings)</p>
+
+<pre><code>let b:myfileencodingsbak=&amp;fileencodings
+let &amp;fileencodings=a:encodings
+</code></pre>
+
+<p>endfunction
+function! RestoreFileEncodings()</p>
+
+<pre><code>let &amp;fileencodings=b:myfileencodingsbak
+unlet b:myfileencodingsbak
+</code></pre>
+
+<p>endfunction</p>
+
+<p>au BufReadPre <em>.nfo call SetFileEncodings(&lsquo;cp437&rsquo;)|set ambiwidth=single
+au BufReadPost </em>.nfo call RestoreFileEncodings()</p>
+
+<p>&ldquo; žßÁÁÏÔÊŸÆÕÍštxtÎÄŒþ£šÐèÒªtxt.vimœÅ±Ÿ£©
+au BufRead,BufNewFile *  setfiletype txt</p>
+
+<p>&ldquo; ÓÃ¿ÕžñŒüÀŽ¿ª¹ØÕÛµþ
+set foldenable
+set foldmethod=manual
+nnoremap <space> @=((foldclosed(line(&lsquo;.&rsquo;)) &lt; 0) ? &lsquo;zc&rsquo; : &lsquo;zo&rsquo;)<CR></p>
+
+<p>&ldquo; minibufexpl²åŒþµÄÒ»°ãÉèÖÃ
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+:colorscheme evening
+filetype plugin indent on
+set guifont=Courier\ 12
+set nocompatible
+let $VIMFILES=$HOME.&lsquo;/.vim&rsquo;
+map <F4> :call TitleDet()<cr>&rsquo;s
+function AddTitle()</p>
+
+<pre><code>call append(0,"/*=============================================================================")
+call append(1,"#")
+call append(2,"# Author: mengdaiku - mengdaikun@gmail.com")
+call append(3,"#")
+call append(4,"# QQ : 646978600")
+call append(5,"#")
+call append(6,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+call append(7,"#")
+call append(8,"# Filename: ".expand("%:t"))
+call append(9,"#")
+call append(10,"# Description: ")
+call append(11,"#")
+call append(12,"=============================================================================*/")
+echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+</code></pre>
+
+<p>endf
+&ldquo;更新最近修改时间和文件名
+function UpdateTitle()</p>
+
+<pre><code>normal m'
+execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+normal ''
+normal mk
+execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+execute "noh"
+normal 'k
+echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+</code></pre>
+
+<p>endfunction
+&ldquo;判断前10行代码里面，是否有Last modified这个单词，
+"如果没有的话，代表没有添加过作者信息，需要新添加；
+"如果有的话，那么只需要更新即可
+function TitleDet()</p>
+
+<pre><code>let n=1
+"默认为添加
+while n &lt; 10
+    let line = getline(n)
+    if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+        call UpdateTitle()
+        return
+    endif
+    let n = n + 1
+endwhile
+call AddTitle()
+</code></pre>
+
+<p>endfunction
+map <F3> :call TitleDet1()<cr>&rsquo;s
+function AddTitle1()</p>
+
+<pre><code>call append(0,"#/*=============================================================================")
+call append(1,"#")
+call append(2,"# Author: mengdaikun - mengdaikun@gmail.com")
+call append(3,"#")
+call append(4,"# QQ : 646978600")
+call append(5,"#")
+call append(6,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+call append(7,"#")
+call append(8,"# Filename: ".expand("%:t"))
+call append(9,"#")
+call append(10,"# Description: ")
+call append(11,"#")
+call append(12,"#=============================================================================*/")
+echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+</code></pre>
+
+<p>endf
+&ldquo;更新最近修改时间和文件名
+function UpdateTitle1()</p>
+
+<pre><code>normal m'
+execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+normal ''
+normal mk
+execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+execute "noh"
+normal 'k
+echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+</code></pre>
+
+<p>endfunction
+&ldquo;判断前10行代码里面，是否有Last modified这个单词，
+"如果没有的话，代表没有添加过作者信息，需要新添加；
+"如果有的话，那么只需要更新即可
+function TitleDet1()</p>
+
+<pre><code>let n=1
+"默认为添加
+while n &lt; 10
+    let line = getline(n)
+    if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+        call UpdateTitle1()
+        return
+    endif
+    let n = n + 1
+endwhile
+call AddTitle1()
+</code></pre>
+
+<p>endfunction
+map <F2> :call TitleDet2()<cr>&rsquo;s
+function AddTitle2()</p>
+
+<pre><code>call append(0,"'''/*=============================================================================")
+call append(1,"#")
+call append(2,"# Author: mengdaikun - mengdaikun@gmail.com")
+call append(3,"#")
+call append(4,"# QQ : 646978600")
+call append(5,"#")
+call append(6,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+call append(7,"#")
+call append(8,"# Filename: ".expand("%:t"))
+call append(9,"#")
+call append(10,"# Description: ")
+call append(11,"#")
+call append(12,"=============================================================================*/'''")
+echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+</code></pre>
+
+<p>endf
+&ldquo;更新最近修改时间和文件名
+function UpdateTitle2()</p>
+
+<pre><code>normal m'
+execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+normal ''
+normal mk
+execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+execute "noh"
+normal 'k
+echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+</code></pre>
+
+<p>endfunction
+&ldquo;判断前10行代码里面，是否有Last modified这个单词，
+"如果没有的话，代表没有添加过作者信息，需要新添加；
+"如果有的话，那么只需要更新即可
+function TitleDet2()</p>
+
+<pre><code>let n=1
+"默认为添加
+while n &lt; 10
+    let line = getline(n)
+    if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+        call UpdateTitle2()
+        return
+    endif
+    let n = n + 1
+endwhile
+call AddTitle2()
+</code></pre>
+
+<p>endfunction
+set t_Co=256
+colorscheme darkburn
+let g:SuperTabRetainCompletionType=2
+let g:SuperTabDefaultCompletionType=&ldquo;&lt;C-X>&lt;C-O>&rdquo;
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[linux内核启动流程]]></title>
@@ -662,105 +1009,6 @@ ps aux|grep svn 即可查看到svnserve
 ```</p>
 
 <p>到此一个的版本库的项目引入以完成~即可用 svn list/checkout等命令 svn://URL 取出版本库的相关项目(后期补上基于apche的svn)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[常用的命令2]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2/"/>
-    <updated>2013-05-19T10:58:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2</id>
-    <content type="html"><![CDATA[<p>```</p>
-
-<h1>uname -a               # 查看内核/操作系统/CPU信息</h1>
-
-<h1>head -n 1 /etc/issue   # 查看操作系统版本</h1>
-
-<h1>cat /proc/cpuinfo      # 查看CPU信息</h1>
-
-<h1>hostname               # 查看计算机名</h1>
-
-<h1>lspci -tv              # 列出所有PCI设备</h1>
-
-<h1>lsusb -tv              # 列出所有USB设备</h1>
-
-<h1>lsmod                  # 列出加载的内核模块</h1>
-
-<h1>env                    # 查看环境变量</h1>
-
-<p><code>
-资源
-</code></p>
-
-<h1>free -m                # 查看内存使用量和交换区使用量</h1>
-
-<h1>df -h                  # 查看各分区使用情况</h1>
-
-<h1>du -sh &lt;目录名&gt;        # 查看指定目录的大小</h1>
-
-<h1>grep MemTotal /proc/meminfo   # 查看内存总量</h1>
-
-<h1>grep MemFree /proc/meminfo    # 查看空闲内存量</h1>
-
-<h1>uptime                 # 查看系统运行时间、用户数、负载</h1>
-
-<h1>cat /proc/loadavg      # 查看系统负载</h1>
-
-<p><code>
-磁盘和分区
-</code></p>
-
-<h1>mount | column -t      # 查看挂接的分区状态</h1>
-
-<h1>fdisk -l               # 查看所有分区</h1>
-
-<h1>swapon -s              # 查看所有交换分区</h1>
-
-<h1>hdparm -i /dev/hda     # 查看磁盘参数(仅适用于IDE设备)</h1>
-
-<h1>dmesg | grep IDE       # 查看启动时IDE设备检测状况</h1>
-
-<p>```</p>
-
-<p>网络 进程 用户 服务 程序</p>
-
-<p>```</p>
-
-<h1>ifconfig               # 查看所有网络接口的属性</h1>
-
-<h1>iptables -L            # 查看防火墙设置</h1>
-
-<h1>route -n               # 查看路由表</h1>
-
-<h1>netstat -lntp          # 查看所有监听端口</h1>
-
-<h1>netstat -antp          # 查看所有已经建立的连接</h1>
-
-<h1>netstat -s             # 查看网络统计信息</h1>
-
-<h1>ps -ef                 # 查看所有进程</h1>
-
-<h1>top                    # 实时显示进程状态</h1>
-
-<h1>w                      # 查看活动用户</h1>
-
-<h1>id             # 查看指定用户信息</h1>
-
-<h1>last                   # 查看用户登录日志</h1>
-
-<h1>cut -d: -f1 /etc/passwd   # 查看系统所有用户</h1>
-
-<h1>cut -d: -f1 /etc/group    # 查看系统所有组</h1>
-
-<h1>crontab -l             # 查看当前用户的计划任务</h1>
-
-<h1>chkconfig –list       # 列出所有系统服务</h1>
-
-<h1>chkconfig –list | grep on    # 列出所有启动的系统服务</h1>
-
-<h1>rpm -qa                # 查看所有安装的软件包</h1>
-
-<p>```</p>
 ]]></content>
   </entry>
   

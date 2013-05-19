@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 长颈鹿 | mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/chang-jing-lu/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T18:43:24+08:00</updated>
+  <updated>2013-05-19T18:59:25+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[看你这闹的]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/kan-ni-zhe-nao-de/"/>
+    <updated>2013-05-19T18:50:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/kan-ni-zhe-nao-de</id>
+    <content type="html"><![CDATA[<p><code>
+记得六月初的一个傍晚，那会刚考完经济学，我就跑去城站接你，到了才知道我弄错了，原来你在滨江，那会下着大雨，我又得直奔滨江。记得接你回到学校已经八点了。都两个月来了，暑假我们相依为伴。其间你只闹过一回。但今天你闹得最凶。我承认下午的军训我逃了。反正去了也打酱油…但我也有事啊！下午出门了，本想去看受伤的双手，终究没去。只是买了点生活用品。晚上冒着被批的风险去见你，你倒好死活不坑声，还好平哥调解好，让你开了口。我这九天过得那叫苦啊！我也想晚上过去的，挤不出时间啊！接下来的时间应该比较好了！我会每天过去的~看你这闹的…好像内存条跟你有仇似的…bios乱了，大爱开源世界…嗯~晚安~
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[校赛]]></title>
@@ -47,7 +58,7 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#109;&#x64;&#x6b;&#64;&#x73;&#x65;&#114;&#x76;&#x65;&#114;&#x2e;&#101;&#x78;&#x61;&#x6d;&#112;&#108;&#x65;&#46;&#99;&#x6f;&#x6d;">&#109;&#x64;&#107;&#x40;&#115;&#x65;&#x72;&#118;&#101;&#x72;&#x2e;&#x65;&#x78;&#97;&#109;&#x70;&#108;&#101;&#x2e;&#x63;&#111;&#x6d;</a>
+ *         Author:  mdk-vim.cpp-c (mdk), <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x6d;&#100;&#107;&#x40;&#115;&#x65;&#x72;&#x76;&#101;&#114;&#x2e;&#101;&#x78;&#97;&#x6d;&#112;&#108;&#x65;&#x2e;&#x63;&#111;&#x6d;">&#x6d;&#x64;&#x6b;&#x40;&#115;&#x65;&#114;&#118;&#101;&#114;&#46;&#101;&#x78;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;</a>
  *        Company:  cjluacm-vim-mdk
  *
  * =====================================================================================

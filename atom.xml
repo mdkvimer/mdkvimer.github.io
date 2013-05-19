@@ -4,7 +4,7 @@
   <title><![CDATA[mdk Blog home]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T18:43:24+08:00</updated>
+  <updated>2013-05-19T18:59:25+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,667 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[myvimrc]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/myvimrc/"/>
+    <updated>2013-05-19T18:55:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/myvimrc</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+<span class='line-number'>247</span>
+<span class='line-number'>248</span>
+<span class='line-number'>249</span>
+<span class='line-number'>250</span>
+<span class='line-number'>251</span>
+<span class='line-number'>252</span>
+<span class='line-number'>253</span>
+<span class='line-number'>254</span>
+<span class='line-number'>255</span>
+<span class='line-number'>256</span>
+<span class='line-number'>257</span>
+<span class='line-number'>258</span>
+<span class='line-number'>259</span>
+<span class='line-number'>260</span>
+<span class='line-number'>261</span>
+<span class='line-number'>262</span>
+<span class='line-number'>263</span>
+<span class='line-number'>264</span>
+<span class='line-number'>265</span>
+<span class='line-number'>266</span>
+<span class='line-number'>267</span>
+<span class='line-number'>268</span>
+<span class='line-number'>269</span>
+<span class='line-number'>270</span>
+<span class='line-number'>271</span>
+<span class='line-number'>272</span>
+<span class='line-number'>273</span>
+<span class='line-number'>274</span>
+<span class='line-number'>275</span>
+<span class='line-number'>276</span>
+<span class='line-number'>277</span>
+<span class='line-number'>278</span>
+<span class='line-number'>279</span>
+<span class='line-number'>280</span>
+<span class='line-number'>281</span>
+<span class='line-number'>282</span>
+<span class='line-number'>283</span>
+<span class='line-number'>284</span>
+<span class='line-number'>285</span>
+<span class='line-number'>286</span>
+<span class='line-number'>287</span>
+<span class='line-number'>288</span>
+<span class='line-number'>289</span>
+<span class='line-number'>290</span>
+<span class='line-number'>291</span>
+<span class='line-number'>292</span>
+<span class='line-number'>293</span>
+<span class='line-number'>294</span>
+<span class='line-number'>295</span>
+<span class='line-number'>296</span>
+<span class='line-number'>297</span>
+<span class='line-number'>298</span>
+<span class='line-number'>299</span>
+<span class='line-number'>300</span>
+<span class='line-number'>301</span>
+<span class='line-number'>302</span>
+<span class='line-number'>303</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>set syntax=on
+</span><span class='line'>
+</span><span class='line'>set noeb
+</span><span class='line'>
+</span><span class='line'>set confirm
+</span><span class='line'>
+</span><span class='line'>set autoindent
+</span><span class='line'>set cindent
+</span><span class='line'>
+</span><span class='line'>set tabstop=4
+</span><span class='line'>
+</span><span class='line'>set softtabstop=4
+</span><span class='line'>set shiftwidth=4
+</span><span class='line'>
+</span><span class='line'>set noexpandtab
+</span><span class='line'>
+</span><span class='line'>set smarttab
+</span><span class='line'>
+</span><span class='line'>set number
+</span><span class='line'>set history=1000
+</span><span class='line'>
+</span><span class='line'>set nobackup
+</span><span class='line'>set noswapfile
+</span><span class='line'>
+</span><span class='line'>set ignorecase
+</span><span class='line'>
+</span><span class='line'>set hlsearch
+</span><span class='line'>set incsearch
+</span><span class='line'>
+</span><span class='line'>set gdefault
+</span><span class='line'>
+</span><span class='line'>set enc=utf-8
+</span><span class='line'>set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+</span><span class='line'>
+</span><span class='line'>set langmenu=zh_CN.UTF-8
+</span><span class='line'>set helplang=cn
+</span><span class='line'>
+</span><span class='line'>set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+</span><span class='line'>"set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
+</span><span class='line'>
+</span><span class='line'>set laststatus=2
+</span><span class='line'>
+</span><span class='line'>set ruler           
+</span><span class='line'>
+</span><span class='line'>set cmdheight=2
+</span><span class='line'>
+</span><span class='line'>filetype on
+</span><span class='line'>
+</span><span class='line'>filetype plugin on
+</span><span class='line'>
+</span><span class='line'>filetype indent on
+</span><span class='line'>
+</span><span class='line'>set viminfo+=!
+</span><span class='line'>
+</span><span class='line'>set iskeyword+=_,$,@,%,#,-
+</span><span class='line'>
+</span><span class='line'>set linespace=0
+</span><span class='line'>
+</span><span class='line'>set wildmenu
+</span><span class='line'>
+</span><span class='line'>set backspace=2
+</span><span class='line'>
+</span><span class='line'>set whichwrap+=&lt;,&gt;,h,l
+</span><span class='line'>
+</span><span class='line'>set mouse=a
+</span><span class='line'>set selection=exclusive
+</span><span class='line'>set selectmode=mouse,key
+</span><span class='line'>
+</span><span class='line'>set report=0
+</span><span class='line'>
+</span><span class='line'>set shortmess=atI
+</span><span class='line'>
+</span><span class='line'>set fillchars=vert:\ ,stl:\ ,stlnc:\
+</span><span class='line'>
+</span><span class='line'>set showmatch
+</span><span class='line'>
+</span><span class='line'>set matchtime=5
+</span><span class='line'>
+</span><span class='line'>set scrolloff=3
+</span><span class='line'>
+</span><span class='line'>set smartindent
+</span><span class='line'>
+</span><span class='line'>if has("autocmd")
+</span><span class='line'>   autocmd FileType xml,html,c,cs,java,perl,shell,bash,cpp,python,vim,php,ruby set number
+</span><span class='line'>   autocmd FileType xml,html vmap &lt;C-o&gt; &lt;ESC&gt;'&lt;i&lt;!--&lt;ESC&gt;o&lt;ESC&gt;'&gt;o--&gt;
+</span><span class='line'>   autocmd FileType java,c,cpp,cs vmap &lt;C-o&gt; &lt;ESC&gt;'&lt;o/*&lt;ESC&gt;'&gt;o*/
+</span><span class='line'>   autocmd FileType html,text,php,vim,c,java,xml,bash,shell,perl,python setlocal textwidth=100
+</span><span class='line'>   autocmd Filetype html,xml,xsl source $VIMRUNTIME/plugin/closetag.vim
+</span><span class='line'>   autocmd BufReadPost *
+</span><span class='line'>      \ if line("'\"") &gt; 0 && line("'\"") &lt;= line("$") |
+</span><span class='line'>      \   exe "normal g`\"" |
+</span><span class='line'>      \ endif
+</span><span class='line'>endif " has("autocmd")
+</span><span class='line'>
+</span><span class='line'>" F5±àÒëºÍÔËÐÐC³ÌÐò£¬F6±àÒëºÍÔËÐÐC++³ÌÐò
+</span><span class='line'>" Çë×¢Òâ£¬ÏÂÊöŽúÂëÔÚwindowsÏÂÊ¹ÓÃ»á±šŽí
+</span><span class='line'>" ÐèÒªÈ¥µô./ÕâÁœžö×Ö·û
+</span><span class='line'>
+</span><span class='line'>" CµÄ±àÒëºÍÔËÐÐ
+</span><span class='line'>map &lt;F5&gt; :call CompileRunGcc()&lt;CR&gt;
+</span><span class='line'>func! CompileRunGcc()
+</span><span class='line'>exec "w"
+</span><span class='line'>exec "!gcc % -o %&lt;"
+</span><span class='line'>exec "! ./%&lt;"
+</span><span class='line'>endfunc
+</span><span class='line'>
+</span><span class='line'>" C++µÄ±àÒëºÍÔËÐÐ
+</span><span class='line'>map &lt;F6&gt; :call CompileRunGpp()&lt;CR&gt;
+</span><span class='line'>func! CompileRunGpp()
+</span><span class='line'>exec "w"
+</span><span class='line'>exec "!g++ % -o %&lt;"
+</span><span class='line'>exec "! ./%&lt;"
+</span><span class='line'>endfunc
+</span><span class='line'>
+</span><span class='line'>" &lt;F7&gt; ÔËÐÐpython³ÌÐò  
+</span><span class='line'>map &lt;F7&gt; :w&lt;cr&gt;:!python %&lt;cr&gt;  
+</span><span class='line'>  
+</span><span class='line'>  
+</span><span class='line'>" &lt;F8&gt; ÔËÐÐshell³ÌÐò  
+</span><span class='line'>map &lt;F8&gt; :call CompileRunSH()&lt;CR&gt;  
+</span><span class='line'>func! CompileRunSH()  
+</span><span class='line'>exec "w"  
+</span><span class='line'>exec "!chmod u+x %"  
+</span><span class='line'>exec "!./%"  
+</span><span class='line'>endfunc  
+</span><span class='line'>  
+</span><span class='line'>  
+</span><span class='line'>"&lt;F9&gt;  gdbµ÷ÊÔ  
+</span><span class='line'>map &lt;F9&gt; :call Debug()&lt;CR&gt;  
+</span><span class='line'>func!  Debug()  
+</span><span class='line'>exec "w"  
+</span><span class='line'>exec "!gcc % -o %&lt; -gstabs+"  
+</span><span class='line'>exec "!gdb %&lt;"
+</span><span class='line'>endfunc
+</span><span class='line'>  
+</span><span class='line'>" ÄÜ¹»Æ¯ÁÁµØÏÔÊŸ.NFOÎÄŒþ
+</span><span class='line'>set encoding=utf-8
+</span><span class='line'>function! SetFileEncodings(encodings)
+</span><span class='line'>    let b:myfileencodingsbak=&fileencodings
+</span><span class='line'>    let &fileencodings=a:encodings
+</span><span class='line'>endfunction
+</span><span class='line'>function! RestoreFileEncodings()
+</span><span class='line'>    let &fileencodings=b:myfileencodingsbak
+</span><span class='line'>    unlet b:myfileencodingsbak
+</span><span class='line'>endfunction
+</span><span class='line'>
+</span><span class='line'>au BufReadPre *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
+</span><span class='line'>au BufReadPost *.nfo call RestoreFileEncodings()
+</span><span class='line'>
+</span><span class='line'>" žßÁÁÏÔÊŸÆÕÍštxtÎÄŒþ£šÐèÒªtxt.vimœÅ±Ÿ£©
+</span><span class='line'>au BufRead,BufNewFile *  setfiletype txt
+</span><span class='line'>
+</span><span class='line'>" ÓÃ¿ÕžñŒüÀŽ¿ª¹ØÕÛµþ
+</span><span class='line'>set foldenable
+</span><span class='line'>set foldmethod=manual
+</span><span class='line'>nnoremap &lt;space&gt; @=((foldclosed(line('.')) &lt; 0) ? 'zc' : 'zo')&lt;CR&gt;
+</span><span class='line'>
+</span><span class='line'>" minibufexpl²åŒþµÄÒ»°ãÉèÖÃ
+</span><span class='line'>let g:miniBufExplMapWindowNavVim = 1
+</span><span class='line'>let g:miniBufExplMapWindowNavArrows = 1
+</span><span class='line'>let g:miniBufExplMapCTabSwitchBufs = 1
+</span><span class='line'>let g:miniBufExplModSelTarget = 1
+</span><span class='line'>:colorscheme evening
+</span><span class='line'>filetype plugin indent on
+</span><span class='line'>set guifont=Courier\ 12
+</span><span class='line'>set nocompatible
+</span><span class='line'>let $VIMFILES=$HOME.'/.vim'
+</span><span class='line'>map &lt;F4&gt; :call TitleDet()&lt;cr&gt;'s
+</span><span class='line'>function AddTitle()
+</span><span class='line'>    call append(0,"/*=============================================================================")
+</span><span class='line'>    call append(1,"#")
+</span><span class='line'>    call append(2,"# Author: mengdaiku - mengdaikun@gmail.com")
+</span><span class='line'>    call append(3,"#")
+</span><span class='line'>    call append(4,"# QQ : 646978600")
+</span><span class='line'>    call append(5,"#")
+</span><span class='line'>    call append(6,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+</span><span class='line'>    call append(7,"#")
+</span><span class='line'>    call append(8,"# Filename: ".expand("%:t"))
+</span><span class='line'>    call append(9,"#")
+</span><span class='line'>    call append(10,"# Description: ")
+</span><span class='line'>    call append(11,"#")
+</span><span class='line'>    call append(12,"=============================================================================*/")
+</span><span class='line'>    echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+</span><span class='line'>endf
+</span><span class='line'>"更新最近修改时间和文件名
+</span><span class='line'>function UpdateTitle()
+</span><span class='line'>    normal m'
+</span><span class='line'>    execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+</span><span class='line'>    normal ''
+</span><span class='line'>    normal mk
+</span><span class='line'>    execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+</span><span class='line'>    execute "noh"
+</span><span class='line'>    normal 'k
+</span><span class='line'>    echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+</span><span class='line'>endfunction
+</span><span class='line'>"判断前10行代码里面，是否有Last modified这个单词，
+</span><span class='line'>"如果没有的话，代表没有添加过作者信息，需要新添加；
+</span><span class='line'>"如果有的话，那么只需要更新即可
+</span><span class='line'>function TitleDet()
+</span><span class='line'>    let n=1
+</span><span class='line'>    "默认为添加
+</span><span class='line'>    while n &lt; 10
+</span><span class='line'>        let line = getline(n)
+</span><span class='line'>        if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+</span><span class='line'>            call UpdateTitle()
+</span><span class='line'>            return
+</span><span class='line'>        endif
+</span><span class='line'>        let n = n + 1
+</span><span class='line'>    endwhile
+</span><span class='line'>    call AddTitle()
+</span><span class='line'>endfunction
+</span><span class='line'>map &lt;F3&gt; :call TitleDet1()&lt;cr&gt;'s
+</span><span class='line'>function AddTitle1()
+</span><span class='line'>    call append(0,"#/*=============================================================================")
+</span><span class='line'>    call append(1,"#")
+</span><span class='line'>    call append(2,"# Author: mengdaikun - mengdaikun@gmail.com")
+</span><span class='line'>    call append(3,"#")
+</span><span class='line'>    call append(4,"# QQ : 646978600")
+</span><span class='line'>    call append(5,"#")
+</span><span class='line'>    call append(6,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+</span><span class='line'>    call append(7,"#")
+</span><span class='line'>    call append(8,"# Filename: ".expand("%:t"))
+</span><span class='line'>    call append(9,"#")
+</span><span class='line'>    call append(10,"# Description: ")
+</span><span class='line'>    call append(11,"#")
+</span><span class='line'>    call append(12,"#=============================================================================*/")
+</span><span class='line'>    echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+</span><span class='line'>endf
+</span><span class='line'>"更新最近修改时间和文件名
+</span><span class='line'>function UpdateTitle1()
+</span><span class='line'>    normal m'
+</span><span class='line'>    execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+</span><span class='line'>    normal ''
+</span><span class='line'>    normal mk
+</span><span class='line'>    execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+</span><span class='line'>    execute "noh"
+</span><span class='line'>    normal 'k
+</span><span class='line'>    echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+</span><span class='line'>endfunction
+</span><span class='line'>"判断前10行代码里面，是否有Last modified这个单词，
+</span><span class='line'>"如果没有的话，代表没有添加过作者信息，需要新添加；
+</span><span class='line'>"如果有的话，那么只需要更新即可
+</span><span class='line'>function TitleDet1()
+</span><span class='line'>    let n=1
+</span><span class='line'>    "默认为添加
+</span><span class='line'>    while n &lt; 10
+</span><span class='line'>        let line = getline(n)
+</span><span class='line'>        if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+</span><span class='line'>            call UpdateTitle1()
+</span><span class='line'>            return
+</span><span class='line'>        endif
+</span><span class='line'>        let n = n + 1
+</span><span class='line'>    endwhile
+</span><span class='line'>    call AddTitle1()
+</span><span class='line'>endfunction
+</span><span class='line'>map &lt;F2&gt; :call TitleDet2()&lt;cr&gt;'s
+</span><span class='line'>function AddTitle2()
+</span><span class='line'>    call append(0,"'''/*=============================================================================")
+</span><span class='line'>    call append(1,"#")
+</span><span class='line'>    call append(2,"# Author: mengdaikun - mengdaikun@gmail.com")
+</span><span class='line'>    call append(3,"#")
+</span><span class='line'>    call append(4,"# QQ : 646978600")
+</span><span class='line'>    call append(5,"#")
+</span><span class='line'>    call append(6,"# Last modified: ".strftime("%Y-%m-%d %H:%M"))
+</span><span class='line'>    call append(7,"#")
+</span><span class='line'>    call append(8,"# Filename: ".expand("%:t"))
+</span><span class='line'>    call append(9,"#")
+</span><span class='line'>    call append(10,"# Description: ")
+</span><span class='line'>    call append(11,"#")
+</span><span class='line'>    call append(12,"=============================================================================*/'''")
+</span><span class='line'>    echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+</span><span class='line'>endf
+</span><span class='line'>"更新最近修改时间和文件名
+</span><span class='line'>function UpdateTitle2()
+</span><span class='line'>    normal m'
+</span><span class='line'>    execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+</span><span class='line'>    normal ''
+</span><span class='line'>    normal mk
+</span><span class='line'>    execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+</span><span class='line'>    execute "noh"
+</span><span class='line'>    normal 'k
+</span><span class='line'>    echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+</span><span class='line'>endfunction
+</span><span class='line'>"判断前10行代码里面，是否有Last modified这个单词，
+</span><span class='line'>"如果没有的话，代表没有添加过作者信息，需要新添加；
+</span><span class='line'>"如果有的话，那么只需要更新即可
+</span><span class='line'>function TitleDet2()
+</span><span class='line'>    let n=1
+</span><span class='line'>    "默认为添加
+</span><span class='line'>    while n &lt; 10
+</span><span class='line'>        let line = getline(n)
+</span><span class='line'>        if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+</span><span class='line'>            call UpdateTitle2()
+</span><span class='line'>            return
+</span><span class='line'>        endif
+</span><span class='line'>        let n = n + 1
+</span><span class='line'>    endwhile
+</span><span class='line'>    call AddTitle2()
+</span><span class='line'>endfunction
+</span><span class='line'>set t_Co=256
+</span><span class='line'>colorscheme darkburn 
+</span><span class='line'>let g:SuperTabRetainCompletionType=2
+</span><span class='line'>let g:SuperTabDefaultCompletionType="&lt;C-X&gt;&lt;C-O&gt;"</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[琐碎思]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/suo-sui-si/"/>
+    <updated>2013-05-19T18:54:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/suo-sui-si</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>梦回310…记得晚睡熄灯后分东西部飙歌…一起被老罗拉到阳台上政治课…一起在球场挥汗打球…一块热衷于投三分…无兄弟不篮球~记得快高考时，男阿姨来我们宿舍告我们要本份点了…留下那句“国大不是问题…”经典…夜深人静…只想道声:兄弟可好…</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[对不起]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/dui-bu-qi/"/>
+    <updated>2013-05-19T18:52:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/dui-bu-qi</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>。。有时候没办法陪著你，你总是对我说没关系，放不下我对你的任性，对不起不该让你伤心，有时候，你会让让我，尽管我大男人发作，有时候，你会装作不懂，默默地，留一些空间给我，这些事情，其实，我一直都藏在心里，请你原谅我不懂逗你开心，请你原谅我不懂听你的心，回想这过去，我学著让你更安心，别赌气别任性别放弃，说声对不起，请你相信我，我会更加珍惜你，请你相信我我会呵护著你，小小的爱情，却是我最大的幸运，疼爱的，想念的都是你，请你相信，一个这样的我，请原谅，对不起~对不起</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[看你这闹的]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/kan-ni-zhe-nao-de/"/>
+    <updated>2013-05-19T18:50:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/kan-ni-zhe-nao-de</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>记得六月初的一个傍晚，那会刚考完经济学，我就跑去城站接你，到了才知道我弄错了，原来你在滨江，那会下着大雨，我又得直奔滨江。记得接你回到学校已经八点了。都两个月来了，暑假我们相依为伴。其间你只闹过一回。但今天你闹得最凶。我承认下午的军训我逃了。反正去了也打酱油…但我也有事啊！下午出门了，本想去看受伤的双手，终究没去。只是买了点生活用品。晚上冒着被批的风险去见你，你倒好死活不坑声，还好平哥调解好，让你开了口。我这九天过得那叫苦啊！我也想晚上过去的，挤不出时间啊！接下来的时间应该比较好了！我会每天过去的~看你这闹的…好像内存条跟你有仇似的…bios乱了，大爱开源世界…嗯~晚安~</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[空白]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/kong-bai/"/>
+    <updated>2013-05-19T18:47:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/kong-bai</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在空白的屏幕上打出一连串的字符，我以为我做得到，但我始终不敢按回车，好奇又害怕答案，当删去时内心又觉得空虚…恨自己…怪自己…唉…望着屏幕～好空白…</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[linux内核启动流程]]></title>
@@ -4180,303 +4841,6 @@ PHP代码</p>
 <p>所有的命令你都可以通过“man”来查询详细的使用方式。</p>
 
 <p>文章转载自：<a href="http://www.oschina.net/question/28_39527">http://www.oschina.net/question/28_39527</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[网易笔试]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/wang-yi-bi-shi/"/>
-    <updated>2013-05-19T10:31:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/wang-yi-bi-shi</id>
-    <content type="html"><![CDATA[<p>应该说网易的这个笔试对我来说很简单~有那么几个点可以写出来</p>
-
-<p>mysql 一些基础的应用</p>
-
-<p>linux操作系统</p>
-
-<p>tcp/ip</p>
-
-<p>tcp/ip的三次握手过程~</p>
-
-<p>vim/gcc/gdb的使用</p>
-
-<p>进程线程端口号</p>
-
-<p>文件的权限使用情况</p>
-
-<p>大概就这么几点~总体难度不大的</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[企鹅实习生笔试]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi/"/>
-    <updated>2013-05-19T10:31:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/qi-e-shi-xi-sheng-bi-shi</id>
-    <content type="html"><![CDATA[<p>笔试的范围面算是比较广吧～涉及操作系统～数据结构和算法～网络～c/c++~软件工程~唉～还是太弱了～抱着打酱油的心去带回一大瓶酱油～还是得总结总结打有准备的仗~考到线程的并发~插入排序～tcp/ip~操作系统内存分配~~加油了～要有准备要努力啊</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[这三天]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/zhe-san-tian/"/>
-    <updated>2013-05-19T10:29:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/zhe-san-tian</id>
-    <content type="html"><![CDATA[<p>逃了三天课，这三天来~也算是对三年来的验证吧。星期一，浙大玉泉校区参加163.com的笔试（sa反垃圾邮件工程师）,星期二，笔试太累,基本一天在实验室睡觉。今天去了趟滨江。在163.com的c座大厦里就吃了一个他们的小面包和一杯水。╮(╯▽╰)╭，不管结果如何~或许都得到历练了~
-星期一，下午两点多，自个火急火燎的赶到浙大，看到玉泉校区才知道什么是读书人的地方，人家的校园，人家的读书氛围，看的像我这种二本掉渣的院校心里不是一般滋味.在里面逛了一圈后终于找到了曹光彪科技楼.晚上的宣讲会赵HR看起来很年轻，讲得很有渲染力。演讲的能力让我打心底里佩服。到场有三百多个人~大部分都是浙大~好不自卑吗~我是坐b1去的玉泉校区~然后我的笔试座位号也B1(神座啊)~八点的考试~主考官最后一个把考卷给我~算是从8:10开始的~我是9:01交的卷子~当时在场的我第三个交卷~自我感觉不错的~就赶着坐公交回下沙了~回到学校的时候已经10:30了~所以没回寝室~在实验室睡了一晚~还因此感冒了~杭州的天气还真是易变啊
-星期二，因为笔试那天晚上赶着回来太累了~而且这一天就一节软件工程~所以逃了~也因HR告诉我们笔试的通知最晚在第二天的晚上告诉我们~这一天我是在焦虑中度过的~但我觉得自己的笔试很好~可以拿到面试的~晚上跟着老聂从实验室回去~吃了个饭洗了个澡~然后突然发现163.com的面试通知短信~很兴奋~跑去特地要老聂找去滨江的公交路线~一整晚睡得还可以~
-今天~怎么说呢~一切的一切或许又回归了吧~今天又逃了一天的课~早上八点跑来实验室拿简历~九点的时候去书店给天师取快递~快十点的时候坐着566前往滨江~快中午的时候到达滨江~好久都不出去了~下车后有点找不着北的感觉~找了好久才找到面试的地点~快下午一点的时候开始前往面试地点~路上认识一位从上海赶过来的哥们~他研二搞安卓的~他说饿想找吃的~最后我们一起来到了163.com大厦的C座签到，发现面试区域居然提供吃喝~163.com的研究所所在地的确很偏僻~跟我一起的哥们也这么说~他一口气吃了两个面包~我们才坐下不久我就面试开始了~面我的是个很年轻的技术哥~他首先让我自我介绍~然后他开始看我的网上简历和我的笔试卷子~边看边问~当时也是脑子一片空白~随性也跟他扯起来~我记得他让我介绍了我的两个项目~一个是在线评判系统~另一个是ftp（半成品的项目）~我糊里糊涂的也不知道怎么说了~最后依稀记得他向我问了tcpdump和smtp协议~我记得笔试的卷有两道tcp/ip的题目~我答得都挺好的~一个是tcp的三次握手过程和那七层协议~其实我看到面试官手里我的卷子上打着一个不错的分数~心里窃喜啊~最后面试官让我问他问题~我问了几个后就不问了~然后他说面试结束了让我去面试区等待HR通知~走出来的时候我问面试官怎么不问shell啊？他没回答~他过了会问我课多吗~我随性的回答了~出来后发现跟我一起来的那哥们也刚面完出来~我们彼此谈了感受~期间他又吃了两个面包~我们在等待区侯着期间认识了一位中国科技大学的研一的也搞安卓的~他还没有面~他不断地询问都面了啥~我看了他的简历~光项目他就有了一页纸了~牛人啊~然后的然后~那个女HR告诉我结果~我没有追问为何~走出来的时候也挺释然的~╮(╯▽╰)╭╮(╯▽╰)╭~
-一句话概括：面包挺好吃的，水也挺甜的~这三天也算是攒了经验值吧~结果已经不重要了~过程已经享受了~在此之前在群里也吼了好多~╮(╯▽╰)╭~回去洗个澡~睡个觉明天的太阳依旧灿烂~一个掉渣的二本院校的技术屌丝男的小逆袭？或许吧~</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[多线程之生产者于消费者问题]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti/"/>
-    <updated>2013-05-19T10:26:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti</id>
-    <content type="html"><![CDATA[<p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
-</span><span class='line'>#include&lt;stdlib.h&gt;
-</span><span class='line'>#include&lt;string.h&gt;
-</span><span class='line'>#include&lt;sys/wait.h&gt;
-</span><span class='line'>#include&lt;sys/types.h&gt;
-</span><span class='line'>#include&lt;unistd.h&gt;
-</span><span class='line'>#include&lt;pthread.h&gt;
-</span><span class='line'>#include&lt;time.h&gt;
-</span><span class='line'>#include&lt;math.h&gt;
-</span><span class='line'>#define BUFFER_SIZE 8
-</span><span class='line'>
-</span><span class='line'>struct prodcons {
-</span><span class='line'>int buffer[BUFFER_SIZE];
-</span><span class='line'>pthread_mutex_t lock;
-</span><span class='line'>int readpos,writepos;
-</span><span class='line'>pthread_cond_t notempty;
-</span><span class='line'>pthread_cond_t notfull;
-</span><span class='line'>};
-</span><span class='line'>
-</span><span class='line'>void init(struct prodcons *b)
-</span><span class='line'>{
-</span><span class='line'>pthread_mutex_init(&b-&gt;lock,NULL);
-</span><span class='line'>pthread_cond_init(&b-&gt;notempty,NULL);
-</span><span class='line'>pthread_cond_init(&b-&gt;notfull,NULL);
-</span><span class='line'>b-&gt;readpos = 0 ;
-</span><span class='line'>b-&gt;writepos = 0 ;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>void put(struct prodcons *b,int data)
-</span><span class='line'>{
-</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
-</span><span class='line'>if((b-&gt;writepos + 1)%BUFFER_SIZE == b-&gt;readpos)
-</span><span class='line'>{
-</span><span class='line'>pthread_cond_wait(&b-&gt;notfull,&b-&gt;lock);
-</span><span class='line'>}
-</span><span class='line'>b-&gt;buffer[b-&gt;writepos] = data;
-</span><span class='line'>b-&gt;writepos++;
-</span><span class='line'>if(b-&gt;writepos &gt;= BUFFER_SIZE)
-</span><span class='line'>b-&gt;writepos = 0;
-</span><span class='line'>pthread_cond_signal(&b-&gt;notempty);
-</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int get(struct prodcons *b)
-</span><span class='line'>{
-</span><span class='line'>int data;
-</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
-</span><span class='line'>if(b-&gt;writepos == b-&gt;readpos)
-</span><span class='line'>{
-</span><span class='line'>pthread_cond_wait(&b-&gt;notempty,&b-&gt;lock);
-</span><span class='line'>}
-</span><span class='line'>data = b-&gt;buffer[b-&gt;readpos];
-</span><span class='line'>b-&gt;readpos++;
-</span><span class='line'>
-</span><span class='line'>if(b-&gt;readpos &gt;= BUFFER_SIZE)
-</span><span class='line'>b-&gt;readpos = 0;
-</span><span class='line'>
-</span><span class='line'>pthread_cond_signal(&b-&gt;notfull);
-</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
-</span><span class='line'>return data;
-</span><span class='line'>}
-</span><span class='line'>#define OVER (-1)
-</span><span class='line'>struct prodcons buffer;
-</span><span class='line'>void *producer(void *data)
-</span><span class='line'>{
-</span><span class='line'>int n;
-</span><span class='line'>for(n = 0 ; n &lt; 50 ; n++)
-</span><span class='line'>{
-</span><span class='line'>printf(“%d\t”,n);
-</span><span class='line'>put(&buffer,n);
-</span><span class='line'>}
-</span><span class='line'>put(&buffer,OVER);
-</span><span class='line'>return NULL;
-</span><span class='line'>}
-</span><span class='line'>void *consumer(void *data)
-</span><span class='line'>{
-</span><span class='line'>int d;
-</span><span class='line'>while(1)
-</span><span class='line'>{
-</span><span class='line'>d = get(&buffer);
-</span><span class='line'>if(d == OVER)
-</span><span class='line'>break;
-</span><span class='line'>printf(“%d\t”,d);
-</span><span class='line'>}
-</span><span class='line'>return NULL;
-</span><span class='line'>}
-</span><span class='line'>int main(void)
-</span><span class='line'>{
-</span><span class='line'>pthread_t th_a,th_b;
-</span><span class='line'>void *retval;
-</span><span class='line'>init(&buffer);
-</span><span class='line'>pthread_create(&th_a,NULL,producer,0);
-</span><span class='line'>pthread_create(&th_b,NULL,consumer,0);
-</span><span class='line'>pthread_join(th_a,&retval);
-</span><span class='line'>pthread_join(th_b,&retval);
-</span><span class='line'>printf(“\n”);
-</span><span class='line'>return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[新交通规则]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/18/xin-jiao-tong-gui-ze/"/>
-    <updated>2013-05-18T22:49:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/18/xin-jiao-tong-gui-ze</id>
-    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>   //before
-</span><span class='line'>    if(light == “green”){
-</span><span class='line'>      run();
-</span><span class='line'>    }else if(light == “red”){
-</span><span class='line'>      stop();
-</span><span class='line'>    }else if(light == “yellow”){
-</span><span class='line'>      holdOn();
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    //now
-</span><span class='line'>    if(light == “green”){
-</span><span class='line'>      run();
-</span><span class='line'>    }else if(light == “red”){
-</span><span class='line'>      stop();
-</span><span class='line'>    }else if(light == “yellow”){
-</span><span class='line'>      stop();
-</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
