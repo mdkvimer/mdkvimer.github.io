@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 笔试与面试 | 曾经的308的小菜菜]]></title>
+  <title><![CDATA[Category: 笔试与面试 | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/bi-shi-yu-mian-shi/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-19T19:54:58+08:00</updated>
+  <updated>2013-05-19T20:09:28+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[周一的面试]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/zhou-%5B%3F%5D-de-mian-shi/"/>
+    <updated>2013-05-19T19:59:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/zhou-[?]-de-mian-shi</id>
+    <content type="html"><![CDATA[<p><code>
+time: 2013 5 13 4:30 ~ 5:30
+</code>
+<code>
+国内一家大的互联网公司
+</code>
+<code>
+address:浙大路41号汉庭酒店301
+</code></p>
+
+<p><code>
+面试官: 资深码农(SA吧)
+</code></p>
+
+<p><code>
+二逼码农:mdk
+</code></p>
+
+<p>```
+main()
+{</p>
+
+<pre><code>1.tcp/ip 七层协议
+2.tcp/ip 三次握手
+3.tcp/ip 状态
+4.个人的一些情况
+5.deal access.log with shell(awk,sed,re)
+6.个人项目
+7.一些OS的问题
+.........
+</code></pre>
+
+<p>}
+```</p>
+
+<p>总的来说有所收获~经验值也得到提升</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[网易笔试]]></title>
