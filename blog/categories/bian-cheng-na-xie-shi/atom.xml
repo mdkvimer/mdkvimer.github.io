@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 编程那些事 | mdk Blog home]]></title>
+  <link href="http://mdkvimer.github.io/blog/categories/bian-cheng-na-xie-shi/atom.xml" rel="self"/>
+  <link href="http://mdkvimer.github.io/"/>
+  <updated>2013-05-19T15:22:50+08:00</updated>
+  <id>http://mdkvimer.github.io/</id>
+  <author>
+    <name><![CDATA[mdkvimer]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[20个位运算知多少2]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/"/>
+    <updated>2013-05-18T22:46:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2</id>
+    <content type="html"><![CDATA[<p>```
+int getMaxInt1(){
+  return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
+}</p>
+
+<p>int getMaxInt2(){
+  return ~( 1 &lt;&lt; 31 );
+}</p>
+
+<p>int getMaxInt3(){
+  return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
+}</p>
+
+<p>int getMaxInt4(){
+  return ( (unsigned int) – 1 ) >> 1;
+}</p>
+
+<p>int getMinInt5(){
+  return 1 &lt;&lt; 31; //获取int类型的最小值
+}</p>
+
+<p>int getMinInt6(){
+  return 1 &lt;&lt; -1; //gcc 不支持
+}</p>
+
+<p>int getMaxLong(){
+  return ((unsigned long) – 1 ) >> 1;
+}</p>
+
+<p>int getMinLong(){
+  return 1 &lt;&lt; 63;
+}</p>
+
+<p>int mulTwo(int n){
+   return n &lt;&lt; 1;
+}</p>
+
+<p>int divTwo(int n){
+  return n >> 1;
+}</p>
+
+<p>int mulTwoPower(int n,int m){
+ //n*(2<sup>m</sup>)
+  return n &lt;&lt; m;
+}</p>
+
+<p>int divTwoPower(int n,int m){
+ //n/(2<sup>m</sup>)
+  return n >> m;
+}</p>
+
+<p>bool isOddNumber(int n){
+  return (n &amp; 1) == 1;
+}</p>
+
+<p>void swap1(int a,int b){
+ a ^= b;
+ b ^= a;
+ a ^= b;
+ cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+}</p>
+
+<p>void swap2(int <em>a,int </em>b){
+ (<em>a) ^= (</em>b) ^= (<em>a) ^= (</em>b);
+}</p>
+
+<p>int abs(int n){
+  return (n<sup> n >> 31 </sup>) &ndash;( n >> 31 );
+}</p>
+
+<p>int main(int argc,char <em>argv[])
+{
+   /</em></p>
+
+<pre><code>*位运算的20则
+* */
+int max1 = getMaxInt1();
+int max2 = getMaxInt2();
+int max3 = getMaxInt4();
+int min1 = getMinInt5();
+int min2 = getMinInt6();
+int max4 = getMaxLong();
+int min3 = getMinLong();
+int num1 = mulTwo(2);
+int num2 = divTwo(2);
+int num3 = mulTwoPower(2,1);
+int num4 = divTwoPower(2,1);
+int num5 = isOddNumber(4);
+int num6 = isOddNumber(3);
+int a=3;
+int b=4;
+int a1=3;
+int b1=4;
+a ^= b;
+b ^= a;
+a ^= b;
+//cout&lt;&lt;a&lt;&lt;”  “&lt;&lt;b&lt;&lt;endl;
+//cout&lt;&lt;max1&lt;&lt;” “&lt;&lt;max2&lt;&lt;” “&lt;&lt;max3&lt;&lt;endl;
+//cout&lt;&lt;min1&lt;&lt;” “&lt;&lt;min2&lt;&lt;endl;
+//cout&lt;&lt;max4&lt;&lt;endl;
+//cout&lt;&lt;min3&lt;&lt;endl;
+//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+//cout&lt;&lt;num5&lt;&lt;” “&lt;&lt;num6&lt;&lt;endl;
+//swap1(a,b);
+//cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+//swap2(&amp;a1,&amp;b1);
+//cout&lt;&lt;a1&lt;&lt;” “&lt;&lt;b1&lt;&lt;endl;
+int abs1 = abs(-5);
+cout&lt;&lt;abs1&lt;&lt;endl;
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[20个位运算知多少1]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/"/>
+    <updated>2013-05-18T22:45:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1</id>
+    <content type="html"><![CDATA[<p>```
+int max1(int a,int b){
+  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
+}</p>
+
+<p>int max2(int x,int y){
+  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
+}</p>
+
+<p>int min1(int a,int b){
+  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
+}</p>
+
+<p>int min2(int x,int y){
+  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
+}</p>
+
+<p>bool isSampSign(int x,int y){
+  return (x<sup>y</sup>) >= 0;
+}</p>
+
+<p>int getTwo(int n){
+ // 2<sup>n</sup>
+ return 2 &lt;&lt; (n-1);
+}</p>
+
+<p>bool isTwo(int n){
+ return n > 0 ? (n&amp;(n-1)) == 0:false;
+}</p>
+
+<p>int quyu(int m,int n){
+  return m &amp; (n-1);
+}</p>
+
+<p>int getAgv1(int n,int m){
+ return (n+m) >> 1;
+}</p>
+
+<p>int getAgv2(int x,int y){
+ return ((x<sup>y</sup>) >> 1) + (x&amp;y);
+}</p>
+
+<p>int getBit(int n,int m){  //从低位到高位 取n的第m位
+ return (n >> (m-1)) &amp; 1;
+}</p>
+
+<p>int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
+ return n | (1 &lt;&lt; (m-1));
+}</p>
+
+<p>int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
+ return n &amp; ~(1 &lt;&lt; (m-1));
+}</p>
+
+<p>int getnum1(int n){
+  //get n+1
+  return &ndash;~n;
+}</p>
+
+<p>int getnum2(int n){
+ return ~-n;
+}</p>
+
+<p>int getnum3(int n){
+ return ~n + 1;
+}</p>
+
+<p>int main(int argc,char *argv[])
+{</p>
+
+<pre><code>int num1 = max1(3,5);
+int num2 = max2(3,5);
+int num3 = min1(3,5);
+int num4 = min2(3,5);
+cout&lt;&lt;getnum3(3)&lt;&lt;endl;
+//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
+//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
+//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
+//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
+//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
+//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
+//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
+//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+return 0;
+</code></pre>
+
+<p>}
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
