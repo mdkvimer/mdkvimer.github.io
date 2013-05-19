@@ -9,7 +9,56 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="计量OJ简史 / * ===================================================================================== * * Filename: oj.cpp * * Description: 计量oj简史2 * * &hellip;">
+  <meta name="description" content="计量OJ简史 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,130 +148,253 @@
 
 <div class="entry-content"><p>计量OJ简史</p>
 
-<p>/<em>
- * =====================================================================================
- *
- *       Filename:  oj.cpp
- *
- *    Description:  计量oj简史2
- *
- *        Version:  1.0
- *        Created:  2013/1/12 19:46:55
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  mdk-vim.cpp-c (mdk), <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x6d;&#x64;&#x6b;&#x40;&#x73;&#x65;&#114;&#x76;&#101;&#x72;&#46;&#101;&#120;&#x61;&#109;&#x70;&#108;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#109;&#100;&#x6b;&#x40;&#x73;&#x65;&#x72;&#x76;&#x65;&#x72;&#x2e;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;</a>
- *        Company:  cjluacm-vim-mdk
- *
- * =====================================================================================
- </em>/</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>/*
+</span><span class='line'> * =====================================================================================
+</span><span class='line'> *
+</span><span class='line'> *       Filename:  oj.cpp
+</span><span class='line'> *
+</span><span class='line'> *    Description:  计量oj简史2
+</span><span class='line'> *
+</span><span class='line'> *        Version:  1.0
+</span><span class='line'> *        Created:  2013/1/12 19:46:55
+</span><span class='line'> *       Revision:  none
+</span><span class='line'> *       Compiler:  gcc
+</span><span class='line'> *
+</span><span class='line'> *         Author:  mdk-vim.cpp-c (mdk), mdk@server.example.com
+</span><span class='line'> *        Company:  cjluacm-vim-mdk
+</span><span class='line'> *
+</span><span class='line'> * =====================================================================================
+</span><span class='line'> */
+</span><span class='line'>#pragma warning(disable:一切阻力)
+</span><span class='line'>
+</span><span class='line'>#include &lt; 院领导 &gt;
+</span><span class='line'>
+</span><span class='line'>#include &lt; 尤天师 &gt;
+</span><span class='line'>
+</span><span class='line'>#include &lt; 308 全体成员 &gt;
+</span><span class='line'>
+</span><span class='line'>using 一台很老的 DELL 台式机 std;
+</span><span class='line'>
+</span><span class='line'>#define              OJ史前时代      ( 以UVA转载题为主 );
+</span><span class='line'>
+</span><span class='line'>#define              OJ目前大事      ( 稳步发展月赛 );
+</span><span class='line'>
+</span><span class='line'>#define              ACM基地记事     ( 出题解题做题 );
+</span><span class='line'>
+</span><span class='line'>int main()
+</span><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>
+</span><span class='line'>            time        = 2009 / 7 /28;
+</span><span class='line'>
+</span><span class='line'>            place       = hdu 信息楼一楼;
+</span><span class='line'>
+</span><span class='line'>            action      = *****ACM研讨交流会;
+</span><span class='line'>
+</span><span class='line'>            person      = 院领导 + 尤天师 + 308 全体成员 + 部分08级同学;
+</span><span class='line'>
+</span><span class='line'>            harvest     = ” 领导一定支持 ~~! ” + 水果若干;
+</span><span class='line'>
+</span><span class='line'>            time        = 2009 / 9 / 12;
+</span><span class='line'>
+</span><span class='line'>            action      = 尤天师提交月赛申请书;
+</span><span class='line'>
+</span><span class='line'>            time       += 3;
+</span><span class='line'>
+</span><span class='line'>            action      = 月赛审核通过;
+</span><span class='line'>
+</span><span class='line'>            for(   time = 2009 / 9 / 28; time != 2009 / 10 / 5; ++time )
+</span><span class='line'>
+</span><span class='line'>            {
+</span><span class='line'>
+</span><span class='line'>                 action = OJ construting;
+</span><span class='line'>
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            time        = 9 / 10 / 2009;
+</span><span class='line'>
+</span><span class='line'>            action      = OJ 在后院论坛开辟子版块;               
+</span><span class='line'>
+</span><span class='line'>            time        = 21 / 11 / 2009;
+</span><span class='line'>
+</span><span class='line'>            action      = 招新赛完毕;
+</span><span class='line'>
+</span><span class='line'>            time        = 1 / 12 / 2009;
+</span><span class='line'>
+</span><span class='line'>            action      = 新人入住完毕;
+</span><span class='line'>
+</span><span class='line'>            time        = 5/ 01/ 2010;
+</span><span class='line'>
+</span><span class='line'>            action      = 月赛进入全校范围;
+</span><span class='line'>
+</span><span class='line'>            while ( time++ != 2011 / 7 )
+</span><span class='line'>
+</span><span class='line'>            {
+</span><span class='line'>
+</span><span class='line'>                      action = OJ updating;
+</span><span class='line'>
+</span><span class='line'>            }
+</span><span class='line'>           
+</span><span class='line'>            /*
+</span><span class='line'>             *未获得前辈们的认可就将OJ转换
+</span><span class='line'>             *在此向前辈们致歉
+</span><span class='line'>             * 我们的宗旨是将OJ打造成造福于全校搞IT的学生
+</span><span class='line'>             * */
+</span><span class='line'>           
+</span><span class='line'>            time        =  5 / 6 / 2012
+</span><span class='line'>
+</span><span class='line'>            action      =  平台转换 windows-&gt;linux 内核开源
+</span><span class='line'>           
+</span><span class='line'>            time        =  25 / 6 / 2012
+</span><span class='line'>           
+</span><span class='line'>            action      =  web 端修改完毕 数据无损伤导入 新oj 新特性
+</span><span class='line'>
+</span><span class='line'>            time        =  * / 7 / 2012
+</span><span class='line'>
+</span><span class='line'>            action      =  投入使用(期间省赛被挫三人组组织两场比赛)
+</span><span class='line'>
+</span><span class='line'>            time        = 28 / 10 / 2012
+</span><span class='line'>
+</span><span class='line'>            action      = 域名重新对外(acm.cjlu.edu.cn)
+</span><span class='line'>
+</span><span class='line'>            while ( time ++ != 2014 / 7 )
+</span><span class='line'>            
+</span><span class='line'>            {
+</span><span class='line'>                  
+</span><span class='line'>                   action1 = OJ updating
+</span><span class='line'>                  
+</span><span class='line'>                   action2 = CODE2AC()
+</span><span class='line'>
+</span><span class='line'>            }
+</span><span class='line'>
+</span><span class='line'>            return 0;
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<h1>pragma warning(disable:一切阻力)</h1>
-
-<h1>include &lt; 院领导 ></h1>
-
-<h1>include &lt; 尤天师 ></h1>
-
-<h1>include &lt; 308 全体成员 ></h1>
-
-<p>using 一台很老的 DELL 台式机 std;</p>
-
-<h1>define              OJ史前时代      ( 以UVA转载题为主 );</h1>
-
-<h1>define              OJ目前大事      ( 稳步发展月赛 );</h1>
-
-<h1>define              ACM基地记事     ( 出题解题做题 );</h1>
-
-<p>int main()</p>
-
-<p>{</p>
-
-<pre><code>        time        = 2009 / 7 /28;
-
-        place       = hdu 信息楼一楼;
-
-        action      = *****ACM研讨交流会;
-
-        person      = 院领导 + 尤天师 + 308 全体成员 + 部分08级同学;
-
-        harvest     = ” 领导一定支持 ~~! ” + 水果若干;
-
-        time        = 2009 / 9 / 12;
-
-        action      = 尤天师提交月赛申请书;
-
-        time       += 3;
-
-        action      = 月赛审核通过;
-
-        for(   time = 2009 / 9 / 28; time != 2009 / 10 / 5; ++time )
-
-        {
-
-             action = OJ construting;
-
-        }
-
-        time        = 9 / 10 / 2009;
-
-        action      = OJ 在后院论坛开辟子版块;               
-
-        time        = 21 / 11 / 2009;
-
-        action      = 招新赛完毕;
-
-        time        = 1 / 12 / 2009;
-
-        action      = 新人入住完毕;
-
-        time        = 5/ 01/ 2010;
-
-        action      = 月赛进入全校范围;
-
-        while ( time++ != 2011 / 7 )
-
-        {
-
-                  action = OJ updating;
-
-        }
-
-        /*
-         *未获得前辈们的认可就将OJ转换
-         *在此向前辈们致歉
-         * 我们的宗旨是将OJ打造成造福于全校搞IT的学生
-         * */
-
-        time        =  5 / 6 / 2012
-
-        action      =  平台转换 windows-&gt;linux 内核开源
-
-        time        =  25 / 6 / 2012
-
-        action      =  web 端修改完毕 数据无损伤导入 新oj 新特性
-
-        time        =  * / 7 / 2012
-
-        action      =  投入使用(期间省赛被挫三人组组织两场比赛)
-
-        time        = 28 / 10 / 2012
-
-        action      = 域名重新对外(acm.cjlu.edu.cn)
-
-        while ( time ++ != 2014 / 7 )
-
-        {
-
-               action1 = OJ updating
-
-               action2 = CODE2AC()
-
-        }
-
-        return 0;
-</code></pre>
-
-<p>}</p>
 </div>
 
 

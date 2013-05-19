@@ -283,19 +283,27 @@ while(1){
 
 <p>（下述配置和耗时情况帮你粗略估计完成整个安装过程大概需要的时间）</p>
 
-<h1>grep bogo /proc/cpuinfo</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># grep bogo /proc/cpuinfo
+</span><span class='line'>bogomips       : 3337.81</span></code></pre></td></tr></table></div></figure>
 
-<p>bogomips       : 3337.81</p>
 
-<h1>hdparm -tT /dev/sda</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># hdparm -tT /dev/sda
+</span><span class='line'>/dev/sda:
+</span><span class='line'> Timing cached reads:   1100 MB in  2.00 seconds = 549.97 MB/sec
+</span><span class='line'> Timing buffered disk reads:  224 MB in  3.01 seconds =  74.36 MB/sec</span></code></pre></td></tr></table></div></figure>
 
-<p>/dev/sda:
- Timing cached reads:   1100 MB in  2.00 seconds = 549.97 MB/sec
- Timing buffered disk reads:  224 MB in  3.01 seconds =  74.36 MB/sec</p>
 
-<h1>grep MemTotal /proc/meminfo</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># grep MemTotal /proc/meminfo
+</span><span class='line'>MemTotal:       509248 kB</span></code></pre></td></tr></table></div></figure>
 
-<p>MemTotal:       509248 kB</p>
 
 <ol>
 <li>快速安装指南</li>
@@ -314,11 +322,17 @@ while(1){
 
 <p>代码 2.1: 引导最小光盘</p>
 
-<p>Gentoo Linux Installation LiveCD                     <a href="http://www.gentoo.org">http://www.gentoo.org</a>
-Enter to Boot; F1 for kernels  F2 for options.
-boot: gentoo-nofb
-（或在有问题的情况下）
-boot: gentoo-nofb nodetect</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Gentoo Linux Installation LiveCD                     http://www.gentoo.org
+</span><span class='line'>Enter to Boot; F1 for kernels  F2 for options.
+</span><span class='line'>boot: gentoo-nofb
+</span><span class='line'>（或在有问题的情况下）
+</span><span class='line'>boot: gentoo-nofb nodetect</span></code></pre></td></tr></table></div></figure>
+
 
 <p>可选：装载模块</p>
 
@@ -326,12 +340,19 @@ boot: gentoo-nofb nodetect</p>
 
 <p>代码 2.2: 载入必要的模块</p>
 
-<p>livecd root # lspci
-（根据lspci的输出查看需要哪些模块）</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # lspci
+</span><span class='line'>（根据lspci的输出查看需要哪些模块）
+</span><span class='line'>
+</span><span class='line'>（以下只是个例子，实际以具体硬件为准）
+</span><span class='line'>livecd root # modprobe 3w-9xxx
+</span><span class='line'>livecd root # modprobe r8169</span></code></pre></td></tr></table></div></figure>
 
-<p>（以下只是个例子，实际以具体硬件为准）
-livecd root # modprobe 3w-9xxx
-livecd root # modprobe r8169</p>
 
 <p>网络配置</p>
 
@@ -343,15 +364,21 @@ livecd root # modprobe r8169</p>
 
 <p>代码 2.3: 通过向导配置网络</p>
 
-<p>livecd root # net-setup eth0</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # net-setup eth0</span></code></pre></td></tr></table></div></figure>
+
 
 <p>或者，你也可以手动打开网络。下面的例子把你电脑的IP地址配置为192.168.1.10，并把网关和域名服务器设为192.168.1.1。</p>
 
 <p>代码 2.4: 手动配置网络</p>
 
-<p>livecd root # ifconfig eth0 192.168.1.10/24
-livecd root # route add default gw 192.168.1.1
-livecd root # echo nameserver 192.168.1.1 > /etc/resolv.conf</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # ifconfig eth0 192.168.1.10/24
+</span><span class='line'>livecd root # route add default gw 192.168.1.1
+</span><span class='line'>livecd root # echo nameserver 192.168.1.1 &gt; /etc/resolv.conf</span></code></pre></td></tr></table></div></figure>
+
 
 <p>安装盘允许你启动一个sshd服务，添加用户，运行irssi（一个命令行的客户端聊天工具），还可以使用links进行网上冲浪。</p>
 
@@ -361,35 +388,57 @@ livecd root # echo nameserver 192.168.1.1 > /etc/resolv.conf</p>
 
 <p>代码 2.5: 启动sshd</p>
 
-<p>livecd root # time /etc/init.d/sshd start
- * Generating hostkey &hellip;
-（sshd生成密钥并显示更多输出）
- * starting sshd &hellip;                            [ok]</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # time /etc/init.d/sshd start
+</span><span class='line'> * Generating hostkey ...
+</span><span class='line'>（sshd生成密钥并显示更多输出）
+</span><span class='line'> * starting sshd ...                            [ok]
+</span><span class='line'>
+</span><span class='line'>real   0m13.688s
+</span><span class='line'>user   0m9.420s
+</span><span class='line'>sys    0m0.090s</span></code></pre></td></tr></table></div></figure>
 
-<p>real   0m13.688s
-user   0m9.420s
-sys    0m0.090s</p>
 
 <p>现在设置一下安装盘的root密码，使你能通过另一台电脑连接。请注意正常情况下不推荐你允许root通过ssh连接。如果你的本地网络不太可靠，请设一个又长又复杂的密码。它只能使用一次，因为机器重启后就没掉了。</p>
 
 <p>代码 2.6: 设置root密码</p>
 
-<p>livecd root # passwd
-New UNIX password: 输入密码
-Retype new UNIX password: 输入密码
-passwd: password updated successfully</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # passwd
+</span><span class='line'>New UNIX password: 输入密码
+</span><span class='line'>Retype new UNIX password: 输入密码
+</span><span class='line'>passwd: password updated successfully</span></code></pre></td></tr></table></div></figure>
+
 
 <p>现在就可以在另一台电脑上打开一个终端并连接到你的新机器，在新的窗口中继续本指南接下去的内容，复制/粘贴文中的命令。</p>
 
 <p>代码 2.7: 从另一台电脑连到你的新机器</p>
 
-<p>（使用你新机器的IP地址）
-$ ssh <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#114;&#111;&#111;&#116;&#64;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x31;&#46;&#49;&#48;">&#114;&#111;&#111;&#x74;&#x40;&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#x2e;&#49;&#46;&#x31;&#48;</a>
-The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
-RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &lsquo;192.168.1.10&rsquo; (RSA) to the list of known hosts.
-Password: 输入密码</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（使用你新机器的IP地址）
+</span><span class='line'>$ ssh root@192.168.1.10
+</span><span class='line'>The authenticity of host '192.168.1.10 (192.168.1.10)' can't be established.
+</span><span class='line'>RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
+</span><span class='line'>Are you sure you want to continue connecting (yes/no)? yes
+</span><span class='line'>Warning: Permanently added '192.168.1.10' (RSA) to the list of known hosts.
+</span><span class='line'>Password: 输入密码</span></code></pre></td></tr></table></div></figure>
+
 
 <p>准备磁盘</p>
 
@@ -397,41 +446,69 @@ Password: 输入密码</p>
 
 <p>代码 2.8: 创建分区</p>
 
-<p>livecd ~ # fdisk /dev/sda</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd ~ # fdisk /dev/sda
+</span><span class='line'>
+</span><span class='line'>（本手册接下去使用以下分区规划）
+</span><span class='line'>livecd ~ # fdisk -l /dev/sda
+</span><span class='line'>
+</span><span class='line'>Disk /dev/sda: 599.9 GB, 599978409984 bytes
+</span><span class='line'>255 heads, 63 sectors/track, 72943 cylinders
+</span><span class='line'>Units = cylinders of 16065 * 512 = 8225280 bytes
+</span><span class='line'>
+</span><span class='line'>   Device Boot      Start         End      Blocks   Id  System
+</span><span class='line'>/dev/sda1   *           1          12       96358+  83  Linux
+</span><span class='line'>/dev/sda2              13         110      787185   82  Linux swap / Solaris
+</span><span class='line'>/dev/sda3             111       72943   585031072+  83  Linux</span></code></pre></td></tr></table></div></figure>
 
-<p>（本手册接下去使用以下分区规划）
-livecd ~ # fdisk -l /dev/sda</p>
-
-<p>Disk /dev/sda: 599.9 GB, 599978409984 bytes
-255 heads, 63 sectors/track, 72943 cylinders
-Units = cylinders of 16065 * 512 = 8225280 bytes</p>
-
-<p>   Device Boot      Start         End      Blocks   Id  System
-/dev/sda1   *           1          12       96358+  83  Linux
-/dev/sda2              13         110      787185   82  Linux swap / Solaris
-/dev/sda3             111       72943   585031072+  83  Linux</p>
 
 <p>使用mke2fs，mke2fs -j，mkreiserfs，mkfs.xfs和mkfs.jfs建立Linux分区的文件系统。使用mkswap和swapon初始化交换分区。</p>
 
 <p>代码 2.9: 创建文件系统并激活交换分区</p>
 
-<p>（ext2完全满足/boot分区的需要）
-livecd ~ # mke2fs /dev/sda1</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（ext2完全满足/boot分区的需要）
+</span><span class='line'>livecd ~ # mke2fs /dev/sda1
+</span><span class='line'>
+</span><span class='line'>（主分区就用ext3吧）
+</span><span class='line'>livecd ~ # mke2fs -j /dev/sda3
+</span><span class='line'>
+</span><span class='line'>（创建并激活交换分区）
+</span><span class='line'>livecd ~ # mkswap /dev/sda2 && swapon /dev/sda2</span></code></pre></td></tr></table></div></figure>
 
-<p>（主分区就用ext3吧）
-livecd ~ # mke2fs -j /dev/sda3</p>
-
-<p>（创建并激活交换分区）
-livecd ~ # mkswap /dev/sda2 &amp;&amp; swapon /dev/sda2</p>
 
 <p>把新建的文件系统挂载到/mnt/gentoo。如果需要其他挂载点（如/mnt/gentoo/boot），也要为它们创建目录并挂载好。</p>
 
 <p>代码 2.10: 挂载文件系统</p>
 
-<p>livecd ~ # mount /dev/sda3 /mnt/gentoo
-livecd ~ # mkdir /mnt/gentoo/boot
-livecd ~ # mount /dev/sda1 /mnt/gentoo/boot
-livecd ~ # cd /mnt/gentoo</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd ~ # mount /dev/sda3 /mnt/gentoo
+</span><span class='line'>livecd ~ # mkdir /mnt/gentoo/boot
+</span><span class='line'>livecd ~ # mount /dev/sda1 /mnt/gentoo/boot
+</span><span class='line'>livecd ~ # cd /mnt/gentoo</span></code></pre></td></tr></table></div></figure>
+
 
 <p>安装Stage</p>
 
@@ -439,46 +516,75 @@ livecd ~ # cd /mnt/gentoo</p>
 
 <p>代码 2.11: 设定日期和UTC时间</p>
 
-<p>（查看时钟）
-livecd gentoo # date
-Mon Mar  6 00:14:13 UTC 2006</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（查看时钟）
+</span><span class='line'>livecd gentoo # date
+</span><span class='line'>Mon Mar  6 00:14:13 UTC 2006
+</span><span class='line'>
+</span><span class='line'>（设置当前日期和时间，如果需要的话）
+</span><span class='line'>livecd gentoo # date 030600162006 （格式为MMDDhhmmYYYY）
+</span><span class='line'>Mon Mar  6 00:16:00 UTC 2006</span></code></pre></td></tr></table></div></figure>
 
-<p>（设置当前日期和时间，如果需要的话）
-livecd gentoo # date 030600162006 （格式为MMDDhhmmYYYY）
-Mon Mar  6 00:16:00 UTC 2006</p>
 
 <p>接下来，从我们的镜像下载一份stage包：</p>
 
 <p>代码 2.12: 下载一份stage3压缩包</p>
 
-<p>livecd gentoo # links <a href="http://www.gentoo.org/main/en/mirrors.xml">http://www.gentoo.org/main/en/mirrors.xml</a>
-（选一个镜像，进入releases/x86/current-stage3/目录，高亮显示你需要的stage3包，
-即i686 stage3，按下D键下载）</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd gentoo # links http://www.gentoo.org/main/en/mirrors.xml
+</span><span class='line'>（选一个镜像，进入releases/x86/current-stage3/目录，高亮显示你需要的stage3包，
+</span><span class='line'>即i686 stage3，按下D键下载）</span></code></pre></td></tr></table></div></figure>
+
 
 <p>进入/mnt/gentoo，执行tar xjpf <stage3 tarball>解压stage包。</p>
 
 <p>代码 2.13: 解开stage3压缩包</p>
 
-<p>livecd gentoo # time tar xjpf stage3*</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd gentoo # time tar xjpf stage3*
+</span><span class='line'>
+</span><span class='line'>real  1m14.157s
+</span><span class='line'>user  1m2.920s
+</span><span class='line'>sys   0m7.530s</span></code></pre></td></tr></table></div></figure>
 
-<p>real  1m14.157s
-user  1m2.920s
-sys   0m7.530s</p>
 
 <p>安装最新的Portage快照。跟下载stage3压缩包一样：从我们的列表选择一个最近的镜像，下载最新的快照并解压。</p>
 
 <p>代码 2.14: 下载最新的Portage快照</p>
 
-<p>livecd gentoo # cd /mnt/gentoo/usr
-livecd usr # wget <a href="http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2">http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>livecd gentoo # cd /mnt/gentoo/usr
+</span><span class='line'>livecd usr # wget http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2</span></code></pre></td></tr></table></div></figure>
+
 
 <p>代码 2.15: 解开Portage快照</p>
 
-<p>livecd usr # time tar xjf portage-lat*</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd usr # time tar xjf portage-lat*
+</span><span class='line'>
+</span><span class='line'>real  0m40.523s
+</span><span class='line'>user  0m28.280s
+</span><span class='line'>sys   0m8.240s</span></code></pre></td></tr></table></div></figure>
 
-<p>real  0m40.523s
-user  0m28.280s
-sys   0m8.240s</p>
 
 <p>切换系统</p>
 
@@ -486,14 +592,21 @@ sys   0m8.240s</p>
 
 <p>代码 2.16: Chroot</p>
 
-<p>livecd usr # cd /
-livecd / # mount -t proc proc /mnt/gentoo/proc
-livecd / # mount -o bind /dev /mnt/gentoo/dev
-livecd / # cp -L /etc/resolv.conf /mnt/gentoo/etc/
-livecd / # chroot /mnt/gentoo /bin/bash
-livecd / # env-update &amp;&amp; source /etc/profile</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd usr # cd /
+</span><span class='line'>livecd / # mount -t proc proc /mnt/gentoo/proc
+</span><span class='line'>livecd / # mount -o bind /dev /mnt/gentoo/dev
+</span><span class='line'>livecd / # cp -L /etc/resolv.conf /mnt/gentoo/etc/
+</span><span class='line'>livecd / # chroot /mnt/gentoo /bin/bash
+</span><span class='line'>livecd / # env-update && source /etc/profile
+</span><span class='line'>&gt;&gt;&gt; Regenerating /etc/ld.so.cache...</span></code></pre></td></tr></table></div></figure>
 
-<blockquote><blockquote><blockquote><p>Regenerating /etc/ld.so.cache&hellip;</p></blockquote></blockquote></blockquote>
 
 <p>设定时区</p>
 
@@ -501,11 +614,17 @@ livecd / # env-update &amp;&amp; source /etc/profile</p>
 
 <p>代码 2.17: 设置时区</p>
 
-<p>livecd / # ls /usr/share/zoneinfo
-（以上海为例）
-livecd / # cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-livecd / # date
-Thu Aug 30 11:03:16 CST 2007</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd / # ls /usr/share/zoneinfo
+</span><span class='line'>（以上海为例）
+</span><span class='line'>livecd / # cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span><span class='line'>livecd / # date
+</span><span class='line'>Thu Aug 30 11:03:16 CST 2007</span></code></pre></td></tr></table></div></figure>
+
 
 <p>设定主机名和域名</p>
 
@@ -513,13 +632,21 @@ Thu Aug 30 11:03:16 CST 2007</p>
 
 <p>代码 2.18: 设置主机名和域名</p>
 
-<p>livecd / # cd /etc
-livecd etc # echo &ldquo;127.0.0.1 mdk-server.vim.myplace mybox localhost&rdquo; > hosts
-livecd etc # sed -i -e &rsquo;s/HOSTNAME.*/HOSTNAME=&ldquo;mdk-server&rdquo;/&lsquo; conf.d/hostname
-（使用指定的主机名并检查）
-livecd etc # hostname mdk-server
-livecd etc # hostname -f
-mdk-server.vim.myplace</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd / # cd /etc
+</span><span class='line'>livecd etc # echo "127.0.0.1 mdk-server.vim.myplace mybox localhost" &gt; hosts
+</span><span class='line'>livecd etc # sed -i -e 's/HOSTNAME.*/HOSTNAME="mdk-server"/' conf.d/hostname
+</span><span class='line'>（使用指定的主机名并检查）
+</span><span class='line'>livecd etc # hostname mdk-server
+</span><span class='line'>livecd etc # hostname -f
+</span><span class='line'>mdk-server.vim.myplace</span></code></pre></td></tr></table></div></figure>
+
 
 <p>内核配置</p>
 
@@ -527,23 +654,41 @@ mdk-server.vim.myplace</p>
 
 <p>代码 2.19: 安装内核源码包，编译和安装内核</p>
 
-<p>livecd etc # time emerge gentoo-sources</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd etc # time emerge gentoo-sources
+</span><span class='line'>
+</span><span class='line'>real  2m51.435s
+</span><span class='line'>user  0m58.220s
+</span><span class='line'>sys   0m29.890s
+</span><span class='line'>livecd etc # cd /usr/src/linux
+</span><span class='line'>livecd linux # make menuconfig
+</span><span class='line'>（配置内核）
+</span><span class='line'>livecd linux # time make -j2
+</span><span class='line'>
+</span><span class='line'>（所花的时间很大程度上决定于你所选的选项）
+</span><span class='line'>real  3m51.962s
+</span><span class='line'>user  3m27.060s
+</span><span class='line'>sys   0m24.310s
+</span><span class='line'>
+</span><span class='line'>livecd linux # make modules_install
+</span><span class='line'>livecd linux # cp arch/i386/boot/bzImage /boot/kernel</span></code></pre></td></tr></table></div></figure>
 
-<p>real  2m51.435s
-user  0m58.220s
-sys   0m29.890s
-livecd etc # cd /usr/src/linux
-livecd linux # make menuconfig
-（配置内核）
-livecd linux # time make -j2</p>
-
-<p>（所花的时间很大程度上决定于你所选的选项）
-real  3m51.962s
-user  3m27.060s
-sys   0m24.310s</p>
-
-<p>livecd linux # make modules_install
-livecd linux # cp arch/i386/boot/bzImage /boot/kernel</p>
 
 <p>配置系统</p>
 
@@ -551,25 +696,41 @@ livecd linux # cp arch/i386/boot/bzImage /boot/kernel</p>
 
 <p>代码 2.20: fstab范例</p>
 
-<p>livecd linux # cd /etc
-livecd etc # nano -w fstab
-/dev/sda1   /boot     ext2    noauto,noatime     1 2
-/dev/sda3   /         ext3    noatime            0 1
-/dev/sda2   none      swap    sw                 0 0</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd linux # cd /etc
+</span><span class='line'>livecd etc # nano -w fstab
+</span><span class='line'>/dev/sda1   /boot     ext2    noauto,noatime     1 2
+</span><span class='line'>/dev/sda3   /         ext3    noatime            0 1
+</span><span class='line'>/dev/sda2   none      swap    sw                 0 0</span></code></pre></td></tr></table></div></figure>
+
 
 <p>在/etc/conf.d/net中配置网络。把net.eth0启动脚本添加到默认运行级别。如果有多张网卡，分别为它们建立符号链接到net.eth0启动脚本，并一起添加到默认运行级别。用nano编辑/etc/conf.d/net，或者使用如下命令：</p>
 
 <p>代码 2.21: 配置网络</p>
 
-<p>livecd etc # cd conf.d
-livecd conf.d # echo &lsquo;config_eth0=( &ldquo;192.168.1.10/24&rdquo; )&rsquo; >> net
-livecd conf.d # echo &lsquo;routes_eth0=( &ldquo;default via 192.168.1.1&rdquo; )&rsquo; >> net
-livecd conf.d # rc-update add net.eth0 default
-（如果你把网卡驱动编译为模块，
-需要将它添加到/etc/modules.autoload.d/kernel-2.6）
-livecd conf.d # echo r8169 >> /etc/modules.autoload.d/kernel-2.6
-（如果希望重启后通过ssh重新连接到新机器）
-livecd conf.d # rc-update add sshd default</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd etc # cd conf.d
+</span><span class='line'>livecd conf.d # echo 'config_eth0=( "192.168.1.10/24" )' &gt;&gt; net
+</span><span class='line'>livecd conf.d # echo 'routes_eth0=( "default via 192.168.1.1" )' &gt;&gt; net
+</span><span class='line'>livecd conf.d # rc-update add net.eth0 default
+</span><span class='line'>（如果你把网卡驱动编译为模块，
+</span><span class='line'>需要将它添加到/etc/modules.autoload.d/kernel-2.6）
+</span><span class='line'>livecd conf.d # echo r8169 &gt;&gt; /etc/modules.autoload.d/kernel-2.6
+</span><span class='line'>（如果希望重启后通过ssh重新连接到新机器）
+</span><span class='line'>livecd conf.d # rc-update add sshd default</span></code></pre></td></tr></table></div></figure>
+
 
 <p>注意: 如果需要支持PCMCIA卡，请emerge pcmciautils。</p>
 
@@ -577,25 +738,37 @@ livecd conf.d # rc-update add sshd default</p>
 
 <p>代码 2.22: 设置root密码</p>
 
-<p>livecd conf.d # passwd
-New UNIX password: 输入密码
-Retype new UNIX password: 再输入密码
-passwd: password updated successfully</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # passwd
+</span><span class='line'>New UNIX password: 输入密码
+</span><span class='line'>Retype new UNIX password: 再输入密码
+</span><span class='line'>passwd: password updated successfully</span></code></pre></td></tr></table></div></figure>
+
 
 <p>编辑/etc/conf.d/clock以定义前面所使用的时区。</p>
 
 <p>代码 2.23: 编辑/etc/conf.d/clock</p>
 
-<p>livecd conf.d # nano -w /etc/conf.d/clock
-TIMEZONE=&ldquo;Asia/Shanghai&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # nano -w /etc/conf.d/clock
+</span><span class='line'>TIMEZONE="Asia/Shanghai"</span></code></pre></td></tr></table></div></figure>
+
 
 <p>检查系统配置，查看并编辑这些配置文件：/etc/rc.conf， /etc/conf.d/rc，/etc/conf.d/keymaps。</p>
 
 <p>代码 2.24: 可选：编辑一些配置文件</p>
 
-<p>livecd conf.d # nano -w /etc/rc.conf
-livecd conf.d # nano -w /etc/conf.d/rc
-livecd conf.d # nano -w /etc/conf.d/keymaps</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # nano -w /etc/rc.conf
+</span><span class='line'>livecd conf.d # nano -w /etc/conf.d/rc
+</span><span class='line'>livecd conf.d # nano -w /etc/conf.d/keymaps</span></code></pre></td></tr></table></div></figure>
+
 
 <p>安装系统工具</p>
 
@@ -604,23 +777,37 @@ livecd conf.d # nano -w /etc/conf.d/keymaps</p>
 
 <p>代码 2.25: 安装系统日志和cron守护进程</p>
 
-<p>livecd conf.d # time emerge syslog-ng vixie-cron</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # time emerge syslog-ng vixie-cron
+</span><span class='line'>
+</span><span class='line'>real  1m54.099s
+</span><span class='line'>user  1m2.630s
+</span><span class='line'>sys   0m34.620s
+</span><span class='line'>livecd conf.d # rc-update add syslog-ng default
+</span><span class='line'>livecd conf.d # rc-update add vixie-cron default</span></code></pre></td></tr></table></div></figure>
 
-<p>real  1m54.099s
-user  1m2.630s
-sys   0m34.620s
-livecd conf.d # rc-update add syslog-ng default
-livecd conf.d # rc-update add vixie-cron default</p>
 
 <p>安装必要的文件系统工具（xfsprogs，reiserfsprogs或jfsutils）和网络工具（dhcpcd或ppp）。</p>
 
 <p>代码 2.26: 安装其它工具</p>
 
-<p>livecd conf.d # emerge xfsprogs       （如果使用XFS文件系统）
-livecd conf.d # emerge jfsutils       （如果使用JFS文件系统）
-livecd conf.d # emerge reiserfsprogs  （如果使用Reiser文件系统）
-livecd conf.d # emerge dhcpcd         （如果使用DHCP客户端）
-livecd conf.d # emerge ppp            （如果使用PPPoE ADSL连接）</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # emerge xfsprogs       （如果使用XFS文件系统）
+</span><span class='line'>livecd conf.d # emerge jfsutils       （如果使用JFS文件系统）
+</span><span class='line'>livecd conf.d # emerge reiserfsprogs  （如果使用Reiser文件系统）
+</span><span class='line'>livecd conf.d # emerge dhcpcd         （如果使用DHCP客户端）
+</span><span class='line'>livecd conf.d # emerge ppp            （如果使用PPPoE ADSL连接）</span></code></pre></td></tr></table></div></figure>
+
 
 <p>配置引导程序</p>
 
@@ -628,41 +815,73 @@ livecd conf.d # emerge ppp            （如果使用PPPoE ADSL连接）</p>
 
 <p>代码 2.27: Emerge grub并编辑它的配置文件</p>
 
-<p>livecd conf.d # time emerge grub</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # time emerge grub
+</span><span class='line'>
+</span><span class='line'>real  1m4.634s
+</span><span class='line'>user  0m39.460s
+</span><span class='line'>sys   0m15.280s
+</span><span class='line'>livecd conf.d # nano -w /boot/grub/grub.conf</span></code></pre></td></tr></table></div></figure>
 
-<p>real  1m4.634s
-user  0m39.460s
-sys   0m15.280s
-livecd conf.d # nano -w /boot/grub/grub.conf</p>
 
 <p>代码 2.28: grub.conf范例</p>
 
-<p>default 0
-timeout 10</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>default 0
+</span><span class='line'>timeout 10
+</span><span class='line'>
+</span><span class='line'>title Gentoo
+</span><span class='line'>root (hd0,0)
+</span><span class='line'>kernel /boot/kernel root=/dev/sda3</span></code></pre></td></tr></table></div></figure>
 
-<p>title Gentoo
-root (hd0,0)
-kernel /boot/kernel root=/dev/sda3</p>
 
 <p>代码 2.29: 安装grub</p>
 
-<p>livecd conf.d # grub
-Probing devices to guess BIOS drives. This may take a long time.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # grub
+</span><span class='line'>Probing devices to guess BIOS drives. This may take a long time.
+</span><span class='line'>
+</span><span class='line'>grub&gt; root (hd0,0)
+</span><span class='line'> Filesystem type is ext2fs, partition type 0xfd
+</span><span class='line'>
+</span><span class='line'>grub&gt; setup (hd0)
+</span><span class='line'> Checking if "/boot/grub/stage1" exists... yes
+</span><span class='line'> Checking if "/boot/grub/stage2" exists... yes
+</span><span class='line'> Checking if "/boot/grub/e2fs_stage1_5" exists... yes
+</span><span class='line'> Running "embed /boot/grub/e2fs_stage1_5 (hd0)"...  16 sectors are embedded.
+</span><span class='line'>succeeded
+</span><span class='line'> Running "install /boot/grub/stage1 (hd0) (hd0)1+16 p (hd0,0)/boot/grub/stage2 /boot/
+</span><span class='line'>grub/menu.lst"... succeeded
+</span><span class='line'>Done.
+</span><span class='line'>
+</span><span class='line'>grub&gt; quit</span></code></pre></td></tr></table></div></figure>
 
-<p>grub> root (hd0,0)
- Filesystem type is ext2fs, partition type 0xfd</p>
-
-<p>grub> setup (hd0)
- Checking if &ldquo;/boot/grub/stage1&rdquo; exists&hellip; yes
- Checking if &ldquo;/boot/grub/stage2&rdquo; exists&hellip; yes
- Checking if &ldquo;/boot/grub/e2fs_stage1_5&rdquo; exists&hellip; yes
- Running &ldquo;embed /boot/grub/e2fs_stage1_5 (hd0)&rdquo;&hellip;  16 sectors are embedded.
-succeeded
- Running &ldquo;install /boot/grub/stage1 (hd0) (hd0)1+16 p (hd0,0)/boot/grub/stage2 /boot/
-grub/menu.lst&rdquo;&hellip; succeeded
-Done.</p>
-
-<p>grub> quit</p>
 
 <p>重启</p>
 
@@ -670,38 +889,57 @@ Done.</p>
 
 <p>代码 2.30: 重启</p>
 
-<p>livecd conf.d # exit
-livecd / # umount /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo/boot /mnt/gentoo
-livecd / # reboot
-（别忘了取出光盘）</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # exit
+</span><span class='line'>livecd / # umount /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo/boot /mnt/gentoo
+</span><span class='line'>livecd / # reboot
+</span><span class='line'>（别忘了取出光盘）</span></code></pre></td></tr></table></div></figure>
+
 
 <p>完成安装
 注意: 在我们这台测试机器上，从minimal CD启动显示boot提示符开始，到重启后显示登录提示符， 总用时为00:42:31 。没错，不到一个小时！注意这个时间还包含了stage3包、Portage快照和一些软件包的下载时间，以及配置内核所花的时间。</p>
 
 <p>以root身份登录，用useradd添加一个或多个用户，作为日常使用。</p>
 
-<p>代码 2.31: 从另一台电脑连到你的新机器</p>
-
-<p>（清理known_hosts文件中的内容，因为你的新机器已生成一个新的
+<p>代码 2.31: 从另一台电脑连到你的新机器
+<code>
+（清理known_hosts文件中的内容，因为你的新机器已生成一个新的
 通用主机密钥）
 $ nano -w ~/.ssh/known_hosts
-（找出新机器的IP并删除那一行，保存并退出nano）</p>
+（找出新机器的IP并删除那一行，保存并退出nano）
+</code>
+（使用你新机器的IP地址）</p>
 
-<p>（使用你新机器的IP地址）
-$ ssh <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#x3a;&#x72;&#111;&#x6f;&#116;&#64;&#49;&#x39;&#50;&#46;&#x31;&#x36;&#x38;&#x2e;&#x31;&#46;&#x31;&#x30;">&#114;&#x6f;&#111;&#116;&#64;&#49;&#57;&#x32;&#x2e;&#x31;&#x36;&#56;&#46;&#x31;&#46;&#49;&#48;</a>
-The authenticity of host &lsquo;192.168.1.10 (192.168.1.10)&rsquo; can&rsquo;t be established.
-RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &lsquo;192.168.1.10&rsquo; (RSA) to the list of known hosts.
-Password: 输入密码</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh root@192.168.1.10
+</span><span class='line'>The authenticity of host '192.168.1.10 (192.168.1.10)' can't be established.
+</span><span class='line'>RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
+</span><span class='line'>Are you sure you want to continue connecting (yes/no)? yes
+</span><span class='line'>Warning: Permanently added '192.168.1.10' (RSA) to the list of known hosts.
+</span><span class='line'>Password: 输入密码</span></code></pre></td></tr></table></div></figure>
+
 
 <p>代码 2.32: 添加一个新用户</p>
 
-<p>mybox ~ # adduser -g users -G lp,wheel,audio,cdrom,portage,cron -m john
-mybox ~ # passwd john
-New UNIX password: 设置John的密码
-Retype new UNIX password: 再次输入John的密码
-passwd: password updated successfully</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # adduser -g users -G lp,wheel,audio,cdrom,portage,cron -m john
+</span><span class='line'>mybox ~ # passwd john
+</span><span class='line'>New UNIX password: 设置John的密码
+</span><span class='line'>Retype new UNIX password: 再次输入John的密码
+</span><span class='line'>passwd: password updated successfully</span></code></pre></td></tr></table></div></figure>
+
 
 <p>最后涉及的配置</p>
 
@@ -709,28 +947,43 @@ passwd: password updated successfully</p>
 
 <p>代码 2.33: 使用mirrorselect并设置MAKEOPTS</p>
 
-<p>mybox ~ # emerge mirrorselect
-mybox ~ # mirrorselect -i -o >> /etc/make.conf
-mybox ~ # mirrorselect -i -r -o >> /etc/make.conf
-（通常，一个较好的值为处理器数加一）
-mybox ~ # echo &lsquo;MAKEOPTS=&ldquo;-j2&rdquo;&rsquo; >> /etc/make.conf</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # emerge mirrorselect
+</span><span class='line'>mybox ~ # mirrorselect -i -o &gt;&gt; /etc/make.conf
+</span><span class='line'>mybox ~ # mirrorselect -i -r -o &gt;&gt; /etc/make.conf
+</span><span class='line'>（通常，一个较好的值为处理器数加一）
+</span><span class='line'>mybox ~ # echo 'MAKEOPTS="-j2"' &gt;&gt; /etc/make.conf</span></code></pre></td></tr></table></div></figure>
+
 
 <p>现在是启用或禁用一些USE标记的好时机。运行emerge -vpe world，列出所有当前已安装的软件包以及它们被启用和禁用的USE标记。编辑/etc/make.conf或使用下列命令定义USE变量：</p>
 
 <p>代码 2.34: 查看当前使用的USE标记并启用或禁用一些</p>
 
-<p>mybox ~ # emerge -vpe world
-（Portage列出软件包和它们的USE标记。作为例子，让我们禁用ipv6和fortran，
-并启用unicode）
-mybox ~ # echo &lsquo;USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode&rdquo;&rsquo; >> /etc/make.conf</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # emerge -vpe world
+</span><span class='line'>（Portage列出软件包和它们的USE标记。作为例子，让我们禁用ipv6和fortran，
+</span><span class='line'>并启用unicode）
+</span><span class='line'>mybox ~ # echo 'USE="nptl nptlonly -ipv6 -fortran unicode"' &gt;&gt; /etc/make.conf</span></code></pre></td></tr></table></div></figure>
+
 
 <p>新版本的glibc使用/etc/locale.gen来定义语言环境。</p>
 
 <p>代码 2.35: 定义语言环境</p>
 
-<p>mybox ~ # cd /etc
-mybox etc # nano -w locale.gen
-mybox etc # locale-gen</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # cd /etc
+</span><span class='line'>mybox etc # nano -w locale.gen
+</span><span class='line'>mybox etc # locale-gen</span></code></pre></td></tr></table></div></figure>
+
 
 <p>最后但并非最轻松的，你可能想修改/etc/make.conf中的CFLAGS变量来优化编码，以满足你的特定需要。请注意极少需要一长串的标记列表，那样甚至可能导致系统崩溃。建议通过march选项指定处理器类型并赋上-O2 -pipe。</p>
 
@@ -738,13 +991,21 @@ mybox etc # locale-gen</p>
 
 <p>代码 2.36: 为make.conf作最后的修改</p>
 
-<p>mybox etc # nano -w make.conf
-（在CFLAGS中将-march设为你的CPU类型）
-CFLAGS=&ldquo;-O2 -march=athlon-xp -pipe&rdquo;
-（添加下面一行）
-FEATURES=&ldquo;ccache&rdquo;
-（只有清楚自己在干什么才添加下面一行）
-ACCEPT_KEYWORDS=&ldquo;~x86&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox etc # nano -w make.conf
+</span><span class='line'>（在CFLAGS中将-march设为你的CPU类型）
+</span><span class='line'>CFLAGS="-O2 -march=athlon-xp -pipe"
+</span><span class='line'>（添加下面一行）
+</span><span class='line'>FEATURES="ccache"
+</span><span class='line'>（只有清楚自己在干什么才添加下面一行）
+</span><span class='line'>ACCEPT_KEYWORDS="~x86"</span></code></pre></td></tr></table></div></figure>
+
 
 <p>可能你会想重编译整个系统两次，以使你所作的最新配置完全生效。这要花很长的时间来完成，而只能得到微小的速度提升。你可以让系统自己随着以后新软件包的发布而逐步完成优化。不过，站在保持系统一致性的立场来看，重编译仍不失为一个好主意。请参考文档Gentoo GCC升级指南，其中讨论了如何搭建一个具有良好一致性的system和world，以及这样做的好处。</p>
 
@@ -752,34 +1013,63 @@ ACCEPT_KEYWORDS=&ldquo;~x86&rdquo;</p>
 
 <p>代码 2.37: 升级软件包</p>
 
-<p>（安装ccache）
-mybox etc # emerge ccache</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（安装ccache）
+</span><span class='line'>mybox etc # emerge ccache
+</span><span class='line'>
+</span><span class='line'>（请注意转到~x86会导致很多软件包要升级）
+</span><span class='line'>mybox etc # emerge -vpuD --newuse world
+</span><span class='line'>（好好看一看软件包列表和它们的USE标记，
+</span><span class='line'>有阻止的包就先卸载，然后启动漫长的过程）
+</span><span class='line'>mybox etc # time emerge -vuD --newuse world
+</span><span class='line'>（（重）编译了79个软件包）
+</span><span class='line'>
+</span><span class='line'>real  180m13.276s
+</span><span class='line'>user  121m22.905s
+</span><span class='line'>sys   36m31.472s
+</span><span class='line'>
+</span><span class='line'>（重编译libtool以避免一些潜在的问题）
+</span><span class='line'>mybox etc # emerge --oneshot libtool
+</span><span class='line'>
+</span><span class='line'>（更新配置文件，确保不要让dispatch-conf更新你配置好的文件）
+</span><span class='line'>mybox etc # dispatch-conf
+</span><span class='line'>
+</span><span class='line'>（如果升级了perl，应该执行perl-cleaner脚本）
+</span><span class='line'>mybox etc # time perl-cleaner all
+</span><span class='line'>real  1m6.495s
+</span><span class='line'>user  0m42.699s
+</span><span class='line'>sys   0m10.641s
+</span><span class='line'>
+</span><span class='line'>（如果升级了python的主要软件包，应该执行python-updater脚本）
+</span><span class='line'>mybox etc # python-updater</span></code></pre></td></tr></table></div></figure>
 
-<p>（请注意转到~x86会导致很多软件包要升级）
-mybox etc # emerge -vpuD &mdash;newuse world
-（好好看一看软件包列表和它们的USE标记，
-有阻止的包就先卸载，然后启动漫长的过程）
-mybox etc # time emerge -vuD &mdash;newuse world
-（（重）编译了79个软件包）</p>
-
-<p>real  180m13.276s
-user  121m22.905s
-sys   36m31.472s</p>
-
-<p>（重编译libtool以避免一些潜在的问题）
-mybox etc # emerge &mdash;oneshot libtool</p>
-
-<p>（更新配置文件，确保不要让dispatch-conf更新你配置好的文件）
-mybox etc # dispatch-conf</p>
-
-<p>（如果升级了perl，应该执行perl-cleaner脚本）
-mybox etc # time perl-cleaner all
-real  1m6.495s
-user  0m42.699s
-sys   0m10.641s</p>
-
-<p>（如果升级了python的主要软件包，应该执行python-updater脚本）
-mybox etc # python-updater</p>
 
 <p>接下来该做什么</p>
 
@@ -790,41 +1080,69 @@ mybox etc # python-updater</p>
 
 <p>代码 2.38: Emerge GNOME</p>
 
-<p>mybox etc # emerge -vp gnome
-（查看软件包列表和它们的USE标记，
-如果需要请编辑make.conf
-mybox etc # nano -w /etc/make.conf
-（定义了以下USE标记）
-USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode svg hal dbus \</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox etc # emerge -vp gnome
+</span><span class='line'>（查看软件包列表和它们的USE标记，
+</span><span class='line'>如果需要请编辑make.conf
+</span><span class='line'>mybox etc # nano -w /etc/make.conf
+</span><span class='line'>（定义了以下USE标记）
+</span><span class='line'>USE="nptl nptlonly -ipv6 -fortran unicode svg hal dbus \
+</span><span class='line'>     -kde -qt4 -arts -eds -esd gnome gstreamer gtk firefox"
+</span><span class='line'>
+</span><span class='line'>mybox etc # time emerge gnome
+</span><span class='line'>（安装了326个软件包）
+</span><span class='line'>
+</span><span class='line'>real  520m44.532s
+</span><span class='line'>user  339m21.144s
+</span><span class='line'>sys   146m22.337s
+</span><span class='line'>
+</span><span class='line'>代码 2.39: Emerge KDE
+</span><span class='line'>
+</span><span class='line'>mybox etc # emerge -vp kde-meta
+</span><span class='line'>（查看软件包列表和它们的USE标记，
+</span><span class='line'>如果需要请编辑make.conf
+</span><span class='line'>mybox etc # nano -w /etc/make.conf
+</span><span class='line'>定义了以下USE标记）
+</span><span class='line'>USE="nptl nptlonly -ipv6 -fortran unicode svg hal dbus \
+</span><span class='line'>     kde qt4 -arts -eds -esd -gnome -gstreamer -gtk -firefox"
+</span><span class='line'>
+</span><span class='line'>mybox etc # time emerge kde-meta
+</span><span class='line'>（安装了391个软件包）
+</span><span class='line'>
+</span><span class='line'>real  1171m25.318s
+</span><span class='line'>user  851m26.393s
+</span><span class='line'>sys   281m45.629s</span></code></pre></td></tr></table></div></figure>
 
-<pre><code> -kde -qt4 -arts -eds -esd gnome gstreamer gtk firefox"
-</code></pre>
-
-<p>mybox etc # time emerge gnome
-（安装了326个软件包）</p>
-
-<p>real  520m44.532s
-user  339m21.144s
-sys   146m22.337s</p>
-
-<p>代码 2.39: Emerge KDE</p>
-
-<p>mybox etc # emerge -vp kde-meta
-（查看软件包列表和它们的USE标记，
-如果需要请编辑make.conf
-mybox etc # nano -w /etc/make.conf
-定义了以下USE标记）
-USE=&ldquo;nptl nptlonly -ipv6 -fortran unicode svg hal dbus \</p>
-
-<pre><code> kde qt4 -arts -eds -esd -gnome -gstreamer -gtk -firefox"
-</code></pre>
-
-<p>mybox etc # time emerge kde-meta
-（安装了391个软件包）</p>
-
-<p>real  1171m25.318s
-user  851m26.393s
-sys   281m45.629s</p>
 </div>
   
   
@@ -1447,119 +1765,227 @@ void bar()</p>
   </header>
 
 
-  <div class="entry-content"><p>int getMaxInt1(){
-  return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
-}</p>
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>int getMaxInt1(){
+</span><span class='line'>  return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMaxInt2(){
+</span><span class='line'>  return ~( 1 &lt;&lt; 31 );
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMaxInt3(){
+</span><span class='line'>  return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMaxInt4(){
+</span><span class='line'>  return ( (unsigned int) – 1 ) &gt;&gt; 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMinInt5(){
+</span><span class='line'>  return 1 &lt;&lt; 31; //获取int类型的最小值
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMinInt6(){
+</span><span class='line'>  return 1 &lt;&lt; -1; //gcc 不支持
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMaxLong(){
+</span><span class='line'>  return ((unsigned long) – 1 ) &gt;&gt; 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getMinLong(){
+</span><span class='line'>  return 1 &lt;&lt; 63;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int mulTwo(int n){
+</span><span class='line'>   return n &lt;&lt; 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int divTwo(int n){
+</span><span class='line'>  return n &gt;&gt; 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int mulTwoPower(int n,int m){
+</span><span class='line'> //n*(2^m)
+</span><span class='line'>  return n &lt;&lt; m;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int divTwoPower(int n,int m){
+</span><span class='line'> //n/(2^m)
+</span><span class='line'>  return n &gt;&gt; m;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>bool isOddNumber(int n){
+</span><span class='line'>  return (n & 1) == 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void swap1(int a,int b){
+</span><span class='line'> a ^= b;
+</span><span class='line'> b ^= a;
+</span><span class='line'> a ^= b;
+</span><span class='line'> cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>void swap2(int *a,int *b){
+</span><span class='line'> (*a) ^= (*b) ^= (*a) ^= (*b);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int abs(int n){
+</span><span class='line'>  return (n^( n &gt;&gt; 31 )) -( n &gt;&gt; 31 );
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int main(int argc,char *argv[])
+</span><span class='line'>{
+</span><span class='line'>   /*
+</span><span class='line'>    *位运算的20则
+</span><span class='line'>    * */
+</span><span class='line'>    int max1 = getMaxInt1();
+</span><span class='line'>    int max2 = getMaxInt2();
+</span><span class='line'>    int max3 = getMaxInt4();
+</span><span class='line'>    int min1 = getMinInt5();
+</span><span class='line'>    int min2 = getMinInt6();
+</span><span class='line'>    int max4 = getMaxLong();
+</span><span class='line'>    int min3 = getMinLong();
+</span><span class='line'>    int num1 = mulTwo(2);
+</span><span class='line'>    int num2 = divTwo(2);
+</span><span class='line'>    int num3 = mulTwoPower(2,1);
+</span><span class='line'>    int num4 = divTwoPower(2,1);
+</span><span class='line'>    int num5 = isOddNumber(4);
+</span><span class='line'>    int num6 = isOddNumber(3);
+</span><span class='line'>    int a=3;
+</span><span class='line'>    int b=4;
+</span><span class='line'>    int a1=3;
+</span><span class='line'>    int b1=4;
+</span><span class='line'>    a ^= b;
+</span><span class='line'>    b ^= a;
+</span><span class='line'>    a ^= b;
+</span><span class='line'>    //cout&lt;&lt;a&lt;&lt;”  “&lt;&lt;b&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;max1&lt;&lt;” “&lt;&lt;max2&lt;&lt;” “&lt;&lt;max3&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;min1&lt;&lt;” “&lt;&lt;min2&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;max4&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;min3&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;num5&lt;&lt;” “&lt;&lt;num6&lt;&lt;endl;
+</span><span class='line'>    //swap1(a,b);
+</span><span class='line'>    //cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
+</span><span class='line'>    //swap2(&a1,&b1);
+</span><span class='line'>    //cout&lt;&lt;a1&lt;&lt;” “&lt;&lt;b1&lt;&lt;endl;
+</span><span class='line'>    int abs1 = abs(-5);
+</span><span class='line'>    cout&lt;&lt;abs1&lt;&lt;endl;
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<p>int getMaxInt2(){
-  return ~( 1 &lt;&lt; 31 );
-}</p>
-
-<p>int getMaxInt3(){
-  return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
-}</p>
-
-<p>int getMaxInt4(){
-  return ( (unsigned int) – 1 ) >> 1;
-}</p>
-
-<p>int getMinInt5(){
-  return 1 &lt;&lt; 31; //获取int类型的最小值
-}</p>
-
-<p>int getMinInt6(){
-  return 1 &lt;&lt; -1; //gcc 不支持
-}</p>
-
-<p>int getMaxLong(){
-  return ((unsigned long) – 1 ) >> 1;
-}</p>
-
-<p>int getMinLong(){
-  return 1 &lt;&lt; 63;
-}</p>
-
-<p>int mulTwo(int n){
-   return n &lt;&lt; 1;
-}</p>
-
-<p>int divTwo(int n){
-  return n >> 1;
-}</p>
-
-<p>int mulTwoPower(int n,int m){
- //n*(2<sup>m</sup>)
-  return n &lt;&lt; m;
-}</p>
-
-<p>int divTwoPower(int n,int m){
- //n/(2<sup>m</sup>)
-  return n >> m;
-}</p>
-
-<p>bool isOddNumber(int n){
-  return (n &amp; 1) == 1;
-}</p>
-
-<p>void swap1(int a,int b){
- a ^= b;
- b ^= a;
- a ^= b;
- cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
-}</p>
-
-<p>void swap2(int <em>a,int </em>b){
- (<em>a) ^= (</em>b) ^= (<em>a) ^= (</em>b);
-}</p>
-
-<p>int abs(int n){
-  return (n<sup> n >> 31 </sup>) &ndash;( n >> 31 );
-}</p>
-
-<p>int main(int argc,char <em>argv[])
-{
-   /</em></p>
-
-<pre><code>*位运算的20则
-* */
-int max1 = getMaxInt1();
-int max2 = getMaxInt2();
-int max3 = getMaxInt4();
-int min1 = getMinInt5();
-int min2 = getMinInt6();
-int max4 = getMaxLong();
-int min3 = getMinLong();
-int num1 = mulTwo(2);
-int num2 = divTwo(2);
-int num3 = mulTwoPower(2,1);
-int num4 = divTwoPower(2,1);
-int num5 = isOddNumber(4);
-int num6 = isOddNumber(3);
-int a=3;
-int b=4;
-int a1=3;
-int b1=4;
-a ^= b;
-b ^= a;
-a ^= b;
-//cout&lt;&lt;a&lt;&lt;”  “&lt;&lt;b&lt;&lt;endl;
-//cout&lt;&lt;max1&lt;&lt;” “&lt;&lt;max2&lt;&lt;” “&lt;&lt;max3&lt;&lt;endl;
-//cout&lt;&lt;min1&lt;&lt;” “&lt;&lt;min2&lt;&lt;endl;
-//cout&lt;&lt;max4&lt;&lt;endl;
-//cout&lt;&lt;min3&lt;&lt;endl;
-//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
-//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
-//cout&lt;&lt;num5&lt;&lt;” “&lt;&lt;num6&lt;&lt;endl;
-//swap1(a,b);
-//cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
-//swap2(&amp;a1,&amp;b1);
-//cout&lt;&lt;a1&lt;&lt;” “&lt;&lt;b1&lt;&lt;endl;
-int abs1 = abs(-5);
-cout&lt;&lt;abs1&lt;&lt;endl;
-return 0;
-</code></pre>
-
-<p>}</p>
 </div>
   
   
@@ -1596,93 +2022,175 @@ return 0;
   </header>
 
 
-  <div class="entry-content"><p>int max1(int a,int b){
-  return b &amp; ( (a-b) >> 31) | a &amp; (~(a-b) >> 31);
-}</p>
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>int max1(int a,int b){
+</span><span class='line'>  return b & ( (a-b) &gt;&gt; 31) | a & (~(a-b) &gt;&gt; 31);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int max2(int x,int y){
+</span><span class='line'>  return x ^ ((x^y) & -(x &lt; y));
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int min1(int a,int b){
+</span><span class='line'>  return a & ((a-b) &gt;&gt; 31) | b & (~(a-b) &gt;&gt; 31);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int min2(int x,int y){
+</span><span class='line'>  return y ^ ((x^y) & -(x &lt; y));
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>bool isSampSign(int x,int y){
+</span><span class='line'>  return (x^y) &gt;= 0;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getTwo(int n){
+</span><span class='line'> // 2^n
+</span><span class='line'> return 2 &lt;&lt; (n-1);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>bool isTwo(int n){
+</span><span class='line'> return n &gt; 0 ? (n&(n-1)) == 0:false;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int quyu(int m,int n){
+</span><span class='line'>  return m & (n-1);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getAgv1(int n,int m){
+</span><span class='line'> return (n+m) &gt;&gt; 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getAgv2(int x,int y){
+</span><span class='line'> return ((x^y) &gt;&gt; 1) + (x&y);
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getBit(int n,int m){  //从低位到高位 取n的第m位
+</span><span class='line'> return (n &gt;&gt; (m-1)) & 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
+</span><span class='line'> return n | (1 &lt;&lt; (m-1));
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
+</span><span class='line'> return n & ~(1 &lt;&lt; (m-1));
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getnum1(int n){
+</span><span class='line'>  //get n+1
+</span><span class='line'>  return -~n;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getnum2(int n){
+</span><span class='line'> return ~-n;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int getnum3(int n){
+</span><span class='line'> return ~n + 1;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>int main(int argc,char *argv[])
+</span><span class='line'>{
+</span><span class='line'>    int num1 = max1(3,5);
+</span><span class='line'>    int num2 = max2(3,5);
+</span><span class='line'>    int num3 = min1(3,5);
+</span><span class='line'>    int num4 = min2(3,5);
+</span><span class='line'>    cout&lt;&lt;getnum3(3)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;getTwo(2)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
+</span><span class='line'>    //cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
+</span><span class='line'>    //cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<p>int max2(int x,int y){
-  return x ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}</p>
-
-<p>int min1(int a,int b){
-  return a &amp; ((a-b) >> 31) | b &amp; (~(a-b) >> 31);
-}</p>
-
-<p>int min2(int x,int y){
-  return y ^ ((x<sup>y</sup>) &amp; &ndash;(x &lt; y));
-}</p>
-
-<p>bool isSampSign(int x,int y){
-  return (x<sup>y</sup>) >= 0;
-}</p>
-
-<p>int getTwo(int n){
- // 2<sup>n</sup>
- return 2 &lt;&lt; (n-1);
-}</p>
-
-<p>bool isTwo(int n){
- return n > 0 ? (n&amp;(n-1)) == 0:false;
-}</p>
-
-<p>int quyu(int m,int n){
-  return m &amp; (n-1);
-}</p>
-
-<p>int getAgv1(int n,int m){
- return (n+m) >> 1;
-}</p>
-
-<p>int getAgv2(int x,int y){
- return ((x<sup>y</sup>) >> 1) + (x&amp;y);
-}</p>
-
-<p>int getBit(int n,int m){  //从低位到高位 取n的第m位
- return (n >> (m-1)) &amp; 1;
-}</p>
-
-<p>int setBit1(int n,int m){ //从低位到高位 将n的第m位置1
- return n | (1 &lt;&lt; (m-1));
-}</p>
-
-<p>int setBit2(int n,int m){ //从低位到高位 将n的第m位置0
- return n &amp; ~(1 &lt;&lt; (m-1));
-}</p>
-
-<p>int getnum1(int n){
-  //get n+1
-  return &ndash;~n;
-}</p>
-
-<p>int getnum2(int n){
- return ~-n;
-}</p>
-
-<p>int getnum3(int n){
- return ~n + 1;
-}</p>
-
-<p>int main(int argc,char *argv[])
-{</p>
-
-<pre><code>int num1 = max1(3,5);
-int num2 = max2(3,5);
-int num3 = min1(3,5);
-int num4 = min2(3,5);
-cout&lt;&lt;getnum3(3)&lt;&lt;endl;
-//cout&lt;&lt;getBit2(4,1)&lt;&lt;endl;
-//cout&lt;&lt;getAgv1(3,5)&lt;&lt;” “&lt;&lt;getAgv2(3,5)&lt;&lt;endl;
-//cout&lt;&lt;quyu(2,4)&lt;&lt;” “&lt;&lt;quyu(5,3)&lt;&lt;endl;
-//cout&lt;&lt;isTwo(4)&lt;&lt;” “&lt;&lt;isTwo(5)&lt;&lt;endl;
-//cout&lt;&lt;getTwo(2)&lt;&lt;endl;
-//cout&lt;&lt;isSampSign(-1,2)&lt;&lt;endl;;
-//cout&lt;&lt;isSampSign(3,5)&lt;&lt;endl;
-//cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
-//cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
-return 0;
-</code></pre>
-
-<p>}</p>
 </div>
   
   
@@ -1762,84 +2270,133 @@ return 0;
 
   <div class="entry-content"><p>//从排好序的数组中找出k出现的字数</p>
 
-<h1>include<iostream></h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;iostream&gt;
+</span><span class='line'>#include&lt;cstdio&gt;
+</span><span class='line'>#include&lt;string&gt;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int GetFistK(int* data,int length,int k,int start,int end)
+</span><span class='line'>{
+</span><span class='line'>  if(start &gt; end)
+</span><span class='line'>   return -1;
+</span><span class='line'>  int middleIndex = (start + end) / 2;
+</span><span class='line'>  int middleData = data[middleIndex];
+</span><span class='line'>  if(middleData == k)
+</span><span class='line'>  {
+</span><span class='line'>   if((middleIndex &gt; 0 && data[middleIndex-1]!=k)||middleIndex ==0)
+</span><span class='line'>    return middleIndex;
+</span><span class='line'>   else
+</span><span class='line'>    end = middleIndex – 1;
+</span><span class='line'>  }
+</span><span class='line'>  else if(middleData &gt; k)
+</span><span class='line'>   end = middleIndex – 1;
+</span><span class='line'>  else
+</span><span class='line'>   start = middleIndex + 1;
+</span><span class='line'>  return GetFistK(data,length,k,start,end);
+</span><span class='line'>}
+</span><span class='line'>int GetLastK(int* data,int length,int k,int start,int end)
+</span><span class='line'>{
+</span><span class='line'> if(start &gt; end)
+</span><span class='line'>  return -1;
+</span><span class='line'> int middleIndex = (start + end) / 2;
+</span><span class='line'> int middleData = data[middleIndex];
+</span><span class='line'> if(middleData == k)
+</span><span class='line'> {
+</span><span class='line'>  if((middleIndex &lt; length – 1 && data[middleIndex + 1] != k)||middleIndex == length -1 )
+</span><span class='line'>   return middleIndex;
+</span><span class='line'>  else
+</span><span class='line'>   start = middleIndex + 1;
+</span><span class='line'> }
+</span><span class='line'> else if(middleData &lt; k)
+</span><span class='line'>  start = middleIndex + 1;
+</span><span class='line'> else
+</span><span class='line'>  end = middleIndex – 1;
+</span><span class='line'> return GetLastK(data,length,k,start,end);
+</span><span class='line'>}
+</span><span class='line'>int GetNumberK(int* data,int length,int k)
+</span><span class='line'>{
+</span><span class='line'>   int number = 0;
+</span><span class='line'>   if(data != NULL && length &gt; 0)
+</span><span class='line'>   {
+</span><span class='line'>    int first = GetFistK(data,length,k,0,length – 1);
+</span><span class='line'> int last = GetLastK(data,length,k,0,length – 1);
+</span><span class='line'>
+</span><span class='line'> if(first &gt; -1 && last &gt; -1)
+</span><span class='line'>  number = last – first + 1;
+</span><span class='line'>   }
+</span><span class='line'>   return number;
+</span><span class='line'>}
+</span><span class='line'>int main()
+</span><span class='line'>{ 
+</span><span class='line'>    int data[8] = {3,3,3,3,3,3,4,5};
+</span><span class='line'> int k = 4;
+</span><span class='line'> int total=GetNumberK(data,8,k);
+</span><span class='line'> cout&lt;&lt;total&lt;&lt;endl;
+</span><span class='line'> return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<h1>include<cstdio></h1>
-
-<h1>include<string></h1>
-
-<p>using namespace std;
-int GetFistK(int* data,int length,int k,int start,int end)
-{
-  if(start > end)
-   return -1;
-  int middleIndex = (start + end) / 2;
-  int middleData = data[middleIndex];
-  if(middleData == k)
-  {
-   if((middleIndex > 0 &amp;&amp; data[middleIndex-1]!=k)||middleIndex ==0)</p>
-
-<pre><code>return middleIndex;
-</code></pre>
-
-<p>   else</p>
-
-<pre><code>end = middleIndex – 1;
-</code></pre>
-
-<p>  }
-  else if(middleData > k)
-   end = middleIndex – 1;
-  else
-   start = middleIndex + 1;
-  return GetFistK(data,length,k,start,end);
-}
-int GetLastK(int<em> data,int length,int k,int start,int end)
-{
- if(start > end)
-  return -1;
- int middleIndex = (start + end) / 2;
- int middleData = data[middleIndex];
- if(middleData == k)
- {
-  if((middleIndex &lt; length – 1 &amp;&amp; data[middleIndex + 1] != k)||middleIndex == length -1 )
-   return middleIndex;
-  else
-   start = middleIndex + 1;
- }
- else if(middleData &lt; k)
-  start = middleIndex + 1;
- else
-  end = middleIndex – 1;
- return GetLastK(data,length,k,start,end);
-}
-int GetNumberK(int</em> data,int length,int k)
-{
-   int number = 0;
-   if(data != NULL &amp;&amp; length > 0)
-   {</p>
-
-<pre><code>int first = GetFistK(data,length,k,0,length – 1);
-</code></pre>
-
-<p> int last = GetLastK(data,length,k,0,length – 1);</p>
-
-<p> if(first > -1 &amp;&amp; last > -1)
-  number = last – first + 1;
-   }
-   return number;
-}
-int main()
-{</p>
-
-<pre><code>int data[8] = {3,3,3,3,3,3,4,5};
-</code></pre>
-
-<p> int k = 4;
- int total=GetNumberK(data,8,k);
- cout&lt;&lt;total&lt;&lt;endl;
- return 0;
-}</p>
 </div>
   
   
