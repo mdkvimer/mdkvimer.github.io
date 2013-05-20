@@ -1158,9 +1158,11 @@ PHP代码</p>
   </header>
 
 
-  <div class="entry-content"><p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的</p>
+  <div class="entry-content"><p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的
+code</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span> (proandcon.c)</span> <a href='/downloads/code/proandcon.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1258,104 +1260,105 @@ PHP代码</p>
 <span class='line-number'>96</span>
 <span class='line-number'>97</span>
 <span class='line-number'>98</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
-</span><span class='line'>#include&lt;stdlib.h&gt;
-</span><span class='line'>#include&lt;string.h&gt;
-</span><span class='line'>#include&lt;sys/wait.h&gt;
-</span><span class='line'>#include&lt;sys/types.h&gt;
-</span><span class='line'>#include&lt;unistd.h&gt;
-</span><span class='line'>#include&lt;pthread.h&gt;
-</span><span class='line'>#include&lt;time.h&gt;
-</span><span class='line'>#include&lt;math.h&gt;
-</span><span class='line'>#define BUFFER_SIZE 8
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/wait.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/types.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;pthread.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;time.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#define BUFFER_SIZE 8</span>
 </span><span class='line'>
-</span><span class='line'>struct prodcons {
-</span><span class='line'>int buffer[BUFFER_SIZE];
-</span><span class='line'>pthread_mutex_t lock;
-</span><span class='line'>int readpos,writepos;
-</span><span class='line'>pthread_cond_t notempty;
-</span><span class='line'>pthread_cond_t notfull;
-</span><span class='line'>};
+</span><span class='line'><span class="k">struct</span> <span class="n">prodcons</span> <span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>
+</span><span class='line'> <span class="n">pthread_mutex_t</span> <span class="n">lock</span><span class="p">;</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">readpos</span><span class="p">,</span><span class="n">writepos</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_cond_t</span> <span class="n">notempty</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_cond_t</span> <span class="n">notfull</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
 </span><span class='line'>
-</span><span class='line'>void init(struct prodcons *b)
-</span><span class='line'>{
-</span><span class='line'>pthread_mutex_init(&b-&gt;lock,NULL);
-</span><span class='line'>pthread_cond_init(&b-&gt;notempty,NULL);
-</span><span class='line'>pthread_cond_init(&b-&gt;notfull,NULL);
-</span><span class='line'>b-&gt;readpos = 0 ;
-</span><span class='line'>b-&gt;writepos = 0 ;
-</span><span class='line'>}
+</span><span class='line'><span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_mutex_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>void put(struct prodcons *b,int data)
-</span><span class='line'>{
-</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
-</span><span class='line'>if((b-&gt;writepos + 1)%BUFFER_SIZE == b-&gt;readpos)
-</span><span class='line'>{
-</span><span class='line'>pthread_cond_wait(&b-&gt;notfull,&b-&gt;lock);
-</span><span class='line'>}
-</span><span class='line'>b-&gt;buffer[b-&gt;writepos] = data;
-</span><span class='line'>b-&gt;writepos++;
-</span><span class='line'>if(b-&gt;writepos &gt;= BUFFER_SIZE)
-</span><span class='line'>b-&gt;writepos = 0;
-</span><span class='line'>pthread_cond_signal(&b-&gt;notempty);
-</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
-</span><span class='line'>}
+</span><span class='line'><span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="kt">int</span> <span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">((</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">BUFFER_SIZE</span> <span class="o">==</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">,</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">[</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">&gt;=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span>
+</span><span class='line'>     <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">);</span>
+</span><span class='line'> <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>int get(struct prodcons *b)
-</span><span class='line'>{
-</span><span class='line'>int data;
-</span><span class='line'>pthread_mutex_lock(&b-&gt;lock);
-</span><span class='line'>if(b-&gt;writepos == b-&gt;readpos)
-</span><span class='line'>{
-</span><span class='line'>pthread_cond_wait(&b-&gt;notempty,&b-&gt;lock);
-</span><span class='line'>}
-</span><span class='line'>data = b-&gt;buffer[b-&gt;readpos];
-</span><span class='line'>b-&gt;readpos++;
+</span><span class='line'><span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">==</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">,</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'> <span class="n">data</span> <span class="o">=</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">[</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">];</span>
+</span><span class='line'> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="o">++</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>if(b-&gt;readpos &gt;= BUFFER_SIZE)
-</span><span class='line'>b-&gt;readpos = 0;
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">&gt;=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span>
+</span><span class='line'>     <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>pthread_cond_signal(&b-&gt;notfull);
-</span><span class='line'>pthread_mutex_unlock(&b-&gt;lock);
-</span><span class='line'>return data;
-</span><span class='line'>}
-</span><span class='line'>#define OVER (-1)
-</span><span class='line'>struct prodcons buffer;
-</span><span class='line'>void *producer(void *data)
-</span><span class='line'>{
-</span><span class='line'>int n;
-</span><span class='line'>for(n = 0 ; n &lt; 50 ; n++)
-</span><span class='line'>{
-</span><span class='line'>printf(“%d\t”,n);
-</span><span class='line'>put(&buffer,n);
-</span><span class='line'>}
-</span><span class='line'>put(&buffer,OVER);
-</span><span class='line'>return NULL;
-</span><span class='line'>}
-</span><span class='line'>void *consumer(void *data)
-</span><span class='line'>{
-</span><span class='line'>int d;
-</span><span class='line'>while(1)
-</span><span class='line'>{
-</span><span class='line'>d = get(&buffer);
-</span><span class='line'>if(d == OVER)
-</span><span class='line'>break;
-</span><span class='line'>printf(“%d\t”,d);
-</span><span class='line'>}
-</span><span class='line'>return NULL;
-</span><span class='line'>}
-</span><span class='line'>int main(void)
-</span><span class='line'>{
-</span><span class='line'>pthread_t th_a,th_b;
-</span><span class='line'>void *retval;
-</span><span class='line'>init(&buffer);
-</span><span class='line'>pthread_create(&th_a,NULL,producer,0);
-</span><span class='line'>pthread_create(&th_b,NULL,consumer,0);
-</span><span class='line'>pthread_join(th_a,&retval);
-</span><span class='line'>pthread_join(th_b,&retval);
-</span><span class='line'>printf(“\n”);
-</span><span class='line'>return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'> <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">);</span>
+</span><span class='line'> <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'> <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">#define OVER (-1)</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">prodcons</span> <span class="n">buffer</span><span class="p">;</span>
+</span><span class='line'><span class="kt">void</span> <span class="o">*</span><span class="nf">producer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'> <span class="k">for</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="p">;</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">put</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'> <span class="n">put</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="n">OVER</span><span class="p">);</span>
+</span><span class='line'> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">void</span> <span class="o">*</span><span class="nf">consumer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">d</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>   <span class="n">d</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
+</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="n">OVER</span><span class="p">)</span>
+</span><span class='line'>       <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_t</span> <span class="n">th_a</span><span class="p">,</span><span class="n">th_b</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">retval</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th_a</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">producer</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th_b</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">consumer</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_join</span><span class="p">(</span><span class="n">th_a</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retval</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_join</span><span class="p">(</span><span class="n">th_b</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retval</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
   
