@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-20T10:38:04+08:00</updated>
+  <updated>2013-05-20T11:00:52+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -1814,13 +1814,10 @@ shmdt   拆卸共享内存
     <link href="http://mdkvimer.github.io/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li/"/>
     <updated>2013-05-19T11:04:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/19/linuxnei-cun-dong-tai-fen-qu-guan-li</id>
-    <content type="html"><![CDATA[<p>1.分别使用首次适应算法,最佳适应算法分配内存空间</p>
+    <content type="html"><![CDATA[<p>mycode</p>
 
-<p>2.实现对内存空间的释放</p>
-
-<p>3.显示内存分配情况</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span> (memblockman.c)</span> <a href='http://mdkvimer.github.io/downloads/code/memblockman.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1986,172 +1983,267 @@ shmdt   拆卸共享内存
 <span class='line-number'>164</span>
 <span class='line-number'>165</span>
 <span class='line-number'>166</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
-</span><span class='line'>#include&lt;unistd.h&gt;
-</span><span class='line'>#include&lt;stdlib.h&gt;
-</span><span class='line'>#include&lt;string.h&gt;
-</span><span class='line'>#include&lt;sys/wait.h&gt;
-</span><span class='line'>#include&lt;sys/types.h&gt;
-</span><span class='line'>#define MEMSIZE 100   
-</span><span class='line'>#define MINSIZE 2    
-</span><span class='line'>typedef struct MemoryInformation{
-</span><span class='line'>int start;  
-</span><span class='line'>int size;  
-</span><span class='line'>char info;  
-</span><span class='line'>}MEMINFO;
-</span><span class='line'>MEMINFO MemList[MEMSIZE];
-</span><span class='line'>void Display();
-</span><span class='line'>void InitAll()
-</span><span class='line'>{
-</span><span class='line'>int i;
-</span><span class='line'>MEMINFO temp={0,0,’e'};
-</span><span class='line'>for(i=0;i&lt;MEMSIZE;i++)
-</span><span class='line'>MemList[i]=temp;
-</span><span class='line'>MemList[0].start = 0;
-</span><span class='line'>MemList[0].size = MEMSIZE;
-</span><span class='line'>MemList[0].info = ‘f’;
-</span><span class='line'>}
-</span><span class='line'> 
-</span><span class='line'>void FirstFit_new()
-</span><span class='line'>{
-</span><span class='line'>int i,j,size;
-</span><span class='line'>char temp[10];
-</span><span class='line'>printf(“How MAny MEMORY do you require?”);
-</span><span class='line'>scanf(“%d”,&size);
-</span><span class='line'>for(i=0;i &lt; MEMSIZE -1 && MemList[i].info!=’e';i++){
-</span><span class='line'>if(MemList[i].size &gt;= size && MemList[i].info==’f'){
-</span><span class='line'>if(MemList[i].size – size &lt;= MINSIZE)
-</span><span class='line'>MemList[i].info=’u';
-</span><span class='line'>else{
-</span><span class='line'>for(j=MEMSIZE – 2;j &gt; i;j–){
-</span><span class='line'>MemList[j+1] = MemList[j];
-</span><span class='line'>}
-</span><span class='line'>MemList[i+1].start = MemList[i].start + size;
-</span><span class='line'>MemList[i+1].size = MemList[i].size – size;
-</span><span class='line'>MemList[i+1].info = ‘f’;
-</span><span class='line'>MemList[i].size = size;
-</span><span class='line'>MemList[i].info = ‘u’;
-</span><span class='line'>}
-</span><span class='line'>break;
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>if(i == MEMSIZE – 1 || MemList[i].info == ‘e’){
-</span><span class='line'>printf(“NOT Enough Memory!\n”);
-</span><span class='line'>getchar();
-</span><span class='line'>}
-</span><span class='line'>Display();
-</span><span class='line'>}
-</span><span class='line'>void BestFit_new()
-</span><span class='line'>{
-</span><span class='line'>int i,j,k,flag,size;
-</span><span class='line'>char temp[10];
-</span><span class='line'>printf(“How Many MEMORY require?”);
-</span><span class='line'>scanf(“%d”,&size);
-</span><span class='line'>j = 0;
-</span><span class='line'>flag = 0;
-</span><span class='line'>k = MEMSIZE;
-</span><span class='line'>for(i=0;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++){
-</span><span class='line'>if(MemList[i].size &gt;= size && MemList[i].info == ‘f’){
-</span><span class='line'>flag = 1;
-</span><span class='line'>if(MemList[i].size &lt; k){
-</span><span class='line'>k = MemList[i].size;
-</span><span class='line'>j = i;
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>i=j;
-</span><span class='line'>if(flag == 0)
-</span><span class='line'>{
-</span><span class='line'>printf(“NOT ENOUGH Memory!\n”);
-</span><span class='line'>getchar();
-</span><span class='line'>}
-</span><span class='line'>else if(MemList[i].size – size &lt;= MINSIZE)
-</span><span class='line'>MemList[i].info = ‘u’;
-</span><span class='line'>else{
-</span><span class='line'>for(j=MEMSIZE-2;j &gt; i;j–){
-</span><span class='line'>MemList[j+1]=MemList[j];
-</span><span class='line'>}
-</span><span class='line'>MemList[i].start = MemList[i].start + size;
-</span><span class='line'>MemList[i].size = MemList[i].size – size;
-</span><span class='line'>MemList[i].info = ‘f’;
-</span><span class='line'>MemList[i].size = size;
-</span><span class='line'>MemList[i].info = ‘u’;
-</span><span class='line'>}
-</span><span class='line'>Display();
-</span><span class='line'>}
-</span><span class='line'>void del()
-</span><span class='line'>{
-</span><span class='line'>int i,number;
-</span><span class='line'>printf(“please input the NUMBER you want to delete:”);
-</span><span class='line'>scanf(“%d”,&number);
-</span><span class='line'>if(MemList[number].info == ‘u’){
-</span><span class='line'>MemList[number].info = ‘f’;
-</span><span class='line'>if(MemList[number+1].info==’f'){
-</span><span class='line'>MemList[number].size += MemList[number+1].size;
-</span><span class='line'>for(i=number+1;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++)
-</span><span class='line'>MemList[i]=MemList[i+1];
-</span><span class='line'>}
-</span><span class='line'>if(MemList[number - 1].info != ‘f’){
-</span><span class='line'>MemList[number -1].size += MemList[number].size;
-</span><span class='line'>for(i=number;i&lt;MEMSIZE – 1 && MemList[i].info!=’e';i++)
-</span><span class='line'>MemList[i]=MemList[i+1];
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>else{
-</span><span class='line'>printf(“This number is NOT exits or is NOT sued!\n”);
-</span><span class='line'>getchar();
-</span><span class='line'>}
-</span><span class='line'>Display();
-</span><span class='line'>}
-</span><span class='line'>void Display()
-</span><span class='line'>{
-</span><span class='line'>int i,used = 0;
-</span><span class='line'>printf(“\n——————————————\n”);
-</span><span class='line'>printf(“%5s %15s %15s”,”Number”,”Start”,”Size”,”info”);
-</span><span class='line'>printf(“\n——————————————\n”);
-</span><span class='line'>for(i=0;i&lt;MEMSIZE && MemList[i].info != ‘e’;i++){
-</span><span class='line'>if(MemList[i].info == ‘u’)
-</span><span class='line'>used+= MemList[i].size;
-</span><span class='line'>printf(“%5d %15d %15d %15s\n”,i,MemList[i].start,MemList[i].size,MemList[i].info == ‘u’?”USED”:”FREE”);
-</span><span class='line'>}
-</span><span class='line'>printf(“\n——————————————\n”);
-</span><span class='line'>printf(“TotalSize : %-10d Used: %-10d Free:%-10d\n”,MEMSIZE,used,MEMSIZE – used);
-</span><span class='line'>printf(“\n\nPress Any Key to Return\n”);
-</span><span class='line'>getchar();
-</span><span class='line'>}
-</span><span class='line'>int main()
-</span><span class='line'>{
-</span><span class='line'>char ch;
-</span><span class='line'>InitAll();
-</span><span class='line'>while(1)
-</span><span class='line'>{
-</span><span class='line'>printf(“   Memory manager  \n”);
-</span><span class='line'>printf(“================================================\n”);
-</span><span class='line'>printf(“1. Get a block use the FIRSTFIT method\n”);
-</span><span class='line'>printf(“2. Get a block use the BESTFFIT method\n”);
-</span><span class='line'>printf(“3. Free or delete a block\n”);
-</span><span class='line'>printf(“4. Display Mem information\n”);
-</span><span class='line'>printf(“5. Exit\n”);
-</span><span class='line'>printf(“================================================\n”);
-</span><span class='line'>ch = getchar();
-</span><span class='line'>switch(ch){
-</span><span class='line'>case ’1′:
-</span><span class='line'>FirstFit_new();
-</span><span class='line'>break;
-</span><span class='line'>case ’2′:
-</span><span class='line'>BestFit_new();
-</span><span class='line'>break;
-</span><span class='line'>case ’3′:
-</span><span class='line'>del();
-</span><span class='line'>break;
-</span><span class='line'>case ’4′:
-</span><span class='line'>Display();
-</span><span class='line'>break;
-</span><span class='line'>case ’5′:
-</span><span class='line'>exit(0);
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *       Filename:  memblockman.c</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *    Description:  memory control</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *        Version:  1.0</span>
+</span><span class='line'><span class="cm"> *        Created:  2012年12月31日 14时21分14秒</span>
+</span><span class='line'><span class="cm"> *       Revision:  none</span>
+</span><span class='line'><span class="cm"> *       Compiler:  gcc</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *         Author:  ACman mdk (Orz Linux Sir Koma linyu zhujiajun), mdk@server.example.com</span>
+</span><span class='line'><span class="cm"> *        Company:  ACM 309 JudgeOnline</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="cm">/*进入程序后可以根据菜单项进入不同的模块*/</span>
+</span><span class='line'><span class="cm">/*1.使用首次适应算法分配空间            */</span>
+</span><span class='line'><span class="cm">/*2.使用最佳适应算法分配空间            */</span>
+</span><span class='line'><span class="cm">/*3.释放一块内存空间                    */</span>
+</span><span class='line'><span class="cm">/*4.显示内存分配情况                    */</span>
+</span><span class='line'><span class="cm">/*5.退出系统                            */</span>
+</span><span class='line'><span class="cm">/*--------------------------------------*/</span>
+</span><span class='line'><span class="cp">#include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/wait.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/types.h&gt;</span>
+</span><span class='line'><span class="cp">#define MEMSIZE 100  </span><span class="cm">/*定义内存大小为100*/</span><span class="cp"></span>
+</span><span class='line'><span class="cp">#define MINSIZE 2   </span><span class="cm">/*分配时如果剩余小于此值则不再分配*/</span><span class="cp"></span>
+</span><span class='line'><span class="k">typedef</span> <span class="k">struct</span> <span class="n">MemoryInformation</span><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">start</span><span class="p">;</span> <span class="cm">/*开始的地址*/</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">size</span><span class="p">;</span> <span class="cm">/*大小*/</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="n">info</span><span class="p">;</span> <span class="cm">/*状态:f空闲(FREE):&#39;u&#39;占用(USED):&#39;e&#39;表结束(END)*/</span>
+</span><span class='line'><span class="p">}</span><span class="n">MEMINFO</span><span class="p">;</span>
+</span><span class='line'><span class="n">MEMINFO</span> <span class="n">MemList</span><span class="p">[</span><span class="n">MEMSIZE</span><span class="p">];</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">Display</span><span class="p">();</span>
+</span><span class='line'><span class="cm">/*-----------------------*/</span>
+</span><span class='line'><span class="cm">/*函数名：InitAll()      */</span>
+</span><span class='line'><span class="cm">/*功能:初始化所有变量    */</span>
+</span><span class='line'><span class="cm">/*-----------------------*/</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">InitAll</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">MEMINFO</span> <span class="n">temp</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">};</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MEMSIZE</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">MemList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">MemList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span> <span class="o">=</span> <span class="n">MEMSIZE</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">MemList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;f&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cm">/*--------------------------------*/</span>
+</span><span class='line'><span class="cm">/*函数名:FirstFit_new()          */</span>
+</span><span class='line'><span class="cm">/*功能：使用首次适应算法分配内存*/</span>
+</span><span class='line'><span class="cm">/*------------------------------*/</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">FirstFit_new</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">size</span><span class="p">;</span>
+</span><span class='line'> <span class="kt">char</span> <span class="n">temp</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;How MAny MEMORY do you require?&quot;</span><span class="p">);</span>
+</span><span class='line'> <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">size</span><span class="p">);</span>
+</span><span class='line'> <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">MEMSIZE</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span><span class="o">!=</span><span class="sc">&#39;e&#39;</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">size</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span><span class="o">==</span><span class="sc">&#39;f&#39;</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">-</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="n">MINSIZE</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span><span class="o">=</span><span class="sc">&#39;u&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>      <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="n">MEMSIZE</span> <span class="o">-</span> <span class="mi">2</span><span class="p">;</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">--</span><span class="p">){</span>
+</span><span class='line'>       <span class="n">MemList</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">start</span> <span class="o">=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">start</span> <span class="o">+</span> <span class="n">size</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">size</span> <span class="o">=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">-</span> <span class="n">size</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;f&#39;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;u&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">MEMSIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;NOT Enough Memory!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">getchar</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">Display</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cm">/*------------------------------*/</span>
+</span><span class='line'><span class="cm">/*函数名：BestFit_new()         */</span>
+</span><span class='line'><span class="cm">/*功能：使用最佳适应算法分配内存*/</span>
+</span><span class='line'><span class="cm">/*------------------------------*/</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">BestFit_new</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">flag</span><span class="p">,</span><span class="n">size</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="n">temp</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;How Many MEMORY require?&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">size</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">k</span> <span class="o">=</span> <span class="n">MEMSIZE</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MEMSIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span><span class="o">!=</span><span class="sc">&#39;e&#39;</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">size</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">==</span> <span class="sc">&#39;f&#39;</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">){</span>
+</span><span class='line'>     <span class="n">k</span> <span class="o">=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">i</span><span class="o">=</span><span class="n">j</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;NOT ENOUGH Memory!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">getchar</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">-</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="n">MINSIZE</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;u&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>   <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="n">MEMSIZE</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="n">j</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">--</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">MemList</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">MemList</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>   <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">start</span> <span class="o">=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">start</span> <span class="o">+</span> <span class="n">size</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">-</span> <span class="n">size</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;f&#39;</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;u&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">Display</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cm">/*------------------------*/</span>
+</span><span class='line'><span class="cm">/*函数名：del()          */</span>
+</span><span class='line'><span class="cm">/*功能:释放一块内存      */</span>
+</span><span class='line'><span class="cm">/*-----------------------*/</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">del</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">number</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;please input the NUMBER you want to delete:&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">number</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">number</span><span class="p">].</span><span class="n">info</span> <span class="o">==</span> <span class="sc">&#39;u&#39;</span><span class="p">){</span>
+</span><span class='line'>   <span class="n">MemList</span><span class="p">[</span><span class="n">number</span><span class="p">].</span><span class="n">info</span> <span class="o">=</span> <span class="sc">&#39;f&#39;</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">info</span><span class="o">==</span><span class="sc">&#39;f&#39;</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">MemList</span><span class="p">[</span><span class="n">number</span><span class="p">].</span><span class="n">size</span> <span class="o">+=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MEMSIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span><span class="o">!=</span><span class="sc">&#39;e&#39;</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="n">info</span> <span class="o">!=</span> <span class="sc">&#39;f&#39;</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">MemList</span><span class="p">[</span><span class="n">number</span> <span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">size</span> <span class="o">+=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">number</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">number</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MEMSIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span><span class="o">!=</span><span class="sc">&#39;e&#39;</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;This number is NOT exits or is NOT sued!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>   <span class="n">getchar</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">Display</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cm">/*---------------------------*/</span>
+</span><span class='line'><span class="cm">/*函数名:Display()           */</span>
+</span><span class='line'><span class="cm">/*功能:显示内存状态          */</span>
+</span><span class='line'><span class="cm">/*---------------------------*/</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">Display</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span><span class="n">used</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%5s %15s %15s&quot;</span><span class="p">,</span><span class="s">&quot;Number&quot;</span><span class="p">,</span><span class="s">&quot;Start&quot;</span><span class="p">,</span><span class="s">&quot;Size&quot;</span><span class="p">,</span><span class="s">&quot;info&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">MEMSIZE</span> <span class="o">&amp;&amp;</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">!=</span> <span class="sc">&#39;e&#39;</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">==</span> <span class="sc">&#39;u&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">used</span><span class="o">+=</span> <span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%5d %15d %15d %15s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">start</span><span class="p">,</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="p">,</span><span class="n">MemList</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">info</span> <span class="o">==</span> <span class="sc">&#39;u&#39;</span><span class="o">?</span><span class="s">&quot;USED&quot;</span><span class="o">:</span><span class="s">&quot;FREE&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;TotalSize : %-10d Used: %-10d Free:%-10d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">MEMSIZE</span><span class="p">,</span><span class="n">used</span><span class="p">,</span><span class="n">MEMSIZE</span> <span class="o">-</span> <span class="n">used</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">Press Any Key to Return</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">getchar</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cm">/*----------------*/</span>
+</span><span class='line'><span class="cm">/*函数名;main()   */</span>
+</span><span class='line'><span class="cm">/*功能:主函数     */</span>
+</span><span class='line'><span class="cm">/*----------------*/</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">InitAll</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;   Memory manager  </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;================================================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;1. Get a block use the FIRSTFIT method</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;2. Get a block use the BESTFFIT method</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;3. Free or delete a block</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;4. Display Mem information</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;5. Exit</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;================================================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">ch</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">switch</span><span class="p">(</span><span class="n">ch</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">case</span> <span class="sc">&#39;1&#39;</span>:
+</span><span class='line'>            <span class="n">FirstFit_new</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="sc">&#39;2&#39;</span>:
+</span><span class='line'>            <span class="n">BestFit_new</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="sc">&#39;3&#39;</span>:
+</span><span class='line'>            <span class="n">del</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="sc">&#39;4&#39;</span>:
+</span><span class='line'>            <span class="n">Display</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="sc">&#39;5&#39;</span>:
+</span><span class='line'>            <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
