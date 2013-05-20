@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-20T15:54:50+08:00</updated>
+  <updated>2013-05-20T16:26:00+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,718 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[python网络编程2]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-bian-cheng-2/"/>
+    <updated>2013-05-20T16:23:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-bian-cheng-2</id>
+    <content type="html"><![CDATA[<p>python网络编程之socket</p>
+
+<p>code</p>
+
+<figure class='code'><figcaption><span> (server2.py)</span> <a href='http://mdkvimer.github.io/downloads/code/server2.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#/*=============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Author: mengdaikun - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># QQ : 646978600</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Last modified: 2013-04-09 15:37</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Filename: server2.py</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Description: </span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#=============================================================================*/</span>
+</span><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c"># basic server by python </span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span> <span class="o">,</span> <span class="nn">sys</span> <span class="o">,</span> <span class="nn">socket</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5566</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">))</span>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Waiting for connecting...&quot;</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">clientsock</span> <span class="p">,</span> <span class="n">clientaddr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Got connect from&quot;</span><span class="p">,</span><span class="n">clientsock</span><span class="o">.</span><span class="n">getpeername</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python网络编程1]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-bian-cheng-1/"/>
+    <updated>2013-05-20T16:23:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-bian-cheng-1</id>
+    <content type="html"><![CDATA[<p>网络编程之socket</p>
+
+<p>code</p>
+
+<figure class='code'><figcaption><span> (server1.py)</span> <a href='http://mdkvimer.github.io/downloads/code/server1.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#/*=============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Author: mengdaikun - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># QQ : 646978600</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Last modified: 2013-04-09 14:24</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Filename: server1.py</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Description: </span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#=============================================================================*/</span>
+</span><span class='line'><span class="c">#!/usr/bin/env python </span>
+</span><span class='line'><span class="c">#server for python </span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span><span class="nn">socket</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5566</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">))</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Server is running on port </span><span class="si">%d</span><span class="s">;press Ctrl-C to terminate.&quot;</span> <span class="o">%</span> <span class="n">port</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="p">,</span><span class="n">clientaddr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientfile</span> <span class="o">=</span> <span class="n">clientsock</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;rw&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Welcome, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">clientaddr</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Please enter a string:&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">line</span> <span class="o">=</span> <span class="n">clientfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;You enter </span><span class="si">%d</span><span class="s"> characters.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OJ之python监控]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/20/ojzhi-pythonjian-kong/"/>
+    <updated>2013-05-20T16:22:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/20/ojzhi-pythonjian-kong</id>
+    <content type="html"><![CDATA[<p>利用python监控在线平台是否存活</p>
+
+<p>code</p>
+
+<figure class='code'><figcaption><span> (oj.py)</span> <a href='http://mdkvimer.github.io/downloads/code/oj.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c">#check for oj</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-05-20 16:09</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: oj.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description:python监控程序在线评判系统并发短信通知和邮件 </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">time</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">count_string</span><span class="p">(</span><span class="n">weburl</span><span class="p">,</span><span class="n">string_tobe_find</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">web</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">weburl</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">except</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>    <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">web</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">string_tobe_find</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">status</span> <span class="o">=</span> <span class="n">count_string</span><span class="p">(</span><span class="s">&#39;http://acm.cjlu.edu.cn/status.php&#39;</span><span class="p">,</span><span class="s">&quot;waiting&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/local/fetion/fetion --sid=usid --pwd=passwd --to=18767161672 --msg-utf8=mdk-OJ-down!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#print time.ctime(time.time()),&quot;OJ index can&#39;n open&quot;,&quot;please check for oj&quot;</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">status</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/local/fetion/fetion --sid=usid --pwd=passwd --to=18767161672 --msg-utf8=mdk-OJ-down!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#print time.ctime(time.time()),&quot;OJ waiting now&quot;,&quot;please deal with&quot;</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/local/fetion/fetion --sid=usid --pwd=passwd --to=18767161672 --msg-utf8=mdk-OJ-normal!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#print time.ctime(time.time()),&quot;Oj normal now!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s"> OJ check now  by --python mdk&quot;</span>
+</span><span class='line'>    <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+</span><span class='line'>    <span class="n">check</span><span class="p">()</span>
+</span><span class='line'>    <span class="c">#check()</span>
+</span><span class='line'>    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python网络爬虫之ACM]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-pa-chong-zhi-acm/"/>
+    <updated>2013-05-20T16:20:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-pa-chong-zhi-acm</id>
+    <content type="html"><![CDATA[<p>每一个acmer的一个福音,利用vim+爬虫代码提交代码,在putty里大作手脚啦</p>
+
+<figure class='code'><figcaption><span> (AC.py)</span> <a href='http://mdkvimer.github.io/downloads/code/AC.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-05-20 15:59</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: AC.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: submit for poj come from www.cnblogs.com/ma6174/archive/2012/07/26/2609791.html chang</span>
+</span><span class='line'><span class="sd"># by mdk</span>
+</span><span class='line'><span class="sd"># </span>
+</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">logging</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span><span class="o">,</span><span class="nn">urllib2</span><span class="o">,</span><span class="nn">cookielib</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">POJ</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">URL_HOME</span> <span class="o">=</span> <span class="s">&#39;http://poj.org/&#39;</span>
+</span><span class='line'>    <span class="n">URL_LOGIN</span> <span class="o">=</span> <span class="n">URL_HOME</span> <span class="o">+</span> <span class="s">&#39;login?&#39;</span>
+</span><span class='line'>    <span class="n">URL_SUBMIT</span> <span class="o">=</span> <span class="n">URL_HOME</span> <span class="o">+</span> <span class="s">&#39;submit?&#39;</span>
+</span><span class='line'>    <span class="n">URL_STATUS</span> <span class="o">=</span> <span class="n">URL_HOME</span> <span class="o">+</span> <span class="s">&#39;status?&#39;</span>
+</span><span class='line'>    <span class="c">#结果信息</span>
+</span><span class='line'>    <span class="n">INFO</span> <span class="o">=</span><span class="p">[</span><span class="s">&#39;RunID&#39;</span><span class="p">,</span><span class="s">&#39;User&#39;</span><span class="p">,</span><span class="s">&#39;Problem&#39;</span><span class="p">,</span><span class="s">&#39;Result&#39;</span><span class="p">,</span><span class="s">&#39;Memory&#39;</span><span class="p">,</span><span class="s">&#39;Time&#39;</span><span class="p">,</span><span class="s">&#39;Language&#39;</span><span class="p">,</span><span class="s">&#39;Code Length&#39;</span><span class="p">,</span><span class="s">&#39;Submit Time&#39;</span><span class="p">]</span>
+</span><span class='line'>    <span class="c">#语言</span>
+</span><span class='line'>    <span class="n">LANGUAGE</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>            <span class="s">&#39;G++&#39;</span><span class="p">:</span><span class="s">&#39;0&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;GCC&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;JAVA&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;PASCAL&#39;</span><span class="p">:</span><span class="s">&#39;3&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;C++&#39;</span><span class="p">:</span><span class="s">&#39;4&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="s">&#39;5&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;FORTRAN&#39;</span><span class="p">:</span><span class="s">&#39;6&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+</span><span class='line'>        <span class="n">cj</span> <span class="o">=</span> <span class="n">cookielib</span><span class="o">.</span><span class="n">LWPCookieJar</span><span class="p">()</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">opener</span> <span class="o">=</span><span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPCookieProcessor</span><span class="p">(</span><span class="n">cj</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opener</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span class='line'>                <span class="n">user_id1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">password1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">B1</span> <span class="o">=</span> <span class="s">&#39;login&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">postdata</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_LOGIN</span><span class="p">,</span><span class="n">postdata</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_LOGIN</span><span class="p">,</span><span class="n">postdata</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;loginlog&#39;</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;login successful!&quot;</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;login failed&#39;</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>        <span class="k">except</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;login failed&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pid</span><span class="p">,</span><span class="n">language</span><span class="p">,</span><span class="n">src</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">submit_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span class='line'>                <span class="n">problem_id</span> <span class="o">=</span> <span class="n">pid</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">language</span> <span class="o">=</span> <span class="n">POJ</span><span class="o">.</span><span class="n">LANGUAGE</span><span class="p">[</span><span class="n">language</span><span class="o">.</span><span class="n">upper</span><span class="p">()],</span>
+</span><span class='line'>                <span class="n">source</span> <span class="o">=</span> <span class="n">src</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">submit</span> <span class="o">=</span> <span class="s">&#39;Submit&#39;</span><span class="p">,)</span>
+</span><span class='line'>        <span class="n">postdata2</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">submit_data</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">req2</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_SUBMIT</span><span class="p">,</span><span class="n">data</span> <span class="o">=</span> <span class="n">postdata2</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_SUBMIT</span><span class="p">,</span><span class="n">postdata2</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;submit successful&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>        <span class="k">except</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;submit error&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">user_id</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">url</span> <span class="o">=</span> <span class="n">POJ</span><span class="o">.</span><span class="n">URL_STATUS</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;user_id&#39;</span><span class="p">:</span><span class="n">user_id</span><span class="p">})</span>
+</span><span class='line'>        <span class="n">page</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&#39;table&#39;</span><span class="p">,{</span><span class="s">&#39;class&#39;</span><span class="p">:</span><span class="s">&#39;a&#39;</span><span class="p">})</span> <span class="c">#提取表格</span>
+</span><span class='line'>        <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;&gt;[-+: \w]*&lt;&#39;</span><span class="p">)</span>  <span class="c">#正则表达式匹配需要的信息</span>
+</span><span class='line'>        <span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+</span><span class='line'>        <span class="c">#正在评判，编译或等待</span>
+</span><span class='line'>        <span class="n">wait</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Running &amp; Judging&#39;</span><span class="p">,</span><span class="s">&#39;Compiling&#39;</span><span class="p">,</span><span class="s">&#39;Waiting&#39;</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">32</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">wait</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">or</span> <span class="n">result</span><span class="p">[</span><span class="mi">32</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">32</span><span class="p">])</span>
+</span><span class='line'><span class="c">#                sleep(1)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>        <span class="c">#最终结果在result序列中的位置</span>
+</span><span class='line'>        <span class="n">num</span> <span class="o">=</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">45</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">POJ</span><span class="o">.</span><span class="n">INFO</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s">&#39;:&#39;</span><span class="p">,</span><span class="n">result</span><span class="p">[</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="c">#基础logging模块配置</span>
+</span><span class='line'>    <span class="n">FORMAT</span> <span class="o">=</span> <span class="s">&#39;----</span><span class="si">%(message)s</span><span class="s">----&#39;</span>
+</span><span class='line'>    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span><span class="n">format</span> <span class="o">=</span> <span class="n">FORMAT</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="c">#从外部传入参数</span>
+</span><span class='line'>        <span class="n">user_id</span> <span class="o">=</span> <span class="s">&#39;username&#39;</span>
+</span><span class='line'>        <span class="n">pwd</span> <span class="o">=</span> <span class="s">&#39;userpasswd&#39;</span>
+</span><span class='line'>        <span class="n">pid</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span><span class='line'>        <span class="n">src</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>  <span class="c">#测试</span>
+</span><span class='line'>        <span class="n">user_id</span> <span class="o">=</span> <span class="s">&#39;5566mdk&#39;</span>
+</span><span class='line'>        <span class="n">pwd</span> <span class="o">=</span> <span class="s">&#39;5566mdk&#39;</span>
+</span><span class='line'>        <span class="n">pid</span> <span class="o">=</span> <span class="mi">1000</span>
+</span><span class='line'>        <span class="n">lang</span> <span class="o">=</span> <span class="s">&#39;gcc&#39;</span>
+</span><span class='line'>        <span class="n">src</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+</span><span class='line'><span class="s">        #include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="s">        int main()</span>
+</span><span class='line'><span class="s">        {</span>
+</span><span class='line'><span class="s">            int a,b;</span>
+</span><span class='line'><span class="s">            scanf(&quot;</span><span class="si">%d%d</span><span class="s">&quot;,&amp;a,&amp;b);</span>
+</span><span class='line'><span class="s">            printf(&quot;</span><span class="si">%d</span><span class="s">&quot;,a+b);</span>
+</span><span class='line'><span class="s">            return 0;</span>
+</span><span class='line'><span class="s">        }</span>
+</span><span class='line'><span class="s">        &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;connecting to server&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">poj</span> <span class="o">=</span> <span class="n">POJ</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">poj</span><span class="o">.</span><span class="n">login</span><span class="p">():</span>
+</span><span class='line'>        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;submiting&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">poj</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span><span class="n">lang</span><span class="p">,</span><span class="n">src</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;getting result&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">status</span> <span class="o">=</span> <span class="n">poj</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">while</span> <span class="n">status</span><span class="o">!=</span><span class="bp">True</span><span class="p">:</span>  <span class="c">#直到检测到结果</span>
+</span><span class='line'>                <span class="n">status</span> <span class="o">=</span> <span class="n">poj</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python天气预报]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/20/pythontian-qi-yu-bao/"/>
+    <updated>2013-05-20T16:16:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/20/pythontian-qi-yu-bao</id>
+    <content type="html"><![CDATA[<p>利用python提取网页版的天气预报放入一个文件，并用shell提取今明两天的做fetion发送的内容,把脚本放入crontab shell脚本在这里略
+code</p>
+
+<figure class='code'><figcaption><span> (tianqi.py)</span> <a href='http://mdkvimer.github.io/downloads/code/tianqi.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c">#coding:utf-8</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-05-20 16:11</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: tianqi.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: 网络抓取网页天气预报并利用split整合发短信通知(发信脚本略) </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">datetime</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">HTMLParser</span> <span class="kn">import</span> <span class="n">HTMLParser</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">main</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">HTMLParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">tarsum</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;td&#39;</span><span class="p">,</span><span class="s">&#39;th&#39;</span><span class="p">,</span><span class="s">&#39;br&#39;</span><span class="p">]</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">,</span><span class="n">attrs</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="o">=</span> <span class="n">tag</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;table&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span> <span class="o">=</span> <span class="n">tag</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span><span class="p">:</span>
+</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+</span><span class='line'>            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;td&#39;</span><span class="p">:</span>
+</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tarsum</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">days</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span><span class="p">)</span>
+</span><span class='line'>           <span class="c"># self.result[days].append(data.strip())</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">days</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_endtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">getvalue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://qq.ip138.com/weather/zhejiang/HangZhou.htm&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">page</span><span class="p">,</span><span class="s">&#39;gb2312&#39;</span><span class="p">,</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">line</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">line</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">getvalue</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">key</span><span class="p">,</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">a</span><span class="p">,</span>
+</span><span class='line'>        <span class="k">print</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[搬家了]]></title>
@@ -3875,688 +4587,6 @@ c.直连网络端点间的满载状态下的直线状态
 <p>　　如此，我们可以写出更复杂的表达式来匹配报文，如IP或TCP中的报文id，IP是中的分段标志，ICMP中类型和代码等。</p>
 
 <p>转载自<a href="http://blog.csdn.net/zjl_1026_2001/article/details/7303118">http://blog.csdn.net/zjl_1026_2001/article/details/7303118</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[今天]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/jin-tian/"/>
-    <updated>2013-05-19T10:49:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/jin-tian</id>
-    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>今天~冷~冻~冰。高一同班的一女生今告诉我《盗墓笔记8》出了，
-</span><span class='line'>曾经坐在她后面看这小说，想不到她居然也看了而且很迷恋。。
-</span><span class='line'>移动硬盘两天了还没到，可恶的申通！！晚上打电话回家了。。
-</span><span class='line'>怀念老妈做的菜，更喜欢吃自个做的菜。。青菜啊。。就这样了</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[想说的那些话]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/xiang-shuo-de-na-xie-hua/"/>
-    <updated>2013-05-19T10:47:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/xiang-shuo-de-na-xie-hua</id>
-    <content type="html"><![CDATA[<pre><code>许久未曾写下些什么,每次抬起手放在键盘上就有种卡住的感觉,如鲠在喉.10年9月自己单枪匹马的坐着k538经过一天一夜的奔波来到杭州，进入了计量~时间过的太快了,禁不起片刻的伫足.转眼四年已快过四分之三了
-伴随着成长,随之而来的便是压力.回忆起小时候信誓旦旦的说想快点长大,是多么的天真.殊不知长大的结局就是各种莫名其妙的压力开始死皮赖脸的往你肩上垒.我并不是反感压力,反而我倒是挺嗜迷这种压力的感觉.说来也奇怪,人总是对自己的真实存在充满怀疑,而这些代表着责任的压力恰恰填补了存在感缺失的空隙.
-思前想后,总是被一个问题困扰.人为什么而活.记得之前不少在室友面前感叹人生,还因而被他们当做笑柄.我们活着的意义是什么呢?即便那样不着调的理由也算意义的话,那么人活着连这种可怜的意义都没有.长辈们说为了下一代,父母为了儿女,儿女又为了未来的下一代.这便是如今普遍支撑起人们意志的理由.然而这是意义么?也许问题本身就存在毛病,很多事情并不是为了有意义而存在的.这世间万物的存在,它们又何时想过意义.所以太追求意义只是可笑的作茧自缚.
-之前想过~十多年的寒窗”苦”读,总想给自己放个长长的假.去各处游历也好.就像南宁帮的小宝哥一样现在到处旅游~总之是想过一种没有任何压力的生活.但是现实是禁不起这么久的清闲的.正如我刚才说的,时间禁不起半点伫足
-前几天跟老同学调侃~~大家都问毕业后会回省内发展吗？我说不回的~原因很简单：专业不对口~我也想为家乡的发展作贡献的~毕竟很多人都说,像我这样还会那么一丁半点技术的水货,应该去杭州上海深圳那样的大城市去发展,待遇很更好~自己身边的大牛们也都奔向这些城市~待遇都5k左右或者更多的~或许吧~但这样随之就有很多问题随之而来~
-原来在人人上面看过几篇帖子,有说父母慢慢变老的细节的,也有正儿八经计算我们一生还能见父母多少次的.不管形式如何,主题都是一样.人在长大,父母在变老.我们在一起的年华并不如我们想象的那么多了.看完之后感触颇深,”父母在,不远游”也成了我经常念及的话.虽说”好男儿志在四方”苦守一地只会沦为窝囊的代名词.但我总觉得,人活着总要去在意一点情感吧,这样也不妄自诩情感生物.时常能见着父母,能隔三岔五的嘘个寒问个暖什么的才是我想要的.所以现在的我远在它乡~一周至少会打两次长途回家跟老爸老妈唠叨上一段时间~算是对自己的罪过的一种弥补吧~至少这样我打完电话的心情总是明朗~就像之前我打回去告诉放假回家的具体日期后~~现在我每次打回去他们都会问票买的怎么样了~
-</code></pre>
-
-<p>   之前打电话回家老爸老妈总会问生活费还够用吗？我总说够用的~其实确是够用了~虽说每个家庭,每位父母都不会计较儿女用自己再多的钱.但是潜移默化的从家长的口中会流露出,诸如”这么大还用家里的钱”或者”养你那么多年,看看你用我了多少钱”此类的,看似平常,却略带点责备的语句.请原谅我的狭隘,我总感觉这些话是莫大的讽刺.它仿佛一个驮在你背上,你甩也甩不掉的怪物.还时刻的提醒你,告诫你,你这个浪费钱的家伙,你的存在根本就是一个错误,一个天天吃了睡,睡了吃的东西居然浪费这么多金钱,可耻,可恨!每每想到此处,我心中便充满了负罪感,恨不得马上去死掉.我有平板，尼康卡片机,移动硬盘各种高端电子设备~其实是我在上海的老哥给我买的~总之我不想成为家人的负担了~</p>
-
-<pre><code>总之,再多的原因都是我在自说自话.路是错是对反正已经走到了这一步,定要认认真真,踏踏实实的走下去.说起”踏踏实实”,这也是我这些年来感悟最多的一个词.不管友情,亲情,爱情都不是该用语言来诠释的东西.用心去做,心中自泯~冷暖自知的便好.
-写了好多也说了好多~这些年来经历也算不少了~今天看了自己大一写的那些计划~发现自己写的那些东西居然跟自己如今的行径大体相同~不论如何~世界末日已过~~新纪元开始了~~这也算是给自己新纪元的新的风向标吧~想说的太多了~~以后再说吧~~
-
-```                                                                                                         
-                                                                                                                                –by 2012-12-22 mdk-vimer
-```
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[有的时候]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/you-de-shi-hou/"/>
-    <updated>2013-05-19T10:46:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/you-de-shi-hou</id>
-    <content type="html"><![CDATA[<p>  有的时候喜欢不吃不喝，一个人走过饭堂门口，感觉不饿，想想，再绕回来；
-  有的时候喜欢让自己很忙，累到心里都感觉到疲惫了，蒙起头就睡，不让自己伤神再想起别的事来；
-  有的时候醒来会想起某些人，曾经还以为，少了谁都不会怎样，生活还不是一样要过。－－其实不是这样，想念有的时候会让人痛彻心扉；
-  有的时候话特别多，喜欢喊着讲，不一定是高兴才这样，也不全是难过非要发泄，可能只是单纯的想而已；
-  有的时候喜欢某一首歌，单曲循环，反复听着，像是听着自己的心声那样，比如“十年”：十年之前你不认识我，我也不认识你…十年之后我们是朋友，还可以问候…一路走来，再走下去，遇人无数，谁会是谁的过客，谁又会是谁的知己；
-  有的时候很沉默，喜欢一句话都不说，一个人走到某个角落，渐渐的，把某些事想开来，刹那间，让自己找到奋斗下去的勇气；
-  有的时候喜欢逛逛朋友的空间，不怎么留痕迹，感觉你们快乐就好；
-  有的时候会和别人说，其实我很内向，只是喜欢在你们面前“聒噪”而已，经常某些人会瞪着眼睛反回来，“少来了你，就你这样还内向呢…”有点不知所措，笑笑，无所谓吧，我们一起快乐就好；
-  有的时候想着去联系某个人，拿起电话的时候才知道，其实不懂要说什么，总是会突然怀念一些朋友，在心里的问候，也许你们不懂；
-  有的时候很多人在一起，感觉很开心，只是自己不怎么喜欢讲话，喜欢听别人讲那些自己经历过或不曾经历过的事，经常在心里感慨：哇，人家见识好广，懂得很多；
-  有的时候渴望和我们家族的人在一起，不做什么，一起聊聊天，听听他们唱歌，也会觉得很温馨，偶尔有的时候玩真心话大冒险，会把小丑弄得很委屈，呵呵…其实我也挨她整得很无语过；
-  有的时候会很想去某个地方，比如说南宁，不为什么，只是有好多同学在那，会很想他们，我的青春，他们加入过，曾经我们一起努力过，奋斗过。或者走在街上，还会遇到某张熟悉的面孔，打招呼的时候也许会这样说：真巧，你也在这；
-  有的时候感觉心里有些不好过，因为大大小小的考试太多，有些顾不上朋友，他们会以为我变了，冷落了他们，其实不是这样，可是很多时候不懂怎么说，害怕他们这样回我，人家读大学都很多课余时间，难道就只有你忙吗；</p>
-
-<p>  有的时候会很想家，想家里人的时候很温馨，也很有动力，常常有这样的感觉，我可以努力去做很多事，只要他们健康、快乐就好；
-  有的时候还会为久违的问候而感动，人家说，我不想知道你的主角是谁，我只是想看看你的文字而已…傻啊，你怎么不说你是想看看我的心情，想知道我过得好不好呢；
-  有的时候…有的时候也想问某个人，如果你也听说，我把自己的生活过成这样，会不会你也开始有那么一点心疼我？
-  有的时候，每个人都有很多个“有的时候”吧，只是不同的时候不同的心情，不同的感慨而已。我不知道你在想什么，不知道你在做什么，也许吃饭，也许～～</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ubuntu livecd]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/ubuntu-livecd/"/>
-    <updated>2013-05-19T10:45:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/ubuntu-livecd</id>
-    <content type="html"><![CDATA[<p>将现有的ubuntu系统打造成LiveCD ~下载Live Ubuntu Backup V2.2 (lub)</p>
-
-<p>将所有环境装好后分别执行: 将lub放到家目录</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>1.sudo chmod 777 /home/lub
-</span><span class='line'>
-</span><span class='line'>2.sudo /home/lub -b</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后按e或c来选择是英文提示，还是中文提示。第一次执行时，可能会提示需要安装lupin-casper和squashfs-tools，其中 lupin-casper可以忽略，而squashfs-tools必须安装，运行$sudo apt-get install squashfs-tools即可</p>
-
-<p>之后再次运行$sudo /home/lub -b，依提示运行，就能在用户文件夹下生成一个backup-2013.01.02的目录了，其中有的backup-2013.01.02.squashfs文件就是我们想要的</p>
-
-<p>3.将ubuntu-11.10-desktop.i386.iso拷贝到/home.acmer/下:</p>
-
-<p>执行:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo /home/acmer/mnt && sudo mount -o loop /home/acmer/Ubuntu-11.10-desktop-i386.iso /home/acmer/mnt</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li></li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo mkdir /home/acmer/livecd 将/home/acmer/mnt下的内容除了casper/filesystem.squashfs，同步到了/home/acmer/livecd目录下。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>执行:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo rsync –exclude=/home/acmer/acmer/casper/filesystem.squashfs -a /home/acmer/mnt/ /home/acmer/livecd </span></code></pre></td></tr></table></div></figure>
-
-
-<p>5.对/home/acmer/livecd/casper/目录下的filesystem.squashfs、 filesystem.manifest、filesystem.manifest-desktop这三个文件进行操作，由于它们只有读权限，所以先执行$sudo chmod o+w /home/acmer/livecd/casper/filesystem.*</p>
-
-<p>将刚才lub生成的那个backup-2013.01.02.squashfs文件，拷贝成/home/acmer/livecd/casper/filesystem.squashfs</p>
-
-<p>执行：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo cp /home/acmer/backup-2013.01.02/backup2013.01.02.squashfs /home/acmer/livecd/casper/filesystem.squashfs</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li></li>
-</ol>
-
-
-<p>此外，还要更新/home/acmer/livecd/casper/目录下的filesystem.manifest和filesystem.manifest-remove，这两个文件实际上是系统所装包的列表，通过以下方式更新</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo dpkg -l | grep ii | awk ‘{print $2,$3}’ &gt;/home/acmer/livecd/casper/filesystem.manifest
-</span><span class='line'>
-</span><span class='line'>$sudo dpkg -l | grep ii | awk {print$2,$3}’&gt; /home/acmer/livecd/casper/filesystem.manifes-remove</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li></li>
-</ol>
-
-
-<p>退回的LiveCD的工作目录 /home/acmer/livecd 下，</p>
-
-<p>执行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo rm md5sum.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<p>再执行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$find -type f -print0 | sudo xargs -0 md5sum | grep -v ./isolinux/ | grep -v ./md5sum.txt | sudo tee md5sum.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<p>更新原来的md5sum</p>
-
-<ol>
-<li></li>
-</ol>
-
-
-<p>将工作目录下的内容打包成ISO</p>
-
-<p>先运行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo apt-get install mkisofs 安装ISO打包工具，</span></code></pre></td></tr></table></div></figure>
-
-
-<p>执行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$sudo mkisofs -D -r -V “mdk-linux” -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../cjlu-acmer.iso .</span></code></pre></td></tr></table></div></figure>
-
-
-<p>打包iso时最后一定加 . 来表示目前目录</p>
-
-<p>参照文章来源（有删节）:<a href="http://www.linuxidc.com/Linux/2011-04/34097.htm">http://www.linuxidc.com/Linux/2011-04/34097.htm</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[运维的那些命令]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/yun-wei-de-na-xie-ming-ling/"/>
-    <updated>2013-05-19T10:42:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/yun-wei-de-na-xie-ming-ling</id>
-    <content type="html"><![CDATA[<p>转自:<a href="http://deepin.iteye.com/blog/711813">http://deepin.iteye.com/blog/711813</a>
-1.删除0字节文件</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>find -type f -size 0 -exec rm -rf {} \;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2.查看进程
-按内存从大到小排列</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -e   -o “%C   : %p : %z : %a”|sort -k5 -nr</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3.按cpu利用率从大到小排列</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -e   -o “%C   : %p : %z : %a”|sort   -nr</span></code></pre></td></tr></table></div></figure>
-
-
-<p>4.打印说cache里的URL</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>grep -r -a   jpg /data/cache/* | strings | grep “http:” | awk -F’http:’ ‘{print “http:”$2;}’</span></code></pre></td></tr></table></div></figure>
-
-
-<p>5.查看http的并发请求数及其TCP连接状态：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li></li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i ‘/Root/s/no/yes/’ /etc/ssh/sshd_config   sed在这个文里Root的一行，匹配Root一行，将no替换成yes.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>7.1.如何杀掉mysql进程：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps aux |grep mysql |grep -v grep  |awk ‘{print $2}’ |xargs kill -9 (从中了解到awk的用途)
-</span><span class='line'>
-</span><span class='line'>killall -TERM mysqld
-</span><span class='line'>
-</span><span class='line'>kill -9 `cat /usr/local/apache2/logs/httpd.pid`   试试查杀进程PID</span></code></pre></td></tr></table></div></figure>
-
-
-<p>8.显示运行3级别开启的服务:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ls /etc/rc3.d/S* |cut -c 15-   (从中了解到cut的用途，截取数据)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>9.如何在编写SHELL显示多个信息，用EOF</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cat &lt;&lt; EOF
-</span><span class='line'>+————————————————————–+
-</span><span class='line'>|       === Welcome to Tunoff services ===                |
-</span><span class='line'>+————————————————————–+
-</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>for 的巧用(如给mysql建软链接)</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd /usr/local/mysql/bin
-</span><span class='line'>for i in *
-</span><span class='line'>do ln /usr/local/mysql/bin/$i /usr/bin/$i
-</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>取IP地址：</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ifconfig eth0 |grep “inet addr:” |awk ‘{print $2}’|cut -c 6-   或者
-</span><span class='line'>
-</span><span class='line'>ifconfig   | grep ‘inet addr:’| grep -v ’127.0.0.1′ | cut -d: -f2 | awk ‘{ print $1}’</span></code></pre></td></tr></table></div></figure>
-
-
-<p>12.内存的大小:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>free -m |grep “Mem” | awk ‘{print $2}’</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li></li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>netstat -an -t | grep “:80″ | grep ESTABLISHED | awk ‘{printf “%s %s\n”,$5,$6}’ | sort</span></code></pre></td></tr></table></div></figure>
-
-
-<p>14.查看Apache的并发请求数及其TCP连接状态：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’</span></code></pre></td></tr></table></div></figure>
-
-
-<p>15.因为同事要统计一下服务器下面所有的jpg的文件的大小,写了个shell给他来统计.原来用xargs实现,但他一次处理一部分,搞的有多个总和….,下面的命令就能解决啦.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>find / -name *.jpg -exec wc -c {} \;|awk ‘{print $1}’|awk ‘{a+=$1}END{print a}’</span></code></pre></td></tr></table></div></figure>
-
-
-<p>CPU的数量（多核算多个CPU，cat /proc/cpuinfo |grep -c processor）越多，系统负载越低，每秒能处理的请求数也越多。</p>
-
-<p>—————————————————————————————
-16   CPU负载</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># cat /proc/loadavg</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查前三个输出值是否超过了系统逻辑CPU的4倍。</p>
-
-<p>18   CPU负载</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#mpstat 1 1</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查%idle是否过低(比如小于5%)</p>
-
-<p>19   内存空间</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># free</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查free值是否过低   也可以用</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># cat /proc/meminfo</span></code></pre></td></tr></table></div></figure>
-
-
-<p>20   swap空间</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># free</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查swap used值是否过高   如果swap used值过高，进一步检查swap动作是否频繁：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># vmstat 1 5</span></code></pre></td></tr></table></div></figure>
-
-
-<p>观察si和so值是否较大</p>
-
-<p>21   磁盘空间</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># df -h</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查是否有分区使用率(Use%)过高(比如超过90%)   如发现某个分区空间接近用尽，可以进入该分区的挂载点，用以下命令找出占用空间最多的文件或目录：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># du -cks * | sort -rn | head -n 10</span></code></pre></td></tr></table></div></figure>
-
-
-<p>22   磁盘I/O负载</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># iostat -x 1 2</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查I/O使用率(%util)是否超过100%</p>
-
-<p>23   网络负载</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># sar -n DEV</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查网络流量(rxbyt/s, txbyt/s)是否过高</p>
-
-<p>24   网络错误</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># netstat -i</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查是否有网络错误(drop fifo colls carrier)   也可以用命令：# cat /proc/net/dev</p>
-
-<p>25 网络连接数目</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># netstat -an | grep -E “^(tcp)” | cut -c 68- | sort | uniq -c | sort -n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>26   进程总数</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># ps aux | wc -l</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查进程个数是否正常 (比如超过250)</p>
-
-<p>27   可运行进程数目</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># vmwtat 1 5</span></code></pre></td></tr></table></div></figure>
-
-
-<p>列给出的是可运行进程的数目，检查其是否超过系统逻辑CPU的4倍</p>
-
-<p>28   进程</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># top -id 1</span></code></pre></td></tr></table></div></figure>
-
-
-<p>观察是否有异常进程出现</p>
-
-<p>29   网络状态   检查DNS, 网关等是否可以正常连通</p>
-
-<p>30   用户</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># who | wc -l</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查登录用户是否过多 (比如超过50个)   也可以用命令</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># uptime</span></code></pre></td></tr></table></div></figure>
-
-
-<p>31   系统日志</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># cat /var/log/rflogview/*errors</span></code></pre></td></tr></table></div></figure>
-
-
-<p> 检查是否有异常错误记录   也可以搜寻一些异常关键字，例如：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># grep -i error /var/log/messages
-</span><span class='line'># grep -i fail /var/log/messages</span></code></pre></td></tr></table></div></figure>
-
-
-<p>32   核心日志</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># dmesg</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查是否有异常错误记录</p>
-
-<p>33   系统时间</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># date</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查系统时间是否正确</p>
-
-<p>34   打开文件数目</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># lsof | wc -l</span></code></pre></td></tr></table></div></figure>
-
-
-<p>检查打开文件总数是否过多</p>
-
-<p>35   日志</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># logwatch –print   配置/etc/log.d/logwatch.conf，将 Mailto 设置为自己的email 地址，启动mail服务 (sendmail或者postfix)，这样就可以每天收到日志报告了。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>缺省logwatch只报告昨天的日志，可以用# logwatch –print –range all 获得所有的日志分析结果。
-可以用</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># logwatch –print –detail high 获得更具体的日志分析结果(而不仅仅是出错日志)。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>36.杀掉80端口相关的进程</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>lsof -i :80|grep -v “PID”|awk ‘{print “kill -9″,$2}’|sh</span></code></pre></td></tr></table></div></figure>
-
-
-<p>37.清除僵死进程。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -eal | awk ‘{ if ($2 == “Z”) {print $4}}’ | kill -9</span></code></pre></td></tr></table></div></figure>
-
-
-<p>38.tcpdump 抓包 ，用来防止80端口被人攻击时可以分析数据</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># tcpdump -c 10000 -i eth0 -n dst port 80 &gt; /root/pkts</span></code></pre></td></tr></table></div></figure>
-
-
-<p>39.然后检查IP的重复数 并从小到大排序 注意 “-t\ +0″   中间是两个空格</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># less pkts | awk {‘printf $3″\n”‘} | cut -d. -f 1-4 | sort | uniq -c | awk {‘printf $1″ “$2″\n”‘} | sort -n -t\ +0</span></code></pre></td></tr></table></div></figure>
-
-
-<p>40.查看有多少个活动的php-cgi进程</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>netstat -anp | grep php-cgi | grep ^tcp | wc -l
-</span><span class='line'>
-</span><span class='line'>chkconfig –list | awk ‘{if ($5==”3:on”) print $1}’</span></code></pre></td></tr></table></div></figure>
-
-
-<p>41.kudzu查看网卡型号</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>kudzu –probe –class=network</span></code></pre></td></tr></table></div></figure>
-
-
-<p>匹配中文字符的正则表达式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[\u4e00-\u9fa5]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
-
-<p>匹配双字节字符(包括汉字在内)：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[^\x00-\xff]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
-
-<p>匹配空白行的正则表达式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\n\s*\r</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：可以用来删除空白行</p>
-
-<p>匹配HTML标记的正则表达式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;(\S*?)[^&gt;]*&gt;.*?&lt;/\1&gt;|&lt;.*? /&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧无能为力</p>
-
-<p>匹配首尾空白字符的正则表达式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>^\s*|\s*$</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
-
-<p>匹配Email地址的正则表达式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：表单验证时很实用</p>
-
-<p>匹配网址URL的正则表达式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[a-zA-z]+://[^\s]*</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
-
-<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>^[a-zA-Z][a-zA-Z0-9_]{4,15}$</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：表单验证时很实用</p>
-
-<p>匹配国内电话号码：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\d{3}-\d{8}|\d{4}-\d{7}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：匹配形式如 0511-4405222 或 021-87888822</p>
-
-<p>匹配腾讯QQ号：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[1-9][0-9]{4,}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：腾讯QQ号从10000开始</p>
-
-<p>匹配中国邮政编码：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[1-9]\d{5}(?!\d)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：中国邮政编码为6位数字</p>
-
-<p>匹配身份证：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\d{15}|\d{18}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：中国的身份证为15位或18位</p>
-
-<p>匹配ip地址：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\d+\.\d+\.\d+\.\d+</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：提取ip地址时有用</p>
-
-<p>匹配特定数字：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>^[1-9]\d*$　 　 //匹配正整数
-</span><span class='line'>^-[1-9]\d*$ 　 //匹配负整数
-</span><span class='line'>^-?[1-9]\d*$　　 //匹配整数
-</span><span class='line'>^[1-9]\d*|0$　 //匹配非负整数（正整数 + 0）
-</span><span class='line'>^-[1-9]\d*|0$　　 //匹配非正整数（负整数 + 0）
-</span><span class='line'>^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$　　 //匹配正浮点数
-</span><span class='line'>^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$　 //匹配负浮点数
-</span><span class='line'>^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$　 //匹配浮点数
-</span><span class='line'>^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）
-</span><span class='line'>^(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0$　　//匹配非正浮点数（负浮点数 + 0）</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：处理大量数据时有用，具体应用时注意修正</p>
-
-<p>匹配特定字符串：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串
-</span><span class='line'>^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串
-</span><span class='line'>^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串
-</span><span class='line'>^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串
-</span><span class='line'>^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串</span></code></pre></td></tr></table></div></figure>
-
-
-<p>评注：最基本也是最常用的一些表达式</p>
 ]]></content>
   </entry>
   

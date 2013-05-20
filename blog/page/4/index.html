@@ -9,8 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="转自:http://www.cnblogs.com/realyan/archive/2011/07/14/2106339.html
-虚函数的定义： 　　虚函数必须是类的非静态成员函数（且非构造函数），其访问权限是public（可以定义为private or proteceted， 但是对于多态来说 &hellip;">
+  <meta name="description" content="生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +78,1529 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti/">多线程之生产者于消费者问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:26:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的
+code</p>
+
+<figure class='code'><figcaption><span> (proandcon.c)</span> <a href='/downloads/code/proandcon.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/wait.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/types.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;pthread.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;time.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#define BUFFER_SIZE 8</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">struct</span> <span class="n">prodcons</span> <span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>
+</span><span class='line'> <span class="n">pthread_mutex_t</span> <span class="n">lock</span><span class="p">;</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">readpos</span><span class="p">,</span><span class="n">writepos</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_cond_t</span> <span class="n">notempty</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_cond_t</span> <span class="n">notfull</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_mutex_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="kt">int</span> <span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">((</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">BUFFER_SIZE</span> <span class="o">==</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">,</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">[</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">&gt;=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span>
+</span><span class='line'>     <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">);</span>
+</span><span class='line'> <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'> <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">==</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">,</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'> <span class="n">data</span> <span class="o">=</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">[</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">];</span>
+</span><span class='line'> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">&gt;=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span>
+</span><span class='line'>     <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">);</span>
+</span><span class='line'> <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+</span><span class='line'> <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">#define OVER (-1)</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">prodcons</span> <span class="n">buffer</span><span class="p">;</span>
+</span><span class='line'><span class="kt">void</span> <span class="o">*</span><span class="nf">producer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'> <span class="k">for</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="p">;</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">put</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'> <span class="n">put</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="n">OVER</span><span class="p">);</span>
+</span><span class='line'> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">void</span> <span class="o">*</span><span class="nf">consumer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">d</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>   <span class="n">d</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
+</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="n">OVER</span><span class="p">)</span>
+</span><span class='line'>       <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">pthread_t</span> <span class="n">th_a</span><span class="p">,</span><span class="n">th_b</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">retval</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th_a</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">producer</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th_b</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">consumer</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_join</span><span class="p">(</span><span class="n">th_a</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retval</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">pthread_join</span><span class="p">(</span><span class="n">th_b</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retval</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/xin-jiao-tong-gui-ze/">新交通规则</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:49:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>   //before
+</span><span class='line'>    if(light == “green”){
+</span><span class='line'>      run();
+</span><span class='line'>    }else if(light == “red”){
+</span><span class='line'>      stop();
+</span><span class='line'>    }else if(light == “yellow”){
+</span><span class='line'>      holdOn();
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    //now
+</span><span class='line'>    if(light == “green”){
+</span><span class='line'>      run();
+</span><span class='line'>    }else if(light == “red”){
+</span><span class='line'>      stop();
+</span><span class='line'>    }else if(light == “yellow”){
+</span><span class='line'>      stop();
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/unix-socket-server-and-client/">Unix Socket Server&amp;client</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:48:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>socket()函数创建一个socket,然后调用bind()函数将其与本机的地址以及一个本地端口绑定~然后利用listen()在相应的socket上监听，当accept()接收到一个连接的服务请求时，服务器将显示客户机的ip地址,并通过新的socket向客户端发送字符串”Hello,you are connected!”最后关闭socket</p>
+
+<p>myserver.c:
+客户端通过服务器域名获得服务器的ip,然后新建一个socket调用connect与服务器连接，连接成功后接收从服务器发送过来的数据，最后关闭socket</p>
+
+<p>gethostbyname()是完成域名转换的 struct hostent <em>gethostbyname(const char </em>name)</p>
+
+<p>server</p>
+
+<figure class='code'><figcaption><span> (myserver.c)</span> <a href='/downloads/code/myserver.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> *socket server</span>
+</span><span class='line'><span class="cm"> * */</span>
+</span><span class='line'><span class="cp">#include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;errno.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/types.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;netinet/in.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/socket.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/wait.h&gt;</span>
+</span><span class='line'><span class="cp">#define SERVERPORT 3333</span>
+</span><span class='line'><span class="cp">#define BACKLOG 10</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span><span class="n">clientfd</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">my_addr</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">remote_addr</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">((</span><span class="n">sockfd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span> <span class="p">,</span> <span class="n">SOCK_STREAM</span> <span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">perror</span><span class="p">(</span><span class="s">&quot;socket create error !!!&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">my_addr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">my_addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">SERVERPORT</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">my_addr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">INADDR_ANY</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">bzero</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">my_addr</span><span class="p">.</span><span class="n">sin_zero</span><span class="p">),</span><span class="mi">8</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">my_addr</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>     <span class="n">perror</span><span class="p">(</span><span class="s">&quot;bind error....&quot;</span><span class="p">);</span>
+</span><span class='line'>     <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">listen</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span><span class="n">BACKLOG</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>     <span class="n">perror</span><span class="p">(</span><span class="s">&quot;listen error ..&quot;</span><span class="p">);</span>
+</span><span class='line'>     <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>     <span class="kt">int</span> <span class="n">sin_size</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr_in</span><span class="p">);</span>
+</span><span class='line'>     <span class="k">if</span><span class="p">((</span><span class="n">clientfd</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">remote_addr</span><span class="p">,</span><span class="o">&amp;</span><span class="n">sin_size</span><span class="p">))</span><span class="o">==-</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>     <span class="n">perror</span><span class="p">(</span><span class="s">&quot;accept error...&quot;</span><span class="p">);</span>
+</span><span class='line'>     <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Receied a connection from %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">inet_ntoa</span><span class="p">(</span><span class="n">remote_addr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">));</span>
+</span><span class='line'>     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">fork</span><span class="p">()){</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="n">send</span><span class="p">(</span><span class="n">clientfd</span><span class="p">,</span><span class="s">&quot;Hello,you are connected!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">perror</span><span class="p">(</span><span class="s">&quot;send error...&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">close</span><span class="p">(</span><span class="n">clientfd</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="n">close</span><span class="p">(</span><span class="n">clientfd</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>client</p>
+
+<figure class='code'><figcaption><span> (myclient.c)</span> <a href='/downloads/code/myclient.c'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> *socket client </span>
+</span><span class='line'><span class="cm"> * */</span>
+</span><span class='line'><span class="cp">#include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;unistd.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;errno.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;netdb.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/types.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/wait.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;sys/socket.h&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;netinet/in.h&gt;</span>
+</span><span class='line'><span class="cp">#define SERVERPORT 3333</span>
+</span><span class='line'><span class="cp">#define MAXDATASIZE 100</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span><span class="n">recvbytes</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">MAXDATASIZE</span><span class="p">];</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">hostent</span> <span class="o">*</span><span class="n">host</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">serv_addr</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>   <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">&quot;Please enter the server&#39;hostname!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>   <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">((</span><span class="n">host</span><span class="o">=</span> <span class="n">gethostbyname</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+</span><span class='line'>   <span class="n">perror</span><span class="p">(</span><span class="s">&quot;gethostbyname error...&quot;</span><span class="p">);</span>
+</span><span class='line'>   <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">((</span><span class="n">sockfd</span><span class="o">=</span><span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">SOCK_STREAM</span> <span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>   <span class="n">perror</span><span class="p">(</span><span class="s">&quot;socket error...&quot;</span><span class="p">);</span>
+</span><span class='line'>   <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span> <span class="p">;</span>
+</span><span class='line'>  <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">SERVERPORT</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_addr</span> <span class="o">=</span> <span class="o">*</span><span class="p">((</span><span class="k">struct</span> <span class="n">in_addr</span> <span class="o">*</span><span class="p">)</span><span class="n">host</span><span class="o">-&gt;</span><span class="n">h_addr</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">bzero</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">serv_addr</span><span class="p">.</span><span class="n">sin_zero</span><span class="p">),</span><span class="mi">8</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">serv_addr</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>  <span class="n">perror</span><span class="p">(</span><span class="s">&quot;connext error...&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">((</span><span class="n">recvbytes</span><span class="o">=</span><span class="n">recv</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span><span class="n">buf</span><span class="p">,</span><span class="n">MAXDATASIZE</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>   <span class="n">perror</span><span class="p">(</span><span class="s">&quot;recv error ....&quot;</span><span class="p">);</span>
+</span><span class='line'>   <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">buf</span><span class="p">[</span><span class="n">recvbytes</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;REceived:%s </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">buf</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">close</span><span class="p">(</span><span class="n">sockfd</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/gentoozui-xiao-hua-an-zhuang/">Gentoo最小化安装</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:48:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>转载自有删减<a href="http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml">http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml</a>
+代码 1.1: 测试机器的规格</p>
+
+<p>（下述配置和耗时情况帮你粗略估计完成整个安装过程大概需要的时间）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># grep bogo /proc/cpuinfo
+</span><span class='line'>bogomips       : 3337.81</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># hdparm -tT /dev/sda
+</span><span class='line'>/dev/sda:
+</span><span class='line'> Timing cached reads:   1100 MB in  2.00 seconds = 549.97 MB/sec
+</span><span class='line'> Timing buffered disk reads:  224 MB in  3.01 seconds =  74.36 MB/sec</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># grep MemTotal /proc/meminfo
+</span><span class='line'>MemTotal:       509248 kB</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>快速安装指南</li>
+</ol>
+
+
+<p>安装介质</p>
+
+<p>从我们的镜像下载一张光盘。可以在releases/x86/current-iso/中找到最小光盘的ISO文件。最小安装光盘只适用于有网络环境的安装。本指南将使用最小光盘。</p>
+
+<p>刻制光盘，用它引导机器。</p>
+
+<p>从光盘启动</p>
+
+<p>启动时按下F2查看有哪些引导选项。你可以启动gentoo或者gentoo-nofb，后者禁用帧缓冲。如果你用LiveCD引导，别忘了添上nox选项以防止启动X图形环境。有好几个选项可用于启用或禁用一些特性。正常情况下会检测出你的硬件并装载所有模块。如果内核无法正确引导或是在引导过程中挂机，你可能不得不尝试不同的配置。最安全的办法大概是使用nodetect选项，然后显式地载入需要的模块。</p>
+
+<p>代码 2.1: 引导最小光盘</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Gentoo Linux Installation LiveCD                     http://www.gentoo.org
+</span><span class='line'>Enter to Boot; F1 for kernels  F2 for options.
+</span><span class='line'>boot: gentoo-nofb
+</span><span class='line'>（或在有问题的情况下）
+</span><span class='line'>boot: gentoo-nofb nodetect</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可选：装载模块</p>
+
+<p>如果使用了nodetect选项，就要在启动后载入必要的模块。你还要配置好网络并拥有访问磁盘的权限。lspci命令能帮助你确认硬件信息。</p>
+
+<p>代码 2.2: 载入必要的模块</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # lspci
+</span><span class='line'>（根据lspci的输出查看需要哪些模块）
+</span><span class='line'>
+</span><span class='line'>（以下只是个例子，实际以具体硬件为准）
+</span><span class='line'>livecd root # modprobe 3w-9xxx
+</span><span class='line'>livecd root # modprobe r8169</span></code></pre></td></tr></table></div></figure>
+
+
+<p>网络配置</p>
+
+<p>如果还没开启网络，可以用net-setup来配置网络。配置之前可能要先用modprobe为网卡载入支持模块。如果你有ADSL，请使用pppoe-setup和pppoe-start。要支持PPTP，首先编辑/etc/ppp/chap-secrets和/etc/ppp/options.pptp，然后使用pptp <server ip>。</p>
+
+<p>如果是无线连接，用iwconfig设置无线连接参数，然后再次执行net-setup或者手动运行ifconfig、dhcpcd和/或route。</p>
+
+<p>如果你用代理，不要忘了使用export http_proxy、ftp_proxy和RSYNC_PROXY初始化系统环境。</p>
+
+<p>代码 2.3: 通过向导配置网络</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # net-setup eth0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者，你也可以手动打开网络。下面的例子把你电脑的IP地址配置为192.168.1.10，并把网关和域名服务器设为192.168.1.1。</p>
+
+<p>代码 2.4: 手动配置网络</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # ifconfig eth0 192.168.1.10/24
+</span><span class='line'>livecd root # route add default gw 192.168.1.1
+</span><span class='line'>livecd root # echo nameserver 192.168.1.1 &gt; /etc/resolv.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装盘允许你启动一个sshd服务，添加用户，运行irssi（一个命令行的客户端聊天工具），还可以使用links进行网上冲浪。</p>
+
+<p>可选：通过ssh连接到你的新机器</p>
+
+<p>最有趣的功能当然是sshd。启动这个服务，从另一台机器连过来，然后从本指南复制/粘贴命令。</p>
+
+<p>代码 2.5: 启动sshd</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # time /etc/init.d/sshd start
+</span><span class='line'> * Generating hostkey ...
+</span><span class='line'>（sshd生成密钥并显示更多输出）
+</span><span class='line'> * starting sshd ...                            [ok]
+</span><span class='line'>
+</span><span class='line'>real   0m13.688s
+</span><span class='line'>user   0m9.420s
+</span><span class='line'>sys    0m0.090s</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在设置一下安装盘的root密码，使你能通过另一台电脑连接。请注意正常情况下不推荐你允许root通过ssh连接。如果你的本地网络不太可靠，请设一个又长又复杂的密码。它只能使用一次，因为机器重启后就没掉了。</p>
+
+<p>代码 2.6: 设置root密码</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd root # passwd
+</span><span class='line'>New UNIX password: 输入密码
+</span><span class='line'>Retype new UNIX password: 输入密码
+</span><span class='line'>passwd: password updated successfully</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在就可以在另一台电脑上打开一个终端并连接到你的新机器，在新的窗口中继续本指南接下去的内容，复制/粘贴文中的命令。</p>
+
+<p>代码 2.7: 从另一台电脑连到你的新机器</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（使用你新机器的IP地址）
+</span><span class='line'>$ ssh root@192.168.1.10
+</span><span class='line'>The authenticity of host '192.168.1.10 (192.168.1.10)' can't be established.
+</span><span class='line'>RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
+</span><span class='line'>Are you sure you want to continue connecting (yes/no)? yes
+</span><span class='line'>Warning: Permanently added '192.168.1.10' (RSA) to the list of known hosts.
+</span><span class='line'>Password: 输入密码</span></code></pre></td></tr></table></div></figure>
+
+
+<p>准备磁盘</p>
+
+<p>使用fdisk或者cfdisk创建分区规划。至少需要一个交换分区（类别为82）和一个Linux分区（类别为83）。下面是我们的手册选用的方案，创建包括一个/boot分区，一个交换分区和一个主分区。将/dev/sda替换为你自己的磁盘。大多数系统忽略启动标志，但有的系统需要它。使用fdisk的a命令在启动分区上设置这个标志。</p>
+
+<p>代码 2.8: 创建分区</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd ~ # fdisk /dev/sda
+</span><span class='line'>
+</span><span class='line'>（本手册接下去使用以下分区规划）
+</span><span class='line'>livecd ~ # fdisk -l /dev/sda
+</span><span class='line'>
+</span><span class='line'>Disk /dev/sda: 599.9 GB, 599978409984 bytes
+</span><span class='line'>255 heads, 63 sectors/track, 72943 cylinders
+</span><span class='line'>Units = cylinders of 16065 * 512 = 8225280 bytes
+</span><span class='line'>
+</span><span class='line'>   Device Boot      Start         End      Blocks   Id  System
+</span><span class='line'>/dev/sda1   *           1          12       96358+  83  Linux
+</span><span class='line'>/dev/sda2              13         110      787185   82  Linux swap / Solaris
+</span><span class='line'>/dev/sda3             111       72943   585031072+  83  Linux</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用mke2fs，mke2fs -j，mkreiserfs，mkfs.xfs和mkfs.jfs建立Linux分区的文件系统。使用mkswap和swapon初始化交换分区。</p>
+
+<p>代码 2.9: 创建文件系统并激活交换分区</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（ext2完全满足/boot分区的需要）
+</span><span class='line'>livecd ~ # mke2fs /dev/sda1
+</span><span class='line'>
+</span><span class='line'>（主分区就用ext3吧）
+</span><span class='line'>livecd ~ # mke2fs -j /dev/sda3
+</span><span class='line'>
+</span><span class='line'>（创建并激活交换分区）
+</span><span class='line'>livecd ~ # mkswap /dev/sda2 && swapon /dev/sda2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把新建的文件系统挂载到/mnt/gentoo。如果需要其他挂载点（如/mnt/gentoo/boot），也要为它们创建目录并挂载好。</p>
+
+<p>代码 2.10: 挂载文件系统</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd ~ # mount /dev/sda3 /mnt/gentoo
+</span><span class='line'>livecd ~ # mkdir /mnt/gentoo/boot
+</span><span class='line'>livecd ~ # mount /dev/sda1 /mnt/gentoo/boot
+</span><span class='line'>livecd ~ # cd /mnt/gentoo</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装Stage</p>
+
+<p>首先确保正确设置了日期和时间。执行date MMDDhhmmYYYY，使用UTC时间。</p>
+
+<p>代码 2.11: 设定日期和UTC时间</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（查看时钟）
+</span><span class='line'>livecd gentoo # date
+</span><span class='line'>Mon Mar  6 00:14:13 UTC 2006
+</span><span class='line'>
+</span><span class='line'>（设置当前日期和时间，如果需要的话）
+</span><span class='line'>livecd gentoo # date 030600162006 （格式为MMDDhhmmYYYY）
+</span><span class='line'>Mon Mar  6 00:16:00 UTC 2006</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接下来，从我们的镜像下载一份stage包：</p>
+
+<p>代码 2.12: 下载一份stage3压缩包</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd gentoo # links http://www.gentoo.org/main/en/mirrors.xml
+</span><span class='line'>（选一个镜像，进入releases/x86/current-stage3/目录，高亮显示你需要的stage3包，
+</span><span class='line'>即i686 stage3，按下D键下载）</span></code></pre></td></tr></table></div></figure>
+
+
+<p>进入/mnt/gentoo，执行tar xjpf <stage3 tarball>解压stage包。</p>
+
+<p>代码 2.13: 解开stage3压缩包</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd gentoo # time tar xjpf stage3*
+</span><span class='line'>
+</span><span class='line'>real  1m14.157s
+</span><span class='line'>user  1m2.920s
+</span><span class='line'>sys   0m7.530s</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装最新的Portage快照。跟下载stage3压缩包一样：从我们的列表选择一个最近的镜像，下载最新的快照并解压。</p>
+
+<p>代码 2.14: 下载最新的Portage快照</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> 
+</span><span class='line'>livecd gentoo # cd /mnt/gentoo/usr
+</span><span class='line'>livecd usr # wget http://distfiles.gentoo.org/snapshots/portage-latest.tar.bz2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>代码 2.15: 解开Portage快照</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd usr # time tar xjf portage-lat*
+</span><span class='line'>
+</span><span class='line'>real  0m40.523s
+</span><span class='line'>user  0m28.280s
+</span><span class='line'>sys   0m8.240s</span></code></pre></td></tr></table></div></figure>
+
+
+<p>切换系统</p>
+
+<p>挂载/proc &amp; /dev文件系统，拷贝/etc/resolv.conf文件，然后chroot到你的Gentoo环境。</p>
+
+<p>代码 2.16: Chroot</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd usr # cd /
+</span><span class='line'>livecd / # mount -t proc proc /mnt/gentoo/proc
+</span><span class='line'>livecd / # mount -o bind /dev /mnt/gentoo/dev
+</span><span class='line'>livecd / # cp -L /etc/resolv.conf /mnt/gentoo/etc/
+</span><span class='line'>livecd / # chroot /mnt/gentoo /bin/bash
+</span><span class='line'>livecd / # env-update && source /etc/profile
+</span><span class='line'>&gt;&gt;&gt; Regenerating /etc/ld.so.cache...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>设定时区</p>
+
+<p>设置你的时区信息：使用/usr/share/zoneinfo中的正确条目。</p>
+
+<p>代码 2.17: 设置时区</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd / # ls /usr/share/zoneinfo
+</span><span class='line'>（以上海为例）
+</span><span class='line'>livecd / # cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span><span class='line'>livecd / # date
+</span><span class='line'>Thu Aug 30 11:03:16 CST 2007</span></code></pre></td></tr></table></div></figure>
+
+
+<p>设定主机名和域名</p>
+
+<p>在/etc/conf.d/hostname和/etc/hosts中设置主机名。以下例子中我们用mybox作为主机名，用at.myplace作为域名。可以用nano编辑这些配置文件，或者使用下面的命令：</p>
+
+<p>代码 2.18: 设置主机名和域名</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd / # cd /etc
+</span><span class='line'>livecd etc # echo "127.0.0.1 mdk-server.vim.myplace mybox localhost" &gt; hosts
+</span><span class='line'>livecd etc # sed -i -e 's/HOSTNAME.*/HOSTNAME="mdk-server"/' conf.d/hostname
+</span><span class='line'>（使用指定的主机名并检查）
+</span><span class='line'>livecd etc # hostname mdk-server
+</span><span class='line'>livecd etc # hostname -f
+</span><span class='line'>mdk-server.vim.myplace</span></code></pre></td></tr></table></div></figure>
+
+
+<p>内核配置</p>
+
+<p>安装一个内核源码包（通常为gentoo-sources），配置、编译并拷贝arch/i386/boot/bzImage文件到/boot。</p>
+
+<p>代码 2.19: 安装内核源码包，编译和安装内核</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd etc # time emerge gentoo-sources
+</span><span class='line'>
+</span><span class='line'>real  2m51.435s
+</span><span class='line'>user  0m58.220s
+</span><span class='line'>sys   0m29.890s
+</span><span class='line'>livecd etc # cd /usr/src/linux
+</span><span class='line'>livecd linux # make menuconfig
+</span><span class='line'>（配置内核）
+</span><span class='line'>livecd linux # time make -j2
+</span><span class='line'>
+</span><span class='line'>（所花的时间很大程度上决定于你所选的选项）
+</span><span class='line'>real  3m51.962s
+</span><span class='line'>user  3m27.060s
+</span><span class='line'>sys   0m24.310s
+</span><span class='line'>
+</span><span class='line'>livecd linux # make modules_install
+</span><span class='line'>livecd linux # cp arch/i386/boot/bzImage /boot/kernel</span></code></pre></td></tr></table></div></figure>
+
+
+<p>配置系统</p>
+
+<p>编辑/etc/fstab，用实际的分区名代替BOOT、ROOT和SWAP。记得确认一下文件系统是否与所安装的相匹配。</p>
+
+<p>代码 2.20: fstab范例</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd linux # cd /etc
+</span><span class='line'>livecd etc # nano -w fstab
+</span><span class='line'>/dev/sda1   /boot     ext2    noauto,noatime     1 2
+</span><span class='line'>/dev/sda3   /         ext3    noatime            0 1
+</span><span class='line'>/dev/sda2   none      swap    sw                 0 0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在/etc/conf.d/net中配置网络。把net.eth0启动脚本添加到默认运行级别。如果有多张网卡，分别为它们建立符号链接到net.eth0启动脚本，并一起添加到默认运行级别。用nano编辑/etc/conf.d/net，或者使用如下命令：</p>
+
+<p>代码 2.21: 配置网络</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd etc # cd conf.d
+</span><span class='line'>livecd conf.d # echo 'config_eth0=( "192.168.1.10/24" )' &gt;&gt; net
+</span><span class='line'>livecd conf.d # echo 'routes_eth0=( "default via 192.168.1.1" )' &gt;&gt; net
+</span><span class='line'>livecd conf.d # rc-update add net.eth0 default
+</span><span class='line'>（如果你把网卡驱动编译为模块，
+</span><span class='line'>需要将它添加到/etc/modules.autoload.d/kernel-2.6）
+</span><span class='line'>livecd conf.d # echo r8169 &gt;&gt; /etc/modules.autoload.d/kernel-2.6
+</span><span class='line'>（如果希望重启后通过ssh重新连接到新机器）
+</span><span class='line'>livecd conf.d # rc-update add sshd default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意: 如果需要支持PCMCIA卡，请emerge pcmciautils。</p>
+
+<p>执行passwd设置root密码。</p>
+
+<p>代码 2.22: 设置root密码</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # passwd
+</span><span class='line'>New UNIX password: 输入密码
+</span><span class='line'>Retype new UNIX password: 再输入密码
+</span><span class='line'>passwd: password updated successfully</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编辑/etc/conf.d/clock以定义前面所使用的时区。</p>
+
+<p>代码 2.23: 编辑/etc/conf.d/clock</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # nano -w /etc/conf.d/clock
+</span><span class='line'>TIMEZONE="Asia/Shanghai"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>检查系统配置，查看并编辑这些配置文件：/etc/rc.conf， /etc/conf.d/rc，/etc/conf.d/keymaps。</p>
+
+<p>代码 2.24: 可选：编辑一些配置文件</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # nano -w /etc/rc.conf
+</span><span class='line'>livecd conf.d # nano -w /etc/conf.d/rc
+</span><span class='line'>livecd conf.d # nano -w /etc/conf.d/keymaps</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装系统工具</p>
+
+<p>安装一个系统日志如syslog-ng和一个cron守护进程如vixie-cron，并把它们添加到默认运行级别。
+注意: Cron守护进程依赖于MTA。mail-mta/ssmtp会因依赖性而被一起安装。如果你想使用一种更高级的MTA，可以现在安装它。要是现在没空，暂时先安装ssmtp，以后再卸载并安装你要的MTA。</p>
+
+<p>代码 2.25: 安装系统日志和cron守护进程</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # time emerge syslog-ng vixie-cron
+</span><span class='line'>
+</span><span class='line'>real  1m54.099s
+</span><span class='line'>user  1m2.630s
+</span><span class='line'>sys   0m34.620s
+</span><span class='line'>livecd conf.d # rc-update add syslog-ng default
+</span><span class='line'>livecd conf.d # rc-update add vixie-cron default</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安装必要的文件系统工具（xfsprogs，reiserfsprogs或jfsutils）和网络工具（dhcpcd或ppp）。</p>
+
+<p>代码 2.26: 安装其它工具</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # emerge xfsprogs       （如果使用XFS文件系统）
+</span><span class='line'>livecd conf.d # emerge jfsutils       （如果使用JFS文件系统）
+</span><span class='line'>livecd conf.d # emerge reiserfsprogs  （如果使用Reiser文件系统）
+</span><span class='line'>livecd conf.d # emerge dhcpcd         （如果使用DHCP客户端）
+</span><span class='line'>livecd conf.d # emerge ppp            （如果使用PPPoE ADSL连接）</span></code></pre></td></tr></table></div></figure>
+
+
+<p>配置引导程序</p>
+
+<p>安装并配置grub。</p>
+
+<p>代码 2.27: Emerge grub并编辑它的配置文件</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # time emerge grub
+</span><span class='line'>
+</span><span class='line'>real  1m4.634s
+</span><span class='line'>user  0m39.460s
+</span><span class='line'>sys   0m15.280s
+</span><span class='line'>livecd conf.d # nano -w /boot/grub/grub.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>代码 2.28: grub.conf范例</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>default 0
+</span><span class='line'>timeout 10
+</span><span class='line'>
+</span><span class='line'>title Gentoo
+</span><span class='line'>root (hd0,0)
+</span><span class='line'>kernel /boot/kernel root=/dev/sda3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>代码 2.29: 安装grub</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # grub
+</span><span class='line'>Probing devices to guess BIOS drives. This may take a long time.
+</span><span class='line'>
+</span><span class='line'>grub&gt; root (hd0,0)
+</span><span class='line'> Filesystem type is ext2fs, partition type 0xfd
+</span><span class='line'>
+</span><span class='line'>grub&gt; setup (hd0)
+</span><span class='line'> Checking if "/boot/grub/stage1" exists... yes
+</span><span class='line'> Checking if "/boot/grub/stage2" exists... yes
+</span><span class='line'> Checking if "/boot/grub/e2fs_stage1_5" exists... yes
+</span><span class='line'> Running "embed /boot/grub/e2fs_stage1_5 (hd0)"...  16 sectors are embedded.
+</span><span class='line'>succeeded
+</span><span class='line'> Running "install /boot/grub/stage1 (hd0) (hd0)1+16 p (hd0,0)/boot/grub/stage2 /boot/
+</span><span class='line'>grub/menu.lst"... succeeded
+</span><span class='line'>Done.
+</span><span class='line'>
+</span><span class='line'>grub&gt; quit</span></code></pre></td></tr></table></div></figure>
+
+
+<p>重启</p>
+
+<p>退出chroot环境，卸载所有文件系统并重启：</p>
+
+<p>代码 2.30: 重启</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>livecd conf.d # exit
+</span><span class='line'>livecd / # umount /mnt/gentoo/dev /mnt/gentoo/proc /mnt/gentoo/boot /mnt/gentoo
+</span><span class='line'>livecd / # reboot
+</span><span class='line'>（别忘了取出光盘）</span></code></pre></td></tr></table></div></figure>
+
+
+<p>完成安装
+注意: 在我们这台测试机器上，从minimal CD启动显示boot提示符开始，到重启后显示登录提示符， 总用时为00:42:31 。没错，不到一个小时！注意这个时间还包含了stage3包、Portage快照和一些软件包的下载时间，以及配置内核所花的时间。</p>
+
+<p>以root身份登录，用useradd添加一个或多个用户，作为日常使用。</p>
+
+<p>代码 2.31: 从另一台电脑连到你的新机器
+<code>
+（清理known_hosts文件中的内容，因为你的新机器已生成一个新的
+通用主机密钥）
+$ nano -w ~/.ssh/known_hosts
+（找出新机器的IP并删除那一行，保存并退出nano）
+</code>
+（使用你新机器的IP地址）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh root@192.168.1.10
+</span><span class='line'>The authenticity of host '192.168.1.10 (192.168.1.10)' can't be established.
+</span><span class='line'>RSA key fingerprint is 96:e7:2d:12:ac:9c:b0:94:90:9f:40:89:b0:45:26:8f.
+</span><span class='line'>Are you sure you want to continue connecting (yes/no)? yes
+</span><span class='line'>Warning: Permanently added '192.168.1.10' (RSA) to the list of known hosts.
+</span><span class='line'>Password: 输入密码</span></code></pre></td></tr></table></div></figure>
+
+
+<p>代码 2.32: 添加一个新用户</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # adduser -g users -G lp,wheel,audio,cdrom,portage,cron -m john
+</span><span class='line'>mybox ~ # passwd john
+</span><span class='line'>New UNIX password: 设置John的密码
+</span><span class='line'>Retype new UNIX password: 再次输入John的密码
+</span><span class='line'>passwd: password updated successfully</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后涉及的配置</p>
+
+<p>开始选择最近的镜像，在/etc/make.conf中定义SYNC变量和GENTOO_MIRRORS变量，或者也可以使用mirrorselect。此时你还可以定义并行编译的进程数。</p>
+
+<p>代码 2.33: 使用mirrorselect并设置MAKEOPTS</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # emerge mirrorselect
+</span><span class='line'>mybox ~ # mirrorselect -i -o &gt;&gt; /etc/make.conf
+</span><span class='line'>mybox ~ # mirrorselect -i -r -o &gt;&gt; /etc/make.conf
+</span><span class='line'>（通常，一个较好的值为处理器数加一）
+</span><span class='line'>mybox ~ # echo 'MAKEOPTS="-j2"' &gt;&gt; /etc/make.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在是启用或禁用一些USE标记的好时机。运行emerge -vpe world，列出所有当前已安装的软件包以及它们被启用和禁用的USE标记。编辑/etc/make.conf或使用下列命令定义USE变量：</p>
+
+<p>代码 2.34: 查看当前使用的USE标记并启用或禁用一些</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # emerge -vpe world
+</span><span class='line'>（Portage列出软件包和它们的USE标记。作为例子，让我们禁用ipv6和fortran，
+</span><span class='line'>并启用unicode）
+</span><span class='line'>mybox ~ # echo 'USE="nptl nptlonly -ipv6 -fortran unicode"' &gt;&gt; /etc/make.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>新版本的glibc使用/etc/locale.gen来定义语言环境。</p>
+
+<p>代码 2.35: 定义语言环境</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox ~ # cd /etc
+</span><span class='line'>mybox etc # nano -w locale.gen
+</span><span class='line'>mybox etc # locale-gen</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后但并非最轻松的，你可能想修改/etc/make.conf中的CFLAGS变量来优化编码，以满足你的特定需要。请注意极少需要一长串的标记列表，那样甚至可能导致系统崩溃。建议通过march选项指定处理器类型并赋上-O2 -pipe。</p>
+
+<p>可能你还想转到 ~x86。只有当你能够对付那些脆弱不良的ebuild和软件包时才能这么做。如果你倾向于保持系统的稳定性，请不要添加ACCEPT_KEYWORDS变量。添加FEATURES=”ccache”却是个好主意。</p>
+
+<p>代码 2.36: 为make.conf作最后的修改</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox etc # nano -w make.conf
+</span><span class='line'>（在CFLAGS中将-march设为你的CPU类型）
+</span><span class='line'>CFLAGS="-O2 -march=athlon-xp -pipe"
+</span><span class='line'>（添加下面一行）
+</span><span class='line'>FEATURES="ccache"
+</span><span class='line'>（只有清楚自己在干什么才添加下面一行）
+</span><span class='line'>ACCEPT_KEYWORDS="~x86"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可能你会想重编译整个系统两次，以使你所作的最新配置完全生效。这要花很长的时间来完成，而只能得到微小的速度提升。你可以让系统自己随着以后新软件包的发布而逐步完成优化。不过，站在保持系统一致性的立场来看，重编译仍不失为一个好主意。请参考文档Gentoo GCC升级指南，其中讨论了如何搭建一个具有良好一致性的system和world，以及这样做的好处。</p>
+
+<p>只重编译那些因你应用了新的USE标记或受此影响而需要升级的软件包，也要花费不少时间。可能还必须卸载会阻止你升级的软件包。在emerge -vpuD –newuse world的输出中寻找“[blocks B ]”，用emerge -C卸载它们。</p>
+
+<p>代码 2.37: 升级软件包</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>（安装ccache）
+</span><span class='line'>mybox etc # emerge ccache
+</span><span class='line'>
+</span><span class='line'>（请注意转到~x86会导致很多软件包要升级）
+</span><span class='line'>mybox etc # emerge -vpuD --newuse world
+</span><span class='line'>（好好看一看软件包列表和它们的USE标记，
+</span><span class='line'>有阻止的包就先卸载，然后启动漫长的过程）
+</span><span class='line'>mybox etc # time emerge -vuD --newuse world
+</span><span class='line'>（（重）编译了79个软件包）
+</span><span class='line'>
+</span><span class='line'>real  180m13.276s
+</span><span class='line'>user  121m22.905s
+</span><span class='line'>sys   36m31.472s
+</span><span class='line'>
+</span><span class='line'>（重编译libtool以避免一些潜在的问题）
+</span><span class='line'>mybox etc # emerge --oneshot libtool
+</span><span class='line'>
+</span><span class='line'>（更新配置文件，确保不要让dispatch-conf更新你配置好的文件）
+</span><span class='line'>mybox etc # dispatch-conf
+</span><span class='line'>
+</span><span class='line'>（如果升级了perl，应该执行perl-cleaner脚本）
+</span><span class='line'>mybox etc # time perl-cleaner all
+</span><span class='line'>real  1m6.495s
+</span><span class='line'>user  0m42.699s
+</span><span class='line'>sys   0m10.641s
+</span><span class='line'>
+</span><span class='line'>（如果升级了python的主要软件包，应该执行python-updater脚本）
+</span><span class='line'>mybox etc # python-updater</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接下来该做什么</p>
+
+<p>想安装服务器应用程序还是一个桌面系统，取决于你打算让你的新Gentoo做什么。以下仅作为一个例子，统计了emerge gnome和emerge kde在~x86系统（按之前的描述安装的）上所花费的时间。两者是在同一起点开始安装的。</p>
+
+<p>去看看我们的文档目录，研究一下如何安装和配置你挑选的软件。
+重要: 以下只是举个例子，并不意味着就作为推荐设置。</p>
+
+<p>代码 2.38: Emerge GNOME</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mybox etc # emerge -vp gnome
+</span><span class='line'>（查看软件包列表和它们的USE标记，
+</span><span class='line'>如果需要请编辑make.conf
+</span><span class='line'>mybox etc # nano -w /etc/make.conf
+</span><span class='line'>（定义了以下USE标记）
+</span><span class='line'>USE="nptl nptlonly -ipv6 -fortran unicode svg hal dbus \
+</span><span class='line'>     -kde -qt4 -arts -eds -esd gnome gstreamer gtk firefox"
+</span><span class='line'>
+</span><span class='line'>mybox etc # time emerge gnome
+</span><span class='line'>（安装了326个软件包）
+</span><span class='line'>
+</span><span class='line'>real  520m44.532s
+</span><span class='line'>user  339m21.144s
+</span><span class='line'>sys   146m22.337s
+</span><span class='line'>
+</span><span class='line'>代码 2.39: Emerge KDE
+</span><span class='line'>
+</span><span class='line'>mybox etc # emerge -vp kde-meta
+</span><span class='line'>（查看软件包列表和它们的USE标记，
+</span><span class='line'>如果需要请编辑make.conf
+</span><span class='line'>mybox etc # nano -w /etc/make.conf
+</span><span class='line'>定义了以下USE标记）
+</span><span class='line'>USE="nptl nptlonly -ipv6 -fortran unicode svg hal dbus \
+</span><span class='line'>     kde qt4 -arts -eds -esd -gnome -gstreamer -gtk -firefox"
+</span><span class='line'>
+</span><span class='line'>mybox etc # time emerge kde-meta
+</span><span class='line'>（安装了391个软件包）
+</span><span class='line'>
+</span><span class='line'>real  1171m25.318s
+</span><span class='line'>user  851m26.393s
+</span><span class='line'>sys   281m45.629s</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/yan-fa-yu-kai-fa/">开发与研发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:47:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>开发与研发，前者是工程派，后者是理论派,后者太过于看重理论的东西，但两者都很重要
+</span><span class='line'>从商业的角度来说，前者重要，从研究的角度来说，后者重要.
+</span><span class='line'>单本质还是工程带动研发，研发补充开发。
+</span><span class='line'>上层框架的设计比纯做理论的要复杂的多，他们构造的是一个生态系统，例如操作系统1 + 1 &lt; 2
+</span><span class='line'>研发解决现有的技术解决不了的问题，开发是利用现有的技术解决现实的问题
+</span><span class='line'>开发的问题研发总能解决。开发能够提出研发的课题，研发完了，在回归开发
+</span><span class='line'>就好比开发调用研发这个函数，开发与研发就好比cpu和主板，哪个不行都不行~</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1095,728 +2617,6 @@ void bar()</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/er-fen/">二分</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:39:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>//从排好序的数组中找出k出现的字数</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;iostream&gt;
-</span><span class='line'>#include&lt;cstdio&gt;
-</span><span class='line'>#include&lt;string&gt;
-</span><span class='line'>using namespace std;
-</span><span class='line'>int GetFistK(int* data,int length,int k,int start,int end)
-</span><span class='line'>{
-</span><span class='line'>  if(start &gt; end)
-</span><span class='line'>   return -1;
-</span><span class='line'>  int middleIndex = (start + end) / 2;
-</span><span class='line'>  int middleData = data[middleIndex];
-</span><span class='line'>  if(middleData == k)
-</span><span class='line'>  {
-</span><span class='line'>   if((middleIndex &gt; 0 && data[middleIndex-1]!=k)||middleIndex ==0)
-</span><span class='line'>    return middleIndex;
-</span><span class='line'>   else
-</span><span class='line'>    end = middleIndex – 1;
-</span><span class='line'>  }
-</span><span class='line'>  else if(middleData &gt; k)
-</span><span class='line'>   end = middleIndex – 1;
-</span><span class='line'>  else
-</span><span class='line'>   start = middleIndex + 1;
-</span><span class='line'>  return GetFistK(data,length,k,start,end);
-</span><span class='line'>}
-</span><span class='line'>int GetLastK(int* data,int length,int k,int start,int end)
-</span><span class='line'>{
-</span><span class='line'> if(start &gt; end)
-</span><span class='line'>  return -1;
-</span><span class='line'> int middleIndex = (start + end) / 2;
-</span><span class='line'> int middleData = data[middleIndex];
-</span><span class='line'> if(middleData == k)
-</span><span class='line'> {
-</span><span class='line'>  if((middleIndex &lt; length – 1 && data[middleIndex + 1] != k)||middleIndex == length -1 )
-</span><span class='line'>   return middleIndex;
-</span><span class='line'>  else
-</span><span class='line'>   start = middleIndex + 1;
-</span><span class='line'> }
-</span><span class='line'> else if(middleData &lt; k)
-</span><span class='line'>  start = middleIndex + 1;
-</span><span class='line'> else
-</span><span class='line'>  end = middleIndex – 1;
-</span><span class='line'> return GetLastK(data,length,k,start,end);
-</span><span class='line'>}
-</span><span class='line'>int GetNumberK(int* data,int length,int k)
-</span><span class='line'>{
-</span><span class='line'>   int number = 0;
-</span><span class='line'>   if(data != NULL && length &gt; 0)
-</span><span class='line'>   {
-</span><span class='line'>    int first = GetFistK(data,length,k,0,length – 1);
-</span><span class='line'> int last = GetLastK(data,length,k,0,length – 1);
-</span><span class='line'>
-</span><span class='line'> if(first &gt; -1 && last &gt; -1)
-</span><span class='line'>  number = last – first + 1;
-</span><span class='line'>   }
-</span><span class='line'>   return number;
-</span><span class='line'>}
-</span><span class='line'>int main()
-</span><span class='line'>{ 
-</span><span class='line'>    int data[8] = {3,3,3,3,3,3,4,5};
-</span><span class='line'> int k = 4;
-</span><span class='line'> int total=GetNumberK(data,8,k);
-</span><span class='line'> cout&lt;&lt;total&lt;&lt;endl;
-</span><span class='line'> return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/chang-jing-lu-oj/">长颈鹿OJ</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:39:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>计量OJ简史</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>/*
-</span><span class='line'> * =====================================================================================
-</span><span class='line'> *
-</span><span class='line'> *       Filename:  oj.cpp
-</span><span class='line'> *
-</span><span class='line'> *    Description:  计量oj简史2
-</span><span class='line'> *
-</span><span class='line'> *        Version:  1.0
-</span><span class='line'> *        Created:  2013/1/12 19:46:55
-</span><span class='line'> *       Revision:  none
-</span><span class='line'> *       Compiler:  gcc
-</span><span class='line'> *
-</span><span class='line'> *         Author:  mdk-vim.cpp-c (mdk), mdk@server.example.com
-</span><span class='line'> *        Company:  cjluacm-vim-mdk
-</span><span class='line'> *
-</span><span class='line'> * =====================================================================================
-</span><span class='line'> */
-</span><span class='line'>#pragma warning(disable:一切阻力)
-</span><span class='line'>
-</span><span class='line'>#include &lt; 院领导 &gt;
-</span><span class='line'>
-</span><span class='line'>#include &lt; 尤天师 &gt;
-</span><span class='line'>
-</span><span class='line'>#include &lt; 308 全体成员 &gt;
-</span><span class='line'>
-</span><span class='line'>using 一台很老的 DELL 台式机 std;
-</span><span class='line'>
-</span><span class='line'>#define              OJ史前时代      ( 以UVA转载题为主 );
-</span><span class='line'>
-</span><span class='line'>#define              OJ目前大事      ( 稳步发展月赛 );
-</span><span class='line'>
-</span><span class='line'>#define              ACM基地记事     ( 出题解题做题 );
-</span><span class='line'>
-</span><span class='line'>int main()
-</span><span class='line'>
-</span><span class='line'>{
-</span><span class='line'>
-</span><span class='line'>            time        = 2009 / 7 /28;
-</span><span class='line'>
-</span><span class='line'>            place       = hdu 信息楼一楼;
-</span><span class='line'>
-</span><span class='line'>            action      = *****ACM研讨交流会;
-</span><span class='line'>
-</span><span class='line'>            person      = 院领导 + 尤天师 + 308 全体成员 + 部分08级同学;
-</span><span class='line'>
-</span><span class='line'>            harvest     = ” 领导一定支持 ~~! ” + 水果若干;
-</span><span class='line'>
-</span><span class='line'>            time        = 2009 / 9 / 12;
-</span><span class='line'>
-</span><span class='line'>            action      = 尤天师提交月赛申请书;
-</span><span class='line'>
-</span><span class='line'>            time       += 3;
-</span><span class='line'>
-</span><span class='line'>            action      = 月赛审核通过;
-</span><span class='line'>
-</span><span class='line'>            for(   time = 2009 / 9 / 28; time != 2009 / 10 / 5; ++time )
-</span><span class='line'>
-</span><span class='line'>            {
-</span><span class='line'>
-</span><span class='line'>                 action = OJ construting;
-</span><span class='line'>
-</span><span class='line'>            }
-</span><span class='line'>
-</span><span class='line'>            time        = 9 / 10 / 2009;
-</span><span class='line'>
-</span><span class='line'>            action      = OJ 在后院论坛开辟子版块;               
-</span><span class='line'>
-</span><span class='line'>            time        = 21 / 11 / 2009;
-</span><span class='line'>
-</span><span class='line'>            action      = 招新赛完毕;
-</span><span class='line'>
-</span><span class='line'>            time        = 1 / 12 / 2009;
-</span><span class='line'>
-</span><span class='line'>            action      = 新人入住完毕;
-</span><span class='line'>
-</span><span class='line'>            time        = 5/ 01/ 2010;
-</span><span class='line'>
-</span><span class='line'>            action      = 月赛进入全校范围;
-</span><span class='line'>
-</span><span class='line'>            while ( time++ != 2011 / 7 )
-</span><span class='line'>
-</span><span class='line'>            {
-</span><span class='line'>
-</span><span class='line'>                      action = OJ updating;
-</span><span class='line'>
-</span><span class='line'>            }
-</span><span class='line'>           
-</span><span class='line'>            /*
-</span><span class='line'>             *未获得前辈们的认可就将OJ转换
-</span><span class='line'>             *在此向前辈们致歉
-</span><span class='line'>             * 我们的宗旨是将OJ打造成造福于全校搞IT的学生
-</span><span class='line'>             * */
-</span><span class='line'>           
-</span><span class='line'>            time        =  5 / 6 / 2012
-</span><span class='line'>
-</span><span class='line'>            action      =  平台转换 windows-&gt;linux 内核开源
-</span><span class='line'>           
-</span><span class='line'>            time        =  25 / 6 / 2012
-</span><span class='line'>           
-</span><span class='line'>            action      =  web 端修改完毕 数据无损伤导入 新oj 新特性
-</span><span class='line'>
-</span><span class='line'>            time        =  * / 7 / 2012
-</span><span class='line'>
-</span><span class='line'>            action      =  投入使用(期间省赛被挫三人组组织两场比赛)
-</span><span class='line'>
-</span><span class='line'>            time        = 28 / 10 / 2012
-</span><span class='line'>
-</span><span class='line'>            action      = 域名重新对外(acm.cjlu.edu.cn)
-</span><span class='line'>
-</span><span class='line'>            while ( time ++ != 2014 / 7 )
-</span><span class='line'>            
-</span><span class='line'>            {
-</span><span class='line'>                  
-</span><span class='line'>                   action1 = OJ updating
-</span><span class='line'>                  
-</span><span class='line'>                   action2 = CODE2AC()
-</span><span class='line'>
-</span><span class='line'>            }
-</span><span class='line'>
-</span><span class='line'>            return 0;
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/acmyu-shu-mo/">Acm与数模</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:38:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>利用半小时的时间~~这里利用某大牛的部分篇幅。</p>
-
-<p>   学校总喜欢拿数学建模和ACM程序设计竞赛进行对比，的确，这两个比赛都是
-三个人一个队伍，应该说都考察了参赛选手全面的素质。然而毕竟区别还是很大的，
-数学建模竞赛是教育部倡导的几项大学传统赛事之一，相信会有很多大学会像我们学
-校一样看重这一点—–官方认证
-   在说数学建模竞赛本身是一个很好的竞赛形式，的确能提高数学素养，在科学研究数
-学建模发挥的作用是越来越明显，实验室产生的大量数据绝对是需要数学处理才能产
-生真正的科学结果，完全凭直觉的时代早已经过去了。教育部倡导这项竞赛的确是用
-心良苦，真正用心参加过数学建模竞赛的人肯定能得到科学研究的锻炼。然而似乎在
-中国这样国情下，各个学校名利心太强了，使得数学建模竞赛这一个如此好的竞赛形
-式带来了如此多的不公正，无论从竞赛过程还是评奖过程，指导老师参与的都过多
-了，以至有人发出感叹“数学建模究竟是学生参加，还是导师参加呢？”。再就是评
-奖的过程的确是人为因素大了点，受大干扰也大了些。</p>
-
-<pre><code>现在的数学建模竞赛好多都是成了伪造数据竞赛，从赛区的初评来看是产生这种情况
-</code></pre>
-
-<p>的温床。赛区的初评都是看结果的，结果的好坏直接影响着一篇论文的质量，只要结
-果不理想的将很可能是直接刷掉，于是出现了好多数据伪造，只要模型的结果不理
-想，在时间不允许的前提下只能这样，要不然尽管在问题的解决中有创新，但是人家
-根本就看不到了。这样的事实看多了，可以说麻木了。看着那么多伪造数据的论文拿
-国家大奖我只能说数学建模已经在慢慢的贬值，给人一种上当受骗的感觉。数学建模
-就是鼓励造假，越假越好，越假越能拿大奖。看到了拿全国大奖的同学，问他们结果
-怎么那么好，一句话伤透了心“我们的数据都是伪造的”。伤心之余，被获奖的网友们称
-我们队“经验不足，人太老实”进行总结。教训是惨重的，对心灵的打击是不能磨灭的。</p>
-
-<pre><code>从此对数学建模的印象就不如之前的那么虔诚，感觉都是假的，尽管不想造假，但是
-</code></pre>
-
-<p>造假获奖得到的是学校的奖励与鼓励，得到的是各种荣誉。从这个方面至少反映了现
-在的大学造假之风已经比较严重了。
-   相反ACM程序设计竞赛给人的是一种积极向上，公平，公正，机器评判有效的避免了人
-为误差，对与不对自有数据进行测试。而且ACM程序设计竞赛还给人一种永远要继续学
-习的动力，考察的的各个方面，数学，编程能力，相关学科背景，身体素质，心理素
-质，团队合作。。。。。。热爱这个活动的人相信大部分都是一种兴趣，一种发自内
-心的热爱，一种追求梦想，一种永远上进的精神。ACM需要长期的积累，没有随便就成
-功的，从这个意义上说，ACM也是一种奥林匹克，需要长期的锻炼，加上现场的良好发
-挥才能取得好成绩。一个考试成绩很牛的学生可以对经典的最短路
-算法，最小生成树算法讲得头头是道，然而就是不能写程序，不能实现自己的想法，
-甚至很多人对于经典算法是为了考试而死记硬背下来的。科学技术领域日新月异，计
-算机算法领域也是如此，大学本科的教育教材方面已经是难跟上发展，ACM程序设计则
-提供了这样一个引领前进的平台，很多教科书上没有的算法与思考方法都可以在赛题
-上找到答案，而且通过题目的训练不仅能锻炼编程能力，至少对算法也是应该理解。
-所谓“与时俱进”在这里也得到了最大的体现。</p>
-
-<pre><code>                                                 祭拜我一年多来的青春
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/acmde-hong-dong/">Acm的触动</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:38:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>致我热衷的acm:</p>
-
-<p>我真的希望
-大家加油！！！
-不是因为别的原因，因为我们都曾经迷惑，无助，我们没有别人那么强的教练，没有别人那么好的基础，但是，我们都绝对不能放弃。绝对不能，因为，当我们坐在赛场上的时候，不管你是不是愿意，在你上空飘动的始终是你的校旗，别误会，我不是说什么要“为了学校争光”，那种话是用来哄小孩子的。我只想问大家，如果是你，坐在电脑前~~，你的背后有多少人在看着你？你的身上寄托的是什么？
-是希望，是所有喜欢ACM的同学对你的希望，希望有这么一天，ACM也可以象其他的东西一样被其他的人所肯定，而不是什么需要被人怜悯的东西！！！！！！！！！</p>
-
-<p>如果，现在我们寄托了这些东西的话，谁还会告诉我：我们不该奋斗呢？
-如果可以，我宁愿安静的呆在一个不为人知的小角落，平平淡淡的过了这大学四年的生活，至少不会这么累。
-如果可以，我宁愿在开始的时候，就找一个可以依靠的地方，傻傻的什么都不想，幸福的过了这四年。
-如果可以，我宁愿只做一个ACM的看客，静静的品味他们成功的喜悦，分担失败的痛苦。
-如果可以，我宁愿早早的放弃着艰苦的训练，因为我实在不愿意再做这样一个噩梦。
-如果、可以…………
-但是，只是如果……
-而且，决不可以！！
-当我们弱校的人喜欢上ACM的时候，就应该有这种觉悟！
-如果，要后退，那么，就你就不要参加ACM，因为，你不适合。ACM比的并不仅仅是写程序的水平，而更多是三个人的综合素质。没有胆小的人可以赢得ACM的青睐，没有退缩的人可以赢得比赛的胜利。我们这些人，水平本来就有限，也没有什么很出色专业教练。那么如果我们连一拼的勇气都没有了。我们还剩下什么？
-如果可以，让我再次站在大一时候的海报前，我还是会小声的说：“去试试吧，也许很好玩呢~~”
-谢谢大家看了这么多，是不是烦了？呵呵，最后，我只希望大家能+U，同时弱校的队员，
-我希望我们能互相帮助。
-大家~~~~~~~~加油~~~~~~~~~</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/bye-world/">Bye World</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T20:12:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>c :</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
-</span><span class='line'>
-</span><span class='line'>int main()
-</span><span class='line'>{
-</span><span class='line'>  printf("bye world!\n");
-</span><span class='line'>
-</span><span class='line'>  return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>c++ :</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;isotream&gt;
-</span><span class='line'>
-</span><span class='line'>using namespace std;
-</span><span class='line'>
-</span><span class='line'>int main()
-</span><span class='line'>{
-</span><span class='line'>  cout&lt;&lt;"bye world!"&lt;&lt;endl;
-</span><span class='line'>  
-</span><span class='line'>  return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>pascal:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>begin:
-</span><span class='line'>
-</span><span class='line'>  writeln("bye world!");
-</span><span class='line'>
-</span><span class='line'>end;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>bash:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>
-</span><span class='line'>echo "bye world!"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>python :</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/usr/bin/env python
-</span><span class='line'>
-</span><span class='line'>print "bye world"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>perl:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/usr/bin/perl
-</span><span class='line'>
-</span><span class='line'>use strict;
-</span><span class='line'>
-</span><span class='line'>use warnings;
-</span><span class='line'>
-</span><span class='line'>print "bye world\n"</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1840,30 +2640,30 @@ void bar()</p>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/linux/'>linux (12)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (7)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/linux/'>linux (12)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (7)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/05/19/ban-jia-liao/">搬家了</a>
+        <a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-2/">Python网络编程2</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/19/zhou-%5B%3F%5D-de-mian-shi/">周一的面试</a>
+        <a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-1/">Python网络编程1</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/19/myvimrc/">Myvimrc</a>
+        <a href="/blog/2013/05/20/ojzhi-pythonjian-kong/">OJ之python监控</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/19/suo-sui-si/">琐碎思</a>
+        <a href="/blog/2013/05/20/pythonwang-luo-pa-chong-zhi-acm/">python网络爬虫之ACM</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/19/dui-bu-qi/">对不起</a>
+        <a href="/blog/2013/05/20/pythontian-qi-yu-bao/">Python天气预报</a>
       </li>
     
   </ul>
