@@ -9,26 +9,15 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="1
+  <meta name="description" content="1.删除行首空格 1
 2
 3
-4
-5
-6
-7
-8
-9
-10
-这篇博文是在gentoo下敲出来的
-2013到底怎么了？
-2012世界末日的诅咒吗?
-小贝退役了
-....
-690多万大学生毕业
-...
-想说的太多了就不扯了
-人不扯淡枉少年啊
-特别讨厌虚伪的人做虚伪的事~~~ ">
+sed 's/^[]*//g' filename
+sed 's/^ *//g' filename
+sed 's/^[[:space:]]*//g' filename 2.行后和行前添加新行 1
+2
+3
+行前:sed 's/pattern/\n&/g' filename &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -97,6 +86,97 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/24/sed/">Sed技巧小结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-24T14:49:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.删除行首空格</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed 's/^[]*//g' filename
+</span><span class='line'>sed 's/^ *//g' filename
+</span><span class='line'>sed 's/^[[:space:]]*//g' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2.行后和行前添加新行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>行前:sed 's/pattern/\n&/g' filename
+</span><span class='line'>行后:sed 's/pattern/&\n/g' filename
+</span><span class='line'>&=pattern</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3.使用变量替换(使用双引号)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -e "s/$var1/$var2/g" filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4.在第一行前插入文本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '1 i\插入字符串' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5.在最后一行插入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '$ a\插入字符串' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>6.在匹配行前插入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '/pattern/i "插出入字符串"' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>7.在匹配行后插入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '/pattern/a “插入字符串”' fielname</span></code></pre></td></tr></table></div></figure>
+
+
+<p>8.删除文本中空行和空格组成的行以及#号注释的行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grep -v ^# filename | sed '/^[[:space:]]*$/d'|sed '/^$/d'</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2179,49 +2259,6 @@ code</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/suo-sui-si/">琐碎思</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T18:54:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>梦回310…记得晚睡熄灯后分东西部飙歌…一起被老罗拉到阳台上政治课…一起在球场挥汗打球…
-</span><span class='line'>一块热衷于投三分…无兄弟不篮球~记得快高考时，男阿姨来我们宿舍告我们要本份点了…
-</span><span class='line'>留下那句“国大不是问题…”经典…夜深人静…只想道声:兄弟可好…</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -2243,11 +2280,15 @@ code</p>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/linux/'>linux (12)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (1)</a></li><li><a href='/blog/categories/linux/'>linux (12)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/sed/">Sed技巧小结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/05/23/2013zhong-chang-xiu-xi/">2013中场休息</a>
@@ -2263,10 +2304,6 @@ code</p>
     
       <li class="post">
         <a href="/blog/2013/05/20/ojzhi-pythonjian-kong/">OJ之python监控</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/20/pythonwang-luo-pa-chong-zhi-acm/">python网络爬虫之ACM</a>
       </li>
     
   </ul>

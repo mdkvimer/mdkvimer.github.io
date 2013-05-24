@@ -5,11 +5,19 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>校赛 - 起步于308的小菜菜</title>
+  <title>sed技巧小结 - 起步于308的小菜菜</title>
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="今天校赛~也是OJ升级以来面临正式的比赛的之一~lamp架构的抗压相比lnmp肯定弱些~OJ的优化还有一些工作没做好~后期会越来越好的~长颈鹿前浪已经死在沙滩上后浪还是很给力的~让我们看到12级的好苗子~11级还在猛进步~后生可畏啊~今天比赛过程中天师过来看了一眼~笑眯眯的说是不是题目偏难~ &hellip;">
+  <meta name="description" content="1.删除行首空格 1
+2
+3
+sed 's/^[]*//g' filename
+sed 's/^ *//g' filename
+sed 's/^[[:space:]]*//g' filename 2.行后和行前添加新行 1
+2
+3
+行前:sed 's/pattern/\n&/g' filename &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/18/xiao-sai">
+  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/05/24/sed">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="起步于308的小菜菜" type="application/atom+xml">
@@ -81,7 +89,7 @@
   
   <header>
     
-      <h1 class="entry-title">校赛</h1>
+      <h1 class="entry-title">Sed技巧小结</h1>
     
     
       <p class="meta">
@@ -97,7 +105,7 @@
   
 
 
-<time datetime="2013-05-18T22:39:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+<time datetime="2013-05-24T14:49:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
         
         
       </p>
@@ -105,11 +113,61 @@
   </header>
 
 
-<div class="entry-content"><p>今天校赛~也是OJ升级以来面临正式的比赛的之一~lamp架构的抗压相比lnmp肯定弱些~OJ的优化还有一些工作没做好~后期会越来越好的~长颈鹿前浪已经死在沙滩上后浪还是很给力的~让我们看到12级的好苗子~11级还在猛进步~后生可畏啊~今天比赛过程中天师过来看了一眼~笑眯眯的说是不是题目偏难~后面自个又说练的太少~我大天师啊~</p>
+<div class="entry-content"><p>1.删除行首空格</p>
 
-<p>OJ对IE10的兼容性还是挺好的~在线IDE，test，划词翻译都可以正常使用,当然还是首选火狐和谷歌~好了就说这些吧</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed 's/^[]*//g' filename
+</span><span class='line'>sed 's/^ *//g' filename
+</span><span class='line'>sed 's/^[[:space:]]*//g' filename</span></code></pre></td></tr></table></div></figure>
 
-<p>感谢大晨哥做出解题报告~大晨哥辛苦了~以下引用大晨哥的解题报告~长颈鹿加油~</p>
+
+<p>2.行后和行前添加新行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>行前:sed 's/pattern/\n&/g' filename
+</span><span class='line'>行后:sed 's/pattern/&\n/g' filename
+</span><span class='line'>&=pattern</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3.使用变量替换(使用双引号)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -e "s/$var1/$var2/g" filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4.在第一行前插入文本</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '1 i\插入字符串' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5.在最后一行插入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '$ a\插入字符串' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>6.在匹配行前插入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '/pattern/i "插出入字符串"' filename</span></code></pre></td></tr></table></div></figure>
+
+
+<p>7.在匹配行后插入</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '/pattern/a “插入字符串”' fielname</span></code></pre></td></tr></table></div></figure>
+
+
+<p>8.删除文本中空行和空格组成的行以及#号注释的行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grep -v ^# filename | sed '/^[[:space:]]*$/d'|sed '/^$/d'</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -132,12 +190,12 @@
   
 
 
-<time datetime="2013-05-18T22:39:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+<time datetime="2013-05-24T14:49:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/chang-jing-lu/'>长颈鹿</a>
+    <a class='category' href='/blog/categories/awk-and-sed/'>awk&sed</a>
   
 </span>
 
@@ -146,7 +204,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/18/xiao-sai/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/18/xiao-sai/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/05/24/sed/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/05/24/sed/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -157,10 +215,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/05/18/er-fen/" title="Previous Post: 二分">&laquo; 二分</a>
+        <a class="basic-alignment left" href="/blog/2013/05/23/2013zhong-chang-xiu-xi/" title="Previous Post: 2013中场休息">&laquo; 2013中场休息</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-1/" title="Next Post: 20个位运算知多少1">20个位运算知多少1 &raquo;</a>
       
     </p>
   </footer>
