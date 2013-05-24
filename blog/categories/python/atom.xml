@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-24T22:11:57+08:00</updated>
+  <updated>2013-05-24T22:18:31+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -22,7 +22,70 @@
 
 <p>code</p>
 
-<p>{%include_code server2.py %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (server2.py)</span> <a href='/downloads/code/server2.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;#/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaikun - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-04-09 15:37</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: server2.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">#=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'><span class="c"># basic server by python </span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span> <span class="o">,</span> <span class="nn">sys</span> <span class="o">,</span> <span class="nn">socket</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5566</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">))</span>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Waiting for connecting...&quot;</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">clientsock</span> <span class="p">,</span> <span class="n">clientaddr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Got connect from&quot;</span><span class="p">,</span><span class="n">clientsock</span><span class="o">.</span><span class="n">getpeername</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
@@ -35,7 +98,82 @@
 
 <p>code</p>
 
-<p>{% include_code server1.py %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (server1.py)</span> <a href='/downloads/code/server1.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;#/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaikun - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-04-09 14:24</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: server1.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">#=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'><span class="c">#server for python </span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span><span class="nn">socket</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5566</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">))</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Server is running on port </span><span class="si">%d</span><span class="s">;press Ctrl-C to terminate.&quot;</span> <span class="o">%</span> <span class="n">port</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="p">,</span><span class="n">clientaddr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientfile</span> <span class="o">=</span> <span class="n">clientsock</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;rw&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Welcome, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">clientaddr</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Please enter a string:&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">line</span> <span class="o">=</span> <span class="n">clientfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;You enter </span><span class="si">%d</span><span class="s"> characters.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
@@ -48,7 +186,104 @@
 
 <p>code</p>
 
-<p>{% include_code oj.py %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (oj.py)</span> <a href='/downloads/code/oj.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c">#check for oj</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-05-20 16:09</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: oj.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description:python监控程序在线评判系统并发短信通知和邮件 </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">time</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">count_string</span><span class="p">(</span><span class="n">weburl</span><span class="p">,</span><span class="n">string_tobe_find</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">web</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">weburl</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">except</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>    <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">web</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">string_tobe_find</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">status</span> <span class="o">=</span> <span class="n">count_string</span><span class="p">(</span><span class="s">&#39;http://acm.cjlu.edu.cn/status.php&#39;</span><span class="p">,</span><span class="s">&quot;waiting&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/local/fetion/fetion --sid=usid --pwd=passwd --to=18767161672 --msg-utf8=mdk-OJ-down!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#print time.ctime(time.time()),&quot;OJ index can&#39;n open&quot;,&quot;please check for oj&quot;</span>
+</span><span class='line'>    <span class="k">elif</span> <span class="n">status</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/local/fetion/fetion --sid=usid --pwd=passwd --to=18767161672 --msg-utf8=mdk-OJ-down!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#print time.ctime(time.time()),&quot;OJ waiting now&quot;,&quot;please deal with&quot;</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;/usr/local/fetion/fetion --sid=usid --pwd=passwd --to=18767161672 --msg-utf8=mdk-OJ-normal!&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="c">#print time.ctime(time.time()),&quot;Oj normal now!&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s"> OJ check now  by --python mdk&quot;</span>
+</span><span class='line'>    <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+</span><span class='line'>    <span class="n">check</span><span class="p">()</span>
+</span><span class='line'>    <span class="c">#check()</span>
+</span><span class='line'>    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
@@ -59,7 +294,284 @@
     <id>http://mdkvimer.github.io/blog/2013/05/20/pythonwang-luo-pa-chong-zhi-acm</id>
     <content type="html"><![CDATA[<p>每一个acmer的一个福音,利用vim+爬虫代码提交代码,在putty里大作手脚啦</p>
 
-<p>{% include_code AC.py %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (AC.py)</span> <a href='/downloads/code/AC.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-05-20 15:59</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: AC.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: submit for poj come from www.cnblogs.com/ma6174/archive/2012/07/26/2609791.html chang</span>
+</span><span class='line'><span class="sd"># by mdk</span>
+</span><span class='line'><span class="sd"># </span>
+</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">logging</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span><span class="o">,</span><span class="nn">urllib2</span><span class="o">,</span><span class="nn">cookielib</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">POJ</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">URL_HOME</span> <span class="o">=</span> <span class="s">&#39;http://poj.org/&#39;</span>
+</span><span class='line'>    <span class="n">URL_LOGIN</span> <span class="o">=</span> <span class="n">URL_HOME</span> <span class="o">+</span> <span class="s">&#39;login?&#39;</span>
+</span><span class='line'>    <span class="n">URL_SUBMIT</span> <span class="o">=</span> <span class="n">URL_HOME</span> <span class="o">+</span> <span class="s">&#39;submit?&#39;</span>
+</span><span class='line'>    <span class="n">URL_STATUS</span> <span class="o">=</span> <span class="n">URL_HOME</span> <span class="o">+</span> <span class="s">&#39;status?&#39;</span>
+</span><span class='line'>    <span class="c">#结果信息</span>
+</span><span class='line'>    <span class="n">INFO</span> <span class="o">=</span><span class="p">[</span><span class="s">&#39;RunID&#39;</span><span class="p">,</span><span class="s">&#39;User&#39;</span><span class="p">,</span><span class="s">&#39;Problem&#39;</span><span class="p">,</span><span class="s">&#39;Result&#39;</span><span class="p">,</span><span class="s">&#39;Memory&#39;</span><span class="p">,</span><span class="s">&#39;Time&#39;</span><span class="p">,</span><span class="s">&#39;Language&#39;</span><span class="p">,</span><span class="s">&#39;Code Length&#39;</span><span class="p">,</span><span class="s">&#39;Submit Time&#39;</span><span class="p">]</span>
+</span><span class='line'>    <span class="c">#语言</span>
+</span><span class='line'>    <span class="n">LANGUAGE</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>            <span class="s">&#39;G++&#39;</span><span class="p">:</span><span class="s">&#39;0&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;GCC&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;JAVA&#39;</span><span class="p">:</span><span class="s">&#39;2&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;PASCAL&#39;</span><span class="p">:</span><span class="s">&#39;3&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;C++&#39;</span><span class="p">:</span><span class="s">&#39;4&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;C&#39;</span><span class="p">:</span><span class="s">&#39;5&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;FORTRAN&#39;</span><span class="p">:</span><span class="s">&#39;6&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+</span><span class='line'>        <span class="n">cj</span> <span class="o">=</span> <span class="n">cookielib</span><span class="o">.</span><span class="n">LWPCookieJar</span><span class="p">()</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">opener</span> <span class="o">=</span><span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPCookieProcessor</span><span class="p">(</span><span class="n">cj</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opener</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span class='line'>                <span class="n">user_id1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">password1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">B1</span> <span class="o">=</span> <span class="s">&#39;login&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">postdata</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_LOGIN</span><span class="p">,</span><span class="n">postdata</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_LOGIN</span><span class="p">,</span><span class="n">postdata</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;loginlog&#39;</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;login successful!&quot;</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;login failed&#39;</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>        <span class="k">except</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;login failed&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pid</span><span class="p">,</span><span class="n">language</span><span class="p">,</span><span class="n">src</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">submit_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span class='line'>                <span class="n">problem_id</span> <span class="o">=</span> <span class="n">pid</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">language</span> <span class="o">=</span> <span class="n">POJ</span><span class="o">.</span><span class="n">LANGUAGE</span><span class="p">[</span><span class="n">language</span><span class="o">.</span><span class="n">upper</span><span class="p">()],</span>
+</span><span class='line'>                <span class="n">source</span> <span class="o">=</span> <span class="n">src</span><span class="p">,</span>
+</span><span class='line'>                <span class="n">submit</span> <span class="o">=</span> <span class="s">&#39;Submit&#39;</span><span class="p">,)</span>
+</span><span class='line'>        <span class="n">postdata2</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">submit_data</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">req2</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_SUBMIT</span><span class="p">,</span><span class="n">data</span> <span class="o">=</span> <span class="n">postdata2</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">POJ</span><span class="o">.</span><span class="n">URL_SUBMIT</span><span class="p">,</span><span class="n">postdata2</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;submit successful&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>        <span class="k">except</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;submit error&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">user_id</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">url</span> <span class="o">=</span> <span class="n">POJ</span><span class="o">.</span><span class="n">URL_STATUS</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;user_id&#39;</span><span class="p">:</span><span class="n">user_id</span><span class="p">})</span>
+</span><span class='line'>        <span class="n">page</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&#39;table&#39;</span><span class="p">,{</span><span class="s">&#39;class&#39;</span><span class="p">:</span><span class="s">&#39;a&#39;</span><span class="p">})</span> <span class="c">#提取表格</span>
+</span><span class='line'>        <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;&gt;[-+: \w]*&lt;&#39;</span><span class="p">)</span>  <span class="c">#正则表达式匹配需要的信息</span>
+</span><span class='line'>        <span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+</span><span class='line'>        <span class="c">#正在评判，编译或等待</span>
+</span><span class='line'>        <span class="n">wait</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Running &amp; Judging&#39;</span><span class="p">,</span><span class="s">&#39;Compiling&#39;</span><span class="p">,</span><span class="s">&#39;Waiting&#39;</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">32</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">wait</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">or</span> <span class="n">result</span><span class="p">[</span><span class="mi">32</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">32</span><span class="p">])</span>
+</span><span class='line'><span class="c">#                sleep(1)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="bp">False</span>
+</span><span class='line'>        <span class="c">#最终结果在result序列中的位置</span>
+</span><span class='line'>        <span class="n">num</span> <span class="o">=</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">45</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">POJ</span><span class="o">.</span><span class="n">INFO</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s">&#39;:&#39;</span><span class="p">,</span><span class="n">result</span><span class="p">[</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="c">#基础logging模块配置</span>
+</span><span class='line'>    <span class="n">FORMAT</span> <span class="o">=</span> <span class="s">&#39;----</span><span class="si">%(message)s</span><span class="s">----&#39;</span>
+</span><span class='line'>    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span><span class="n">format</span> <span class="o">=</span> <span class="n">FORMAT</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="c">#从外部传入参数</span>
+</span><span class='line'>        <span class="n">user_id</span> <span class="o">=</span> <span class="s">&#39;username&#39;</span>
+</span><span class='line'>        <span class="n">pwd</span> <span class="o">=</span> <span class="s">&#39;userpasswd&#39;</span>
+</span><span class='line'>        <span class="n">pid</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span><span class='line'>        <span class="n">src</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>  <span class="c">#测试</span>
+</span><span class='line'>        <span class="n">user_id</span> <span class="o">=</span> <span class="s">&#39;5566mdk&#39;</span>
+</span><span class='line'>        <span class="n">pwd</span> <span class="o">=</span> <span class="s">&#39;5566mdk&#39;</span>
+</span><span class='line'>        <span class="n">pid</span> <span class="o">=</span> <span class="mi">1000</span>
+</span><span class='line'>        <span class="n">lang</span> <span class="o">=</span> <span class="s">&#39;gcc&#39;</span>
+</span><span class='line'>        <span class="n">src</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+</span><span class='line'><span class="s">        #include&lt;stdio.h&gt;</span>
+</span><span class='line'><span class="s">        int main()</span>
+</span><span class='line'><span class="s">        {</span>
+</span><span class='line'><span class="s">            int a,b;</span>
+</span><span class='line'><span class="s">            scanf(&quot;</span><span class="si">%d%d</span><span class="s">&quot;,&amp;a,&amp;b);</span>
+</span><span class='line'><span class="s">            printf(&quot;</span><span class="si">%d</span><span class="s">&quot;,a+b);</span>
+</span><span class='line'><span class="s">            return 0;</span>
+</span><span class='line'><span class="s">        }</span>
+</span><span class='line'><span class="s">        &#39;&#39;&#39;</span>
+</span><span class='line'>    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;connecting to server&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">poj</span> <span class="o">=</span> <span class="n">POJ</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="n">pwd</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">poj</span><span class="o">.</span><span class="n">login</span><span class="p">():</span>
+</span><span class='line'>        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;submiting&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">poj</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span><span class="n">lang</span><span class="p">,</span><span class="n">src</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;getting result&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">status</span> <span class="o">=</span> <span class="n">poj</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">while</span> <span class="n">status</span><span class="o">!=</span><span class="bp">True</span><span class="p">:</span>  <span class="c">#直到检测到结果</span>
+</span><span class='line'>                <span class="n">status</span> <span class="o">=</span> <span class="n">poj</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
@@ -70,7 +582,140 @@
     <id>http://mdkvimer.github.io/blog/2013/05/20/pythontian-qi-yu-bao</id>
     <content type="html"><![CDATA[<p>利用python提取网页版的天气预报放入一个文件，并用shell提取今明两天的做fetion发送的内容,把脚本放入crontab shell脚本在这里略
 code
-{% include_code tianqi.py %}</p>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (tianqi.py)</span> <a href='/downloads/code/tianqi.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="c">#coding:utf-8</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-05-20 16:11</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: tianqi.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: 网络抓取网页天气预报并利用split整合发短信通知(发信脚本略) </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">datetime</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">HTMLParser</span> <span class="kn">import</span> <span class="n">HTMLParser</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">main</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">HTMLParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">tarsum</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;td&#39;</span><span class="p">,</span><span class="s">&#39;th&#39;</span><span class="p">,</span><span class="s">&#39;br&#39;</span><span class="p">]</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">,</span><span class="n">attrs</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="o">=</span> <span class="n">tag</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;table&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span> <span class="o">=</span> <span class="n">tag</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span><span class="p">:</span>
+</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+</span><span class='line'>            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;td&#39;</span><span class="p">:</span>
+</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tarsum</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">days</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span><span class="p">)</span>
+</span><span class='line'>           <span class="c"># self.result[days].append(data.strip())</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">days</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_endtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">getvalue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://qq.ip138.com/weather/zhejiang/HangZhou.htm&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">page</span><span class="p">,</span><span class="s">&#39;gb2312&#39;</span><span class="p">,</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">line</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">line</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">getvalue</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">key</span><span class="p">,</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">a</span><span class="p">,</span>
+</span><span class='line'>        <span class="k">print</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="平时用linux时，我有一个习惯就是把遇到的，比较有用，并且容易忘的命令，放到一个文本文件中，没事的时候可以拿出来看看，这样可以加深印象，时间长了这些命令的用法基本上都能掌握了。以下是100个用法,有什么不对，还请大家指正。 1
+  <meta name="description" content="1
 2
 3
 4
@@ -23,7 +23,7 @@
 12
 13
 14
-15 &hellip;">
+# uname -a # 查看内核/操作系统/CPU信息 # head -n 1 /etc/issue # 查看操作系统版本 # cat /proc/cpuinfo # 查看CPU信息 # hostname # 查看计算机名 # &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +92,189 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/chang-yong-de-ming-ling-2/">常用的命令2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:58:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># uname -a               # 查看内核/操作系统/CPU信息  
+</span><span class='line'># head -n 1 /etc/issue   # 查看操作系统版本
+</span><span class='line'>
+</span><span class='line'># cat /proc/cpuinfo      # 查看CPU信息
+</span><span class='line'>
+</span><span class='line'># hostname               # 查看计算机名
+</span><span class='line'>
+</span><span class='line'># lspci -tv              # 列出所有PCI设备
+</span><span class='line'>
+</span><span class='line'># lsusb -tv              # 列出所有USB设备
+</span><span class='line'>
+</span><span class='line'># lsmod                  # 列出加载的内核模块
+</span><span class='line'>
+</span><span class='line'># env                    # 查看环境变量</span></code></pre></td></tr></table></div></figure>
+
+
+<p>资源</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># free -m                # 查看内存使用量和交换区使用量 
+</span><span class='line'># df -h                  # 查看各分区使用情况
+</span><span class='line'>
+</span><span class='line'># du -sh &lt;目录名&gt;        # 查看指定目录的大小
+</span><span class='line'>
+</span><span class='line'># grep MemTotal /proc/meminfo   # 查看内存总量
+</span><span class='line'>
+</span><span class='line'># grep MemFree /proc/meminfo    # 查看空闲内存量
+</span><span class='line'>
+</span><span class='line'># uptime                 # 查看系统运行时间、用户数、负载
+</span><span class='line'>
+</span><span class='line'># cat /proc/loadavg      # 查看系统负载</span></code></pre></td></tr></table></div></figure>
+
+
+<p>磁盘和分区</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># mount | column -t      # 查看挂接的分区状态   
+</span><span class='line'># fdisk -l               # 查看所有分区
+</span><span class='line'>
+</span><span class='line'># swapon -s              # 查看所有交换分区
+</span><span class='line'>
+</span><span class='line'># hdparm -i /dev/hda     # 查看磁盘参数(仅适用于IDE设备)
+</span><span class='line'>
+</span><span class='line'># dmesg | grep IDE       # 查看启动时IDE设备检测状况</span></code></pre></td></tr></table></div></figure>
+
+
+<p>网络 进程 用户 服务 程序</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># ifconfig               # 查看所有网络接口的属性   
+</span><span class='line'>
+</span><span class='line'># iptables -L            # 查看防火墙设置
+</span><span class='line'>
+</span><span class='line'># route -n               # 查看路由表
+</span><span class='line'>
+</span><span class='line'># netstat -lntp          # 查看所有监听端口
+</span><span class='line'>
+</span><span class='line'># netstat -antp          # 查看所有已经建立的连接
+</span><span class='line'>
+</span><span class='line'># netstat -s             # 查看网络统计信息   
+</span><span class='line'>
+</span><span class='line'># ps -ef                 # 查看所有进程  
+</span><span class='line'>
+</span><span class='line'># top                    # 实时显示进程状态
+</span><span class='line'>
+</span><span class='line'># w                      # 查看活动用户   
+</span><span class='line'>
+</span><span class='line'># id             # 查看指定用户信息
+</span><span class='line'>
+</span><span class='line'># last                   # 查看用户登录日志
+</span><span class='line'>
+</span><span class='line'># cut -d: -f1 /etc/passwd   # 查看系统所有用户
+</span><span class='line'>
+</span><span class='line'># cut -d: -f1 /etc/group    # 查看系统所有组
+</span><span class='line'>
+</span><span class='line'># crontab -l             # 查看当前用户的计划任务
+</span><span class='line'>
+</span><span class='line'># chkconfig –list       # 列出所有系统服务   
+</span><span class='line'>
+</span><span class='line'># chkconfig –list | grep on    # 列出所有启动的系统服务
+</span><span class='line'>
+</span><span class='line'># rpm -qa                # 查看所有安装的软件包</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -3057,59 +3240,6 @@ PHP代码</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/wang-yi-bi-shi/">网易笔试</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T10:31:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>应该说网易的这个笔试对我来说很简单~有那么几个点可以写出来</p>
-
-<p>mysql 一些基础的应用</p>
-
-<p>linux操作系统</p>
-
-<p>tcp/ip</p>
-
-<p>tcp/ip的三次握手过程~</p>
-
-<p>vim/gcc/gdb的使用</p>
-
-<p>进程线程端口号</p>
-
-<p>文件的权限使用情况</p>
-
-<p>大概就这么几点~总体难度不大的</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -3140,6 +3270,10 @@ PHP代码</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/24/fork/">Fork经典问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/24/sed/">Sed技巧小结</a>
       </li>
     
@@ -3153,10 +3287,6 @@ PHP代码</p>
     
       <li class="post">
         <a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-1/">Python网络编程1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/20/ojzhi-pythonjian-kong/">OJ之python监控</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-24T20:49:53+08:00</updated>
+  <updated>2013-05-24T22:18:31+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[fork经典问题]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/24/fork/"/>
+    <updated>2013-05-24T21:59:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/24/fork</id>
+    <content type="html"><![CDATA[<p>经典问题1,会输出多少?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>  int i;
+</span><span class='line'>  for(i = 0 ; i &lt; 2 ; i++)
+</span><span class='line'>  {
+</span><span class='line'>      fork();
+</span><span class='line'>      printf("-");
+</span><span class='line'>  }
+</span><span class='line'>  return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>经典问题2，会输出多少?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>  int i;
+</span><span class='line'>  for(i = 0 ; i &lt; 2 ; i++)
+</span><span class='line'>  {
+</span><span class='line'>      fork();
+</span><span class='line'>      printf("-\n");
+</span><span class='line'>      fflush(stdout);
+</span><span class='line'>  }
+</span><span class='line'>  return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[sed技巧小结]]></title>
@@ -3367,161 +3440,6 @@ c.直连网络端点间的满载状态下的直线状态
 
 
 <p>到此一个的版本库的项目引入以完成~即可用 svn list/checkout等命令 svn://URL 取出版本库的相关项目(后期补上基于apche的svn)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[常用的命令2]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2/"/>
-    <updated>2013-05-19T10:58:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/chang-yong-de-ming-ling-2</id>
-    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># uname -a               # 查看内核/操作系统/CPU信息  
-</span><span class='line'># head -n 1 /etc/issue   # 查看操作系统版本
-</span><span class='line'>
-</span><span class='line'># cat /proc/cpuinfo      # 查看CPU信息
-</span><span class='line'>
-</span><span class='line'># hostname               # 查看计算机名
-</span><span class='line'>
-</span><span class='line'># lspci -tv              # 列出所有PCI设备
-</span><span class='line'>
-</span><span class='line'># lsusb -tv              # 列出所有USB设备
-</span><span class='line'>
-</span><span class='line'># lsmod                  # 列出加载的内核模块
-</span><span class='line'>
-</span><span class='line'># env                    # 查看环境变量</span></code></pre></td></tr></table></div></figure>
-
-
-<p>资源</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># free -m                # 查看内存使用量和交换区使用量 
-</span><span class='line'># df -h                  # 查看各分区使用情况
-</span><span class='line'>
-</span><span class='line'># du -sh &lt;目录名&gt;        # 查看指定目录的大小
-</span><span class='line'>
-</span><span class='line'># grep MemTotal /proc/meminfo   # 查看内存总量
-</span><span class='line'>
-</span><span class='line'># grep MemFree /proc/meminfo    # 查看空闲内存量
-</span><span class='line'>
-</span><span class='line'># uptime                 # 查看系统运行时间、用户数、负载
-</span><span class='line'>
-</span><span class='line'># cat /proc/loadavg      # 查看系统负载</span></code></pre></td></tr></table></div></figure>
-
-
-<p>磁盘和分区</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># mount | column -t      # 查看挂接的分区状态   
-</span><span class='line'># fdisk -l               # 查看所有分区
-</span><span class='line'>
-</span><span class='line'># swapon -s              # 查看所有交换分区
-</span><span class='line'>
-</span><span class='line'># hdparm -i /dev/hda     # 查看磁盘参数(仅适用于IDE设备)
-</span><span class='line'>
-</span><span class='line'># dmesg | grep IDE       # 查看启动时IDE设备检测状况</span></code></pre></td></tr></table></div></figure>
-
-
-<p>网络 进程 用户 服务 程序</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># ifconfig               # 查看所有网络接口的属性   
-</span><span class='line'>
-</span><span class='line'># iptables -L            # 查看防火墙设置
-</span><span class='line'>
-</span><span class='line'># route -n               # 查看路由表
-</span><span class='line'>
-</span><span class='line'># netstat -lntp          # 查看所有监听端口
-</span><span class='line'>
-</span><span class='line'># netstat -antp          # 查看所有已经建立的连接
-</span><span class='line'>
-</span><span class='line'># netstat -s             # 查看网络统计信息   
-</span><span class='line'>
-</span><span class='line'># ps -ef                 # 查看所有进程  
-</span><span class='line'>
-</span><span class='line'># top                    # 实时显示进程状态
-</span><span class='line'>
-</span><span class='line'># w                      # 查看活动用户   
-</span><span class='line'>
-</span><span class='line'># id             # 查看指定用户信息
-</span><span class='line'>
-</span><span class='line'># last                   # 查看用户登录日志
-</span><span class='line'>
-</span><span class='line'># cut -d: -f1 /etc/passwd   # 查看系统所有用户
-</span><span class='line'>
-</span><span class='line'># cut -d: -f1 /etc/group    # 查看系统所有组
-</span><span class='line'>
-</span><span class='line'># crontab -l             # 查看当前用户的计划任务
-</span><span class='line'>
-</span><span class='line'># chkconfig –list       # 列出所有系统服务   
-</span><span class='line'>
-</span><span class='line'># chkconfig –list | grep on    # 列出所有启动的系统服务
-</span><span class='line'>
-</span><span class='line'># rpm -qa                # 查看所有安装的软件包</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

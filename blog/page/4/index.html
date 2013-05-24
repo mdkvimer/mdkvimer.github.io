@@ -9,7 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="笔试的范围面算是比较广吧～涉及操作系统～数据结构和算法～网络～c/c++~软件工程~唉～还是太弱了～抱着打酱油的心去带回一大瓶酱油～还是得总结总结打有准备的仗~考到线程的并发~插入排序～tcp/ip~操作系统内存分配~~加油了～要有准备要努力啊
+  <meta name="description" content="应该说网易的这个笔试对我来说很简单~有那么几个点可以写出来 mysql 一些基础的应用 linux操作系统 tcp/ip tcp/ip的三次握手过程~ vim/gcc/gdb的使用 进程线程端口号 文件的权限使用情况 大概就这么几点~总体难度不大的
 ">
   
 
@@ -79,6 +79,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/wang-yi-bi-shi/">网易笔试</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:31:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>应该说网易的这个笔试对我来说很简单~有那么几个点可以写出来</p>
+
+<p>mysql 一些基础的应用</p>
+
+<p>linux操作系统</p>
+
+<p>tcp/ip</p>
+
+<p>tcp/ip的三次握手过程~</p>
+
+<p>vim/gcc/gdb的使用</p>
+
+<p>进程线程端口号</p>
+
+<p>文件的权限使用情况</p>
+
+<p>大概就这么几点~总体难度不大的</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2193,263 +2246,6 @@ void bar()</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/18/20wei-yun-suan-zhi-duo-shao-2/">20个位运算知多少2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-18T22:46:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>int getMaxInt1(){
-</span><span class='line'>  return ( 1 &lt;&lt; 31 ) – 1; //优先级括号不能省略
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMaxInt2(){
-</span><span class='line'>  return ~( 1 &lt;&lt; 31 );
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMaxInt3(){
-</span><span class='line'>  return ( 1 &lt;&lt; -1 ) – 1;  //gcc 不支持
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMaxInt4(){
-</span><span class='line'>  return ( (unsigned int) – 1 ) &gt;&gt; 1;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMinInt5(){
-</span><span class='line'>  return 1 &lt;&lt; 31; //获取int类型的最小值
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMinInt6(){
-</span><span class='line'>  return 1 &lt;&lt; -1; //gcc 不支持
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMaxLong(){
-</span><span class='line'>  return ((unsigned long) – 1 ) &gt;&gt; 1;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int getMinLong(){
-</span><span class='line'>  return 1 &lt;&lt; 63;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int mulTwo(int n){
-</span><span class='line'>   return n &lt;&lt; 1;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int divTwo(int n){
-</span><span class='line'>  return n &gt;&gt; 1;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int mulTwoPower(int n,int m){
-</span><span class='line'> //n*(2^m)
-</span><span class='line'>  return n &lt;&lt; m;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int divTwoPower(int n,int m){
-</span><span class='line'> //n/(2^m)
-</span><span class='line'>  return n &gt;&gt; m;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>bool isOddNumber(int n){
-</span><span class='line'>  return (n & 1) == 1;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>void swap1(int a,int b){
-</span><span class='line'> a ^= b;
-</span><span class='line'> b ^= a;
-</span><span class='line'> a ^= b;
-</span><span class='line'> cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>void swap2(int *a,int *b){
-</span><span class='line'> (*a) ^= (*b) ^= (*a) ^= (*b);
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int abs(int n){
-</span><span class='line'>  return (n^( n &gt;&gt; 31 )) -( n &gt;&gt; 31 );
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>int main(int argc,char *argv[])
-</span><span class='line'>{
-</span><span class='line'>   /*
-</span><span class='line'>    *位运算的20则
-</span><span class='line'>    * */
-</span><span class='line'>    int max1 = getMaxInt1();
-</span><span class='line'>    int max2 = getMaxInt2();
-</span><span class='line'>    int max3 = getMaxInt4();
-</span><span class='line'>    int min1 = getMinInt5();
-</span><span class='line'>    int min2 = getMinInt6();
-</span><span class='line'>    int max4 = getMaxLong();
-</span><span class='line'>    int min3 = getMinLong();
-</span><span class='line'>    int num1 = mulTwo(2);
-</span><span class='line'>    int num2 = divTwo(2);
-</span><span class='line'>    int num3 = mulTwoPower(2,1);
-</span><span class='line'>    int num4 = divTwoPower(2,1);
-</span><span class='line'>    int num5 = isOddNumber(4);
-</span><span class='line'>    int num6 = isOddNumber(3);
-</span><span class='line'>    int a=3;
-</span><span class='line'>    int b=4;
-</span><span class='line'>    int a1=3;
-</span><span class='line'>    int b1=4;
-</span><span class='line'>    a ^= b;
-</span><span class='line'>    b ^= a;
-</span><span class='line'>    a ^= b;
-</span><span class='line'>    //cout&lt;&lt;a&lt;&lt;”  “&lt;&lt;b&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;max1&lt;&lt;” “&lt;&lt;max2&lt;&lt;” “&lt;&lt;max3&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;min1&lt;&lt;” “&lt;&lt;min2&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;max4&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;min3&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;num1&lt;&lt;” “&lt;&lt;num2&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;num3&lt;&lt;” “&lt;&lt;num4&lt;&lt;endl;
-</span><span class='line'>    //cout&lt;&lt;num5&lt;&lt;” “&lt;&lt;num6&lt;&lt;endl;
-</span><span class='line'>    //swap1(a,b);
-</span><span class='line'>    //cout&lt;&lt;a&lt;&lt;” “&lt;&lt;b&lt;&lt;endl;
-</span><span class='line'>    //swap2(&a1,&b1);
-</span><span class='line'>    //cout&lt;&lt;a1&lt;&lt;” “&lt;&lt;b1&lt;&lt;endl;
-</span><span class='line'>    int abs1 = abs(-5);
-</span><span class='line'>    cout&lt;&lt;abs1&lt;&lt;endl;
-</span><span class='line'>    return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -2480,6 +2276,10 @@ void bar()</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/05/24/fork/">Fork经典问题</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/24/sed/">Sed技巧小结</a>
       </li>
     
@@ -2493,10 +2293,6 @@ void bar()</p>
     
       <li class="post">
         <a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-1/">Python网络编程1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/20/ojzhi-pythonjian-kong/">OJ之python监控</a>
       </li>
     
   </ul>
