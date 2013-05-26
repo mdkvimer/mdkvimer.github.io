@@ -4,7 +4,7 @@
   <title><![CDATA[Category: awk&sed | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/awk-and-sed/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-26T17:00:52+08:00</updated>
+  <updated>2013-05-26T17:13:29+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -18,7 +18,7 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/24/awkji-qiao/"/>
     <updated>2013-05-24T17:12:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/24/awkji-qiao</id>
-    <content type="html"><![CDATA[<p>awk用法技巧小结</p>
+    <content type="html"><![CDATA[<p>awk用法和技巧小结</p>
 
 <p>{% include_code awk %}</p>
 
