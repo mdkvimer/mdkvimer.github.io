@@ -9,21 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-# uname -a # 查看内核/操作系统/CPU信息 # head -n 1 /etc/issue # 查看操作系统版本 # cat /proc/cpuinfo # 查看CPU信息 # hostname # 查看计算机名 # &hellip;">
+  <meta name="description" content="用开源OJ后由于开源~内核也开源给了我们很大的改造空间~由此搭建起subversion版本控制subversion的安装略（可yum 或apt-get 安装或者源码安装）~安装成功后使用命令 svn –version 即可显示安装版本信息 本人使用是svnserve 建立版本库~ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,6 +78,80 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/svn/">Svn</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T11:00:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用开源OJ后<del>由于开源~内核也开源</del>给了我们很大的改造空间<del>~由此搭建起subversion版本控制</del>subversion的安装略（可yum 或apt-get 安装或者源码安装）~安装成功后使用命令 svn –version 即可显示安装版本信息</p>
+
+<p>本人使用是svnserve 建立版本库~基于apaches的有空再弄~</p>
+
+<ol>
+<li>建立版本目录:</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svnadmin create –fs-type fsfs /usr/local/OJ</span></code></pre></td></tr></table></div></figure>
+
+
+<p>执行后在/usr/local/OJ/目录下生成一堆配置文件~主要文件还是conf/下的svnserve.conf文件，里面有关配置用户和匿名用户对版本库的使用权限设置 anon-access 和autho-access ,write对应的用户读写都可~read只可读</p>
+
+<p>2.刚建立的版本库没有项目需引入项目(在本地引入用file://)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svn import hustoj2mdk file:///usr/local/OJ/project-oj -m “Initial import”</span></code></pre></td></tr></table></div></figure>
+
+
+<p>即可将hustoj2mdk目录的内容引入到版本库的project-oj目录</p>
+
+<p>3.开启svnserve</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>svnserve -d -r /usr/local/OJ
+</span><span class='line'>
+</span><span class='line'>-d 以独立进程的方式开启 -r 便于svn 访问省略/usr/local/OJ  只用project-oj即可</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps aux|grep svn 即可查看到svnserve</span></code></pre></td></tr></table></div></figure>
+
+
+<p>到此一个的版本库的项目引入以完成~即可用 svn list/checkout等命令 svn://URL 取出版本库的相关项目(后期补上基于apche的svn)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2740,506 +2800,6 @@ network-scripts/：
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/shell/">Shell</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T10:38:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>很多人误以为shell脚本只能在命令行下使用。其实shell也可以调用一些GUI组件， 例如菜单，警告框，进度条等等。你可以控制最终的输出，光标位置还有各种输出效果。下面我将介绍一些工具，帮助你创建强大的，互动的，用户友好的 Unix/Linux shell脚本。我在FreeBSD和Linux下测试过这些工具，不过其他UNIX系列的操作系统应该都支持的。</p>
-
-<ol>
-<li>notify-send 命令</li>
-</ol>
-
-
-<p>这个命令可以让你通过通知进程发送一个桌面通知给用户。这可以用来向用户发送提示，或者显示一些信息而不用打断用户工作。你需要安装如下软件包：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install libnotify-bin</span></code></pre></td></tr></table></div></figure>
-
-
-<p>下面这个例子展示了如何从命令行向桌面发送一个简单的消息：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>notify-send “rsnapshot done \”static/image/smiley/default/smile.gif\”" smilieid=”\”1\”" alt=”\”\”" border=”\”0\”"&gt;”</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出：</p>
-
-<p>下面是一个复杂一点的例子：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>….
-</span><span class='line'>alert=18000
-</span><span class='line'>live=$(lynx –dump http://money.rediff.com/ | grep ‘BSE LIVE’ | awk ‘{ print $5}’ | sed ‘s/,//g;s/\.[0-9]*//g’)
-</span><span class='line'>[ $notify_counter -eq 0 ] && [ $live -ge $alert ] && { notify-send -t 5000 -u low -i  ”BSE Sensex touched 18k”;  notify_counter=1; }
-</span><span class='line'>…</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出：</p>
-
-<p>这里的参数解释如下：</p>
-
-<pre><code>-t 5000：指定超时的时间，毫秒
--u low：设置是否紧急
--i gtk-dialog-info：通知图标，你可以指定图标 -i /path/to/your-icon.png
-</code></pre>
-
-<ol>
-<li>tput 命令</li>
-</ol>
-
-
-<p>这个命令是用来设置终端特性的：</p>
-
-<pre><code>  移动光标
-  获得终端信息
-  设置前景和背景色
-  设置粗体模式
-  设置反模式等等
-</code></pre>
-
-<p>举例：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'># clear the screen
-</span><span class='line'>tput clear
-</span><span class='line'># Move cursor to screen location X,Y (top left is 0,0)
-</span><span class='line'>tput cup 3 15
-</span><span class='line'># Set a foreground colour using ANSI escape
-</span><span class='line'>tput setaf 3
-</span><span class='line'>echo “XYX Corp LTD.”
-</span><span class='line'>tput sgr0
-</span><span class='line'>tput cup 5 17
-</span><span class='line'># Set reverse video mode
-</span><span class='line'>tput rev
-</span><span class='line'>echo “M A I N – M E N U”
-</span><span class='line'>tput sgr0
-</span><span class='line'>tput cup 7 15
-</span><span class='line'>echo “1. User Management”
-</span><span class='line'>tput cup 8 15
-</span><span class='line'>echo “2. Service Management”
-</span><span class='line'>tput cup 9 15
-</span><span class='line'>echo “3. Process Management”
-</span><span class='line'>tput cup 10 15
-</span><span class='line'>echo “4. Backup”
-</span><span class='line'># Set bold mode
-</span><span class='line'>tput bold
-</span><span class='line'>tput cup 12 15
-</span><span class='line'>read -p “Enter your choice [1-4] ” choice
-</span><span class='line'>tput clear
-</span><span class='line'>tput sgr0
-</span><span class='line'>tput rc</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出：</p>
-
-<ol>
-<li>setleds 命令</li>
-</ol>
-
-
-<p>这个命令可以让你控制键盘灯，例如打开数字键盘灯：</p>
-
-<p>PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>setleds -D +num</span></code></pre></td></tr></table></div></figure>
-
-
-<p>关闭数字键盘灯：</p>
-
-<p>PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>setleds -D -num
-</span><span class='line'>
-</span><span class='line'>  -caps: 清除大写灯
-</span><span class='line'>  +caps：打开大写灯
-</span><span class='line'>  -scroll：清除滚动锁
-</span><span class='line'>  +scroll：打开滚动锁</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>zenity 命令</li>
-</ol>
-
-
-<p>这个命令可以显示GTK+的对话框，然后返回用户的输入。你可以用这个命令在脚本中显示信息，并要求用户输入信息。下面这段代码就是域名的whois查询：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'># Get domain name
-</span><span class='line'>_zenity=”/usr/bin/zenity”
-</span><span class='line'>_out=”/tmp/whois.output.[    DISCUZ_CODE_4    ]quot;
-</span><span class='line'>domain=$(${_zenity} –title  ”Enter domain” \
-</span><span class='line'>      –entry –text “Enter the domain you would like to see whois info” )
-</span><span class='line'>if [ $? -eq 0 ]
-</span><span class='line'>then
-</span><span class='line'>  # Display a progress dialog while searching whois database
-</span><span class='line'>  whois $domain  | tee &gt;(${_zenity} –width=200 –height=100 \
-</span><span class='line'>        –title=”whois” –progress \
-</span><span class='line'>        –pulsate –text=”Searching domain info…” \
-</span><span class='line'>            –auto-kill –auto-close \
-</span><span class='line'>            –percentage=10) &gt;${_out}
-</span><span class='line'>  # Display back output
-</span><span class='line'>  ${_zenity} –width=800 –height=600  \
-</span><span class='line'>    –title “Whois info for $domain” \
-</span><span class='line'>    –text-info –filename=”${_out}”
-</span><span class='line'>else
-</span><span class='line'>  ${_zenity} –error \
-</span><span class='line'>    –text=”No input provided”
-</span><span class='line'>fi</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出：</p>
-
-<ol>
-<li>kdialog 命令</li>
-</ol>
-
-
-<p>这个命令和zenity很想，只不过它是为KDE/QT应用准备的。使用方法如下：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>kdialog –dontagain myscript:nofilemsg –msgbox “File: ‘~/.backup/config’ not found.”</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出</p>
-
-<ol>
-<li>Dialog</li>
-</ol>
-
-
-<p>这个命令可以在shell脚本中显示文本组件。它使用了curses和ncurses类库。示例代码：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&gt;#!/bin/bash
-</span><span class='line'>dialog –title “Delete file” \
-</span><span class='line'>–backtitle “Linux Shell Script Tutorial Example” \
-</span><span class='line'>–yesno “Are you sure you want to permanently delete \”/tmp/foo.txt\”?” 7 60
-</span><span class='line'># Get exit status
-</span><span class='line'># 0 means user hit [yes] button.
-</span><span class='line'># 1 means user hit [no] button.
-</span><span class='line'># 255 means user hit [Esc] key.
-</span><span class='line'>response=$?
-</span><span class='line'>case $response in
-</span><span class='line'>  0) echo “File deleted.”;;
-</span><span class='line'>  1) echo “File not deleted.”;;
-</span><span class='line'>  255) echo “[ESC] key pressed.”;;
-</span><span class='line'>esac</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>logger 命令</li>
-</ol>
-
-
-<p>这个命令可以让你写入系统日志例如 /var/log/messages：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>logger “MySQL database backup failed.”
-</span><span class='line'>tail -f /var/log/messages
-</span><span class='line'>logger -t mysqld -p daemon.error “Database Server failed”
-</span><span class='line'>tail -f /var/log/syslog</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Apr 20 00:11:45 vivek-desktop kernel: [38600.515354] CPU0: Temperature/speed normal
-</span><span class='line'>
-</span><span class='line'>Apr 20 00:12:20 vivek-desktop mysqld: Database Server failed</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>setterm 命令</li>
-</ol>
-
-
-<p>这个命令可以设置中断的属性。下面的例子是强制屏幕全黑15分钟，并且60分钟后把显示器设为待机状态：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>setterm -blank 15 -powersave powerdown -powerdown 60</span></code></pre></td></tr></table></div></figure>
-
-
-<p>下面这段命令可以在中断显示加下划线的文字：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>setterm -underline on;
-</span><span class='line'>echo “Add Your Important Message Here”
-</span><span class='line'>setterm -underline off</span></code></pre></td></tr></table></div></figure>
-
-
-<p>或者你可以关闭光标：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>setterm -cursor off</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>smbclient：向 MS-Windows 系统发送消息</li>
-</ol>
-
-
-<p>smbclient可以和 SMB/CIFS服务器通信。它可以向MS-Windows系统的指定用户发送消息：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>smbclient -M WinXPPro &lt;&lt;EOF
-</span><span class='line'>Message 1
-</span><span class='line'>Message 2
-</span><span class='line'>…
-</span><span class='line'>..
-</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
-
-
-<p>或者
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>echo “${Message}” | smbclient -M salesguy2
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Bash Socket 编程</li>
-</ol>
-
-
-<p>你可以在bash中开启一个socket链接，并且传输数据。Bash有两个特殊的设备文件：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  /dev/tcp/host/port – 如果hostname，和port是合法的话，bash会尝试开启一个TCP连接。
-</span><span class='line'>  /dev/udp/host/port – 如果hostname和port是合法的话，bash会开启一个UDP连接。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>你可以利用这个技术来测试一台主机的端口是否是开启的，而不需要使用nmap或者port扫描器：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># find out if TCP port 25 open or not
-</span><span class='line'>(echo &gt;/dev/tcp/localhost/25) &&gt;/dev/null && echo “TCP port 25 open” || echo “TCP port 25 close”</span></code></pre></td></tr></table></div></figure>
-
-
-<p>你可以 使用循环来查找开着的端口：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>echo “Scanning TCP ports…”
-</span><span class='line'>for p in {1..1023}
-</span><span class='line'>do
-</span><span class='line'>  (echo &gt;/dev/tcp/localhost/$p) &gt;/dev/null 2&gt;&1 && echo “$p open”
-</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
-
-
-<p>输出：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Scanning TCP ports…
-</span><span class='line'>
-</span><span class='line'>22 open
-</span><span class='line'>
-</span><span class='line'>53 open
-</span><span class='line'>
-</span><span class='line'>80 open
-</span><span class='line'>
-</span><span class='line'>139 open
-</span><span class='line'>
-</span><span class='line'>445 open
-</span><span class='line'>
-</span><span class='line'>631 open</span></code></pre></td></tr></table></div></figure>
-
-
-<p>下面的这个例子让你的脚本扮演HTTP客户端：
-PHP代码</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/bash
-</span><span class='line'>exec 3&lt;&gt; /dev/tcp/${1:-www.cyberciti.biz}/80
-</span><span class='line'>printf “GET / HTTP/1.0\r\n” &gt;&3
-</span><span class='line'>printf “Accept: text/html, text/plain\r\n” &gt;&3
-</span><span class='line'>printf “Accept-Language: en\r\n” &gt;&3
-</span><span class='line'>printf “User-Agent: nixCraft_BashScript v.%s\r\n” “${BASH_VERSION}”  &gt;&3
-</span><span class='line'>printf “\r\n” &gt;&3
-</span><span class='line'>while read LINE &lt;&3
-</span><span class='line'>do
-</span><span class='line'>  # do something on $LINE
-</span><span class='line'>  # or send $LINE to grep or awk for grabbing data
-</span><span class='line'>  # or simply display back data with echo command
-</span><span class='line'>  echo $LINE
-</span><span class='line'>done</span></code></pre></td></tr></table></div></figure>
-
-
-<p>关于GUITools和Cronjob</p>
-
-<p>如果你使用cronjob来调用你的脚本的话，你要通过“ export DISPLAY=[user&rsquo;s machine]:0”命令来设置本地的 display/input 服务。例如调用 /home/vivek/scripts/monitor.stock.sh脚本，它使用了 zenity 工具：
-PHP代码</p>
-
-<pre><code>@hourly DISPLAY=:0.0 /home/vivek/scripts/monitor.stock.sh
-</code></pre>
-
-<p>所有的命令你都可以通过“man”来查询详细的使用方式。</p>
-
-<p>文章转载自：<a href="http://www.oschina.net/question/28_39527">http://www.oschina.net/question/28_39527</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -3263,7 +2823,7 @@ PHP代码</p>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (13)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
@@ -3271,6 +2831,10 @@ PHP代码</p>
     
       <li class="post">
         <a href="/blog/2013/05/24/fork/">Fork经典问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/awkji-qiao/">Awk技巧</a>
       </li>
     
       <li class="post">
@@ -3283,10 +2847,6 @@ PHP代码</p>
     
       <li class="post">
         <a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-2/">Python网络编程2</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-1/">Python网络编程1</a>
       </li>
     
   </ul>
