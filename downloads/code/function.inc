@@ -1,14 +1,14 @@
-#=============================================================================
+#*=============================================================================
 #
 # Author: mengdaiku - mengdaikun@gmail.com
 #
 # QQ : 646978600
 #
-# Last modified: 2013-05-26 21:08
+# Last modified: 2013-05-26 22:19
 #
 # Filename: function.inc
 #
-# Description: 函数库~供脚本调用(../function.inc)
+# Description: 系统监控shell函数库调用(../function.inc)
 #
 #=============================================================================
 function GetPID #PsUser #PsName
