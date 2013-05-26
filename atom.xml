@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-05-26T13:18:16+08:00</updated>
+  <updated>2013-05-26T17:15:03+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -91,9 +91,9 @@
     <link href="http://mdkvimer.github.io/blog/2013/05/24/awkji-qiao/"/>
     <updated>2013-05-24T17:12:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/05/24/awkji-qiao</id>
-    <content type="html"><![CDATA[awk用法技巧小结
+    <content type="html"><![CDATA[<p>awk用法和技巧小结</p>
 
-转自http://blog.chinaunix.net/uid-83572-id-3690.html
+<p>转自<a href="http://blog.chinaunix.net/uid-83572-id-3690.html">http://blog.chinaunix.net/uid-83572-id-3690.html</a></p>
 ]]></content>
   </entry>
   
