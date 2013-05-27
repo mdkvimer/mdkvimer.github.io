@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="系统监控函数库～调用相应的函数即../function.inc
-完善相应的shell代码即可 1
+完善相应的shell代码即可 (function.sh) download 1
 2
 3
 4
@@ -38,15 +38,7 @@
 26
 27
 28
-29
-30
-31
-32
-33
-34
-35
-36
-37 &hellip;">
+29 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -145,7 +137,8 @@
 <div class="entry-content"><p>系统监控函数库～调用相应的函数即../function.inc
 完善相应的shell代码即可</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span> (function.sh)</span> <a href='/downloads/code/function.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -264,125 +257,126 @@
 <span class='line-number'>117</span>
 <span class='line-number'>118</span>
 <span class='line-number'>119</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#*=============================================================================
-</span><span class='line'>#
-</span><span class='line'># Author: mengdaiku - mengdaikun@gmail.com
-</span><span class='line'>#
-</span><span class='line'># QQ : 646978600
-</span><span class='line'>#
-</span><span class='line'># Last modified: 2013-05-26 22:19
-</span><span class='line'>#
-</span><span class='line'># Filename: function.inc
-</span><span class='line'>#
-</span><span class='line'># Description: 系统监控shell函数库调用(../function.inc) 收集来自互联网
-</span><span class='line'>#
-</span><span class='line'>#=============================================================================
-</span><span class='line'>function GetPID #PsUser #PsName
-</span><span class='line'>{
-</span><span class='line'>    PsUser=$1
-</span><span class='line'>    PsName=$2
-</span><span class='line'>    pid=`ps -u $PsUser|grep $PsName|grep -v grep|grep -v vi|grep -v dbx|grep -v tail|grep -v start|grep -v stop |sed -n 1p |awk '{print $1}'`
-</span><span class='line'>    echo $pid
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#*=============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Author: mengdaiku - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># QQ : 646978600</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Last modified: 2013-05-26 22:19</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Filename: function.inc</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Description: 系统监控shell函数库调用(../function.inc) 收集来自互联网</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#=============================================================================</span>
+</span><span class='line'><span class="k">function </span>GetPID <span class="c">#PsUser #PsName</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">PsUser</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'>    <span class="nv">PsName</span><span class="o">=</span><span class="nv">$2</span>
+</span><span class='line'>    <span class="nv">pid</span><span class="o">=</span><span class="sb">`</span>ps -u <span class="nv">$PsUser</span>|grep <span class="nv">$PsName</span>|grep -v grep|grep -v vi|grep -v dbx|grep -v tail|grep -v start|grep -v stop |sed -n 1p |awk <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="nv">$pid</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function GetCpu
-</span><span class='line'>{
-</span><span class='line'>    CpuValue=`ps -p $1 -o pcpu |grep -v CPU | awk '{print $1}' | awk -F. '{print $1}'`
-</span><span class='line'>    echo $CpuValue
-</span><span class='line'>}
+</span><span class='line'><span class="k">function </span>GetCpu
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">CpuValue</span><span class="o">=</span><span class="sb">`</span>ps -p <span class="nv">$1</span> -o pcpu |grep -v CPU | awk <span class="s1">&#39;{print $1}&#39;</span> | awk -F. <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="nv">$CpuValue</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function CheckCpu
-</span><span class='line'>{
-</span><span class='line'>    cpu=`GetCpu $1`
+</span><span class='line'><span class="k">function </span>CheckCpu
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">cpu</span><span class="o">=</span><span class="sb">`</span>GetCpu <span class="nv">$1</span><span class="sb">`</span>
 </span><span class='line'>
-</span><span class='line'>    echo "The CPU is $cpu"
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;The CPU is $cpu&quot;</span>
 </span><span class='line'>
-</span><span class='line'>    if [ "-$cpu" == "-" ]
-</span><span class='line'>    then
-</span><span class='line'>    {
-</span><span class='line'>        echo "The process is not found"
-</span><span class='line'>        return 1;
-</span><span class='line'>    }
-</span><span class='line'>    fi
+</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;-$cpu&quot;</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="k">then</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;The process is not found&quot;</span>
+</span><span class='line'>        <span class="k">return </span>1;
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">fi</span>
 </span><span class='line'>
-</span><span class='line'>    if [ $cpu -gt 80 ]
-</span><span class='line'>    then
-</span><span class='line'>    {
-</span><span class='line'>        echo "The usage of cpu is larger than 80%"
-</span><span class='line'>    }   
-</span><span class='line'>    else
-</span><span class='line'>    {  
-</span><span class='line'>        echo "The usage of cpu is normal"
-</span><span class='line'>    }
-</span><span class='line'>    fi
-</span><span class='line'>}
+</span><span class='line'><span class="k">    if</span> <span class="o">[</span> <span class="nv">$cpu</span> -gt 80 <span class="o">]</span>
+</span><span class='line'>    <span class="k">then</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;The usage of cpu is larger than 80%&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;The usage of cpu is normal&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function GetMem
-</span><span class='line'>{
-</span><span class='line'>    MEMUsage=`ps -o vsz -p $1|grep -v VSZ`
-</span><span class='line'>    (( MEMUsage /= 1000))
-</span><span class='line'>    echo $MEMUsage
-</span><span class='line'>}
+</span><span class='line'><span class="k">function </span>GetMem
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">MEMUsage</span><span class="o">=</span><span class="sb">`</span>ps -o vsz -p <span class="nv">$1</span>|grep -v VSZ<span class="sb">`</span>
+</span><span class='line'>    <span class="o">((</span> MEMUsage /<span class="o">=</span> 1000<span class="o">))</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="nv">$MEMUsage</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function GetDes
-</span><span class='line'>{
-</span><span class='line'>    DES=`ls /proc/$1/fd | wc -l`
-</span><span class='line'>    echo $DES
-</span><span class='line'>}
+</span><span class='line'><span class="k">function </span>GetDes
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">DES</span><span class="o">=</span><span class="sb">`</span>ls /proc/<span class="nv">$1</span>/fd | wc -l<span class="sb">`</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="nv">$DES</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function GetSysCPU
-</span><span class='line'>{
-</span><span class='line'>   CpuIdle=`vmstat 1 5 |sed -n '3,$p' |awk '{x = x + $15} END {print x/5}' |awk -F. '{print $1}'`
-</span><span class='line'>   CpuNum=`echo "100-$CpuIdle" | bc`
-</span><span class='line'>   echo $CpuNum
-</span><span class='line'>}
+</span><span class='line'><span class="k">function </span>GetSysCPU
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>   <span class="nv">CpuIdle</span><span class="o">=</span><span class="sb">`</span>vmstat 1 5 |sed -n <span class="s1">&#39;3,$p&#39;</span> |awk <span class="s1">&#39;{x = x + $15} END {print x/5}&#39;</span> |awk -F. <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>   <span class="nv">CpuNum</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="s2">&quot;100-$CpuIdle&quot;</span> | bc<span class="sb">`</span>
+</span><span class='line'>   <span class="nb">echo</span> <span class="nv">$CpuNum</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function Listening
-</span><span class='line'>{
-</span><span class='line'>    TCPListeningnum=`netstat -an | grep ":$1 " | awk '$1 == "tcp" && $NF == "LISTEN" {print $0}' | wc -l`
-</span><span class='line'>    UDPListeningnum=`netstat -an|grep ":$1 " |awk '$1 == "udp" && $NF == "0.0.0.0:*" {print $0}' | wc -l`
-</span><span class='line'>    (( Listeningnum = TCPListeningnum + UDPListeningnum ))
-</span><span class='line'>    if [ $Listeningnum == 0 ]
-</span><span class='line'>    then
-</span><span class='line'>    {
-</span><span class='line'>        echo "0"
-</span><span class='line'>    }
-</span><span class='line'>    else
-</span><span class='line'>    {
-</span><span class='line'>       echo "1"
-</span><span class='line'>    }
-</span><span class='line'>    fi
-</span><span class='line'>}
+</span><span class='line'><span class="k">function </span>Listening
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">TCPListeningnum</span><span class="o">=</span><span class="sb">`</span>netstat -an | grep <span class="s2">&quot;:$1 &quot;</span> | awk <span class="s1">&#39;$1 == &quot;tcp&quot; &amp;&amp; $NF == &quot;LISTEN&quot; {print $0}&#39;</span> | wc -l<span class="sb">`</span>
+</span><span class='line'>    <span class="nv">UDPListeningnum</span><span class="o">=</span><span class="sb">`</span>netstat -an|grep <span class="s2">&quot;:$1 &quot;</span> |awk <span class="s1">&#39;$1 == &quot;udp&quot; &amp;&amp; $NF == &quot;0.0.0.0:*&quot; {print $0}&#39;</span> | wc -l<span class="sb">`</span>
+</span><span class='line'>    <span class="o">((</span> <span class="nv">Listeningnum</span> <span class="o">=</span> TCPListeningnum + UDPListeningnum <span class="o">))</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$Listeningnum</span> <span class="o">==</span> 0 <span class="o">]</span>
+</span><span class='line'>    <span class="k">then</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>       <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function GetDiskSpc
-</span><span class='line'>{
-</span><span class='line'>    if [ $# -ne 1 ]
-</span><span class='line'>    then
-</span><span class='line'>        return 1
-</span><span class='line'>    fi
+</span><span class='line'><span class="k">function </span>GetDiskSpc
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-ne 1 <span class="o">]</span>
+</span><span class='line'>    <span class="k">then</span>
+</span><span class='line'><span class="k">        return </span>1
+</span><span class='line'>    <span class="k">fi</span>
 </span><span class='line'>
-</span><span class='line'>    Folder="$1$"
-</span><span class='line'>    DiskSpace=`df -k |grep $Folder |awk '{print $5}' |awk -F% '{print $1}'`
-</span><span class='line'>    echo $DiskSpace
-</span><span class='line'>}
+</span><span class='line'><span class="k">    </span><span class="nv">Folder</span><span class="o">=</span><span class="s2">&quot;$1$&quot;</span>
+</span><span class='line'>    <span class="nv">DiskSpace</span><span class="o">=</span><span class="sb">`</span>df -k |grep <span class="nv">$Folder</span> |awk <span class="s1">&#39;{print $5}&#39;</span> |awk -F% <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="nv">$DiskSpace</span>
+</span><span class='line'><span class="o">}</span>
 </span><span class='line'>
-</span><span class='line'>function Chech_Tcp_Server_Port_Stat
-</span><span class='line'>{
-</span><span class='line'>    count_result=0
-</span><span class='line'>    stat_num=`netstat -an|egrep $1 |awk '$6 == "LISTEN" && $1 == "tcp" {print $0}' |wc -l`
-</span><span class='line'>    if [ $stat_num -ge 1 ]
-</span><span class='line'>    then
-</span><span class='line'>    {
-</span><span class='line'>        count_result=0
-</span><span class='line'>        echo "$1 port is normal!"
-</span><span class='line'>    }
-</span><span class='line'>    else
-</span><span class='line'>    {
-</span><span class='line'>        echo "$1 port is abnormal, please check"
-</span><span class='line'>    }
-</span><span class='line'>    fi
-</span><span class='line'>    return 0
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="k">function </span>Chech_Tcp_Server_Port_Stat
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">count_result</span><span class="o">=</span>0
+</span><span class='line'>    <span class="nv">stat_num</span><span class="o">=</span><span class="sb">`</span>netstat -an|egrep <span class="nv">$1</span> |awk <span class="s1">&#39;$6 == &quot;LISTEN&quot; &amp;&amp; $1 == &quot;tcp&quot; {print $0}&#39;</span> |wc -l<span class="sb">`</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$stat_num</span> -ge 1 <span class="o">]</span>
+</span><span class='line'>    <span class="k">then</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="nv">count_result</span><span class="o">=</span>0
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;$1 port is normal!&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;$1 port is abnormal, please check&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="k">    return </span>0
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
