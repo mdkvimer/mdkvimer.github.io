@@ -8,7 +8,7 @@
 #
 # Filename: function.inc
 #
-# Description: 系统监控shell函数库调用(../function.inc)
+# Description: 系统监控shell函数库调用(../function.inc) 收集来自互联网
 #
 #=============================================================================
 function GetPID #PsUser #PsName
