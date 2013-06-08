@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-06-08T18:51:59+08:00</updated>
+  <updated>2013-06-08T19:57:55+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,227 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[个人简历]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li/"/>
+    <updated>2013-06-08T19:55:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li</id>
+    <content type="html"><![CDATA[<p>板砖请轻拍</p>
+
+<figure class='code'><figcaption><span> (个人简历.cpp)</span> <a href='http://mdkvimer.github.io/downloads/code/个人简历.cpp'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *       Filename:  个人简历.cpp</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *    Description:  个人简历</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *        Version:  1.0</span>
+</span><span class='line'><span class="cm"> *        Created:  2013-6-08 18:54:05</span>
+</span><span class='line'><span class="cm"> *       Revision:  none </span>
+</span><span class='line'><span class="cm"> *            BUG:  no init for class myself(because .....)</span>
+</span><span class='line'><span class="cm"> *       Compiler:  gcc</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *         Author:  ACman mdk (Orz Linux Sir Koma linyu zhujiajun), mdk@server.example.com</span>
+</span><span class='line'><span class="cm"> *        Company:  ACM 309 JudgeOnline</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="cp">#include&lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">myself</span><span class="p">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">email1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">email2</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">phone</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">skills</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">other_table</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="n">education</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s在校本科生</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;中国计量学院&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;毕业时间%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;2014-6&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kt">void</span> <span class="n">skills_now</span><span class="p">(){</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;unix/linux&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;shell&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;c/c++&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;python&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">void</span> <span class="n">other_info</span><span class="p">(){</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;IED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;vim  &amp;&amp; ssh&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;socket&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;TCP/IP&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;DB&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;mysql&amp;some oracle&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OJ(Judge Online) &amp;&amp; vsftpd&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;architecture&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;lamp &amp;&amp; lnmp&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">interested_in_me</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">want_to_Computer_repair</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world,this is my Resume</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">myself</span> <span class="n">mdk</span> <span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;蒙代坤&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">email1</span> <span class="o">=</span> <span class="s">&quot;mengdaikun@gmail.com</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">email2</span> <span class="o">=</span> <span class="s">&quot;646978600@qq.com</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">phone</span> <span class="o">=</span> <span class="s">&quot;18767161672</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>
+</span><span class='line'>  <span class="n">string</span> <span class="n">first_choice</span> <span class="o">=</span> <span class="s">&quot;Systems Engineer&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">second_choice</span> <span class="o">=</span> <span class="s">&quot;linux SA&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">third_choice</span> <span class="o">=</span> <span class="s">&quot;software Engineer&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">interested_in_me</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my phone number: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">phone</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my email1: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">email1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my email2: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">email2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">want_to_Computer_repair</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;oh,sorry</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Thank you!!nice to meet you </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[shell nginx日志处理1]]></title>
@@ -3755,488 +3976,6 @@ Boot Loader</p>
 <p>在核心完整的加载后，您的主机应该就开始正确的运行了</p>
 
 <p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[linux系统调用列表]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/linuxxi-tong-diao-yong-lie-biao/"/>
-    <updated>2013-05-19T11:08:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/linuxxi-tong-diao-yong-lie-biao</id>
-    <content type="html"><![CDATA[<p>以下是Linux系统调用的一个列表，包含了大部分常用系统调用和由系统调用派生出的的函数。这可能是你在互联网上所能看到的唯一一篇中文注释的Linux系统调用列表，即使是简单的字母序英文列表，能做到这么完全也是很罕见的。</p>
-
-<p>按照惯例，这个列表以man pages第2节，即系统调用节为蓝本。按照笔者的理解，对其作了大致的分类，同时也作了一些小小的修改，删去了几个仅供内核使用，不允许用户调用的系统调用，对个别本人稍觉不妥的地方作了一些小的修改，并对所有列出的系统调用附上简要注释。</p>
-
-<p>其中有一些函数的作用完全相同，只是参数不同。（可能很多熟悉C++朋友马上就能联想起函数重载，但是别忘了Linux核心是用C语言写的，所以只 能取成不同的函数名）。还有一些函数已经过时，被新的更好的函数所代替了（gcc在链接这些函数时会发出警告），但因为兼容的原因还保留着，这些函数我会 在前面标上星号以示区别。</p>
-
-<p>一、进程控制：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>fork     创建一个新进程
-</span><span class='line'>clone     按指定条件创建子进程
-</span><span class='line'>execve    运行可执行文件
-</span><span class='line'>exit  中止进程
-</span><span class='line'>_exit     立即中止当前进程
-</span><span class='line'>getdtablesize     进程所能打开的最大文件数
-</span><span class='line'>getpgid   获取指定进程组标识号
-</span><span class='line'>setpgid   设置指定进程组标志号
-</span><span class='line'>getpgrp   获取当前进程组标识号
-</span><span class='line'>setpgrp   设置当前进程组标志号
-</span><span class='line'>getpid    获取进程标识号
-</span><span class='line'>getppid   获取父进程标识号
-</span><span class='line'>getpriority   获取调度优先级
-</span><span class='line'>setpriority   设置调度优先级
-</span><span class='line'>modify_ldt    读写进程的本地描述表
-</span><span class='line'>nanosleep     使进程睡眠指定的时间
-</span><span class='line'>nice  改变分时进程的优先级
-</span><span class='line'>pause     挂起进程，等待信号
-</span><span class='line'>personality   设置进程运行域
-</span><span class='line'>prctl     对进程进行特定操作
-</span><span class='line'>ptrace    进程跟踪
-</span><span class='line'>sched_get_priority_max    取得静态优先级的上限
-</span><span class='line'>sched_get_priority_min    取得静态优先级的下限
-</span><span class='line'>sched_getparam    取得进程的调度参数
-</span><span class='line'>sched_getscheduler    取得指定进程的调度策略
-</span><span class='line'>sched_rr_get_interval     取得按RR算法调度的实时进程的时间片长度
-</span><span class='line'>sched_setparam    设置进程的调度参数
-</span><span class='line'>sched_setscheduler    设置指定进程的调度策略和参数
-</span><span class='line'>sched_yield   进程主动让出处理器,并将自己等候调度队列队尾
-</span><span class='line'>vfork     创建一个子进程，以供执行新程序，常与execve等同时使用
-</span><span class='line'>wait  等待子进程终止
-</span><span class='line'>wait3     参见wait
-</span><span class='line'>waitpid   等待指定子进程终止
-</span><span class='line'>wait4     参见waitpid
-</span><span class='line'>capget    获取进程权限
-</span><span class='line'>capset    设置进程权限
-</span><span class='line'>getsid    获取会晤标识号
-</span><span class='line'>setsid    设置会晤标识号</span></code></pre></td></tr></table></div></figure>
-
-
-<p>二、文件系统控制</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>1、文件读写操作
-</span><span class='line'>fcntl     文件控制
-</span><span class='line'>open  打开文件
-</span><span class='line'>creat     创建新文件
-</span><span class='line'>close     关闭文件描述字
-</span><span class='line'>read  读文件
-</span><span class='line'>write     写文件
-</span><span class='line'>readv     从文件读入数据到缓冲数组中
-</span><span class='line'>writev    将缓冲数组里的数据写入文件
-</span><span class='line'>pread     对文件随机读
-</span><span class='line'>pwrite    对文件随机写
-</span><span class='line'>lseek     移动文件指针
-</span><span class='line'>_llseek   在64位地址空间里移动文件指针
-</span><span class='line'>dup   复制已打开的文件描述字
-</span><span class='line'>dup2  按指定条件复制文件描述字
-</span><span class='line'>flock     文件加/解锁
-</span><span class='line'>poll  I/O多路转换
-</span><span class='line'>truncate  截断文件
-</span><span class='line'>ftruncate     参见truncate
-</span><span class='line'>umask     设置文件权限掩码
-</span><span class='line'>fsync     把文件在内存中的部分写回磁盘</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2、文件系统操作</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>access   确定文件的可存取性
-</span><span class='line'>chdir     改变当前工作目录
-</span><span class='line'>fchdir    参见chdir
-</span><span class='line'>chmod     改变文件方式
-</span><span class='line'>fchmod    参见chmod
-</span><span class='line'>chown     改变文件的属主或用户组
-</span><span class='line'>fchown    参见chown
-</span><span class='line'>lchown    参见chown
-</span><span class='line'>chroot    改变根目录
-</span><span class='line'>stat  取文件状态信息
-</span><span class='line'>lstat     参见stat
-</span><span class='line'>fstat     参见stat
-</span><span class='line'>statfs    取文件系统信息
-</span><span class='line'>fstatfs   参见statfs
-</span><span class='line'>readdir   读取目录项
-</span><span class='line'>getdents  读取目录项
-</span><span class='line'>mkdir     创建目录
-</span><span class='line'>mknod     创建索引节点
-</span><span class='line'>rmdir     删除目录
-</span><span class='line'>rename    文件改名
-</span><span class='line'>link  创建链接
-</span><span class='line'>symlink   创建符号链接
-</span><span class='line'>unlink    删除链接
-</span><span class='line'>readlink  读符号链接的值
-</span><span class='line'>mount     安装文件系统
-</span><span class='line'>umount    卸下文件系统
-</span><span class='line'>ustat     取文件系统信息
-</span><span class='line'>utime     改变文件的访问修改时间
-</span><span class='line'>utimes    参见utime
-</span><span class='line'>quotactl  控制磁盘配额</span></code></pre></td></tr></table></div></figure>
-
-
-<p>三、系统控制</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ioctl    I/O总控制函数
-</span><span class='line'>_sysctl   读/写系统参数
-</span><span class='line'>acct  启用或禁止进程记账
-</span><span class='line'>getrlimit     获取系统资源上限
-</span><span class='line'>setrlimit     设置系统资源上限
-</span><span class='line'>getrusage     获取系统资源使用情况
-</span><span class='line'>uselib    选择要使用的二进制函数库
-</span><span class='line'>ioperm    设置端口I/O权限
-</span><span class='line'>iopl  改变进程I/O权限级别
-</span><span class='line'>outb  低级端口操作
-</span><span class='line'>reboot    重新启动
-</span><span class='line'>swapon    打开交换文件和设备
-</span><span class='line'>swapoff   关闭交换文件和设备
-</span><span class='line'>bdflush   控制bdflush守护进程
-</span><span class='line'>sysfs     取核心支持的文件系统类型
-</span><span class='line'>sysinfo   取得系统信息
-</span><span class='line'>adjtimex  调整系统时钟
-</span><span class='line'>alarm     设置进程的闹钟
-</span><span class='line'>getitimer     获取计时器值
-</span><span class='line'>setitimer     设置计时器值
-</span><span class='line'>gettimeofday  取时间和时区
-</span><span class='line'>settimeofday  设置时间和时区
-</span><span class='line'>stime     设置系统日期和时间
-</span><span class='line'>time  取得系统时间
-</span><span class='line'>times     取进程运行时间
-</span><span class='line'>uname     获取当前UNIX系统的名称、版本和主机等信息
-</span><span class='line'>vhangup   挂起当前终端
-</span><span class='line'>nfsservctl    对NFS守护进程进行控制
-</span><span class='line'>vm86  进入模拟8086模式
-</span><span class='line'>create_module     创建可装载的模块项
-</span><span class='line'>delete_module     删除可装载的模块项
-</span><span class='line'>init_module   初始化模块
-</span><span class='line'>query_module  查询模块信息
-</span><span class='line'>get_kernel_syms   取得核心符号,已被query_module代替</span></code></pre></td></tr></table></div></figure>
-
-
-<p>四、内存管理</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brk  改变数据段空间的分配
-</span><span class='line'>sbrk  参见brk
-</span><span class='line'>mlock     内存页面加锁
-</span><span class='line'>munlock   内存页面解锁
-</span><span class='line'>mlockall  调用进程所有内存页面加锁
-</span><span class='line'>munlockall    调用进程所有内存页面解锁
-</span><span class='line'>mmap  映射虚拟内存页
-</span><span class='line'>munmap    去除内存页映射
-</span><span class='line'>mremap    重新映射虚拟内存地址
-</span><span class='line'>msync     将映射内存中的数据写回磁盘
-</span><span class='line'>mprotect  设置内存映像保护
-</span><span class='line'>getpagesize   获取页面大小
-</span><span class='line'>sync  将内存缓冲区数据写回硬盘
-</span><span class='line'>cacheflush    将指定缓冲区中的内容写回磁盘</span></code></pre></td></tr></table></div></figure>
-
-
-<p>五、网络管理</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>getdomainname    取域名
-</span><span class='line'>setdomainname     设置域名
-</span><span class='line'>gethostid     获取主机标识号
-</span><span class='line'>sethostid     设置主机标识号
-</span><span class='line'>gethostname   获取本主机名称
-</span><span class='line'>sethostname   设置主机名称</span></code></pre></td></tr></table></div></figure>
-
-
-<p>六、socket控制</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>socketcall   socket系统调用
-</span><span class='line'>socket    建立socket
-</span><span class='line'>bind  绑定socket到端口
-</span><span class='line'>connect   连接远程主机
-</span><span class='line'>accept    响应socket连接请求
-</span><span class='line'>send  通过socket发送信息
-</span><span class='line'>sendto    发送UDP信息
-</span><span class='line'>sendmsg   参见send
-</span><span class='line'>recv  通过socket接收信息
-</span><span class='line'>recvfrom  接收UDP信息
-</span><span class='line'>recvmsg   参见recv
-</span><span class='line'>listen    监听socket端口
-</span><span class='line'>select    对多路同步I/O进行轮询
-</span><span class='line'>shutdown  关闭socket上的连接
-</span><span class='line'>getsockname   取得本地socket名字
-</span><span class='line'>getpeername   获取通信对方的socket名字
-</span><span class='line'>getsockopt    取端口设置
-</span><span class='line'>setsockopt    设置端口参数
-</span><span class='line'>sendfile  在文件或端口间传输数据
-</span><span class='line'>socketpair    创建一对已联接的无名socket</span></code></pre></td></tr></table></div></figure>
-
-
-<p>七、用户管理</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>getuid   获取用户标识号
-</span><span class='line'>setuid    设置用户标志号
-</span><span class='line'>getgid    获取组标识号
-</span><span class='line'>setgid    设置组标志号
-</span><span class='line'>getegid   获取有效组标识号
-</span><span class='line'>setegid   设置有效组标识号
-</span><span class='line'>geteuid   获取有效用户标识号
-</span><span class='line'>seteuid   设置有效用户标识号
-</span><span class='line'>setregid  分别设置真实和有效的的组标识号
-</span><span class='line'>setreuid  分别设置真实和有效的用户标识号
-</span><span class='line'>getresgid     分别获取真实的,有效的和保存过的组标识号
-</span><span class='line'>setresgid     分别设置真实的,有效的和保存过的组标识号
-</span><span class='line'>getresuid     分别获取真实的,有效的和保存过的用户标识号
-</span><span class='line'>setresuid     分别设置真实的,有效的和保存过的用户标识号
-</span><span class='line'>setfsgid  设置文件系统检查时使用的组标识号
-</span><span class='line'>setfsuid  设置文件系统检查时使用的用户标识号
-</span><span class='line'>getgroups     获取后补组标志清单
-</span><span class='line'>setgroups     设置后补组标志清单</span></code></pre></td></tr></table></div></figure>
-
-
-<p>八、进程间通信</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ipc  进程间通信总控制调用</span></code></pre></td></tr></table></div></figure>
-
-
-<p>1、信号</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sigaction    设置对指定信号的处理方法
-</span><span class='line'>sigprocmask   根据参数对信号集中的信号执行阻塞/解除阻塞等操作
-</span><span class='line'>sigpending    为指定的被阻塞信号设置队列
-</span><span class='line'>sigsuspend    挂起进程等待特定信号
-</span><span class='line'>signal    参见signal
-</span><span class='line'>kill  向进程或进程组发信号
-</span><span class='line'>*sigblock     向被阻塞信号掩码中添加信号,已被sigprocmask代替
-</span><span class='line'>*siggetmask   取得现有阻塞信号掩码,已被sigprocmask代替
-</span><span class='line'>*sigsetmask   用给定信号掩码替换现有阻塞信号掩码,已被sigprocmask代替
-</span><span class='line'>*sigmask  将给定的信号转化为掩码,已被sigprocmask代替
-</span><span class='line'>*sigpause     作用同sigsuspend,已被sigsuspend代替
-</span><span class='line'>sigvec    为兼容BSD而设的信号处理函数,作用类似sigaction
-</span><span class='line'>ssetmask  ANSI C的信号处理函数,作用类似sigaction</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2、消息</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>msgctl   消息控制操作
-</span><span class='line'>msgget    获取消息队列
-</span><span class='line'>msgsnd    发消息
-</span><span class='line'>msgrcv    取消息</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3、管道</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pipe     创建管道</span></code></pre></td></tr></table></div></figure>
-
-
-<p>4、信号量</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>semctl   信号量控制
-</span><span class='line'>semget    获取一组信号量
-</span><span class='line'>semop     信号量操作</span></code></pre></td></tr></table></div></figure>
-
-
-<p>5、共享内存</p>
-
-<p><code>
-shmctl  控制共享内存
-shmget  获取共享内存
-shmat   连接共享内存
-shmdt   拆卸共享内存
-</code></p>
-
-<p>转自:<a href="http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html">http://www.ibm.com/developerworks/cn/linux/kernel/syscall/part1/appendix.html</a></p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 笔试与面试 | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/bi-shi-yu-mian-shi/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-06-08T18:51:59+08:00</updated>
+  <updated>2013-06-08T19:57:55+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,226 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[个人简历]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li/"/>
+    <updated>2013-06-08T19:55:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li</id>
+    <content type="html"><![CDATA[<p>板砖请轻拍</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (个人简历.cpp)</span> <a href='/downloads/code/个人简历.cpp'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *       Filename:  个人简历.cpp</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *    Description:  个人简历</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *        Version:  1.0</span>
+</span><span class='line'><span class="cm"> *        Created:  2013-6-08 18:54:05</span>
+</span><span class='line'><span class="cm"> *       Revision:  none </span>
+</span><span class='line'><span class="cm"> *            BUG:  no init for class myself(because .....)</span>
+</span><span class='line'><span class="cm"> *       Compiler:  gcc</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *         Author:  ACman mdk (Orz Linux Sir Koma linyu zhujiajun), mdk@server.example.com</span>
+</span><span class='line'><span class="cm"> *        Company:  ACM 309 JudgeOnline</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="cp">#include&lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">myself</span><span class="p">{</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="k">public</span><span class="o">:</span>
+</span><span class='line'>	<span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">string</span> <span class="n">email1</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">string</span> <span class="n">email2</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">string</span> <span class="n">phone</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">skills</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">other_table</span><span class="p">;</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="k">public</span><span class="o">:</span>
+</span><span class='line'>	<span class="kt">void</span> <span class="n">education</span><span class="p">()</span>
+</span><span class='line'>	<span class="p">{</span>
+</span><span class='line'>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s在校本科生</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;中国计量学院&quot;</span><span class="p">);</span>
+</span><span class='line'>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;毕业时间%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;2014-6&quot;</span><span class="p">);</span>
+</span><span class='line'>	<span class="p">}</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="kt">void</span> <span class="n">skills_now</span><span class="p">(){</span>
+</span><span class='line'>		<span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;unix/linux&quot;</span><span class="p">);</span>
+</span><span class='line'>		<span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;shell&quot;</span><span class="p">);</span>
+</span><span class='line'>		<span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;c/c++&quot;</span><span class="p">);</span>
+</span><span class='line'>		<span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;python&quot;</span><span class="p">);</span>
+</span><span class='line'>	<span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="kt">void</span> <span class="n">other_info</span><span class="p">(){</span>
+</span><span class='line'>		<span class="n">other_table</span><span class="p">[</span><span class="s">&quot;IED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;vim  &amp;&amp; ssh&quot;</span><span class="p">;</span>
+</span><span class='line'>		<span class="n">other_table</span><span class="p">[</span><span class="s">&quot;socket&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;TCP/IP&quot;</span><span class="p">;</span>
+</span><span class='line'>		<span class="n">other_table</span><span class="p">[</span><span class="s">&quot;DB&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;mysql&amp;some oracle&quot;</span><span class="p">;</span>
+</span><span class='line'>		<span class="n">other_table</span><span class="p">[</span><span class="s">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OJ(Judge Online) &amp;&amp; vsftpd&quot;</span><span class="p">;</span>
+</span><span class='line'>		<span class="n">other_table</span><span class="p">[</span><span class="s">&quot;architecture&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;lamp &amp;&amp; lnmp&quot;</span><span class="p">;</span>
+</span><span class='line'>	<span class="p">}</span>
+</span><span class='line'>	
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">interested_in_me</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>	<span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">want_to_Computer_repair</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>	<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>	<span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world,this is my Resume</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>	
+</span><span class='line'>	<span class="n">myself</span> <span class="n">mdk</span> <span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="n">mdk</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;蒙代坤&quot;</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">mdk</span><span class="p">.</span><span class="n">email1</span> <span class="o">=</span> <span class="s">&quot;mengdaikun@gmail.com</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">mdk</span><span class="p">.</span><span class="n">email2</span> <span class="o">=</span> <span class="s">&quot;646978600@qq.com</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">mdk</span><span class="p">.</span><span class="n">phone</span> <span class="o">=</span> <span class="s">&quot;18767161672</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>	
+</span><span class='line'>
+</span><span class='line'>	<span class="n">string</span> <span class="n">first_choice</span> <span class="o">=</span> <span class="s">&quot;Systems Engineer&quot;</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">string</span> <span class="n">second_choice</span> <span class="o">=</span> <span class="s">&quot;linux SA&quot;</span><span class="p">;</span>
+</span><span class='line'>	<span class="n">string</span> <span class="n">third_choice</span> <span class="o">=</span> <span class="s">&quot;software Engineer&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="k">if</span><span class="p">(</span><span class="n">interested_in_me</span><span class="p">)</span>
+</span><span class='line'>	<span class="p">{</span>
+</span><span class='line'>		<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my phone number: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">phone</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>		<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my email1: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">email1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>		<span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my email2: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">email2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>	<span class="p">}</span>
+</span><span class='line'>	<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">want_to_Computer_repair</span><span class="p">)</span>
+</span><span class='line'>	<span class="p">{</span>
+</span><span class='line'>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;oh,sorry</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>	<span class="p">}</span>
+</span><span class='line'>	<span class="k">else</span>
+</span><span class='line'>	<span class="p">{</span>
+</span><span class='line'>		<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Thank you!!nice to meet you </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>	<span class="p">}</span>
+</span><span class='line'>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[周一的面试]]></title>

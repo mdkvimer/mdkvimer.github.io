@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>个人简历 - 起步于308的小菜菜</title>
+  <meta name="author" content="mdkvimer">
+
+  
+  <meta name="description" content="板砖请轻拍 (个人简历.cpp) download 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="起步于308的小菜菜" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41071607-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">起步于308的小菜菜</a></h1>
+  
+    <h2>no money no dream coder 一枚</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mdkvimer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">mdk&home</a></li>
+  <li><a href="/blog/archives">二逼码农mdk</a></li>
+  <li><a href="/about">关于</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">个人简历</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-08T19:55:00+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>板砖请轻拍</p>
+
+<figure class='code'><figcaption><span> (个人简历.cpp)</span> <a href='/downloads/code/个人简历.cpp'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *       Filename:  个人简历.cpp</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *    Description:  个人简历</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *        Version:  1.0</span>
+</span><span class='line'><span class="cm"> *        Created:  2013-6-08 18:54:05</span>
+</span><span class='line'><span class="cm"> *       Revision:  none </span>
+</span><span class='line'><span class="cm"> *            BUG:  no init for class myself(because .....)</span>
+</span><span class='line'><span class="cm"> *       Compiler:  gcc</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *         Author:  ACman mdk (Orz Linux Sir Koma linyu zhujiajun), mdk@server.example.com</span>
+</span><span class='line'><span class="cm"> *        Company:  ACM 309 JudgeOnline</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * =====================================================================================</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="cp">#include&lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include&lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">myself</span><span class="p">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">email1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">email2</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">phone</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">skills</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">other_table</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="n">education</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s在校本科生</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;中国计量学院&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;毕业时间%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="s">&quot;2014-6&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kt">void</span> <span class="n">skills_now</span><span class="p">(){</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;unix/linux&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;shell&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;c/c++&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">skills</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;python&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">void</span> <span class="n">other_info</span><span class="p">(){</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;IED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;vim  &amp;&amp; ssh&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;socket&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;TCP/IP&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;DB&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;mysql&amp;some oracle&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;project&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OJ(Judge Online) &amp;&amp; vsftpd&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">other_table</span><span class="p">[</span><span class="s">&quot;architecture&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;lamp &amp;&amp; lnmp&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">interested_in_me</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">want_to_Computer_repair</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world,this is my Resume</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">myself</span> <span class="n">mdk</span> <span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;蒙代坤&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">email1</span> <span class="o">=</span> <span class="s">&quot;mengdaikun@gmail.com</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">email2</span> <span class="o">=</span> <span class="s">&quot;646978600@qq.com</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mdk</span><span class="p">.</span><span class="n">phone</span> <span class="o">=</span> <span class="s">&quot;18767161672</span><span class="se">\0</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>
+</span><span class='line'>  <span class="n">string</span> <span class="n">first_choice</span> <span class="o">=</span> <span class="s">&quot;Systems Engineer&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">second_choice</span> <span class="o">=</span> <span class="s">&quot;linux SA&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">third_choice</span> <span class="o">=</span> <span class="s">&quot;software Engineer&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">interested_in_me</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my phone number: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">phone</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my email1: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">email1</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;This is my email2: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">mdk</span><span class="p">.</span><span class="n">email2</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">want_to_Computer_repair</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;oh,sorry</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Thank you!!nice to meet you </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">mdkvimer</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-08T19:55:00+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li/" data-via="" data-counturl="http://mdkvimer.github.io/blog/2013/06/08/ge-ren-jian-li/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/" title="Previous Post: shell nginx日志处理1">&laquo; shell nginx日志处理1</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+   <section>
+   <h1>Comments<h1>
+   <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread"></div>
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"mdkvimer"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+<!-- Duoshuo Comment END -->
+
+</div>
+   </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>长颈鹿</p>
+  <p>开源事业</p>
+  <p>unix/linux</p>
+  <p>服务器</p>
+  <p>脚本生活 c/c++</p>
+  <p>有志于沿街摆摊</p>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (5)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/08/ge-ren-jian-li/">个人简历</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/27/xi-tong-jian-kong-shellhan-shu-ku/">系统监控shell函数库</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/fork/">Fork经典问题</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/awkji-qiao/">Awk技巧</a>
+      </li>
+    
+  </ul>
+</section>
+<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=300&skin=10&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=2702542424&verifier=597ea069&dpc=1"></iframe>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/mdkvimer">@mdkvimer</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'mdkvimer',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <h1>友情链接</h1>
+  <ul>
+	  <li>
+	  <a href="http://coolshell.cn"> 酷壳CoolShell </a> <br>
+	  <a href="http://koma.lchx.me"> 阿贵学长 </a> <br>
+	  <a href="http://blog.lchx.me"> 卢牛 </a> <br>
+	  <a href="http://andrewyu.blog.51cto.com"> 抚琴煮酒 </a> <br>
+	  <a href="http://www.cnblogs.com/crazyac/"> Crazy_AC </a> <br>
+	  <a href="http://www.wutianqi.com"> Tanky Woo </a> <br>
+	  <a href="http://ebook.elain.org"> 资源下载1 </a> <br>
+	  <a href="http://download.photosyu.com"> 资源下载2 </a> <br>
+	  <a href="http://mirrors.163.com"> 163开源镜像 </a>
+	  </li>
+  </ul>
+</section>
+
+  
+</aside>
+
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - mdkvimer -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
