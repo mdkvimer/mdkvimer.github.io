@@ -77,9 +77,9 @@ int main(void)
 	myself mdk ;
 
 	mdk.name = "蒙代坤";
-	mdk.email1 = "mengdaikun@gmail.com\0";
-	mdk.email2 = "646978600@qq.com\0";
-	mdk.phone = "18767161672\0";
+	mdk.email1 = "mengdaikun@gmail.com";
+	mdk.email2 = "646978600@qq.com";
+	mdk.phone = "18767161672";
 	
 
 	string first_choice = "Systems Engineer";
@@ -88,9 +88,9 @@ int main(void)
 
 	if(interested_in_me)
 	{
-		cout<<"This is my phone number: %s\n"<<mdk.phone<<endl;
-		cout<<"This is my email1: %s\n"<<mdk.email1<<endl;
-		cout<<"This is my email2: %s\n"<<mdk.email2<<endl;
+		cout<<"This is my phone number: %s"<<mdk.phone<<endl;
+		cout<<"This is my email1: %s"<<mdk.email1<<endl;
+		cout<<"This is my email2: %s"<<mdk.email2<<endl;
 	}
 	else if(want_to_Computer_repair)
 	{
