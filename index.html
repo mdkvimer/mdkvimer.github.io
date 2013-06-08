@@ -9,8 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="系统监控函数库～调用相应的函数即../function.inc
-完善相应的shell代码即可 (function.sh) download 1
+  <meta name="description" content="利用shell 脚本分析 Nginx负载均衡器 (deal_nginx_log1.sh) download 1
 2
 3
 4
@@ -38,7 +37,13 @@
 26
 27
 28
-29 &hellip;">
+29
+30
+31
+32
+33
+34
+35 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,6 +112,329 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-08T18:46:00+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>利用shell 脚本分析 Nginx负载均衡器</p>
+
+<figure class='code'><figcaption><span> (deal_nginx_log1.sh)</span> <a href='/downloads/code/deal_nginx_log1.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: deal_nginx_log1.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./deal_nginx_log1.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: shell 分析处理 nginx 日志 构建高可用linux服务器 nginx 作为最前端的负载均衡器 </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 06/04/13 12:24:07 CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Error:please specify logfile.&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="k">  </span><span class="nv">LOG</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$1</span> <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Sorry,sir,I can&#39;t find yhis apache log file,please try again!&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $1}&#39;</span> <span class="nv">$LOG</span> | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> <span class="nv">$LOG</span> | cut -c 14-18 | sort | uniq -c | sort -rn | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the page&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $11}&#39;</span> <span class="nv">$LOG</span> | sed <span class="s1">&#39;s/^.*\\(.cn*\\)\&quot;/\\1/g&#39;</span> | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo </span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time / Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> <span class="nv">$LOG</span> | cut -c 14-18 | sort -n | uniq -c | sort -rn | head -10 &gt; timelog
+</span><span class='line'>
+</span><span class='line'><span class="k">for </span>i in <span class="sb">`</span>awk <span class="s1">&#39;{print $2}&#39;</span> timelog<span class="sb">`</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span><span class="nv">num</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> timelog | awk <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$i $num&quot;</span>
+</span><span class='line'>  <span class="nv">ip</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> <span class="nv">$LOG</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | sort -n | uniq -c | sort -rn | head -10<span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$ip&quot;</span>
+</span><span class='line'>  <span class="nb">echo</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'>rm -rf timelog
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nginx 作为WebServer</p>
+
+<figure class='code'><figcaption><span> (deal_nginx_log2.sh)</span> <a href='/downloads/code/deal_nginx_log2.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash  </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: deal_nginx_log1.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./deal_nginx_log1.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: shell 分析处理 nginx 日志 构建高可用linux服务器 nginx 作为Web端 ，这时要踢出LVS的ip地址 </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 06/04/13 12:24:07 CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Error:please specify logfile.&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="k">  </span>cat <span class="nv">$1</span> | grep -v <span class="s2">&quot;$LVS_ip&quot;</span> &gt; LOG
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$1</span> <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Sorry,sir,I can&#39;t find yhis apache log file,please try again!&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $1}&#39;</span> LOG | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> LOG | cut -c 14-18 | sort | uniq -c | sort -rn | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the page&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $11}&#39;</span> LOG | sed <span class="s1">&#39;s/^.*\\(.cn*\\)\&quot;/\\1/g&#39;</span> | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo </span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time / Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> LOG | cut -c 14-18 | sort -n | uniq -c | sort -rn | head -10 &gt; timelog
+</span><span class='line'>
+</span><span class='line'><span class="k">for </span>i in <span class="sb">`</span>awk <span class="s1">&#39;{print $2}&#39;</span> timelog<span class="sb">`</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span><span class="nv">num</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> timelog | awk <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$i $num&quot;</span>
+</span><span class='line'>  <span class="nv">ip</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> LOG | awk <span class="s1">&#39;{print $1}&#39;</span> | sort -n | uniq -c | sort -rn | head -10<span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$ip&quot;</span>
+</span><span class='line'>  <span class="nb">echo</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'>rm -rf timelog
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2332,180 +2660,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/20/pythontian-qi-yu-bao/">Python天气预报</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-20T16:16:00+08:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>利用python提取网页版的天气预报放入一个文件，并用shell提取今明两天的做fetion发送的内容,把脚本放入crontab shell脚本在这里略
-code</p>
-
-<figure class='code'><figcaption><span> (tianqi.py)</span> <a href='/downloads/code/tianqi.py'>download</a></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
-</span><span class='line'><span class="c">#coding:utf-8</span>
-</span><span class='line'><span class="sd">&#39;&#39;&#39;/*=============================================================================</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Author: mengdaiku - mengdaikun@gmail.com</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># QQ : 646978600</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Last modified: 2013-05-20 16:11</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Filename: tianqi.py</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Description: 网络抓取网页天气预报并利用split整合发短信通知(发信脚本略) </span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd">=============================================================================*/&#39;&#39;&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">datetime</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">HTMLParser</span> <span class="kn">import</span> <span class="n">HTMLParser</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">main</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">HTMLParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">tarsum</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;td&#39;</span><span class="p">,</span><span class="s">&#39;th&#39;</span><span class="p">,</span><span class="s">&#39;br&#39;</span><span class="p">]</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">,</span><span class="n">attrs</span><span class="p">):</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="o">=</span> <span class="n">tag</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;table&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span> <span class="o">=</span> <span class="n">tag</span>
-</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span class='line'>            <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span><span class="p">:</span>
-</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
-</span><span class='line'>            <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s">&#39;td&#39;</span><span class="p">:</span>
-</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">curtag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tarsum</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">curattrs</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span class='line'>            <span class="n">days</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeclock</span><span class="p">)</span>
-</span><span class='line'>           <span class="c"># self.result[days].append(data.strip())</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">days</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">handle_endtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tag</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marktag</span><span class="p">:</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">readingtitle</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">getvalue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://qq.ip138.com/weather/zhejiang/HangZhou.htm&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">page</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">page</span><span class="p">,</span><span class="s">&#39;gb2312&#39;</span><span class="p">,</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">line</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">line</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">getvalue</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">key</span><span class="p">,</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
-</span><span class='line'>            <span class="k">print</span> <span class="n">a</span><span class="p">,</span>
-</span><span class='line'>        <span class="k">print</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -2527,11 +2681,15 @@ code</p>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (9)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (4)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (6)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/05/27/xi-tong-jian-kong-shellhan-shu-ku/">系统监控shell函数库</a>
@@ -2547,10 +2705,6 @@ code</p>
     
       <li class="post">
         <a href="/blog/2013/05/24/sed/">Sed技巧小结</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/23/2013zhong-chang-xiu-xi/">2013中场休息</a>
       </li>
     
   </ul>
