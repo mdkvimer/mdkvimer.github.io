@@ -52,7 +52,7 @@ class myself{
 	}
 
 	void other_info(){
-		other_table["IED"] = "vim  && ssh";
+		other_table["IDE"] = "vim  && ssh";
 		other_table["socket"] = "TCP/IP";
 		other_table["DB"] = "mysql&some oracle";
 		other_table["project"] = "OJ(Judge Online) && vsftpd";
