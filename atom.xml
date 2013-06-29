@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2013-06-09T13:19:10+08:00</updated>
+  <updated>2013-06-29T15:30:48+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[从未提及的秘密]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/06/29/cong-wei-ti-ji-de-mi-mi/"/>
+    <updated>2013-06-29T14:13:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/06/29/cong-wei-ti-ji-de-mi-mi</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>当我在vim中敲下这一段文字的时候~说明我已经放下了~6月26日上午11点50来分吧，坐上了去往萧山南站的328公交.两年了
+</span><span class='line'>杭州的确发生了很多变化~328快开的时候~有一男生走下车向站台上的一位女生索要电话号码~女生或许被突如其来的举动惊呆了
+</span><span class='line'>先扭过头去~然后捂着嘴巴估计笑（偷着乐吧)..男生依旧向女生举着手机~这时328关上了门~徐徐着要开了~男生发现猛的收回手
+</span><span class='line'>机~拍着车门要司机开门~车上的人看着这一幕都笑了~那个女生这回是真笑了~看着这一幕在自己眼皮底下发生了~我觉得有点好笑
+</span><span class='line'>~佩服那位男生的勇气~自己也忘了当初是怎么要到你的联系方式的~这或许就是讽刺吧~
+</span><span class='line'>一路的风景无暇顾及~你发短信问我：下大雨了,你还来吗?我说会来的~已经在车上了~马上就到南站~到南站的时候~雨似乎
+</span><span class='line'>下得更大了~自己一路上想着这两年多来的时间~去年自己忽悠你我能你给装个MAC玩玩~结果把联想机上的windows删了~给你装上了
+</span><span class='line'>Macubutun~你看到的时候很欢乐~~后来你发现上不了闪讯~闹着要回windows~我无奈给你装了个virbox里面装个win与Macubutun来
+</span><span class='line'>NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后来每每提起这件事都会被你臭骂一顿的~记得你无数次的向我表明
+</span><span class='line'>你的PS有多高超~每次我都得点头认可~时间就这样的过来了
+</span><span class='line'>来到南站雨依旧没有减小的趋势~雨中的南站~出站口的人熙熙攘攘~进站口的人徐徐拖着行李箱~我看到了站在风雨中撑着小伞
+</span><span class='line'>的你~159.5的身高~硬要穿着高跟~消瘦得风能把你吹走~下午两点多的时候我送你进候车大厅~进去前我问你东西都带全了吗？你说
+</span><span class='line'>我有点啰嗦~我愣愣一笑~你拖着行李箱进去了~快进门的时候你回头看看了在雨中的我~然后扭过头去进了候车大厅排队上车..剩下
+</span><span class='line'>在雨中不知所措的我~
+</span><span class='line'>两年多的时间~我们彼此都给了彼此很大的空间~你很少挖我的隐私~你给我更多的似乎是包容~现在想想自己多少有点自私了~
+</span><span class='line'>自己大部分时间宅实验室而且嘴笨不会怎么哄人开心~三点多的时候你发来短信说短信车快开了~我：嗯嗯的回复~火车咣咣的开了
+</span><span class='line'>前往你offer的所在地也是你的老家--无锡~留我一个人在雨中萧条的站着~杭州南站七月要封了~~我们的站点不同了~很讽刺的意义~
+</span><span class='line'>人生是单向道~两个人的人生轨道有同向的时候~但也有岔开的时候~同向时的美好时光就是最好的收获~人生旅途依旧~只是站点
+</span><span class='line'>不同了~回忆是我们在一起过~~</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[个人简历]]></title>
@@ -3794,188 +3841,6 @@ code</p>
 </span><span class='line'>但我始终不敢按回车，好奇又害怕答案，
 </span><span class='line'>当删去时内心又觉得空虚…恨自己…怪自己…唉…望着屏幕～好空白…</span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[linux内核启动流程]]></title>
-    <link href="http://mdkvimer.github.io/blog/2013/05/19/linuxnei-he-qi-dong-liu-cheng/"/>
-    <updated>2013-05-19T11:09:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2013/05/19/linuxnei-he-qi-dong-liu-cheng</id>
-    <content type="html"><![CDATA[<p>启动流程一览</p>
-
-<p>既然启动是很严肃的一件事，那我们就来了解一下整个启动的过程吧！ 好让大家比较容易发现启动过程里面可能会发生问题的地方，以及出现问题后的解决之道！ 不过，由於启动的过程中，那个启动管理程序 (Boot Loader) 使用的软件可能不一样，例如目前各大 Linux distributions 的主流为 grub，但早期 Linux 默认是使用 LILO 。 但无论如何，我们总是得要了解整个 boot loader 的工作情况，才能了解为何进行多重启动的配置时， 老是听人家讲要先安装 Windows 再安装 Linux 的原因～</p>
-
-<p>假设以个人计算机架设的 Linux 主机为例 ， 当你按下电源按键后计算机硬件会主动的读取 BIOS 来加载硬件资讯及进行硬件系统的自我测试， 之后系统会主动的去读取第一个可启动的装置 (由 BIOS 配置的) ，此时就可以读入启动管理程序了。</p>
-
-<p>启动管理程序可以指定使用哪个核心文件来启动，并实际加载核心到内存当中解压缩与运行， 此时核心就能够开始在内存内活动，并侦测所有硬件资讯与加载适当的驱动程序来使整部主机开始运行， 等到核心侦测硬件与加载驱动程序完毕后，一个最阳春的操作系统就开始在你的 PC 上面跑了。</p>
-
-<p>主机系统开始运行后，此时 Linux 才会呼叫外部程序开始准备软件运行的环境， 并且实际的加载所有系统运行所需要的软件程序哩！最后系统就会开始等待你的登陆与操作啦！ 简单来说，系统启动的经过可以汇整成底下的流程的：</p>
-
-<pre><code>加载 BIOS 的硬件资讯与进行自我测试，并依据配置取得第一个可启动的装置；
-读取并运行第一个启动装置内 MBR 的 boot Loader (亦即是 grub, spfdisk 等程序)；
-依据 boot loader 的配置加载 Kernel ，Kernel 会开始侦测硬件与加载驱动程序；
-</code></pre>
-
-<p>BIOS, 启动自我测试与 MBR</p>
-
-<p>在个人计算机架构下，你想要启动整部系统首先就得要让系统去加载 BIOS (Basic Input Output System)，并透过 BIOS 程序去加载 CMOS 的资讯，并且藉由 CMOS 内的配置值取得主机的各项硬件配置， 例如 CPU 与周边设备的沟通时脉啊、启动装置的搜寻顺序啊、硬盘的大小与类型啊、 系统时间啊、各周边汇流排的是否启动 Plug and Play (PnP, 随插即用装置) 啊、 各周边设备的 I/O 位址啊、以及与 CPU 沟通的 IRQ 岔断等等的资讯。</p>
-
-<p>在取得这些资讯后，BIOS 还会进行启动自我测试 (Power-on Self Test, POST) 。 然后开始运行硬件侦测的初始化，并配置 PnP 装置，之后再定义出可启动的装置顺序， 接下来就会开始进行启动装置的数据读取了 (MBR 相关的任务开始)。</p>
-
-<p>由於我们的系统软件大多放置到硬盘中嘛！所以 BIOS 会指定启动的装置好让我们可以读取磁碟中的操作系统核心文件。 但由於不同的操作系统他的文件系统格式不相同，因此我们必须要以一个启动管理程序来处理核心文件加载 (load) 的问题， 因此这个启动管理程序就被称为 Boot Loader 了。那这个 Boot Loader 程序安装在哪里呢？就在启动装置的第一个磁区 (sector) 内，也就是我们一直谈到的 MBR (Master Boot Record, 主要启动记录区)。</p>
-
-<p>那你会不会觉得很奇怪啊？既然核心文件需要 loader 来读取，那每个操作系统的 loader 都不相同， 这样的话 BIOS 又是如何读取 MBR 内的 loader 呢？很有趣的问题吧！其实 BIOS 是透过硬件的 INT 13 中断功能来读取 MBR 的，也就是说，只要 BIOS 能够侦测的到你的磁碟 (不论该磁碟是 SATA 还是 IDE 介面)，那他就有办法透过 INT 13 这条通道来读取该磁碟的第一个磁区内的 MBR 啦！这样 boot loader 也就能够被运行罗！</p>
-
-<p>我们知道每颗硬盘的第一个磁区内含有 446 bytes的 MBR 区域，那么如果我的主机上面有两颗硬盘的话， 系统会去哪颗硬盘的 MBR 读取 boot loader 呢？这个就得要看 BIOS 的配置了。 基本上，我们常常讲的『系统的 MBR』其实指的是 第一个启动装置的 MBR 才对！ 所以，改天如果你要将启动管理程序安装到某颗硬盘的 MBR 时， 要特别注意当时系统的『第一个启动装置』是哪个，否则会安装到错误的硬盘上面的 MBR 喔！
-Boot Loader</p>
-
-<p>刚刚说到 Loader 的最主要功能是要认识操作系统的文件格式并据以加载核心到主内存中去运行。 由於不同操作系统的文件格式不一致，因此每种操作系统都有自己的 boot loader 啦！用自己的 loader 才有办法加载核心文件嘛！那问题就来啦，你应该有听说过多重操作系统吧？也就是在一部主机上面安装多种不同的操作系统。 既然你 (1)必须要使用自己的 loader 才能够加载属於自己的操作系统核心，而 (2)系统的 MBR 只有一个，那你怎么会有办法同时在一部主机上面安装 Windows 与 Linux 呢？</p>
-
-<p>其实每个文件系统 (filesystem, 或者是 partition) 都会保留一块启动磁区 (boot sector) 提供操作系统安装 boot loader ， 而通常操作系统默认都会安装一份 loader 到他根目录所在的文件系统的 boot sector 上。如果我们在一部主机上面安装 Windows 与 Linux 后，该 boot sector, boot loader 与 MBR 的相关性会有点像下图：</p>
-
-<p>图 1.2.1、 boot loader 安装在 MBR, boot sector 与操作系统的关系
-如上图所示，每个操作系统默认是会安装一套 boot loader 到他自己的文件系统中 (就是每个 filesystem 左下角的方框)，而在 Linux 系统安装时，你可以选择将 boot loader 安装到 MBR 去，也可以选择不安装。 如果选择安装到 MBR 的话，那理论上你在 MBR 与 boot sector 都会保有一份 boot loader 程序的。 至於 Windows 安装时，他默认会主动的将 MBR 与 boot sector 都装上一份 boot loader！所以啦， 你会发现安装多重操作系统时，你的 MBR 常常会被不同的操作系统的 boot loader 所覆盖啦！ ^^</p>
-
-<p>我们刚刚提到的两个问题还是没有解决啊！虽然各个操作系统都可以安装一份 boot loader 到他们的 boot sector 中， 这样操作系统可以透过自己的 boot loader 来加载核心了。问题是系统的 MBR 只有一个哩！ 你要怎么运行 boot sector 里面的 loader 啊？</p>
-
-<p>boot loader 主要的功能如下</p>
-
-<pre><code>提供菜单：使用者可以选择不同的启动项目，这也是多重启动的重要功能！
-加载核心文件：直接指向可启动的程序区段来开始操作系统；
-转交其他 loader：将启动管理功能转交给其他 loader 负责。
-</code></pre>
-
-<p>由於具有菜单功能，因此我们可以选择不同的核心来启动。而由於具有控制权转交的功能，因此我们可以加载其他 boot sector 内的 loader 啦！不过 Windows 的 loader 默认不具有控制权转交的功能，因此你不能使用 Windows 的 loader 来加载 Linux 的 loader 喔！这也是为啥第三章谈到 MBR 与多重启动时，会特别强调先装 Windows 再装 Linux 的缘故。 我们将上述的三个功能以底下的图示来解释你就看的懂了！(与第三章的图示也非常类似啦！)</p>
-
-<p>图 1.2.2、 启动管理程序的菜单功能与控制权转交功能示意图
-如上图所示，我的 MBR 使用 Linux 的 grub 这个启动管理程序，并且里面假设已经有了三个菜单， 第一个菜单可以直接指向 Linux 的核心文件并且直接加载核心来启动；第二个菜单可以将启动管理程序控制权交给 Windows 来管理，此时 Windows 的 loader 会接管启动流程，这个时候他就能够启动 windows 了。第三个菜单则是使用 Linux 在 boot sector 内的启动管理程序，此时就会跳出另一个 grub 的菜单啦！了解了吗？</p>
-
-<p>而最终 boot loader 的功能就是『加载 kernel 文件』啦！</p>
-
-<p>加载核心侦测硬件与 initrd</p>
-
-<p>当我们藉由 boot loader 的管理而开始读取核心文件后，接下来， Linux 就会将核心解压缩到主内存当中， 并且利用核心的功能，开始测试与驱动各个周边装置，包括储存装置、CPU、网络卡、声卡等等。 此时 Linux 核心会以自己的功能重新侦测一次硬件，而不一定会使用 BIOS 侦测到的硬件资讯喔！也就是说，核心此时才开始接管 BIOS 后的工作了。 那么核心文件在哪里啊？一般来说，他会被放置到 /boot 里面，并且取名为 /boot/vmlinuz 才对！</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# ls --format=single-column -F /boot
-</span><span class='line'>config-2.6.18-92.el5      &lt;==此版本核心被编译时选择的功能与模块配置档
-</span><span class='line'>grub/                     &lt;==就是启动管理程序 grub 相关数据目录
-</span><span class='line'>initrd-2.6.18-92.el5.img  &lt;==虚拟文件系统档！
-</span><span class='line'>System.map-2.6.18-92.el5  &lt;==核心功能放置到内存位址的对应表
-</span><span class='line'>vmlinuz-2.6.18-92.el5     &lt;==就是核心文件啦！最重要者！</span></code></pre></td></tr></table></div></figure>
-
-
-<p>从上表我们也可以知道此版本的 Linux 核心为 2.6.18-92.el5 这个版本！为了硬件开发商与其他核心功能开发者的便利， 因此 Linux 核心是可以透过动态加载核心模块的 (就请想成驱动程序即可)，这些核心模块就放置在 /lib/modules/ 目录内。 由于模块放置到磁盘根目录内 (要记得 /lib 不可以与 / 分别放在不同的 partition ！)， 因此在启动的过程中核心必须要挂载根目录，这样才能够读取核心模块提供加载驱动程序的功能。 而且为了担心影响到磁碟内的文件系统，因此启动过程中根目录是以唯读的方式来挂载的喔。</p>
-
-<p>一般来说，非必要的功能且可以编译成为模块的核心功能，目前的 Linux distributions 都会将他编译成为模块。 因此 U盘, SATA, SCSI… 等磁碟装置的驱动程序通常都是以模块的方式来存在的。 现在来思考一种情况，假设你的 linux 是安装在 SATA 磁碟上面的，你可以透过 BIOS 的 INT 13 取得 boot loader 与 kernel 文件来启动，然后 kernel 会开始接管系统并且侦测硬件及尝试挂载根目录来取得额外的驱动程序。</p>
-
-<p>问题是，核心根本不认识 SATA 磁碟，所以需要加载 SATA 磁碟的驱动程序， 否则根本就无法挂载根目录。但是 SATA 的驱动程序在 /lib/modules 内，你根本无法挂载根目录又怎么读取到 /lib/modules/ 内的驱动程序？是吧！非常的两难吧！在这个情况之下，你的 Linux 是无法顺利启动的！ 那怎办？没关系，我们可以透过虚拟文件系统来处理这个问题。</p>
-
-<p>虚拟文件系统 (Initial RAM Disk) 一般使用的档名为 /boot/initrd ，这个文件的特色是，他也能够透过 boot loader 来加载到内存中， 然后这个文件会被解压缩并且在内存当中模拟成一个根目录， 且此模拟在内存当中的文件系统能够提供一支可运行的程序，透过该程序来加载启动过程中所最需要的核心模块， 通常这些模块就是 U盘, RAID, LVM, SCSI 等文件系统与磁碟介面的驱动程序啦！等加载完成后， 会帮助核心重新呼叫 /sbin/init 来开始后续的正常启动流程。</p>
-
-<p>如上图所示，boot loader 可以加载 kernel 与 initrd ，然后在内存中让 initrd 解压缩成为根目录， kernel 就能够藉此加载适当的驱动程序，最终释放虚拟文件系统，并挂载实际的根目录文件系统， 就能够开始后续的正常启动流程。更详细的 initrd 说明，你可以自行使用 man initrd 去查阅看看。 底下让我们来了解一下 CentOS 5.x 的 initrd 文件内容有什么吧！</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www ~]# mkdir /tmp/initrd
-</span><span class='line'>[root@www ~]# cp /boot/initrd-2.6.18-92.el5.img /tmp/initrd/
-</span><span class='line'>[root@www ~]# cd /tmp/initrd
-</span><span class='line'>[root@www initrd]# file initrd-2.6.18-92.el5.img
-</span><span class='line'>initrd-2.6.18-92.el5.img: gzip compressed data, ...</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www initrd]# mv initrd-2.6.18-92.el5.img initrd-2.6.18-92.el5.gz
-</span><span class='line'>[root@www initrd]# gzip -d initrd-2.6.18-92.el5.gz
-</span><span class='line'>[root@www initrd]# file initrd-2.6.18-92.el5
-</span><span class='line'>initrd-2.6.18-92.el5: ASCII cpio archive (SVR4 with no CRC)</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www initrd]# cpio -ivcdu &lt; initrd-2.6.18-92.el5
-</span><span class='line'>[root@www initrd]# ll
-</span><span class='line'>drwx------ 2 root root    4096 Apr 10 02:05 bin
-</span><span class='line'>drwx------ 3 root root    4096 Apr 10 02:05 dev
-</span><span class='line'>drwx------ 2 root root    4096 Apr 10 02:05 etc
-</span><span class='line'>-rwx------ 1 root root    1888 Apr 10 02:05 init
-</span><span class='line'>-rw------- 1 root root 5408768 Apr 10 02:00 initrd-2.6.18-92.el5
-</span><span class='line'>drwx------ 3 root root    4096 Apr 10 02:05 lib
-</span><span class='line'>drwx------ 2 root root    4096 Apr 10 02:05 proc
-</span><span class='line'>lrwxrwxrwx 1 root root       3 Apr 10 02:05 sbin -&gt; bin
-</span><span class='line'>drwx------ 2 root root    4096 Apr 10 02:05 sys
-</span><span class='line'>drwx------ 2 root root    4096 Apr 10 02:05 sysroot</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[root@www initrd]# cat init</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/bin/nash             
-</span><span class='line'>mount -t proc /proc /proc    挂载内存的虚拟文件系统
-</span><span class='line'>....(中间省略)....
-</span><span class='line'>echo Creating initial device nodes
-</span><span class='line'>mknod /dev/null c 1 3        创建系统所需要的各项装置！
-</span><span class='line'>....(中间省略)....
-</span><span class='line'>echo "Loading ehci-hcd.ko module"
-</span><span class='line'>insmod /lib/ehci-hcd.ko      加载各项核心模块，就是驱动程序！
-</span><span class='line'>....(中间省略)....
-</span><span class='line'>echo Creating root device.
-</span><span class='line'>mkrootdev -t ext3 -o defaults,ro hdc2 尝试挂载根目录啦！
-</span><span class='line'>....(底下省略)....</span></code></pre></td></tr></table></div></figure>
-
-
-<p>透过上述运行档的内容，我们可以知道 initrd 有加载模块并且尝试挂载了虚拟文件系统。 接下来就能够顺利的运行啦！那么是否一定需要 initrd 呢？</p>
-
-<p>是否没有 initrd 就无法顺利启动？
-答：
-不见得的！需要 initrd 最重要的原因是，当启动时无法挂载根目录的情况下， 此时就一定需要 initrd ，例如你的根目录在特殊的磁碟介面 (U盘, SATA, SCSI) ， 或者是你的文件系统较为特殊 (LVM, RAID) 等等，才会需要 initrd。</p>
-
-<p>如果你的 Linux 是安装在 IDE 介面的磁碟上，并且使用默认的 ext2/ext3 文件系统， 那么不需要 initrd 也能够顺利的启动进入 Linux 的！</p>
-
-<p>在核心完整的加载后，您的主机应该就开始正确的运行了</p>
-
-<p>转自 <a href="http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php">http://vbird.dic.ksu.edu.tw/linux_basic/0510osloader_1.php</a></p>
 ]]></content>
   </entry>
   
