@@ -9,7 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="利用python监控在线平台是否存活 code (oj.py) download 1
+  <meta name="description" content="网络编程之socket code (server1.py) download 1
 2
 3
 4
@@ -46,8 +46,7 @@
 35
 36
 37
-38
-39 &hellip;">
+#!/usr/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -116,6 +115,123 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-1/">Python网络编程1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-20T16:23:00+08:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>网络编程之socket</p>
+
+<p>code</p>
+
+<figure class='code'><figcaption><span> (server1.py)</span> <a href='/downloads/code/server1.py'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
+</span><span class='line'><span class="sd">&#39;&#39;&#39;#/*=============================================================================</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Author: mengdaikun - mengdaikun@gmail.com</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># QQ : 646978600</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Last modified: 2013-04-09 14:24</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Filename: server1.py</span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd"># Description: </span>
+</span><span class='line'><span class="sd">#</span>
+</span><span class='line'><span class="sd">#=============================================================================*/&#39;&#39;&#39;</span>
+</span><span class='line'><span class="c">#server for python </span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span><span class="nn">socket</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5566</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">))</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;Server is running on port </span><span class="si">%d</span><span class="s">;press Ctrl-C to terminate.&quot;</span> <span class="o">%</span> <span class="n">port</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="p">,</span><span class="n">clientaddr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientfile</span> <span class="o">=</span> <span class="n">clientsock</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;rw&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Welcome, &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">clientaddr</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Please enter a string:&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">line</span> <span class="o">=</span> <span class="n">clientfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;You enter </span><span class="si">%d</span><span class="s"> characters.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">clientfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">clientsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2050,49 +2166,6 @@ code</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/kong-bai/">空白</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T18:47:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>在空白的屏幕上打出一连串的字符，我以为我做得到，
-</span><span class='line'>但我始终不敢按回车，好奇又害怕答案，
-</span><span class='line'>当删去时内心又觉得空虚…恨自己…怪自己…唉…望着屏幕～好空白…</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -2118,11 +2191,15 @@ code</p>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (5)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (5)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li><li><a href='/blog/categories/mian-shi-yu-bi-shi/'>面试与笔试 (1)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/29/cong-wei-ti-ji-de-mi-mi/">从未提及的秘密</a>
@@ -2138,10 +2215,6 @@ code</p>
     
       <li class="post">
         <a href="/blog/2013/05/27/xi-tong-jian-kong-shellhan-shu-ku/">系统监控shell函数库</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/fork/">Fork经典问题</a>
       </li>
     
   </ul>
