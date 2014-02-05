@@ -10,12 +10,7 @@
 
   
   <meta name="description" content="1
-2
-3
-4
-好久不写博客
-过完年把2013年度总结补上
-把前段时间的学习做个总结吧！ -----by mdkvimer ">
+挖个heartbeat的坑，有空把做的实验笔记补上 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +79,123 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/06/heartbeat/">Heartbeat</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T00:58:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>挖个heartbeat的坑，有空把做的实验笔记补上</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/06/zabbix/">Zabbix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T00:57:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>补个坑填上zabbix的学习笔记</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/06/salt/">Salt</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T00:57:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>补个坑填学习salt的笔记</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1201,1171 +1313,6 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/24/awkji-qiao/">Awk技巧</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-24T17:12:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>awk用法和技巧小结</p>
-
-<figure class='code'><figcaption><span> (awk)</span> <a href='/downloads/code/awk'>download</a></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-<span class='line-number'>168</span>
-<span class='line-number'>169</span>
-<span class='line-number'>170</span>
-<span class='line-number'>171</span>
-<span class='line-number'>172</span>
-<span class='line-number'>173</span>
-<span class='line-number'>174</span>
-<span class='line-number'>175</span>
-<span class='line-number'>176</span>
-<span class='line-number'>177</span>
-<span class='line-number'>178</span>
-<span class='line-number'>179</span>
-<span class='line-number'>180</span>
-<span class='line-number'>181</span>
-<span class='line-number'>182</span>
-<span class='line-number'>183</span>
-<span class='line-number'>184</span>
-<span class='line-number'>185</span>
-<span class='line-number'>186</span>
-<span class='line-number'>187</span>
-<span class='line-number'>188</span>
-<span class='line-number'>189</span>
-<span class='line-number'>190</span>
-<span class='line-number'>191</span>
-<span class='line-number'>192</span>
-<span class='line-number'>193</span>
-<span class='line-number'>194</span>
-<span class='line-number'>195</span>
-<span class='line-number'>196</span>
-<span class='line-number'>197</span>
-<span class='line-number'>198</span>
-<span class='line-number'>199</span>
-<span class='line-number'>200</span>
-<span class='line-number'>201</span>
-<span class='line-number'>202</span>
-<span class='line-number'>203</span>
-<span class='line-number'>204</span>
-<span class='line-number'>205</span>
-<span class='line-number'>206</span>
-<span class='line-number'>207</span>
-<span class='line-number'>208</span>
-<span class='line-number'>209</span>
-<span class='line-number'>210</span>
-<span class='line-number'>211</span>
-<span class='line-number'>212</span>
-<span class='line-number'>213</span>
-<span class='line-number'>214</span>
-<span class='line-number'>215</span>
-<span class='line-number'>216</span>
-<span class='line-number'>217</span>
-<span class='line-number'>218</span>
-<span class='line-number'>219</span>
-<span class='line-number'>220</span>
-<span class='line-number'>221</span>
-<span class='line-number'>222</span>
-<span class='line-number'>223</span>
-<span class='line-number'>224</span>
-<span class='line-number'>225</span>
-<span class='line-number'>226</span>
-<span class='line-number'>227</span>
-<span class='line-number'>228</span>
-<span class='line-number'>229</span>
-<span class='line-number'>230</span>
-<span class='line-number'>231</span>
-<span class='line-number'>232</span>
-<span class='line-number'>233</span>
-<span class='line-number'>234</span>
-<span class='line-number'>235</span>
-<span class='line-number'>236</span>
-<span class='line-number'>237</span>
-<span class='line-number'>238</span>
-<span class='line-number'>239</span>
-<span class='line-number'>240</span>
-<span class='line-number'>241</span>
-<span class='line-number'>242</span>
-<span class='line-number'>243</span>
-<span class='line-number'>244</span>
-<span class='line-number'>245</span>
-<span class='line-number'>246</span>
-<span class='line-number'>247</span>
-<span class='line-number'>248</span>
-<span class='line-number'>249</span>
-<span class='line-number'>250</span>
-<span class='line-number'>251</span>
-<span class='line-number'>252</span>
-<span class='line-number'>253</span>
-<span class='line-number'>254</span>
-<span class='line-number'>255</span>
-<span class='line-number'>256</span>
-<span class='line-number'>257</span>
-<span class='line-number'>258</span>
-<span class='line-number'>259</span>
-<span class='line-number'>260</span>
-<span class='line-number'>261</span>
-<span class='line-number'>262</span>
-<span class='line-number'>263</span>
-<span class='line-number'>264</span>
-<span class='line-number'>265</span>
-<span class='line-number'>266</span>
-<span class='line-number'>267</span>
-<span class='line-number'>268</span>
-<span class='line-number'>269</span>
-<span class='line-number'>270</span>
-<span class='line-number'>271</span>
-<span class='line-number'>272</span>
-<span class='line-number'>273</span>
-<span class='line-number'>274</span>
-<span class='line-number'>275</span>
-<span class='line-number'>276</span>
-<span class='line-number'>277</span>
-<span class='line-number'>278</span>
-<span class='line-number'>279</span>
-<span class='line-number'>280</span>
-<span class='line-number'>281</span>
-<span class='line-number'>282</span>
-<span class='line-number'>283</span>
-<span class='line-number'>284</span>
-<span class='line-number'>285</span>
-<span class='line-number'>286</span>
-<span class='line-number'>287</span>
-<span class='line-number'>288</span>
-<span class='line-number'>289</span>
-<span class='line-number'>290</span>
-<span class='line-number'>291</span>
-<span class='line-number'>292</span>
-<span class='line-number'>293</span>
-<span class='line-number'>294</span>
-<span class='line-number'>295</span>
-<span class='line-number'>296</span>
-<span class='line-number'>297</span>
-<span class='line-number'>298</span>
-<span class='line-number'>299</span>
-<span class='line-number'>300</span>
-<span class='line-number'>301</span>
-<span class='line-number'>302</span>
-<span class='line-number'>303</span>
-<span class='line-number'>304</span>
-<span class='line-number'>305</span>
-<span class='line-number'>306</span>
-<span class='line-number'>307</span>
-<span class='line-number'>308</span>
-<span class='line-number'>309</span>
-<span class='line-number'>310</span>
-<span class='line-number'>311</span>
-<span class='line-number'>312</span>
-<span class='line-number'>313</span>
-<span class='line-number'>314</span>
-<span class='line-number'>315</span>
-<span class='line-number'>316</span>
-<span class='line-number'>317</span>
-<span class='line-number'>318</span>
-<span class='line-number'>319</span>
-<span class='line-number'>320</span>
-<span class='line-number'>321</span>
-<span class='line-number'>322</span>
-<span class='line-number'>323</span>
-<span class='line-number'>324</span>
-<span class='line-number'>325</span>
-<span class='line-number'>326</span>
-<span class='line-number'>327</span>
-<span class='line-number'>328</span>
-<span class='line-number'>329</span>
-<span class='line-number'>330</span>
-<span class='line-number'>331</span>
-<span class='line-number'>332</span>
-<span class='line-number'>333</span>
-<span class='line-number'>334</span>
-<span class='line-number'>335</span>
-<span class='line-number'>336</span>
-<span class='line-number'>337</span>
-<span class='line-number'>338</span>
-<span class='line-number'>339</span>
-<span class='line-number'>340</span>
-<span class='line-number'>341</span>
-<span class='line-number'>342</span>
-<span class='line-number'>343</span>
-<span class='line-number'>344</span>
-<span class='line-number'>345</span>
-<span class='line-number'>346</span>
-<span class='line-number'>347</span>
-<span class='line-number'>348</span>
-<span class='line-number'>349</span>
-<span class='line-number'>350</span>
-<span class='line-number'>351</span>
-<span class='line-number'>352</span>
-<span class='line-number'>353</span>
-<span class='line-number'>354</span>
-<span class='line-number'>355</span>
-<span class='line-number'>356</span>
-<span class='line-number'>357</span>
-<span class='line-number'>358</span>
-<span class='line-number'>359</span>
-<span class='line-number'>360</span>
-<span class='line-number'>361</span>
-<span class='line-number'>362</span>
-<span class='line-number'>363</span>
-<span class='line-number'>364</span>
-<span class='line-number'>365</span>
-<span class='line-number'>366</span>
-<span class='line-number'>367</span>
-<span class='line-number'>368</span>
-<span class='line-number'>369</span>
-<span class='line-number'>370</span>
-<span class='line-number'>371</span>
-<span class='line-number'>372</span>
-<span class='line-number'>373</span>
-<span class='line-number'>374</span>
-<span class='line-number'>375</span>
-<span class='line-number'>376</span>
-<span class='line-number'>377</span>
-<span class='line-number'>378</span>
-<span class='line-number'>379</span>
-<span class='line-number'>380</span>
-<span class='line-number'>381</span>
-<span class='line-number'>382</span>
-<span class='line-number'>383</span>
-<span class='line-number'>384</span>
-<span class='line-number'>385</span>
-<span class='line-number'>386</span>
-<span class='line-number'>387</span>
-<span class='line-number'>388</span>
-<span class='line-number'>389</span>
-<span class='line-number'>390</span>
-<span class='line-number'>391</span>
-<span class='line-number'>392</span>
-<span class='line-number'>393</span>
-<span class='line-number'>394</span>
-<span class='line-number'>395</span>
-<span class='line-number'>396</span>
-<span class='line-number'>397</span>
-<span class='line-number'>398</span>
-<span class='line-number'>399</span>
-<span class='line-number'>400</span>
-<span class='line-number'>401</span>
-<span class='line-number'>402</span>
-<span class='line-number'>403</span>
-<span class='line-number'>404</span>
-<span class='line-number'>405</span>
-<span class='line-number'>406</span>
-<span class='line-number'>407</span>
-<span class='line-number'>408</span>
-<span class='line-number'>409</span>
-<span class='line-number'>410</span>
-<span class='line-number'>411</span>
-<span class='line-number'>412</span>
-<span class='line-number'>413</span>
-<span class='line-number'>414</span>
-<span class='line-number'>415</span>
-<span class='line-number'>416</span>
-<span class='line-number'>417</span>
-<span class='line-number'>418</span>
-<span class='line-number'>419</span>
-<span class='line-number'>420</span>
-<span class='line-number'>421</span>
-<span class='line-number'>422</span>
-<span class='line-number'>423</span>
-<span class='line-number'>424</span>
-<span class='line-number'>425</span>
-<span class='line-number'>426</span>
-<span class='line-number'>427</span>
-<span class='line-number'>428</span>
-<span class='line-number'>429</span>
-<span class='line-number'>430</span>
-<span class='line-number'>431</span>
-<span class='line-number'>432</span>
-<span class='line-number'>433</span>
-<span class='line-number'>434</span>
-<span class='line-number'>435</span>
-<span class='line-number'>436</span>
-<span class='line-number'>437</span>
-<span class='line-number'>438</span>
-<span class='line-number'>439</span>
-<span class='line-number'>440</span>
-<span class='line-number'>441</span>
-<span class='line-number'>442</span>
-<span class='line-number'>443</span>
-<span class='line-number'>444</span>
-<span class='line-number'>445</span>
-<span class='line-number'>446</span>
-<span class='line-number'>447</span>
-<span class='line-number'>448</span>
-<span class='line-number'>449</span>
-<span class='line-number'>450</span>
-<span class='line-number'>451</span>
-<span class='line-number'>452</span>
-<span class='line-number'>453</span>
-<span class='line-number'>454</span>
-<span class='line-number'>455</span>
-<span class='line-number'>456</span>
-<span class='line-number'>457</span>
-<span class='line-number'>458</span>
-<span class='line-number'>459</span>
-<span class='line-number'>460</span>
-<span class='line-number'>461</span>
-<span class='line-number'>462</span>
-<span class='line-number'>463</span>
-<span class='line-number'>464</span>
-<span class='line-number'>465</span>
-<span class='line-number'>466</span>
-<span class='line-number'>467</span>
-<span class='line-number'>468</span>
-<span class='line-number'>469</span>
-<span class='line-number'>470</span>
-<span class='line-number'>471</span>
-<span class='line-number'>472</span>
-<span class='line-number'>473</span>
-<span class='line-number'>474</span>
-<span class='line-number'>475</span>
-<span class='line-number'>476</span>
-<span class='line-number'>477</span>
-<span class='line-number'>478</span>
-<span class='line-number'>479</span>
-<span class='line-number'>480</span>
-<span class='line-number'>481</span>
-<span class='line-number'>482</span>
-<span class='line-number'>483</span>
-<span class='line-number'>484</span>
-<span class='line-number'>485</span>
-<span class='line-number'>486</span>
-<span class='line-number'>487</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'><span class="nt">awk</span> <span class="err">用法：</span><span class="nt">awk</span> <span class="s1">&#39; pattern {action} &#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">变量名</span> <span class="err">含义</span>
-</span><span class='line'><span class="nt">ARGC</span> <span class="err">命令行变元个数</span>
-</span><span class='line'><span class="nt">ARGV</span> <span class="err">命令行变元数组</span>
-</span><span class='line'><span class="nt">FILENAME</span> <span class="err">当前输入文件名</span>
-</span><span class='line'><span class="nt">FNR</span> <span class="err">当前文件中的记录号</span>
-</span><span class='line'><span class="nt">FS</span> <span class="err">输入域分隔符，默认为一个空格</span>
-</span><span class='line'><span class="nt">RS</span> <span class="err">输入记录分隔符</span>
-</span><span class='line'><span class="nt">NF</span> <span class="err">当前记录里域个数</span>
-</span><span class='line'><span class="nt">NR</span> <span class="err">到目前为止记录数</span>
-</span><span class='line'><span class="nt">OFS</span> <span class="err">输出域分隔符</span>
-</span><span class='line'><span class="nt">ORS</span> <span class="err">输出记录分隔符</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">1</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;/101/&#39;</span> <span class="nt">file</span> <span class="err">显示文件</span><span class="nt">file</span><span class="err">中包含</span><span class="nt">101</span><span class="err">的匹配行。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/101/,/105/&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;$1 == 5&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;$1 == &quot;CT&quot;&#39;</span> <span class="nt">file</span> <span class="err">注意必须带双引号</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;$1 * $2 &gt;100 &#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;$2 &gt;5 &amp;&amp; $2&lt;=15&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="nt">2</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;{print NR,NF,$1,$NF,}&#39;</span> <span class="nt">file</span> <span class="err">显示文件</span><span class="nt">file</span><span class="err">的当前记录号、域数和每一行的第一个和最后一个域。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/101/ {print $1,$2 + 10}&#39;</span> <span class="nt">file</span> <span class="err">显示文件</span><span class="nt">file</span><span class="err">的匹配行的第一、二个域加</span><span class="nt">10</span><span class="err">。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/101/ {print $1$2}&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/101/ {print $1 $2}&#39;</span> <span class="nt">file</span> <span class="err">显示文件</span><span class="nt">file</span><span class="err">的匹配行的第一、二个域，但显示时域中间没有分隔符。</span>
-</span><span class='line'><span class="nt">3</span><span class="err">、</span><span class="nt">df</span> <span class="o">|</span> <span class="nt">awk</span> <span class="s1">&#39;$4&gt;1000000 &#39;</span> <span class="err">通过管道符获得输入，如：显示第</span><span class="nt">4</span><span class="err">个域满足条件的行。</span>
-</span><span class='line'><span class="nt">4</span><span class="err">、</span><span class="nt">awk</span> <span class="nt">-F</span> <span class="s2">&quot;|&quot;</span> <span class="s1">&#39;{print $1}&#39;</span> <span class="nt">file</span> <span class="err">按照新的分隔符“</span><span class="o">|</span><span class="err">”进行操作。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;BEGIN { FS=&quot;</span><span class="cp">[</span><span class="p">:</span> <span class="o">\</span><span class="nb">t</span><span class="o">|</span><span class="cp">]</span><span class="s1">&quot; }</span>
-</span><span class='line'><span class="s1">{print $1,$2,$3}&#39;</span> <span class="nt">file</span> <span class="err">通过设置输入分隔符（</span><span class="nt">FS</span><span class="o">=</span><span class="s2">&quot;</span><span class="cp">[</span><span class="p">:</span> <span class="o">\</span><span class="nb">t</span><span class="o">|</span><span class="cp">]</span><span class="s2">&quot;</span><span class="err">）修改输入分隔符。</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">Sep</span><span class="o">=</span><span class="s2">&quot;|&quot;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="nt">-F</span> <span class="err">$</span><span class="nt">Sep</span> <span class="s1">&#39;{print $1}&#39;</span> <span class="nt">file</span> <span class="err">按照环境变量</span><span class="nt">Sep</span><span class="err">的值做为分隔符。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="nt">-F</span> <span class="s1">&#39;</span><span class="cp">[</span> <span class="p">:</span><span class="o">\</span><span class="nb">t</span><span class="o">|</span><span class="cp">]</span><span class="s1">&#39;</span> <span class="s1">&#39;{print $1}&#39;</span> <span class="nt">file</span> <span class="err">按照正则表达式的值做为分隔符，这里代表空格、</span><span class="o">:</span><span class="err">、</span><span class="nt">TAB</span><span class="err">、</span><span class="o">|</span><span class="err">同时做为分隔符。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="nt">-F</span> <span class="s1">&#39;</span><span class="cp">[][]</span><span class="s1">&#39;</span> <span class="s1">&#39;{print $1}&#39;</span> <span class="nt">file</span> <span class="err">按照正则表达式的值做为分隔符，这里代表</span><span class="cp">[</span><span class="err">、</span><span class="cp">]</span>
-</span><span class='line'><span class="nt">5</span><span class="err">、</span><span class="nt">awk</span> <span class="nt">-f</span> <span class="nt">awkfile</span> <span class="nt">file</span> <span class="err">通过文件</span><span class="nt">awkfile</span><span class="err">的内容依次进行控制。</span>
-</span><span class='line'><span class="nt">cat</span> <span class="nt">awkfile</span>
-</span><span class='line'><span class="o">/</span><span class="nt">101</span><span class="o">/</span><span class="p">{</span><span class="n">print</span> <span class="s2">&quot;\047 Hello! \047&quot;</span><span class="p">}</span> <span class="nt">--</span><span class="err">遇到匹配行以后打印</span> <span class="s1">&#39; Hello! &#39;</span><span class="o">.</span><span class="err">\</span><span class="nt">047</span><span class="err">代表单引号。</span>
-</span><span class='line'><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">1</span><span class="o">,</span><span class="err">$</span><span class="m">2</span><span class="p">}</span> <span class="nt">--</span><span class="err">因为没有模式控制，打印每一行的前两个域。</span>
-</span><span class='line'><span class="nt">6</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;$1 ~ /101/ {print $1}&#39;</span> <span class="nt">file</span> <span class="err">显示文件中第一个域匹配</span><span class="nt">101</span><span class="err">的行（记录）。</span>
-</span><span class='line'><span class="nt">7</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;BEGIN { OFS=&quot;%&quot;}</span>
-</span><span class='line'><span class="s1">{print $1,$2}&#39;</span> <span class="nt">file</span> <span class="err">通过设置输出分隔符（</span><span class="nt">OFS</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="err">）修改输出格式。</span>
-</span><span class='line'><span class="nt">8</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;BEGIN { max=100 ;print &quot;max=&quot; max} BEGIN 表示在处理任意行之前进行的操作。</span>
-</span><span class='line'><span class="s1">{max=($1 &gt;max ?$1:max); print $1,&quot;Now max is &quot;max}&#39;</span> <span class="nt">file</span> <span class="err">取得文件第一个域的最大值。</span>
-</span><span class='line'><span class="err">（表达式</span><span class="nt">1</span><span class="o">?</span><span class="err">表达式</span><span class="nt">2</span><span class="o">:</span><span class="err">表达式</span><span class="nt">3</span> <span class="err">相当于：</span>
-</span><span class='line'><span class="nt">if</span> <span class="o">(</span><span class="err">表达式</span><span class="nt">1</span><span class="o">)</span>
-</span><span class='line'><span class="err">表达式</span><span class="nt">2</span>
-</span><span class='line'><span class="nt">else</span>
-</span><span class='line'><span class="err">表达式</span><span class="nt">3</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{print ($1&gt;4 ? &quot;high &quot;$1: &quot;low &quot;$1)}&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="nt">9</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;$1 * $2 &gt;100 {print $1}&#39;</span> <span class="nt">file</span> <span class="err">显示文件中第一个域匹配</span><span class="nt">101</span><span class="err">的行（记录）。</span>
-</span><span class='line'><span class="nt">10</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;{$1 == &#39;</span><span class="nt">Chi</span><span class="s1">&#39; {$3 = &#39;</span><span class="nt">China</span><span class="s1">&#39;; print}&#39;</span> <span class="nt">file</span> <span class="err">找到匹配行后先将第</span><span class="nt">3</span><span class="err">个域替换后再显示该行（记录）。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{$7 %= 3; print $7}&#39;</span> <span class="nt">file</span> <span class="err">将第</span><span class="nt">7</span><span class="err">域被</span><span class="nt">3</span><span class="err">除，并将余数赋给第</span><span class="nt">7</span><span class="err">域再打印。</span>
-</span><span class='line'><span class="nt">11</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;/tom/ {wage=$2+$3; printf wage}&#39;</span> <span class="nt">file</span> <span class="err">找到匹配行后为变量</span><span class="nt">wage</span><span class="err">赋值并打印该变量。</span>
-</span><span class='line'><span class="nt">12</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;/tom/ {count++;}</span>
-</span><span class='line'><span class="s1">END {print &quot;tom was found &quot;count&quot; times&quot;}&#39;</span> <span class="nt">file</span> <span class="nt">END</span><span class="err">表示在所有输入行处理完后进行处理。</span>
-</span><span class='line'><span class="nt">13</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;gsub(/\$/,&quot;&quot;);gsub(/,/,&quot;&quot;); cost+=$4;</span>
-</span><span class='line'><span class="s1">END {print &quot;The total is $&quot; cost&gt;&quot;filename&quot;}&#39;</span> <span class="nt">file</span> <span class="nt">gsub</span><span class="err">函数用空串替换$和</span><span class="o">,</span><span class="err">再将结果输出到</span><span class="nt">filename</span><span class="err">中。</span>
-</span><span class='line'><span class="nt">1</span> <span class="nt">2</span> <span class="nt">3</span> <span class="err">$</span><span class="nt">1</span><span class="o">,</span><span class="nt">200</span><span class="nc">.00</span>
-</span><span class='line'><span class="nt">1</span> <span class="nt">2</span> <span class="nt">3</span> <span class="err">$</span><span class="nt">2</span><span class="o">,</span><span class="nt">300</span><span class="nc">.00</span>
-</span><span class='line'><span class="nt">1</span> <span class="nt">2</span> <span class="nt">3</span> <span class="err">$</span><span class="nt">4</span><span class="o">,</span><span class="nt">000</span><span class="nc">.00</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{gsub(/\$/,&quot;&quot;);gsub(/,/,&quot;&quot;);</span>
-</span><span class='line'><span class="s1">if ($4&gt;1000&amp;&amp;$4&lt;2000) c1+=$4;</span>
-</span><span class='line'><span class="s1">else if ($4&gt;2000&amp;&amp;$4&lt;3000) c2+=$4;</span>
-</span><span class='line'><span class="s1">else if ($4&gt;3000&amp;&amp;$4&lt;4000) c3+=$4;</span>
-</span><span class='line'><span class="s1">else c4+=$4; }</span>
-</span><span class='line'><span class="s1">END {printf &quot;c1=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">;c2=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">;c3=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">;c4=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">\n&quot;,c1,c2,c3,c4}&quot;&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">通过</span><span class="nt">if</span><span class="err">和</span><span class="nt">else</span> <span class="nt">if</span><span class="err">完成条件语句</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{gsub(/\$/,&quot;&quot;);gsub(/,/,&quot;&quot;);</span>
-</span><span class='line'><span class="s1">if ($4&gt;3000&amp;&amp;$4&lt;4000) exit;</span>
-</span><span class='line'><span class="s1">else c4+=$4; }</span>
-</span><span class='line'><span class="s1">END {printf &quot;c1=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">;c2=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">;c3=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">;c4=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">\n&quot;,c1,c2,c3,c4}&quot;&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">通过</span><span class="nt">exit</span><span class="err">在某条件时退出，但是仍执行</span><span class="nt">END</span><span class="err">操作。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{gsub(/\$/,&quot;&quot;);gsub(/,/,&quot;&quot;);</span>
-</span><span class='line'><span class="s1">if ($4&gt;3000) next;</span>
-</span><span class='line'><span class="s1">else c4+=$4; }</span>
-</span><span class='line'><span class="s1">END {printf &quot;c4=</span><span class="cp">[</span><span class="o">%</span><span class="nb">d</span><span class="cp">]</span><span class="s1">\n&quot;,c4}&quot;&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">通过</span><span class="nt">next</span><span class="err">在某条件时跳过该行，对下一行执行操作。</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nt">14</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;{ print FILENAME,$0 }&#39;</span> <span class="nt">file1</span> <span class="nt">file2</span> <span class="nt">file3</span><span class="o">&gt;</span><span class="nt">fileall</span> <span class="err">把</span><span class="nt">file1</span><span class="err">、</span><span class="nt">file2</span><span class="err">、</span><span class="nt">file3</span><span class="err">的文件内容全部写到</span><span class="nt">fileall</span><span class="err">中，格式为</span>
-</span><span class='line'><span class="err">打印文件并前置文件名。</span>
-</span><span class='line'><span class="nt">15</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39; $1!=previous { close(previous); previous=$1 }</span>
-</span><span class='line'><span class="s1">{print substr($0,index($0,&quot; &quot;) +1)&gt;$1}&#39;</span> <span class="nt">fileall</span> <span class="err">把合并后的文件重新分拆为</span><span class="nt">3</span><span class="err">个文件。并与原文件一致。</span>
-</span><span class='line'><span class="nt">16</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;BEGIN {&quot;date&quot;|getline d; print d}&#39;</span> <span class="err">通过管道把</span><span class="nt">date</span><span class="err">的执行结果送给</span><span class="nt">getline</span><span class="err">，并赋给变量</span><span class="nt">d</span><span class="err">，然后打印。</span>
-</span><span class='line'><span class="nt">17</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;BEGIN {system(&quot;echo \&quot;Input your name:\\c\&quot;&quot;); getline d;print &quot;\nYour name is&quot;,d,&quot;\b!\n&quot;}&#39;</span>
-</span><span class='line'><span class="err">通过</span><span class="nt">getline</span><span class="err">命令交互输入</span><span class="nt">name</span><span class="err">，并显示出来。</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;BEGIN {FS=&quot;:&quot;; while(getline&lt; &quot;/etc/passwd&quot; &gt;0) { if($1~&quot;050</span><span class="cp">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="cp">]</span><span class="s1">_&quot;) print $1}}&#39;</span>
-</span><span class='line'><span class="err">打印</span><span class="o">/</span><span class="nt">etc</span><span class="o">/</span><span class="nt">passwd</span><span class="err">文件中用户名包含</span><span class="nt">050x_</span><span class="err">的用户名。</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">18</span><span class="err">、</span><span class="nt">awk</span> <span class="s1">&#39;{ i=1;while(i awk &#39;</span><span class="p">{</span> <span class="n">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span><span class="n">i</span> <span class="n">type</span> <span class="n">file</span><span class="o">|</span><span class="n">awk</span> <span class="o">-</span><span class="n">F</span> <span class="s2">&quot;/&quot;</span> <span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">{ for(i=1;i { if(i==NF-1) { printf &quot;%s&quot;,$i }</span>
-</span><span class='line'><span class="s1">else { printf &quot;%s/&quot;,$i } }}&#39;</span> <span class="err">显示一个文件的全路径。</span>
-</span><span class='line'><span class="err">用</span><span class="n">for</span><span class="err">和</span><span class="n">if</span><span class="err">显示日期</span>
-</span><span class='line'><span class="n">awk</span> <span class="s1">&#39;BEGIN {</span>
-</span><span class='line'><span class="s1">for(j=1;j&lt;=12;j++)</span>
-</span><span class='line'><span class="s1">{ flag=0;</span>
-</span><span class='line'><span class="s1">printf &quot;\n%d月份\n&quot;,j;</span>
-</span><span class='line'><span class="s1">for(i=1;i&lt;=31;i++)</span>
-</span><span class='line'><span class="s1">{</span>
-</span><span class='line'><span class="s1">if (j==2&amp;&amp;i&gt;28) flag=1;</span>
-</span><span class='line'><span class="s1">if ((j==4||j==6||j==9||j==11)&amp;&amp;i&gt;30) flag=1;</span>
-</span><span class='line'><span class="s1">if (flag==0) {printf &quot;%02d%02d &quot;,j,i}</span>
-</span><span class='line'><span class="s1">}</span>
-</span><span class='line'><span class="s1">}</span>
-</span><span class='line'><span class="s1">}&#39;</span>
-</span><span class='line'><span class="m">19</span><span class="err">、在</span><span class="n">awk</span><span class="err">中调用系统变量必须用单引号，如果是双引号，则表示字符串</span>
-</span><span class='line'><span class="n">Flag</span><span class="o">=</span><span class="n">abcd</span>
-</span><span class='line'><span class="n">awk</span> <span class="s1">&#39;{print &#39;</span><span class="err">$</span><span class="n">Flag</span><span class="s1">&#39;}&#39;</span> <span class="err">结果为</span><span class="n">abcd</span>
-</span><span class='line'><span class="n">awk</span> <span class="s1">&#39;{print &quot;$Flag&quot;}&#39;</span> <span class="err">结果为$</span><span class="n">Flag</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="m">1</span><span class="err">、删除重复的行</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;!a</span><span class="cp">[]</span><span class="s1">++&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">2</span><span class="err">、将数据文件中的每个词的第一个字母变成大写</span>
-</span><span class='line'><span class="n">cat</span> <span class="n">test</span>
-</span><span class='line'><span class="n">linux</span> <span class="n">is</span> <span class="n">long</span> <span class="n">live</span><span class="o">!!!</span>
-</span><span class='line'><span class="n">i</span> <span class="n">am</span> <span class="n">a</span> <span class="n">cuer</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">awk</span> <span class="s1">&#39;,1,1); sub(/^./,toupper(first),); print }&#39;</span> <span class="n">test</span>
-</span><span class='line'><span class="n">Linux</span> <span class="n">is</span> <span class="n">long</span> <span class="n">live</span><span class="o">!!!</span>
-</span><span class='line'><span class="n">I</span> <span class="n">am</span> <span class="n">a</span> <span class="n">cuer</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">3</span><span class="o">.</span><span class="n">awk</span> <span class="err">范例</span>
-</span><span class='line'><span class="n">a</span><span class="o">.</span><span class="err">显示文件第</span><span class="m">3</span><span class="err">和</span><span class="m">5</span><span class="err">行</span><span class="o">:</span> <span class="n">awk</span> <span class="s1">&#39;NR==3 || NR ==5 &#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
-</span><span class='line'><span class="n">b</span><span class="o">.</span><span class="err">打印前</span><span class="m">3</span><span class="err">行和</span><span class="m">7</span><span class="err">行以后的</span><span class="o">:</span> <span class="n">awk</span> <span class="s1">&#39;NR&lt;4 || NR&gt; 7 {print $1}&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
-</span><span class='line'><span class="n">c</span><span class="o">.</span><span class="err">打印以</span><span class="n">root</span><span class="err">和</span><span class="n">nobody</span><span class="err">开始的记录</span><span class="o">:</span> <span class="n">awk</span> <span class="s1">&#39;/^(root|nobody)/&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
-</span><span class='line'><span class="n">d</span><span class="o">.</span><span class="err">如果记录以</span><span class="n">r</span><span class="err">或</span><span class="n">p</span><span class="err">或</span><span class="n">rp</span><span class="err">开头，就打印这个记录</span><span class="o">:</span> <span class="n">awk</span> <span class="s1">&#39;/^</span><span class="cp">[</span><span class="nx">rp</span><span class="cp">]</span><span class="s1">/&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
-</span><span class='line'><span class="n">e</span><span class="o">.</span><span class="err">显示</span><span class="m">1-3</span><span class="err">和</span><span class="m">5-7</span><span class="err">行的信息</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;(NR&lt;4 &amp;&amp; NR&gt;0) || (NR&gt;4 &amp;&amp; NR&lt;8) {print}&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">4</span><span class="o">.</span><span class="err">含有</span><span class="n">root</span><span class="err">的列</span>
-</span><span class='line'><span class="m">#gawk</span>  <span class="s1">&#39;BEGIN{FS=&quot;:&quot; ;sum=0} $1 == &quot;root&quot; {sum=sum+1} END {print sum}&#39;</span> <span class="n">passwd</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">5</span><span class="o">.</span><span class="err">把合在一起的数字汉字用空格分开。</span>
-</span><span class='line'><span class="m">#sed</span> <span class="s1">&#39;s/^</span><span class="cp">[</span> <span class="cp">]</span><span class="s1">*//;s/^</span><span class="cp">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="cp">]</span><span class="s1">*/&amp; /&#39;</span>  <span class="n">file</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;{gsub(/</span><span class="cp">[</span><span class="p">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="cp">]</span><span class="s1">+/,&quot;&quot;,$1);print $1}&#39;</span> <span class="n">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">6</span><span class="o">.</span><span class="err">统计一列数的总数和平均值。</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;{sum +=$2} END{print &quot;sum:&quot; sum}&#39;</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;{sum +=$2} END{print &quot;sum:&quot; sum/NR}&#39;</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">7</span><span class="o">.?</span><span class="err">指定如果零个或一个字符或扩展正则表达式的具体值在字符串中，则字符串匹配</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;/smith?/&#39;</span> <span class="n">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">8</span><span class="o">.</span><span class="err">显示包含</span><span class="n">abc</span><span class="err">或</span><span class="m">123</span><span class="err">的字符串</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;/abc|123/&#39;</span> <span class="n">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">9</span><span class="o">.</span><span class="err">将具有字符串</span><span class="n">ae</span><span class="err">或</span><span class="n">alle</span><span class="err">或</span><span class="n">anne</span><span class="err">或</span><span class="n">allnne</span><span class="err">的所有记录打印至标准输出</span>
-</span><span class='line'><span class="m">#awk</span> <span class="s1">&#39;/a(ll)?(nn)?e/&#39;</span> <span class="n">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="m">10</span><span class="o">.</span><span class="err">{</span><span class="n">m</span><span class="p">}</span><span class="err">指定如果正好有</span><span class="nt">m</span><span class="err">个模式的具体值位于字符串中，则字符串匹配</span><span class="o">.</span><span class="err">下面显示只包含两个</span><span class="nt">l</span><span class="err">的字符串</span>
-</span><span class='line'><span class="nf">#awk</span>  <span class="s1">&#39;/l{2}/&#39;</span>  <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">11</span><span class="o">.</span><span class="p">{</span><span class="n">m</span><span class="o">,</span><span class="p">}</span><span class="err">指定如果至少</span><span class="nt">m</span><span class="err">个模式的具体值在字符串中，则字符串匹配，下面显示至少包含两个</span><span class="nt">t</span><span class="err">的字符串</span>
-</span><span class='line'><span class="nf">#awk</span> <span class="s1">&#39;/t{2,}/&#39;</span>  <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">12</span><span class="o">.</span><span class="p">{</span><span class="n">m</span><span class="o">,</span> <span class="n">n</span><span class="p">}</span><span class="err">指定如果</span> <span class="nt">m</span> <span class="err">和</span> <span class="nt">n</span> <span class="err">之间</span><span class="o">(</span><span class="err">包含的</span> <span class="nt">m</span> <span class="err">和</span> <span class="nt">n</span><span class="o">)</span><span class="err">个模式的具体值在字符串中</span><span class="o">(</span><span class="err">其中</span><span class="nt">m</span><span class="o">&lt;=</span> <span class="nt">n</span><span class="o">)</span><span class="err">，则字符串匹配</span><span class="o">,</span><span class="err">下面显示包含</span><span class="nt">1</span><span class="err">和</span><span class="nt">2</span><span class="err">个</span><span class="nt">er</span><span class="err">的字符串</span>
-</span><span class='line'><span class="nf">#awk</span> <span class="s1">&#39;/er{1,2}/&#39;</span> <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">13</span><span class="o">.</span><span class="err">将具有</span><span class="nt">zxm</span><span class="err">后跟以字母顺序从</span> <span class="nt">a</span> <span class="err">到</span> <span class="nt">h</span> <span class="err">排列的任何字符的所有记录打印至标准输出</span>
-</span><span class='line'><span class="nf">#awk</span> <span class="s1">&#39;/zxm</span><span class="cp">[</span><span class="nx">a</span><span class="na">-h</span><span class="cp">]</span><span class="s1">/&#39;</span>  <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">14</span><span class="o">.</span><span class="cp">[</span><span class="p">^</span><span class="kt">String</span><span class="cp">]</span><span class="err">在</span><span class="cp">[</span> <span class="cp">]</span><span class="err">和在指定字符串开头的</span><span class="o">^</span><span class="err">指明正则表达式与方括号内的任何字符不匹配</span>
-</span><span class='line'><span class="nf">#awk</span> <span class="s1">&#39;/sm</span><span class="cp">[</span><span class="p">^</span><span class="nx">a</span><span class="na">-h</span><span class="cp">]</span><span class="s1">/&#39;</span> <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nt">15</span><span class="o">.</span> <span class="o">~</span><span class="err">或</span><span class="o">!~</span><span class="err">表示指定变量与正则表达式匹配或不匹配的条件语句</span>
-</span><span class='line'><span class="nf">#awk</span>  <span class="s1">&#39;$1 ~ /n/&#39;</span> <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">16</span><span class="o">.</span><span class="err">将把字符</span> <span class="nt">h</span> <span class="err">作为第二个字段的第一个字符和最后一个字符的所有记录打印至标准输出</span>
-</span><span class='line'><span class="nf">#awk</span>  <span class="s1">&#39;$2 ~ /^h/&#39;</span>  <span class="nt">file</span>
-</span><span class='line'><span class="nf">#awk</span>  <span class="s1">&#39;$2 ~ /h$/&#39;</span>  <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nt">17</span><span class="o">.</span><span class="err">将具有以两个字符隔开的字符</span> <span class="nt">a</span> <span class="err">和</span> <span class="nt">e</span> <span class="err">的所有记录打印至标准输出</span>
-</span><span class='line'><span class="nf">#awk</span>  <span class="s1">&#39;/a..e/&#39;</span> <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nt">18</span><span class="o">.</span><span class="err">将具有以零个或更多字符隔开的字符</span> <span class="nt">a</span> <span class="err">和</span> <span class="nt">e</span> <span class="err">打印至标准输出</span>
-</span><span class='line'><span class="nf">#awk</span>  <span class="s1">&#39;/a*e/&#39;</span> <span class="nt">file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">19</span><span class="nc">.awk</span> <span class="err">命令识别大多数用于</span> <span class="nt">C</span> <span class="err">语言约定中的转义序列，以及</span> <span class="nt">awk</span> <span class="err">命令本身用作特殊字符的几个转义序列。转义序列是：</span>
-</span><span class='line'>    <span class="err">转义序列表示的字符</span>
-</span><span class='line'>    <span class="err">\</span><span class="s2">&quot;\&quot;（双引号）</span>
-</span><span class='line'><span class="s2">    \//（斜杠）字符</span>
-</span><span class='line'><span class="s2">    \ddd其编码由 1、2 或 3 位八进制整数表示的字符，其中 d 表示一个八进制数位</span>
-</span><span class='line'><span class="s2">    \\\ (反斜杠) 字符</span>
-</span><span class='line'><span class="s2">    \a警告字符</span>
-</span><span class='line'><span class="s2">    \b退格字符</span>
-</span><span class='line'><span class="s2">    \f换页字符</span>
-</span><span class='line'><span class="s2">    \n换行字符</span>
-</span><span class='line'><span class="s2">    \r回车字符</span>
-</span><span class='line'><span class="s2">    \t跳格字符</span>
-</span><span class='line'><span class="s2">    \v垂直跳格</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s2">20.要显示长于 72 个字符的文件的行，请输入：</span>
-</span><span class='line'><span class="s2">awk &#39;length($0) &gt;72&#39; file</span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">21.要显示字start和stop之间的所有行，包含“start”和“stop”，请输入：</span>
-</span><span class='line'><span class="s2">awk &#39;/start/,/stop/&#39; file</span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">22.在屏幕上打印”What is your name?&quot;</span><span class="o">,</span><span class="err">并等待用户应答。当一行输入完毕后，</span><span class="nt">getline</span><span class="err">函数从终端接收该行输入，并把它储存在自定义变量</span><span class="nt">name</span><span class="err">中。如果第一个域匹配变量</span><span class="nt">name</span><span class="err">的值，</span><span class="nt">print</span><span class="err">函数就被执行，</span><span class="nt">END</span><span class="err">块打印</span><span class="nt">See</span> <span class="nt">you</span><span class="err">和</span><span class="nt">name</span><span class="err">的值</span>
-</span><span class='line'><span class="nf">#awk</span> <span class="s1">&#39;BEGIN{printf &quot;What is your name?&quot;; getline name &lt; &quot;/dev/tty&quot; } $1 ~name {print &quot;Found&quot; name on line &quot;, NR &quot;.&quot;} END{print &quot;See you,&quot; name &quot;.&quot;} test</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">23.awk将逐行读取文件/etc/passwd的内容，在到达文件末尾前，计数器lc一直增加，当到末尾时，打印lc的值</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">BEGIN</span><span class="p">{</span><span class="n">while</span> <span class="p">(</span><span class="n">getline</span> <span class="o">&lt;</span> <span class="s2">&quot;/etc/passwd&quot;</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="n">lc</span><span class="o">++</span><span class="p">;</span> <span class="n">print</span> <span class="n">lc</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">24.system函数可以在awk中执行linux的命令。如：</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">BEGIN</span><span class="p">{</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;clear&quot;</span><span class="p">)</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">25.如果第一个域小于第二个域则打印</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="err">{</span><span class="n">if</span> <span class="p">(</span><span class="err">$</span><span class="m">1</span> <span class="o">&lt;</span><span class="err">$</span><span class="m">2</span><span class="p">)</span> <span class="n">print</span> <span class="err">$</span><span class="m">2</span> <span class="s2">&quot;too high&quot;</span><span class="p">}</span><span class="s1">&#39; test</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">26.变量的初始值为1，若i小于可等于NF(记录中域的个数),则执行打印语句，且i增加1。直到i的值大于NF.</span>
-</span><span class='line'><span class="s1"># awk &#39;</span><span class="p">{</span> <span class="n">i</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">while</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">NF</span> <span class="p">)</span> <span class="err">{</span> <span class="n">print</span> <span class="n">NF</span><span class="o">,</span><span class="err">$</span><span class="n">i</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">}</span><span class="err">}</span><span class="s1">&#39; test</span>
-</span><span class='line'><span class="s1"># awk &#39;</span><span class="p">{</span><span class="n">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">NF</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">print</span> <span class="n">NF</span><span class="o">,</span><span class="err">$</span><span class="n">i</span><span class="p">}</span><span class="s1">&#39; test</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">27.将一个文件的总行数显示出来</span>
-</span><span class='line'><span class="s1">#gawk &#39;</span><span class="p">{</span><span class="n">nlines</span><span class="o">++</span><span class="p">}</span> <span class="nt">END</span> <span class="p">{</span><span class="n">print</span> <span class="n">nlines</span><span class="p">}</span><span class="s1">&#39;  file</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">28.显示拥有至少一个字段的所有行。这是一个简单的方法，将一个文件里的所有空白行删除</span>
-</span><span class='line'><span class="s1">#gawk &#39;</span><span class="nt">NF</span> <span class="o">&gt;</span> <span class="nt">0</span><span class="s1">&#39;  file</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">29.此程序会显示出范围是0 到100 之间的7 个随机数</span>
-</span><span class='line'><span class="s1">#gawk &#39;</span><span class="nt">BEGIN</span> <span class="p">{</span><span class="n">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="m">7</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">print</span> <span class="n">int</span><span class="p">(</span><span class="m">101</span> <span class="o">*</span> <span class="n">rand</span><span class="p">())}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">30.此程序会显示出所有指定的文件的总字节数</span>
-</span><span class='line'><span class="s1">#ls -l files | gawk &#39;</span><span class="p">{</span><span class="n">x</span> <span class="o">+=</span> <span class="err">$</span><span class="m">4</span><span class="p">}</span><span class="o">;</span> <span class="nt">END</span> <span class="p">{</span><span class="n">print</span> <span class="s2">&quot;total bytes: &quot;</span> <span class="n">x</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">31.此程序会将指定文件里最长一行的长度显示出来。expand 会将tab 改成space，所以是用实际的右边界来做长度的比较。</span>
-</span><span class='line'><span class="s1">#expand file | gawk &#39;</span><span class="p">{</span><span class="n">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">())</span> <span class="n">x</span> <span class="o">=</span> <span class="n">length</span><span class="p">()}</span> <span class="nt">END</span> <span class="p">{</span><span class="n">print</span> <span class="s2">&quot;maximum line length is &quot;</span> <span class="n">x</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s1">32.显示所有只有四个字符的字段</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">length</span><span class="o">(</span><span class="err">$</span><span class="nt">1</span><span class="o">)==</span><span class="nt">4</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">1</span><span class="p">}</span><span class="s1">&#39;  file</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s1">33.显示所有以一个C或E开头的字段</span>
-</span><span class='line'><span class="s1">$ awk -F&quot;</span><span class="cp">[</span><span class="p">:</span> <span class="cp">]</span><span class="s1">&quot; &#39;</span><span class="err">$</span><span class="nt">1</span><span class="o">~/^</span><span class="nt">C</span><span class="o">|</span><span class="nt">E</span><span class="o">/</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">1</span><span class="p">}</span><span class="s1">&#39; datafile</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">34.在文件的第一行前插入一行</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">BEGIN</span> <span class="p">{</span><span class="n">print</span> <span class="s2">&quot;new line&quot;</span><span class="p">}</span> <span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39; file &gt;file1</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">35.在文件末尾添加一行</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">END</span> <span class="p">{</span><span class="n">print</span> <span class="s2">&quot;THE END&quot;</span><span class="p">}</span> <span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39; file &gt;file1</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s1">36.awk和cut的相同用法</span>
-</span><span class='line'><span class="s1">#awk -F: &#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">1</span><span class="o">,</span><span class="err">$</span><span class="m">2</span><span class="o">,</span><span class="err">$</span><span class="m">3</span><span class="p">}</span><span class="s1">&#39; file</span>
-</span><span class='line'><span class="s1">#cut -d: -f2,3,4,5  file</span>
-</span><span class='line'><span class="s1">#cut  -c 1-5 /etc/passwd 显示文件中的前1-5个字符</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">37.以@或:为分隔符的文件</span>
-</span><span class='line'><span class="s1">awk -F</span><span class="cp">[</span><span class="p">@:</span><span class="cp">]</span><span class="s1"> &#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">1</span><span class="p">}</span><span class="s1">&#39; file</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">38.结果以$分隔</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">BEGIN</span><span class="p">{</span><span class="n">FS</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">}</span> <span class="p">{</span><span class="n">OFS</span><span class="o">=</span><span class="s2">&quot;$&quot;</span><span class="p">}</span> <span class="p">{</span><span class="n">if</span><span class="p">(</span><span class="err">$</span><span class="m">1</span><span class="o">~/</span><span class="n">Mike</span><span class="o">/</span><span class="p">)</span> <span class="n">print</span> <span class="s2">&quot;&quot;</span><span class="o">,</span><span class="err">$</span><span class="m">3</span><span class="o">,</span><span class="err">$</span><span class="m">4</span><span class="o">,</span><span class="err">$</span><span class="m">5</span><span class="p">}</span><span class="s1">&#39; love</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">39.把一行竖排的数据转换成横排</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;%s,&quot;</span><span class="o">,</span><span class="err">$</span><span class="m">1</span><span class="p">)}</span><span class="s1">&#39; a.txt</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">printf</span> <span class="p">(</span><span class="s2">&quot;%s\n&quot;</span><span class="o">,</span><span class="err">$</span><span class="m">0</span><span class="p">)}</span><span class="s1">&#39; a.txt</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">40.systime函数返回从1970年1月1日开始到当前时间(不计闰年)的整秒数</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">now</span> <span class="o">=</span> <span class="n">systime</span><span class="p">();</span> <span class="n">print</span> <span class="n">now</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">now</span><span class="o">=</span><span class="n">strftime</span><span class="p">(</span> <span class="s2">&quot;%D&quot;</span><span class="o">,</span> <span class="n">systime</span><span class="p">()</span> <span class="p">);</span> <span class="n">print</span> <span class="n">now</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">now</span><span class="o">=</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/%d/%y&quot;</span><span class="p">);</span> <span class="n">print</span> <span class="n">now</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s1">41.将时间戳转成日值的awk方法</span>
-</span><span class='line'><span class="s1">echo &quot;1180051515&quot;|awk &#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%F %T&quot;</span><span class="o">,</span><span class="err">$</span><span class="m">0</span><span class="p">)}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">42.打印输入记录的最后一个字段</span>
-</span><span class='line'><span class="s1">awk -F/ &#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="n">NF</span><span class="p">}</span><span class="s1">&#39; a.txt</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">43.打印输入记录的第2个字段</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">x</span><span class="o">=</span><span class="m">2</span><span class="p">;</span><span class="n">print</span> <span class="err">$</span><span class="n">x</span><span class="p">}</span><span class="s1">&#39; a.txt</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">44.显示文件a.txt的当前记录号、域数和每一行的第一个和最后一个域和文件名</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">NR</span><span class="o">,</span><span class="n">NF</span><span class="o">,</span><span class="err">$</span><span class="m">1</span><span class="o">,</span><span class="err">$</span><span class="n">NF</span><span class="o">,</span><span class="n">FILENAME</span><span class="p">}</span><span class="s1">&#39;  a.txt</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">45.在awk中调用系统变量必须用单引号，如果是双引号，则表示字符串</span>
-</span><span class='line'><span class="s1">Flag=abcd</span>
-</span><span class='line'><span class="s1">awk ‘{print ‘$Flag’}’ 结果为abcd</span>
-</span><span class='line'><span class="s1">awk ‘{print “$Flag”}’ 结果为$Flag</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">46.把三个文件的内容追加到一个文件里</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">FILENAME</span><span class="o">,</span><span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39; a b c &gt;all</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="s1">47.通过管道把date的执行结果送给getline，并赋给变量d，然后打印。</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">BEGIN</span> <span class="p">{</span><span class="s2">&quot;date&quot;</span><span class="o">|</span><span class="n">getline</span> <span class="n">d</span><span class="p">;</span> <span class="n">print</span> <span class="n">d</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">48.通过getline命令交互输入name，并显示出来:</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">BEGIN</span> <span class="p">{</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;echo \&quot;Input your name:\\c\&quot;&quot;</span><span class="p">);</span> <span class="n">getline</span> <span class="n">d</span><span class="p">;</span><span class="n">print</span> <span class="s2">&quot;\nYour name is&quot;</span><span class="o">,</span><span class="n">d</span><span class="o">,</span><span class="s2">&quot;\b!\n&quot;</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">49.输出不换行</span>
-</span><span class='line'><span class="s1">#awk -F: &#39;</span><span class="p">{</span><span class="n">printf</span>  <span class="err">$</span><span class="m">1</span><span class="p">}</span><span class="s1">&#39;  /etc/passwd </span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">50.toupper和tolower函数可用于字符串大小间的转换</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="p">{</span> <span class="n">print</span> <span class="n">toupper</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span><span class="o">,</span> <span class="n">tolower</span><span class="p">(</span><span class="s2">&quot;TEST&quot;</span><span class="p">)</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">51.split函数可按给定的分隔符把字符串分割为一个数组.如果分隔符没提供,按当前FS值进行分割</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="p">{</span> <span class="n">split</span><span class="p">(</span> <span class="s2">&quot;20:18:00&quot;</span><span class="o">,</span> <span class="n">time</span><span class="o">,</span> <span class="s2">&quot;:&quot;</span> <span class="p">);</span> <span class="n">print</span> <span class="n">time</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="o">,</span><span class="n">time</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="o">,</span><span class="n">time</span><span class="cp">[</span><span class="mi">3</span><span class="cp">]</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">52.sub函数匹配记录中最大,最靠左边的子字符串的正则表达式,并用替换字符串替换这些字符串.如果没有指定目标字符串就默认使用整个记录.替换只发生在第一次匹配的时候.格式如下:</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="p">{</span> <span class="n">sub</span><span class="p">(</span><span class="o">/</span><span class="n">test</span><span class="o">/,</span> <span class="s2">&quot;mytest&quot;</span><span class="p">);</span> <span class="n">print</span> <span class="p">}</span><span class="s1">&#39; testfile</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="p">{</span> <span class="n">sub</span><span class="p">(</span><span class="o">/</span><span class="n">test</span><span class="o">/,</span> <span class="s2">&quot;mytest&quot;</span><span class="p">);</span> <span class="err">$</span><span class="m">1</span><span class="p">}</span><span class="o">;</span> <span class="nt">print</span> <span class="err">}</span><span class="s1">&#39; testfile</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">53.system函数可以在awk中执行linux的命令。</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">BEGIN</span><span class="p">{</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;clear&quot;</span><span class="p">)}</span><span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">54.执行shell的date命令，并通过管道输出给getline，然后getline从管道中读取并将输入赋值给d，split函数把变量d转化成数组mon，然后打印数组mon的第二个元素</span>
-</span><span class='line'><span class="s1">#awk &#39;</span><span class="nt">BEGIN</span><span class="p">{</span><span class="s2">&quot;date&quot;</span> <span class="o">|</span> <span class="n">getline</span> <span class="n">d</span><span class="p">;</span> <span class="n">split</span><span class="p">(</span><span class="n">d</span><span class="o">,</span><span class="n">mon</span><span class="p">);</span> <span class="n">print</span> <span class="n">mon</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="p">}</span><span class="s1">&#39; test</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1"> </span>
-</span><span class='line'>
-</span><span class='line'><span class="s1"># 每行后面增加一行空行</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">1</span><span class="o">;</span><span class="p">{</span><span class="n">print</span> <span class="s2">&quot;&quot;</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">BEGIN</span><span class="p">{</span><span class="n">ORS</span><span class="o">=</span><span class="s2">&quot;\n\n&quot;</span><span class="p">}</span><span class="o">;</span><span class="nt">1</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 每行后面增加一行空行。输出文件不会包含连续的两个或两个以上的空行</span>
-</span><span class='line'><span class="s1"># 注意：在Unix系统， DOS行包括的 CRLF （\r\n） 通常会被作为非空行对待</span>
-</span><span class='line'><span class="s1"># 因此 &#39;</span><span class="nt">NF</span><span class="s1">&#39; 将会返回TRUE。</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">NF</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="m">0</span> <span class="s2">&quot;\n&quot;</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 每行后面增加两行空行</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">1</span><span class="o">;</span><span class="p">{</span><span class="n">print</span> <span class="s2">&quot;\n&quot;</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">编号和计算：</span>
-</span><span class='line'><span class="s1"># 以文件为单位，在每句行前加上编号 （左对齐）.</span>
-</span><span class='line'><span class="s1"># 使用制表符 （\t） 来代替空格可以有效保护页变的空白。</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">FNR</span> <span class="s2">&quot;\t&quot;</span> <span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39; files*</span>
-</span><span class='line'><span class="s1"># 用制表符 （\t） 给所有文件加上连贯的编号。</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">print</span> <span class="n">NR</span> <span class="s2">&quot;\t&quot;</span> <span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39; files*</span>
-</span><span class='line'><span class="s1"># number each line of a file （number on left, right-aligned）</span>
-</span><span class='line'><span class="s1"># Double the percent signs if typing from the DOS command prompt.</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;%5d : %s\n&quot;</span><span class="o">,</span> <span class="n">NR</span><span class="o">,</span><span class="err">$</span><span class="m">0</span><span class="p">)}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 给非空白行的行加上编号</span>
-</span><span class='line'><span class="s1"># 记得Unix对于 \r 的处理的特殊之处。（上面已经提到）</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">NF</span><span class="p">{</span><span class="err">$</span><span class="m">0</span><span class="o">=++</span><span class="n">a</span> <span class="s2">&quot; :&quot;</span> <span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="o">;</span><span class="p">{</span><span class="n">print</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">print</span> <span class="p">(</span><span class="n">NF</span><span class="o">?</span> <span class="o">++</span><span class="n">a</span> <span class="s2">&quot; :&quot;</span> <span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 计算行数 （模拟 &quot;wc -l&quot;）</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">END</span><span class="p">{</span><span class="n">print</span> <span class="n">NR</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 计算每行每个区域之和</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">s</span><span class="o">=</span><span class="m">0</span><span class="p">;</span> <span class="n">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NF</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="err">$</span><span class="n">i</span><span class="p">;</span> <span class="n">print</span> <span class="n">s</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 计算所有行所有区域的总和</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NF</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="err">$</span><span class="n">i</span><span class="p">}</span><span class="o">;</span> <span class="nt">END</span><span class="p">{</span><span class="n">print</span> <span class="n">s</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 打印每行每区域的绝对值</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NF</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">if</span> <span class="p">(</span><span class="err">$</span><span class="n">i</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="err">$</span><span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="err">$</span><span class="n">i</span><span class="p">;</span> <span class="n">print</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">NF</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="err">$</span><span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="err">$</span><span class="n">i</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">)</span> <span class="o">?</span> <span class="o">-</span><span class="err">$</span><span class="n">i</span> <span class="o">:</span> <span class="err">$</span><span class="n">i</span><span class="p">;</span> <span class="n">print</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 计算所有行所有区域（词）的个数</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">NF</span> <span class="p">}</span><span class="o">;</span> <span class="nt">END</span> <span class="p">{</span><span class="n">print</span> <span class="n">total</span><span class="p">}</span><span class="s1">&#39; file</span>
-</span><span class='line'><span class="s1"># 打印包含 &quot;Beth&quot; 的行数</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="o">/</span><span class="nt">Beth</span><span class="o">/</span><span class="p">{</span><span class="n">n</span><span class="o">++</span><span class="p">}</span><span class="o">;</span> <span class="nt">END</span> <span class="p">{</span><span class="n">print</span> <span class="n">n</span><span class="o">+</span><span class="m">0</span><span class="p">}</span><span class="s1">&#39; file</span>
-</span><span class='line'><span class="s1"># 打印第一列最大的行</span>
-</span><span class='line'><span class="s1"># 并且在行前打印出这个最大的数</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="err">$</span><span class="nt">1</span> <span class="o">&gt;</span> <span class="nt">max</span> <span class="p">{</span><span class="n">max</span><span class="o">=</span><span class="err">$</span><span class="m">1</span><span class="p">;</span> <span class="n">maxline</span><span class="o">=</span><span class="err">$</span><span class="m">0</span><span class="p">}</span><span class="o">;</span> <span class="nt">END</span><span class="p">{</span> <span class="n">print</span> <span class="n">max</span><span class="o">,</span> <span class="n">maxline</span><span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 打印每行的列数，并在后面跟上此行内容</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">print</span> <span class="n">NF</span> <span class="s2">&quot;:&quot;</span> <span class="err">$</span><span class="m">0</span> <span class="p">}</span> <span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 打印每行的最后一列</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">print</span> <span class="err">$</span><span class="n">NF</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 打印最后一行的最后一列</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span> <span class="n">field</span> <span class="o">=</span> <span class="err">$</span><span class="n">NF</span> <span class="p">}</span><span class="o">;</span> <span class="nt">END</span><span class="p">{</span> <span class="n">print</span> <span class="n">field</span> <span class="p">}</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 打印列数超过4的行</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="nt">NF</span> <span class="o">&gt;</span> <span class="nt">4</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"># 打印最后一列大于4的行</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="err">$</span><span class="nt">NF</span> <span class="o">&gt;</span> <span class="nt">4</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">文本转换和替代：</span>
-</span><span class='line'><span class="s1"># 在Unix环境：转换DOS新行 （CR/LF） 为Unix格式</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">sub</span><span class="p">(</span><span class="o">/</span><span class="err">\</span><span class="n">r</span><span class="err">$</span><span class="o">/,</span><span class="s2">&quot;&quot;</span><span class="p">);</span><span class="n">print</span><span class="p">}</span><span class="s1">&#39; # 假设每行都以Ctrl-M结尾</span>
-</span><span class='line'><span class="s1"># 在Unix环境：转换Unix新行 （LF） 为DOS格式</span>
-</span><span class='line'><span class="s1">awk &#39;</span><span class="p">{</span><span class="n">sub</span><span class="p">(</span><span class="o">/</span><span class="err">$</span><span class="o">/,</span><span class="s2">&quot;\r&quot;</span><span class="p">);</span><span class="n">print</span><span class="p">}</span>
-</span><span class='line'><span class="err">#</span> <span class="err">在</span><span class="nt">DOS</span><span class="err">环境：转换</span><span class="nt">Unix</span><span class="err">新行</span> <span class="err">（</span><span class="nt">LF</span><span class="err">）</span> <span class="err">为</span><span class="nt">DOS</span><span class="err">格式</span>
-</span><span class='line'><span class="nt">awk</span> <span class="nt">1</span>
-</span><span class='line'><span class="err">#</span> <span class="err">在</span><span class="nt">DOS</span><span class="err">环境：转换</span><span class="nt">DOS</span><span class="err">新行</span> <span class="err">（</span><span class="nt">CR</span><span class="o">/</span><span class="nt">LF</span><span class="err">）</span> <span class="err">为</span><span class="nt">Unix</span><span class="err">格式</span>
-</span><span class='line'><span class="err">#</span> <span class="nt">DOS</span><span class="err">版本的</span><span class="nt">awk</span><span class="err">不能运行</span><span class="o">,</span> <span class="err">只能用</span><span class="nt">gawk</span><span class="o">:</span>
-</span><span class='line'><span class="nt">gawk</span> <span class="nt">-v</span> <span class="nt">BINMODE</span><span class="o">=</span><span class="s2">&quot;w&quot;</span> <span class="s1">&#39;1&#39;</span> <span class="nt">infile</span> <span class="o">&gt;</span><span class="nt">outfile</span>
-</span><span class='line'><span class="err">#</span> <span class="err">用</span> <span class="s2">&quot;tr&quot;</span> <span class="err">替代的方法。</span>
-</span><span class='line'><span class="nt">tr</span> <span class="nt">-d</span> <span class="err">\</span><span class="nt">r</span> <span class="o">&lt;</span><span class="nt">infile</span> <span class="o">&gt;</span><span class="nt">outfile</span> <span class="err">#</span> <span class="nt">GNU</span> <span class="nt">tr</span> <span class="err">版本为</span> <span class="nt">1</span><span class="nc">.22</span> <span class="err">或者更高</span>
-</span><span class='line'><span class="err">#</span> <span class="err">删除每行前的空白（包括空格符和制表符）</span>
-</span><span class='line'><span class="err">#</span> <span class="err">使所有文本左对齐</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{sub(/^</span><span class="cp">[</span> <span class="o">\</span><span class="nb">t</span><span class="cp">]</span><span class="s1">+/, &quot;&quot;); print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">删除每行结尾的空白（包括空格符和制表符）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{sub(/</span><span class="cp">[</span> <span class="o">\</span><span class="nb">t</span><span class="cp">]</span><span class="s1">+$/, &quot;&quot;);print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">删除每行开头和结尾的所有空白（包括空格符和制表符）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{gsub(/^</span><span class="cp">[</span> <span class="o">\</span><span class="nb">t</span><span class="cp">]</span><span class="s1">+|</span><span class="cp">[</span> <span class="o">\</span><span class="nb">t</span><span class="cp">]</span><span class="s1">+$/,&quot;&quot;);print}&#39;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{$1=$1;print}&#39;</span> <span class="err">#</span> <span class="err">每列之间的空白也被删除</span>
-</span><span class='line'><span class="err">#</span> <span class="err">在每一行开头处插入</span><span class="nt">5</span><span class="err">个空格</span> <span class="err">（做整页的左位移）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{sub(/^/, &quot; &quot;);print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">用</span><span class="nt">79</span><span class="err">个字符为宽度，将全部文本右对齐</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{printf &quot;%79s\n&quot;, $0}&#39;</span> <span class="nt">file</span><span class="o">*</span>
-</span><span class='line'><span class="err">#</span> <span class="err">用</span><span class="nt">79</span><span class="err">个字符为宽度，将全部文本居中对齐</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{l=length();s=int((79-l)/2); printf &quot;%&quot;(s+l)&quot;s\n&quot;,$0}&#39;</span> <span class="nt">file</span><span class="o">*</span>
-</span><span class='line'><span class="err">#</span> <span class="err">每行用</span> <span class="s2">&quot;bar&quot;</span> <span class="err">查找替换</span> <span class="s2">&quot;foo&quot;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{sub(/foo/,&quot;bar&quot;);print}&#39;</span> <span class="err">#</span> <span class="err">仅仅替换第一个找到的</span><span class="s2">&quot;foo&quot;</span>
-</span><span class='line'><span class="nt">gawk</span> <span class="s1">&#39;{$0=gensub(/foo/,&quot;bar&quot;,4);print}&#39;</span> <span class="err">#</span> <span class="err">仅仅替换第四个找到的</span><span class="s2">&quot;foo&quot;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{gsub(/foo/,&quot;bar&quot;);print}&#39;</span> <span class="err">#</span> <span class="err">全部替换</span>
-</span><span class='line'><span class="err">#</span> <span class="err">在包含</span> <span class="s2">&quot;baz&quot;</span> <span class="err">的行里，将</span> <span class="s2">&quot;foo&quot;</span> <span class="err">替换为</span> <span class="s2">&quot;bar&quot;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/baz/{gsub(/foo/, &quot;bar&quot;)};{print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">在不包含</span> <span class="s2">&quot;baz&quot;</span> <span class="err">的行里，将</span> <span class="s2">&quot;foo&quot;</span> <span class="err">替换为</span> <span class="s2">&quot;bar&quot;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;!/baz/{gsub(/foo/, &quot;bar&quot;)};{print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">将</span> <span class="s2">&quot;scarlet&quot;</span> <span class="err">或者</span> <span class="s2">&quot;ruby&quot;</span> <span class="err">或者</span> <span class="s2">&quot;puce&quot;</span> <span class="err">替换为</span> <span class="s2">&quot;red&quot;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{gsub(/scarlet|ruby|puce/, &quot;red&quot;); print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">倒排文本</span> <span class="err">（模拟</span> <span class="s2">&quot;tac&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{a</span><span class="cp">[</span><span class="nx">i</span><span class="o">++</span><span class="cp">]</span><span class="s1">=$0} END {for (j=i-1; j&gt;=0;) print a</span><span class="cp">[</span><span class="nx">j</span><span class="o">--</span><span class="cp">]</span><span class="s1"> }&#39;</span> <span class="nt">file</span><span class="o">*</span>
-</span><span class='line'><span class="err">#</span> <span class="err">如果一行结尾为反斜线符，将下一行接到这行后面</span>
-</span><span class='line'><span class="err">#</span> <span class="err">（如果有连续多行后面带反斜线符，将会失败）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/\\$/ {sub(/\\$/,&quot;&quot;); getline t; print $0 t; next}; 1&#39;</span> <span class="nt">file</span><span class="o">*</span>
-</span><span class='line'><span class="err">#</span> <span class="err">排序并打印所有登录用户的姓名</span>
-</span><span class='line'><span class="nt">awk</span> <span class="nt">-F</span> <span class="s2">&quot;:&quot;</span> <span class="s1">&#39;{ print $1 | &quot;sort&quot; }&#39;</span> <span class="o">/</span><span class="nt">etc</span><span class="o">/</span><span class="nt">passwd</span>
-</span><span class='line'><span class="err">#</span> <span class="err">以相反的顺序打印出每行的前两列</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{print $2, $1}&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">#</span> <span class="err">调换前两列的位置</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{temp = $1; $1 = $2; $2 = temp}&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印每行，并删除第二列</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{ $2 = &quot;&quot;; print }&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">倒置每行并打印</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{for (i=NF; i&gt;0; i--) printf(&quot;%s &quot;,i);printf (&quot;\n&quot;)}&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">#</span> <span class="err">删除重复连续的行</span> <span class="err">（模拟</span> <span class="s2">&quot;uniq&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;a !~ $0; {a=$0}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">删除重复的、非连续的行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;! a</span><span class="cp">[</span><span class="err">$</span><span class="mi">0</span><span class="cp">]</span><span class="s1">++&#39;</span> <span class="err">#</span> <span class="err">最简练</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;!($0 in a) {a</span><span class="cp">[</span><span class="err">$</span><span class="mi">0</span><span class="cp">]</span><span class="s1">;print}&#39;</span> <span class="err">#</span> <span class="err">最有效</span>
-</span><span class='line'><span class="err">#</span> <span class="err">用逗号链接每</span><span class="nt">5</span><span class="err">行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;ORS=%NR%5?&quot;,&quot;:&quot;\n&quot;&#39;</span> <span class="nt">file</span> <span class="nf">#bug</span> <span class="nt">awk</span> <span class="s1">&#39;ORS=NR%5?&quot;,&quot;:&quot;\n&quot;&#39;</span> <span class="nt">file</span>
-</span><span class='line'><span class="err">选择性的打印某些行：</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印文件的前十行</span> <span class="err">（模拟</span> <span class="s2">&quot;head&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;NR &lt; 11&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印文件的第一行</span> <span class="err">（模拟</span> <span class="s2">&quot;head -1&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;NR&gt;1{exit};1&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印文件的最后两行</span> <span class="err">（模拟</span> <span class="s2">&quot;tail -2&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;{y=x &quot;\n&quot; $0; x=$0};END{print y}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印文件的最后一行</span> <span class="err">（模拟</span> <span class="s2">&quot;tail -1&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;END{print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印匹配正则表达式的行</span> <span class="err">（模拟</span> <span class="s2">&quot;grep&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/regex/&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印不匹配正则表达式的行</span> <span class="err">（模拟</span> <span class="s2">&quot;grep -v&quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;!/regex/&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印匹配正则表达式的前一行，但是不打印当前行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/regex/{print x};{x=$0}&#39;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/regex/{print (x==&quot;&quot; ? &quot;match on line 1&quot; : x)};{x=$0}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印匹配正则表达式的后一行，但是不打印当前行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/regex/{getline;print}&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">以任何顺序查找包含</span> <span class="nt">AAA</span><span class="err">、</span><span class="nt">BBB</span> <span class="err">和</span> <span class="nt">CCC</span> <span class="err">的行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/AAA/; /BBB/; /CCC/&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">以指定顺序查找包含</span> <span class="nt">AAA</span><span class="err">、</span><span class="nt">BBB</span> <span class="err">和</span> <span class="nt">CCC</span> <span class="err">的行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/AAA.*BBB.*CCC/&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印长度大于</span><span class="nt">64</span><span class="err">个字节的行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;length &gt; 64&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印长度小于</span><span class="nt">64</span><span class="err">个字节的行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;length &lt; 64&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印从匹配正则起到文件末尾的内容</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/regex/,0&#39;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/regex/,EOF&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印指定行之间的内容</span> <span class="err">（</span><span class="nt">8-12</span><span class="err">行</span><span class="o">,</span> <span class="err">包括第</span><span class="nt">8</span><span class="err">和第</span><span class="nt">12</span><span class="err">行）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;NR==8,NR==12&#39;</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印第</span><span class="nt">52</span><span class="err">行</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;NR==52&#39;</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;NR==52 {print;exit}&#39;</span> <span class="err">#</span> <span class="err">对于大文件更有效率</span>
-</span><span class='line'><span class="err">#</span> <span class="err">打印两个正则匹配间的内容</span> <span class="err">（包括正则的内容）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/Iowa/,/Montana/&#39;</span> <span class="err">#</span> <span class="err">大小写敏感</span>
-</span><span class='line'><span class="err">选择性的删除某些行：</span>
-</span><span class='line'><span class="err">#</span> <span class="err">删除所有空白行</span> <span class="err">（类似于</span> <span class="s2">&quot;grep &#39;.&#39; &quot;</span><span class="err">）</span>
-</span><span class='line'><span class="nt">awk</span> <span class="nt">NF</span>
-</span><span class='line'><span class="nt">awk</span> <span class="s1">&#39;/./&#39;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="err">其他</span>
-</span><span class='line'><span class="nt">1</span><span class="o">)</span> <span class="err">为了避免碰到</span><span class="nt">awk</span><span class="err">错误，可以总结出以下规律</span><span class="o">:</span>
-</span><span class='line'><span class="err">①</span> <span class="err">确保整个</span><span class="nt">awk_script</span><span class="err">用单引号括起来。</span>
-</span><span class='line'><span class="err">②</span> <span class="err">确保</span><span class="nt">awk_script</span><span class="err">内所有引号成对出现。</span>
-</span><span class='line'><span class="err">③</span> <span class="err">确保用花括号括起动作语句，用圆括号括起条件语句。</span>
-</span><span class='line'><span class="err">④</span> <span class="err">可能忘记使用花括号，也许你认为没有必要，但</span><span class="nt">awk</span><span class="err">不这样认为，将按之解释语法。</span>
-</span><span class='line'><span class="err">⑤</span> <span class="err">如果使用字符串，一定要保证字符串被双引号括起来</span><span class="o">(</span><span class="err">在模式中除外</span><span class="o">)</span><span class="err">。</span>
-</span><span class='line'><span class="nt">2</span><span class="o">)</span> <span class="err">在</span><span class="nt">awk</span><span class="err">中，设置有意义的域名是一种好习惯，在进行模式匹配或关系操作时更容易理解。一般的变量名设置方式为</span><span class="nt">name</span><span class="o">=</span><span class="err">$</span><span class="nt">n</span><span class="err">。</span><span class="o">(</span><span class="err">这里</span><span class="nt">name</span><span class="err">为调用的域变量名，</span> <span class="nt">n</span><span class="err">为实际域号。</span><span class="o">)</span>
-</span><span class='line'><span class="nt">3</span><span class="o">)</span> <span class="err">通常在</span><span class="nt">BEGIN</span><span class="err">部分给一些变量赋值是很有益的，这样可以在</span><span class="nt">awk</span><span class="err">表达式进行改动时减少很多麻烦。</span>
-</span><span class='line'><span class="nt">4</span><span class="o">)</span> <span class="nt">awk</span><span class="err">的基本功能是根据指定规则抽取输入数据的部分内容并输出，另一个重要的功能是对输入数据进行分析运算得到新的数据并输出，这是通过在</span><span class="nt">awk_script</span><span class="err">中对字段变量</span><span class="o">(</span><span class="err">$</span><span class="nt">1</span><span class="err">、$</span><span class="nt">2</span><span class="err">、$</span><span class="nt">3</span><span class="o">...)</span><span class="err">从新赋值或使用更大的字段变量$</span><span class="nt">n</span><span class="o">(</span><span class="nt">n</span><span class="err">大于当前记录的</span><span class="nt">NF</span><span class="o">)</span><span class="err">而实现的。</span>
-</span><span class='line'><span class="nt">5</span><span class="o">)</span> <span class="err">使用字符串或正则表达式时，有时需要在输出中加入一新行或查询一元字符。这时就需要字符串屏蔽序列。</span><span class="nt">awk</span><span class="err">中经常使用的屏蔽序列有</span><span class="o">:</span> <span class="err">\</span><span class="nt">b</span> <span class="err">退格键</span> <span class="err">\</span><span class="nt">t</span> <span class="nt">tab</span><span class="err">键</span> <span class="err">\</span><span class="nt">f</span> <span class="err">走纸换页</span> <span class="err">\</span><span class="nt">ddd</span> <span class="err">八进制值</span> <span class="err">\</span><span class="nt">n</span> <span class="err">新行</span> <span class="err">\</span><span class="nt">r</span> <span class="err">回车键</span> <span class="err">\</span><span class="nt">c</span> <span class="err">任意其他特殊字符。</span><span class="nt">eg</span><span class="o">:</span> <span class="err">\\为反斜线符号</span>
-</span><span class='line'><span class="nt">6</span><span class="o">)</span> <span class="nt">awk</span><span class="err">的输出函数</span><span class="nt">printf</span><span class="err">，基本上和</span><span class="nt">C</span><span class="err">语言的语法类似。</span>
-</span><span class='line'>    <span class="err">①</span> <span class="err">格式</span><span class="o">:</span> <span class="nt">printf</span> <span class="o">(</span><span class="s2">&quot;输出模板字符串&quot;</span><span class="o">,</span><span class="err">参数列表</span><span class="o">)</span>
-</span><span class='line'>    <span class="err">②</span> <span class="err">参数列表是以逗号分隔的列表，参数可以是变量、数字值或字符串。</span>
-</span><span class='line'>    <span class="err">③</span> <span class="err">输出模板字符串的字符串中必须包含格式控制符，有几个参数就要求有几个格式控制符。模板字符串中可以只有格式控制符而没有其它字符。</span>
-</span><span class='line'>    <span class="err">④</span> <span class="err">格式控制符</span><span class="o">:</span> <span class="o">%</span><span class="cp">[</span><span class="o">-</span><span class="cp">][</span><span class="nb">width</span><span class="cp">][</span><span class="bp">.</span><span class="nx">prec</span><span class="cp">]</span><span class="nt">fmt</span> <span class="o">%</span> <span class="o">:</span> <span class="err">标识一个格式控制符的开始，不可省略。</span> <span class="nt">-</span> <span class="o">:</span> <span class="err">表示参数输出时左对齐，可省略。</span> <span class="nt">width</span> <span class="o">:</span> <span class="err">一个数字，表示参数输出时占用域的宽度，可省略。</span> <span class="nc">.prec</span> <span class="o">:</span> <span class="nt">prec</span><span class="err">是一个数值，表示最大字符串长度或小数点右边的位数，可省略。</span> <span class="nt">fmt</span> <span class="o">:</span> <span class="err">一个小写字母，表示输出参数的数据类型，不可省略。</span>
-</span><span class='line'>    <span class="err">⑤</span> <span class="err">常见的</span><span class="nt">fmt</span> <span class="o">:</span> <span class="nt">c</span> <span class="nt">ASCII</span><span class="err">字符</span> <span class="nt">d</span> <span class="err">整数</span> <span class="nt">e</span> <span class="err">浮点数，科学记数法</span> <span class="nt">f</span> <span class="err">浮点数，如</span> <span class="nt">123</span><span class="nc">.44</span> <span class="nt">g</span> <span class="err">由</span><span class="nt">awk</span><span class="err">决定使用哪种浮点数转换</span><span class="nt">e</span><span class="err">或</span><span class="nt">f</span> <span class="nt">o</span> <span class="err">八进制数</span> <span class="nt">s</span> <span class="err">字符串</span> <span class="nt">x</span> <span class="err">十六进制数</span>
-</span><span class='line'>    <span class="err">⑥</span> <span class="err">举例</span><span class="o">:</span> <span class="nt">echo</span> <span class="s2">&quot;65&quot;</span> <span class="o">|</span> <span class="nt">awk</span> <span class="s1">&#39;{ printf (&quot;%c\n&quot;,$0) }&#39;</span> <span class="o">//</span> <span class="err">将打印</span> <span class="nt">A</span> <span class="nt">awk</span> <span class="s1">&#39;BEGIN{printf &quot;%.4f\n&quot;,999}&#39;</span> <span class="o">//</span><span class="err">将打印</span> <span class="nt">999</span><span class="nc">.0000</span> <span class="nt">awk</span> <span class="s1">&#39;BEGIN{printf &quot;2 number:%8.4f%8.2f&quot;,999,888}&#39;</span> <span class="o">//</span> <span class="err">将打印</span> <span class="nt">2</span> <span class="nt">number</span><span class="nd">:999</span><span class="nc">.0000</span> <span class="nt">888</span><span class="nc">.000</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>转自<a href="http://blog.chinaunix.net/uid-83572-id-3690.html">http://blog.chinaunix.net/uid-83572-id-3690.html</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/24/sed/">Sed技巧小结</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-24T14:49:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>1.删除行首空格</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed 's/^[]*//g' filename
-</span><span class='line'>sed 's/^ *//g' filename
-</span><span class='line'>sed 's/^[[:space:]]*//g' filename</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2.行后和行前添加新行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>行前:sed 's/pattern/\n&/g' filename
-</span><span class='line'>行后:sed 's/pattern/&\n/g' filename
-</span><span class='line'>&=pattern</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3.使用变量替换(使用双引号)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed -e "s/$var1/$var2/g" filename</span></code></pre></td></tr></table></div></figure>
-
-
-<p>4.在第一行前插入文本</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '1 i\插入字符串' filename</span></code></pre></td></tr></table></div></figure>
-
-
-<p>5.在最后一行插入</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '$ a\插入字符串' filename</span></code></pre></td></tr></table></div></figure>
-
-
-<p>6.在匹配行前插入</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '/pattern/i "插出入字符串"' filename</span></code></pre></td></tr></table></div></figure>
-
-
-<p>7.在匹配行后插入</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sed -i '/pattern/a “插入字符串”' fielname</span></code></pre></td></tr></table></div></figure>
-
-
-<p>8.删除文本中空行和空格组成的行以及#号注释的行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>grep -v ^# filename | sed '/^[[:space:]]*$/d'|sed '/^$/d'</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/23/2013zhong-chang-xiu-xi/">2013中场休息</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-23T12:56:00+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>这篇博文是在gentoo下敲出来的
-</span><span class='line'>2013到底怎么了？
-</span><span class='line'>2012世界末日的诅咒吗?
-</span><span class='line'>小贝退役了
-</span><span class='line'>....
-</span><span class='line'>690多万大学生毕业
-</span><span class='line'>...
-</span><span class='line'>想说的太多了就不扯了
-</span><span class='line'>人不扯淡枉少年啊
-</span><span class='line'>特别讨厌虚伪的人做虚伪的事~~~</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -2389,11 +1336,23 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/devops/'>DevOps (3)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/heartbeat/">Heartbeat</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/zabbix/">Zabbix</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/salt/">Salt</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a>
@@ -2401,18 +1360,6 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
     
       <li class="post">
         <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/29/cong-wei-ti-ji-de-mi-mi/">从未提及的秘密</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/08/ge-ren-jian-li/">个人简历</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a>
       </li>
     
   </ul>
