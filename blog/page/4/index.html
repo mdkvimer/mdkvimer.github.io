@@ -9,8 +9,14 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="许久未曾写下些什么,每次抬起手放在键盘上就有种卡住的感觉,如鲠在喉.10年9月自己单枪匹马的坐着k538经过一天一夜的奔波来到杭州，进入了计量~时间过的太快了,禁不起片刻的伫足.转眼四年已快过四分之三了
-伴随着成长,随之而来的便是压力.回忆起小时候信誓旦旦的说想快点长大,是多么的天真. &hellip;">
+  <meta name="description" content="1
+2
+3
+4
+今天~冷~冻~冰。高一同班的一女生今告诉我《盗墓笔记8》出了，
+曾经坐在她后面看这小说，想不到她居然也看了而且很迷恋。。
+移动硬盘两天了还没到，可恶的申通！！晚上打电话回家了。。
+怀念老妈做的菜，更喜欢吃自个做的菜。。青菜啊。。就这样了 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +85,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/19/jin-tian/">今天</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-19T10:49:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>今天~冷~冻~冰。高一同班的一女生今告诉我《盗墓笔记8》出了，
+</span><span class='line'>曾经坐在她后面看这小说，想不到她居然也看了而且很迷恋。。
+</span><span class='line'>移动硬盘两天了还没到，可恶的申通！！晚上打电话回家了。。
+</span><span class='line'>怀念老妈做的菜，更喜欢吃自个做的菜。。青菜啊。。就这样了</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1917,244 +1968,6 @@ PHP代码</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/19/duo-xian-cheng-zhi-sheng-chan-zhe-yu-xiao-fei-zhe-wen-ti/">多线程之生产者于消费者问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T10:26:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>生产者线程向一缓冲区中写入数据~消费者线程从缓冲区中读取数据，由于生产者线程和消费者线程共享同一缓冲区，为了正确的读写数据，在使用缓冲队列时必须保持互至。生产者线程和消费者线程必须满足：生产者写入的缓冲区的数目不能超过缓冲区的容量，消费者线程读取的数目不能超过生产者写入的数目。初始化读写指针为0，如果读指针等于写指针。则缓冲区是空的~如果（写指针+1） % N 等于读指针，则缓冲区是满的
-code</p>
-
-<figure class='code'><figcaption><span> (proandcon.c)</span> <a href='/downloads/code/proandcon.c'>download</a></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include&lt;stdio.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;stdlib.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;string.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;sys/wait.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;sys/types.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;unistd.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;pthread.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;time.h&gt;</span>
-</span><span class='line'><span class="cp">#include&lt;math.h&gt;</span>
-</span><span class='line'><span class="cp">#define BUFFER_SIZE 8</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">struct</span> <span class="n">prodcons</span> <span class="p">{</span>
-</span><span class='line'> <span class="kt">int</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>
-</span><span class='line'> <span class="n">pthread_mutex_t</span> <span class="n">lock</span><span class="p">;</span>
-</span><span class='line'> <span class="kt">int</span> <span class="n">readpos</span><span class="p">,</span><span class="n">writepos</span><span class="p">;</span>
-</span><span class='line'> <span class="n">pthread_cond_t</span> <span class="n">notempty</span><span class="p">;</span>
-</span><span class='line'> <span class="n">pthread_cond_t</span> <span class="n">notfull</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">init</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="n">pthread_mutex_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pthread_cond_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
-</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="kt">int</span> <span class="n">data</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">if</span><span class="p">((</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">BUFFER_SIZE</span> <span class="o">==</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>    <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">,</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">[</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">&gt;=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span>
-</span><span class='line'>     <span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'> <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">);</span>
-</span><span class='line'> <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="k">struct</span> <span class="n">prodcons</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'> <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
-</span><span class='line'> <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
-</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">writepos</span> <span class="o">==</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">)</span>
-</span><span class='line'> <span class="p">{</span>
-</span><span class='line'>  <span class="n">pthread_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notempty</span><span class="p">,</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
-</span><span class='line'> <span class="p">}</span>
-</span><span class='line'> <span class="n">data</span> <span class="o">=</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">[</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="p">];</span>
-</span><span class='line'> <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">&gt;=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span>
-</span><span class='line'>     <span class="n">b</span><span class="o">-&gt;</span><span class="n">readpos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'> <span class="n">pthread_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">notfull</span><span class="p">);</span>
-</span><span class='line'> <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
-</span><span class='line'> <span class="k">return</span> <span class="n">data</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="cp">#define OVER (-1)</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">prodcons</span> <span class="n">buffer</span><span class="p">;</span>
-</span><span class='line'><span class="kt">void</span> <span class="o">*</span><span class="nf">producer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'> <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'> <span class="k">for</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="p">;</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'> <span class="p">{</span>
-</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">put</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="n">n</span><span class="p">);</span>
-</span><span class='line'> <span class="p">}</span>
-</span><span class='line'> <span class="n">put</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">,</span><span class="n">OVER</span><span class="p">);</span>
-</span><span class='line'> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="kt">void</span> <span class="o">*</span><span class="nf">consumer</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">d</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>   <span class="n">d</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
-</span><span class='line'>   <span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="n">OVER</span><span class="p">)</span>
-</span><span class='line'>       <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="n">pthread_t</span> <span class="n">th_a</span><span class="p">,</span><span class="n">th_b</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">retval</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th_a</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">producer</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pthread_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">th_b</span><span class="p">,</span><span class="nb">NULL</span><span class="p">,</span><span class="n">consumer</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pthread_join</span><span class="p">(</span><span class="n">th_a</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retval</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">pthread_join</span><span class="p">(</span><span class="n">th_b</span><span class="p">,</span><span class="o">&amp;</span><span class="n">retval</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -2180,11 +1993,15 @@ code</p>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
@@ -2200,10 +2017,6 @@ code</p>
     
       <li class="post">
         <a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/27/xi-tong-jian-kong-shellhan-shu-ku/">系统监控shell函数库</a>
       </li>
     
   </ul>

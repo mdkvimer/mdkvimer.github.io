@@ -9,7 +9,7 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content="计量OJ简史 1
+  <meta name="description" content="//从排好序的数组中找出k出现的字数 1
 2
 3
 4
@@ -54,11 +54,7 @@
 43
 44
 45
-46
-47
-48
-49
-50 &hellip;">
+46 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -127,6 +123,171 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/18/er-fen/">二分</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-18T22:39:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>//从排好序的数组中找出k出现的字数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;iostream&gt;
+</span><span class='line'>#include&lt;cstdio&gt;
+</span><span class='line'>#include&lt;string&gt;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int GetFistK(int* data,int length,int k,int start,int end)
+</span><span class='line'>{
+</span><span class='line'>  if(start &gt; end)
+</span><span class='line'>   return -1;
+</span><span class='line'>  int middleIndex = (start + end) / 2;
+</span><span class='line'>  int middleData = data[middleIndex];
+</span><span class='line'>  if(middleData == k)
+</span><span class='line'>  {
+</span><span class='line'>   if((middleIndex &gt; 0 && data[middleIndex-1]!=k)||middleIndex ==0)
+</span><span class='line'>    return middleIndex;
+</span><span class='line'>   else
+</span><span class='line'>    end = middleIndex – 1;
+</span><span class='line'>  }
+</span><span class='line'>  else if(middleData &gt; k)
+</span><span class='line'>   end = middleIndex – 1;
+</span><span class='line'>  else
+</span><span class='line'>   start = middleIndex + 1;
+</span><span class='line'>  return GetFistK(data,length,k,start,end);
+</span><span class='line'>}
+</span><span class='line'>int GetLastK(int* data,int length,int k,int start,int end)
+</span><span class='line'>{
+</span><span class='line'> if(start &gt; end)
+</span><span class='line'>  return -1;
+</span><span class='line'> int middleIndex = (start + end) / 2;
+</span><span class='line'> int middleData = data[middleIndex];
+</span><span class='line'> if(middleData == k)
+</span><span class='line'> {
+</span><span class='line'>  if((middleIndex &lt; length – 1 && data[middleIndex + 1] != k)||middleIndex == length -1 )
+</span><span class='line'>   return middleIndex;
+</span><span class='line'>  else
+</span><span class='line'>   start = middleIndex + 1;
+</span><span class='line'> }
+</span><span class='line'> else if(middleData &lt; k)
+</span><span class='line'>  start = middleIndex + 1;
+</span><span class='line'> else
+</span><span class='line'>  end = middleIndex – 1;
+</span><span class='line'> return GetLastK(data,length,k,start,end);
+</span><span class='line'>}
+</span><span class='line'>int GetNumberK(int* data,int length,int k)
+</span><span class='line'>{
+</span><span class='line'>   int number = 0;
+</span><span class='line'>   if(data != NULL && length &gt; 0)
+</span><span class='line'>   {
+</span><span class='line'>    int first = GetFistK(data,length,k,0,length – 1);
+</span><span class='line'> int last = GetLastK(data,length,k,0,length – 1);
+</span><span class='line'>
+</span><span class='line'> if(first &gt; -1 && last &gt; -1)
+</span><span class='line'>  number = last – first + 1;
+</span><span class='line'>   }
+</span><span class='line'>   return number;
+</span><span class='line'>}
+</span><span class='line'>int main()
+</span><span class='line'>{ 
+</span><span class='line'>    int data[8] = {3,3,3,3,3,3,4,5};
+</span><span class='line'> int k = 4;
+</span><span class='line'> int total=GetNumberK(data,8,k);
+</span><span class='line'> cout&lt;&lt;total&lt;&lt;endl;
+</span><span class='line'> return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -747,11 +908,15 @@
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
@@ -767,10 +932,6 @@
     
       <li class="post">
         <a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/27/xi-tong-jian-kong-shellhan-shu-ku/">系统监控shell函数库</a>
       </li>
     
   </ul>

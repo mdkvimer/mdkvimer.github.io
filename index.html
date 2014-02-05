@@ -13,12 +13,9 @@
 2
 3
 4
-5
-一年一度的武林大会开始了~各路豪杰各路群雄~高手如林
-渣渣要继续苦逼ing
-来吧来吧
-痛痛快快的玩个遍
-渣渣的大刀已经准备好了 ">
+好久不写博客
+过完年把2013年度总结补上
+把前段时间的学习做个总结吧！ -----by mdkvimer ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,6 +84,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T00:33:00+08:00" pubdate data-updated="true">Feb 6<span>th</span>, 2014</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>好久不写博客
+</span><span class='line'>过完年把2013年度总结补上
+</span><span class='line'>把前段时间的学习做个总结吧！
+</span><span class='line'>                  -----by mdkvimer</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2322,111 +2366,6 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/20/pythonwang-luo-bian-cheng-2/">Python网络编程2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-20T16:23:00+08:00" pubdate data-updated="true">May 20<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>python网络编程之socket</p>
-
-<p>code</p>
-
-<figure class='code'><figcaption><span> (server2.py)</span> <a href='/downloads/code/server2.py'>download</a></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
-</span><span class='line'><span class="sd">&#39;&#39;&#39;#/*=============================================================================</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Author: mengdaikun - mengdaikun@gmail.com</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># QQ : 646978600</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Last modified: 2013-04-09 15:37</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Filename: server2.py</span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd"># Description: </span>
-</span><span class='line'><span class="sd">#</span>
-</span><span class='line'><span class="sd">#=============================================================================*/&#39;&#39;&#39;</span>
-</span><span class='line'><span class="c"># basic server by python </span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">os</span> <span class="o">,</span> <span class="nn">sys</span> <span class="o">,</span> <span class="nn">socket</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'><span class="n">port</span> <span class="o">=</span> <span class="mi">5566</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span><span class="n">port</span><span class="p">))</span>
-</span><span class='line'><span class="k">print</span> <span class="s">&quot;Waiting for connecting...&quot;</span>
-</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">clientsock</span> <span class="p">,</span> <span class="n">clientaddr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Got connect from&quot;</span><span class="p">,</span><span class="n">clientsock</span><span class="o">.</span><span class="n">getpeername</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">clientsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -2450,11 +2389,15 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (8)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
@@ -2470,10 +2413,6 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
     
       <li class="post">
         <a href="/blog/2013/06/08/shell-nginxri-zhi-chu-li-1/">Shell Nginx日志处理1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/27/xi-tong-jian-kong-shellhan-shu-ku/">系统监控shell函数库</a>
       </li>
     
   </ul>
