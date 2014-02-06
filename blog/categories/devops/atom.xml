@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DevOps | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-02-06T22:56:20+08:00</updated>
+  <updated>2014-02-06T22:59:51+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -18,9 +18,77 @@
     <link href="http://mdkvimer.github.io/blog/2014/02/06/heartbeat/"/>
     <updated>2014-02-06T00:58:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2014/02/06/heartbeat</id>
-    <content type="html"><![CDATA[<p>最近做了个heartbeat的资源监控脚本测试，当master的资源不可用时，heartbeat standby 资源转移
-当节点1的http状态嘛不等于200时,heartbeat资源转移(standby)
-{% include_code mdk.sh %}</p>
+    <content type="html"><![CDATA[<p>```
+最近做了个heartbeat的资源监控脚本测试，当master的资源不可用时，heartbeat standby 资源转移
+当节点1的http状态嘛不等于200时,heartbeat资源转移(standby)</p>
+
+<h1>!/bin/bash &ndash;</h1>
+
+<h1>===============================================================================</h1>
+
+<p>#</p>
+
+<h1>FILE: check_srv_status.sh</h1>
+
+<h1></h1>
+
+<h1>USAGE: ./check_srv_status.sh</h1>
+
+<h1></h1>
+
+<h1>DESCRIPTION: 检查srv的状态 如果srv不可用heartbeat vip转换</h1>
+
+<h1></h1>
+
+<h1>OPTIONS: &mdash;&ndash;</h1>
+
+<h1>REQUIREMENTS: &mdash;&ndash;</h1>
+
+<h1>BUGS: &mdash;&ndash;</h1>
+
+<h1>NOTES: &mdash;&ndash;</h1>
+
+<h1>AUTHOR: mengdaikun (),</h1>
+
+<h1>ORGANIZATION:</h1>
+
+<h1>CREATED: 02/06/2014 09:38:28 PM CST</h1>
+
+<h1>REVISION:  &mdash;&ndash;</h1>
+
+<h1>===============================================================================</h1>
+
+<p>set -o nounset                              # Treat unset variables as an error</p>
+
+<p>srv=&ldquo;<a href="http://192.168.6.107">http://192.168.6.107</a>&rdquo;</p>
+
+<p>HTTP_CODE=<code>curl -o /dev/null -s -w "%{http_code}" "${srv}"</code></p>
+
+<p>[ -f /var/log/mdk ] &amp;&amp; echo &ldquo;The file has.&rdquo; || touch /var/log/mdk</p>
+
+<p>function_ha_standby(){</p>
+
+<pre><code>/etc/init.d/heartbeat standby &gt;&gt; /var/log/mdk
+echo  `date +"%Y-%m-%d  %H:%M:%S"`  httpd switched to slave!  &gt;&gt; /var/log/mdk
+/etc/init.d/heartbeat start &gt;&gt; /var/log/mdk
+/etc/init.d/httpd start &gt;&gt; /var/log/mdk
+</code></pre>
+
+<p>}</p>
+
+<p>/sbin/ifconfig | grep eth0:0 >/dev/null 2>&amp;1</p>
+
+<p>if [[ $? -eq 0 ]];then
+   if [[ $HTTP_CODE -ne 200 ]];then</p>
+
+<pre><code>    echo  `date +"%Y-%m-%d  %H:%M:%S"`  httpd haved stop&gt;&gt; /var/log/mdk
+    echo "mdk"
+function_ha_standby
+</code></pre>
+
+<p>   fi
+fi
+```</p>
 ]]></content>
   </entry>
   

@@ -10,7 +10,50 @@
 
   
   <meta name="description" content="1
-挖个heartbeat的坑，有空把做的实验笔记补上 ">
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+最近做了个heartbeat的资源监控脚本测试， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,7 +150,93 @@
 
 
 <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>挖个heartbeat的坑，有空把做的实验笔记补上</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>最近做了个heartbeat的资源监控脚本测试，当master的资源不可用时，heartbeat standby 资源转移
+</span><span class='line'>当节点1的http状态嘛不等于200时,heartbeat资源转移(standby)
+</span><span class='line'>#!/bin/bash - 
+</span><span class='line'>#===============================================================================
+</span><span class='line'>#
+</span><span class='line'>#          FILE: check_srv_status.sh
+</span><span class='line'># 
+</span><span class='line'>#         USAGE: ./check_srv_status.sh 
+</span><span class='line'># 
+</span><span class='line'>#   DESCRIPTION: 检查srv的状态 如果srv不可用heartbeat vip转换
+</span><span class='line'># 
+</span><span class='line'>#       OPTIONS: ---
+</span><span class='line'>#  REQUIREMENTS: ---
+</span><span class='line'>#          BUGS: ---
+</span><span class='line'>#         NOTES: ---
+</span><span class='line'>#        AUTHOR: mengdaikun (), 
+</span><span class='line'>#  ORGANIZATION: 
+</span><span class='line'>#       CREATED: 02/06/2014 09:38:28 PM CST
+</span><span class='line'>#      REVISION:  ---
+</span><span class='line'>#===============================================================================
+</span><span class='line'>set -o nounset                              # Treat unset variables as an error
+</span><span class='line'>
+</span><span class='line'>srv="http://192.168.6.107"
+</span><span class='line'>
+</span><span class='line'>HTTP_CODE=`curl -o /dev/null -s -w "%{http_code}" "${srv}"`
+</span><span class='line'>
+</span><span class='line'>[ -f /var/log/mdk ] && echo "The file has." || touch /var/log/mdk
+</span><span class='line'>
+</span><span class='line'>function_ha_standby(){
+</span><span class='line'>    /etc/init.d/heartbeat standby &gt;&gt; /var/log/mdk
+</span><span class='line'>    echo  `date +"%Y-%m-%d  %H:%M:%S"`  httpd switched to slave!  &gt;&gt; /var/log/mdk
+</span><span class='line'>    /etc/init.d/heartbeat start &gt;&gt; /var/log/mdk
+</span><span class='line'>    /etc/init.d/httpd start &gt;&gt; /var/log/mdk
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>/sbin/ifconfig | grep eth0:0 &gt;/dev/null 2&gt;&1
+</span><span class='line'>
+</span><span class='line'>if [[ $? -eq 0 ]];then
+</span><span class='line'>   if [[ $HTTP_CODE -ne 200 ]];then
+</span><span class='line'>        echo  `date +"%Y-%m-%d  %H:%M:%S"`  httpd haved stop&gt;&gt; /var/log/mdk
+</span><span class='line'>        echo "mdk"
+</span><span class='line'>  function_ha_standby
+</span><span class='line'>   fi
+</span><span class='line'>fi</span></code></pre></td></tr></table></div></figure>
 
 </div>
 

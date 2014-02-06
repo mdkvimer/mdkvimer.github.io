@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 编程那些事 | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/bian-cheng-na-xie-shi/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-02-06T22:56:20+08:00</updated>
+  <updated>2014-02-06T22:59:51+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -19,11 +19,289 @@
     <updated>2013-06-08T18:46:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2013/06/08/shell-nginxri-zhi-chu-li-1</id>
     <content type="html"><![CDATA[<p>利用shell 脚本分析 Nginx负载均衡器
-{% include_code deal_nginx_log1.sh %}</p>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (deal_nginx_log1.sh)</span> <a href='/downloads/code/deal_nginx_log1.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: deal_nginx_log1.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./deal_nginx_log1.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: shell 分析处理 nginx 日志 构建高可用linux服务器 nginx 作为最前端的负载均衡器 </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 06/04/13 12:24:07 CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Error:please specify logfile.&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="k">  </span><span class="nv">LOG</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$1</span> <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Sorry,sir,I can&#39;t find yhis apache log file,please try again!&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $1}&#39;</span> <span class="nv">$LOG</span> | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> <span class="nv">$LOG</span> | cut -c 14-18 | sort | uniq -c | sort -rn | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the page&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $11}&#39;</span> <span class="nv">$LOG</span> | sed <span class="s1">&#39;s/^.*\\(.cn*\\)\&quot;/\\1/g&#39;</span> | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo </span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time / Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> <span class="nv">$LOG</span> | cut -c 14-18 | sort -n | uniq -c | sort -rn | head -10 &gt; timelog
+</span><span class='line'>
+</span><span class='line'><span class="k">for </span>i in <span class="sb">`</span>awk <span class="s1">&#39;{print $2}&#39;</span> timelog<span class="sb">`</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span><span class="nv">num</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> timelog | awk <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$i $num&quot;</span>
+</span><span class='line'>  <span class="nv">ip</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> <span class="nv">$LOG</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | sort -n | uniq -c | sort -rn | head -10<span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$ip&quot;</span>
+</span><span class='line'>  <span class="nb">echo</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'>rm -rf timelog
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Nginx 作为WebServer</p>
 
-<p>{% include_code deal_nginx_log2.sh %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (deal_nginx_log2.sh)</span> <a href='/downloads/code/deal_nginx_log2.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash  </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: deal_nginx_log1.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./deal_nginx_log1.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: shell 分析处理 nginx 日志 构建高可用linux服务器 nginx 作为Web端 ，这时要踢出LVS的ip地址 </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 06/04/13 12:24:07 CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 0 <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Error:please specify logfile.&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="k">  </span>cat <span class="nv">$1</span> | grep -v <span class="s2">&quot;$LVS_ip&quot;</span> &gt; LOG
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$1</span> <span class="o">]</span>
+</span><span class='line'><span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> <span class="s2">&quot;Sorry,sir,I can&#39;t find yhis apache log file,please try again!&quot;</span>
+</span><span class='line'>  <span class="nb">exit </span>0
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $1}&#39;</span> LOG | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> LOG | cut -c 14-18 | sort | uniq -c | sort -rn | head -10
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the page&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $11}&#39;</span> LOG | sed <span class="s1">&#39;s/^.*\\(.cn*\\)\&quot;/\\1/g&#39;</span> | sort | uniq -c | sort -nr | head -10
+</span><span class='line'><span class="nb">echo </span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="c">###############################################################################</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Most of the time / Most of the ip:&quot;</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;--------------------------------------------------------------------------&quot;</span>
+</span><span class='line'>awk <span class="s1">&#39;{print $4}&#39;</span> LOG | cut -c 14-18 | sort -n | uniq -c | sort -rn | head -10 &gt; timelog
+</span><span class='line'>
+</span><span class='line'><span class="k">for </span>i in <span class="sb">`</span>awk <span class="s1">&#39;{print $2}&#39;</span> timelog<span class="sb">`</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span><span class="nv">num</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> timelog | awk <span class="s1">&#39;{print $1}&#39;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$i $num&quot;</span>
+</span><span class='line'>  <span class="nv">ip</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$i</span> LOG | awk <span class="s1">&#39;{print $1}&#39;</span> | sort -n | uniq -c | sort -rn | head -10<span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$ip&quot;</span>
+</span><span class='line'>  <span class="nb">echo</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'>rm -rf timelog
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
