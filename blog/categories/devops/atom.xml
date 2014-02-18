@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DevOps | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-02-18T20:51:49+08:00</updated>
+  <updated>2014-02-18T20:53:37+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -18,8 +18,7 @@
     <link href="http://mdkvimer.github.io/blog/2014/02/06/heartbeat/"/>
     <updated>2014-02-06T00:58:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2014/02/06/heartbeat</id>
-    <content type="html"><![CDATA[<p>{%include_code test.sh %}
-```
+    <content type="html"><![CDATA[<p>```
 最近做了个heartbeat的资源监控脚本测试，当master的资源不可用时，heartbeat standby 资源转移
 当节点1的http状态嘛不等于200时,heartbeat资源转移(standby)</p>
 
