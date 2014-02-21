@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 运维人生 | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/yun-wei-ren-sheng/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-02-21T23:10:08+08:00</updated>
+  <updated>2014-02-21T23:17:47+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -35,9 +35,9 @@
 <p>的公司实习，做的是服务器端的开发（也就是比较流行的虚拟云应用的开发），开发语言
 是python，IDE是Wing IDE。一个月多的时间下来，读了一遍源代码，修改了小模块（re模
 块的使用？其实最后发现用字符串就能解决），添加个小功能(python接收管理平台发来的
-消息进行app的install和uninstall)，九月份会学校的时候写了份自己服务端的文档。我负
+消息进行app的install和uninstall)，九月份回学校的时候写了份自己服务端的文档。我负
 责的服务端有linux和windows端，linux端直接把py代码扔到/etc/init.d/下跑守护进程，
-windows端需要把py代码编译为exe文件作为service启动。那一段时间的确挺开心的，学不
+windows端需要把py代码编译为exe文件作为service启动。那一段时间的确挺开心的，学了不
 少知识，用python操作注册表，py2exe,py的win32 modules etc..</p>
 
 <pre><code>2、十月校招季过后，进入国内一家靠前的互联网公司。十一份的时候入职报到。从入职
