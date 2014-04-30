@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-02-21T23:17:47+08:00</updated>
+  <updated>2014-04-30T21:10:33+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -177,16 +177,6 @@
 <span class='line-number'>38</span>
 <span class='line-number'>39</span>
 <span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>2013是我不平凡的一年，这年是python年，我这一年里也因为python收获了很多。
 </span><span class='line'>过去的一年读过的书有：
 </span><span class='line'>1、《看见》
@@ -204,19 +194,13 @@
 </span><span class='line'>责的服务端有linux和windows端，linux端直接把py代码扔到/etc/init.d/下跑守护进程，
 </span><span class='line'>windows端需要把py代码编译为exe文件作为service启动。那一段时间的确挺开心的，学了不
 </span><span class='line'>少知识，用python操作注册表，py2exe,py的win32 modules etc..
-</span><span class='line'>2、十月校招季过后，进入国内一家靠前的互联网公司。十一份的时候入职报到。从入职
+</span><span class='line'>2、十月校招季过后，进入国内一家一线的互联网公司。十一份的时候入职报到。从入职
 </span><span class='line'>知道现在，这一段时间里，学了更多的东西，将最当初自己抛弃的Django学习并应用了。学习
 </span><span class='line'>了四月多时就传闻的zabbix,最早听说自动化利器puppet,又有py写的salt,salt的安装与配置
 </span><span class='line'>相当简单，个人认为，当初自己捣鼓puppet的时候，光ruby就快把人整死了。DevOps要求从前
 </span><span class='line'>到后都要操刀，这或许就是其比较火的原因吧。总之到目前为止，学了很多，收益匪浅。感谢
 </span><span class='line'>老大（老大是很nice的人，接我入职的时候给我讲了好多实用的东西，相当的nice），感谢师
 </span><span class='line'>傅。感谢一起陪伴的小伙伴们！
-</span><span class='line'>
-</span><span class='line'>校招求职：
-</span><span class='line'>总结：基本功要扎实，擅长说话会有很大的优势(对我而言)。技术不是问题，把技术说出
-</span><span class='line'>来说服人家就是本事。当然前提是先要有接触并学习的。用大宇哥的说还是要靠运气的，虽然
-</span><span class='line'>最终遗憾没能与他成为同事，但能得到163主管的那句赞赏（他当时的态度是诚恳的不是推辞），
-</span><span class='line'>那也是一种鼓励对我而言。谁让最后我在HR面前嘴笨了呢。嗯，就这些，看到不喜勿喷哈。
 </span><span class='line'>
 </span><span class='line'>生活：
 </span><span class='line'>还是比较宅。做的饭越来越好吃。不好的是自己偶尔吸根烟。保持尽量能不喝酒就不喝。
@@ -233,10 +217,7 @@
 </span><span class='line'>python崇尚简洁。当然这总结还简洁吧
 </span><span class='line'>
 </span><span class='line'>                                                                                          --by 技术渣渣mdk
-</span><span class='line'>
-</span><span class='line'>PS:
-</span><span class='line'>明天双休，下周一二跟师傅请了两天假，明天就要回杭了，出来3个月，
-</span><span class='line'>好久没见到学校里的小伙伴们了。。心里还有点小激动哈</span></code></pre></td></tr></table></div></figure>
+</span></code></pre></td></tr></table></div></figure>
 
 
 
