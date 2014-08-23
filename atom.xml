@@ -4,7 +4,7 @@
   <title><![CDATA[起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-08-24T00:17:31+08:00</updated>
+  <updated>2014-08-24T00:57:43+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -12,16 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[520]]></title>
-    <link href="http://mdkvimer.github.io/blog/2014/05/19/520/"/>
-    <updated>2014-05-19T14:35:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2014/05/19/520</id>
-    <content type="html"><![CDATA[<p><code>
-</code></p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[heartbeat]]></title>
@@ -2955,6 +2945,473 @@ code</p>
 <p>苦逼一枚</p>
 
 <p>纪念搬家在此留下一笔</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[周一的面试]]></title>
+    <link href="http://mdkvimer.github.io/blog/2013/05/19/zhou-%5B%3F%5D-de-mian-shi/"/>
+    <updated>2013-05-19T19:59:00+08:00</updated>
+    <id>http://mdkvimer.github.io/blog/2013/05/19/zhou-[?]-de-mian-shi</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>time: 2013 5 13 4:30 ~ 5:30 </span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>国内一家大的互联网公司</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>address:浙大路41号汉庭酒店301</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>面试官: 资深码农(SA吧)</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>二逼码农:mdk</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>main()
+</span><span class='line'>{
+</span><span class='line'>  1.tcp/ip 七层协议
+</span><span class='line'>  2.tcp/ip 三次握手
+</span><span class='line'>  3.tcp/ip 状态
+</span><span class='line'>  4.个人的一些情况
+</span><span class='line'>  5.deal access.log with shell(awk,sed,re)
+</span><span class='line'>  6.个人项目
+</span><span class='line'>  7.一些OS的问题
+</span><span class='line'>  .........
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span> (mdk1.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk1.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk1.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk1.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: the total process apache or nginx</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 13ʱ22·Ö00Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># for httpd</span>
+</span><span class='line'><span class="nv">total1</span><span class="o">=</span><span class="sb">`</span>ps aux | grep httpd | grep -v grep | wc -l<span class="sb">`</span>
+</span><span class='line'><span class="c">#for apache</span>
+</span><span class='line'><span class="nv">total2</span><span class="o">=</span><span class="sb">`</span>ps aux | grep apache | grep -v grep | wc -l<span class="sb">`</span>
+</span><span class='line'><span class="c">#for nginx </span>
+</span><span class='line'><span class="nv">total3</span><span class="o">=</span><span class="sb">`</span>ps aux | grep nginx | grep -v grep | wc -l<span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;the total process is : httpd:$total1  apache : $total2 nginx : $total3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (mdk2.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk2.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk2.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk2.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: check total in tcp port 80 </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 13ʱ32·Ö42Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">total</span><span class="o">=</span><span class="sb">`</span>netstat -tan | grep <span class="s2">&quot;ESTABLISHED&quot;</span> | grep <span class="s2">&quot;:80&quot;</span> | wc -l<span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;the total connect in tcp port 80 have $total&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (mdk3.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk3.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk3.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk3.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: total the ip address</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 13ʱ41·Ö24Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;the total ipddress is:&quot;</span>
+</span><span class='line'>
+</span><span class='line'>cat access.log | awk <span class="s1">&#39;{print $1}&#39;</span> | sort | uniq -c | sort -nr
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (mdk4.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk4.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk4.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk4.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: view the url page</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 13ʱ44·Ö32Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;the view page:&quot;</span>
+</span><span class='line'>
+</span><span class='line'>cat access.log | awk <span class="s1">&#39;{print $8}&#39;</span> | sort | uniq -c | sort -nr | head -n 20
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (mdk5.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk5.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk5.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk5.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: tcpdump</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 13ʱ48·Ö15Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;the port 80 in tcpdump&quot;</span>
+</span><span class='line'>
+</span><span class='line'>tcpdump -i eth0 -tnn dst port 80 -c 1000 | awk -F . <span class="s1">&#39;{print $1&quot;.&quot;$2&quot;.&quot;$3&quot;.&quot;$4}&#39;</span> | sort | uniq -c | sort -rn | head -n 20
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (mdk6.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk6.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk6.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk6.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: up address view page</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 13ʱ54·Ö58Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'>awk <span class="s1">&#39;{++s[$1]} END {for ( i in s) print i,s[i]}&#39;</span> access.log
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span> (mdk7.sh)</span> <a href='http://mdkvimer.github.io/downloads/code/mdk7.sh'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash - </span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#          FILE: mdk7.sh</span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#         USAGE: ./mdk7.sh </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#   DESCRIPTION: </span>
+</span><span class='line'><span class="c"># </span>
+</span><span class='line'><span class="c">#       OPTIONS: ---</span>
+</span><span class='line'><span class="c">#  REQUIREMENTS: ---</span>
+</span><span class='line'><span class="c">#          BUGS: ---</span>
+</span><span class='line'><span class="c">#         NOTES: ---</span>
+</span><span class='line'><span class="c">#        AUTHOR: mengdaikun (), </span>
+</span><span class='line'><span class="c">#  ORGANIZATION: </span>
+</span><span class='line'><span class="c">#       CREATED: 2013Äê05ÔÂ18ÈÕ 15ʱ02·Ö06Ãë CST</span>
+</span><span class='line'><span class="c">#      REVISION:  ---</span>
+</span><span class='line'><span class="c">#===============================================================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set</span> -o nounset                              <span class="c"># Treat unset variables as an error</span>
+</span><span class='line'>
+</span><span class='line'>sleep 10&amp;
+</span><span class='line'>
+</span><span class='line'><span class="nv">id</span><span class="o">=</span><span class="nv">$!</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">char</span><span class="o">=(</span><span class="s2">&quot;-&quot;</span> <span class="s2">&quot;/&quot;</span> <span class="s2">&quot;|&quot;</span> <span class="s2">&quot;\\&quot;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">n</span><span class="o">=</span>0
+</span><span class='line'>
+</span><span class='line'><span class="k">while </span>ps aux | grep <span class="s2">&quot;^[[:space:]]*id&quot;</span> &gt; /dev/null
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo</span> -ne <span class="s2">&quot;\rwaiting...${char[$n]}&quot;</span>
+</span><span class='line'>  <span class="nv">n</span><span class="o">=</span><span class="k">$((</span> <span class="o">(</span>n+1<span class="o">)%</span><span class="m">4</span> <span class="k">))</span>
+</span><span class='line'>  sleep 1
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo </span>OK.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>总结完毕 ^_^</p>
 ]]></content>
   </entry>
   

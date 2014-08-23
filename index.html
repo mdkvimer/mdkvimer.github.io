@@ -9,7 +9,51 @@
   <meta name="author" content="mdkvimer">
 
   
-  <meta name="description" content=" ">
+  <meta name="description" content="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+最近做了个heartbeat的资源监控脚本测试， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,44 +122,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/19/520/">520</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-19T14:35:00+08:00" pubdate data-updated="true">May 19<span>th</span>, 2014</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><code>
-</code></p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -1408,6 +1414,107 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/24/fork/">Fork经典问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-24T21:59:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>经典问题1,会输出多少?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>  int i;
+</span><span class='line'>  for(i = 0 ; i &lt; 2 ; i++)
+</span><span class='line'>  {
+</span><span class='line'>      fork();
+</span><span class='line'>      printf("-");
+</span><span class='line'>  }
+</span><span class='line'>  return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>经典问题2，会输出多少?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
+</span><span class='line'>#include&lt;sys/types.h&gt;
+</span><span class='line'>#include&lt;unistd.h&gt;
+</span><span class='line'>
+</span><span class='line'>int main()
+</span><span class='line'>{
+</span><span class='line'>  int i;
+</span><span class='line'>  for(i = 0 ; i &lt; 2 ; i++)
+</span><span class='line'>  {
+</span><span class='line'>      fork();
+</span><span class='line'>      printf("-\n");
+</span><span class='line'>      fflush(stdout);
+</span><span class='line'>  }
+</span><span class='line'>  return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1431,15 +1538,11 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/devops/'>DevOps (3)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (10)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/devops/'>DevOps (3)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/05/19/520/">520</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2014/02/06/heartbeat/">Heartbeat</a>
@@ -1455,6 +1558,10 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
     
       <li class="post">
         <a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
       </li>
     
   </ul>
