@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-08-29T23:18:36+08:00</updated>
+  <updated>2014-08-29T23:20:11+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -26,7 +26,7 @@ BeautifulSoup: <a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">h
 代码有点小戳呀。。嘿嘿</p>
 
 <p>附件
-{% include_code 829.py %}</p>
+{% include_code html.py %}</p>
 ]]></content>
   </entry>
   
