@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-08-29T23:12:17+08:00</updated>
+  <updated>2014-08-29T23:18:36+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -18,15 +18,14 @@
     <link href="http://mdkvimer.github.io/blog/2014/08/29/python-and-beautiful-soup-to-html/"/>
     <updated>2014-08-29T22:59:00+08:00</updated>
     <id>http://mdkvimer.github.io/blog/2014/08/29/python-and-beautiful-soup-to-html</id>
-    <content type="html"><![CDATA[<p><code>
-今天有这个需求，需要去拉站点的html的文件然后解析想要的几个内容.
-pycurl: http://pycurl.sourceforge.net/doc/index.html
-BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/bs4/doc/
+    <content type="html"><![CDATA[<p>今天有这个需求，需要去拉站点的html的文件然后解析想要的几个内容.
+pycurl: <a href="http://pycurl.sourceforge.net/doc/index.html">http://pycurl.sourceforge.net/doc/index.html</a>
+BeautifulSoup: <a href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">http://www.crummy.com/software/BeautifulSoup/bs4/doc/</a>
 这两个py modules应用的时候可以在ipython试探性的使用某个属性和某个函数，help更直白
 在此做个小笔记作今天的学习笔记.
-代码有点小戳呀。。^_^
-</code>
-附件
+代码有点小戳呀。。嘿嘿</p>
+
+<p>附件
 {% include_code 829.py %}</p>
 ]]></content>
   </entry>
