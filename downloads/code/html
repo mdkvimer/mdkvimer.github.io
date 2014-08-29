@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+'''
+Author:mdk
+Email:mengdaikun@gmail.com
+Date:2014-8-29
+py解析html
+'''
+
+import pycurl
+import StringIO
+from bs4 import BeautifuSoup
+
+#get html file from xxx.com
+def get_html():
+    url = 'http://xxx.com'
+    ret = pycurl.Curl()
+    ret.setopt(ret.URL,url)
+    temp = StringIO.StringIO()
+    ret.setopt(ret.WRITEFUNCTION,temp1.write)
+    ret.setopt(ret.FOLLOWLOCATION,1)
+    ret.setopt(ret.HEADER,True)
+    ret.perform()
+    html = temp.getvalue()
+    temp.close()
+    ret.close()
+    return html
+
+def get_url():
+    html = get_html()
+    soup = BeautifulSoup(html)
+    urls = soup.find("ul",id="cui_nav_ul")#查找ul id=cui_nav_ul的body内容
+
+    for i in urls.find_all('a'): #查找所有a标签
+        if i.get('id'): #a标签下的id内容
+            if 'c_ph' in i.get('id'): #id的内容含c_ph
+                try:
+                    print i.get('title').strip(),i.get('href').strip()
+                except:
+                    pass
+
+if __name__ == '__main__':
+    get_url()

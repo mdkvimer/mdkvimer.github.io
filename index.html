@@ -53,7 +53,14 @@
 42
 43
 44
-最近做了个heartbeat的资源监控脚本测试， &hellip;">
+45
+46
+47
+48
+49
+50
+51
+52 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -122,6 +129,147 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/29/python-and-beautiful-soup-to-html/">Python and Beautiful Soup to Html</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-29T22:59:00+08:00" pubdate data-updated="true">Aug 29<span>th</span>, 2014</time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>今天有这个需求，需要去拉站点的html的文件然后解析想要的几个内容.
+</span><span class='line'>pycurl: http://pycurl.sourceforge.net/doc/index.html
+</span><span class='line'>BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/bs4/doc/
+</span><span class='line'>这两个py modules应用的时候可以在ipython试探性的使用某个属性和某个函数，help更直白
+</span><span class='line'>在此做个小笔记作今天的学习笔记.
+</span><span class='line'>代码有点小戳呀。。嘿嘿
+</span><span class='line'>
+</span><span class='line'>py code
+</span><span class='line'>#!/usr/bin/env python
+</span><span class='line'># -*- coding:utf-8 -*-
+</span><span class='line'>
+</span><span class='line'>'''
+</span><span class='line'>Author:mdk
+</span><span class='line'>Email:mengdaikun@gmail.com
+</span><span class='line'>Date:2014-8-29
+</span><span class='line'>py解析html
+</span><span class='line'>'''
+</span><span class='line'>
+</span><span class='line'>import pycurl
+</span><span class='line'>import StringIO
+</span><span class='line'>from bs4 import BeautifuSoup
+</span><span class='line'>
+</span><span class='line'>#get html file from xxx.com
+</span><span class='line'>def get_html():
+</span><span class='line'>    url = 'http://xxx.com'
+</span><span class='line'>    ret = pycurl.Curl()
+</span><span class='line'>    ret.setopt(ret.URL,url)
+</span><span class='line'>    temp = StringIO.StringIO()
+</span><span class='line'>    ret.setopt(ret.WRITEFUNCTION,temp1.write)
+</span><span class='line'>    ret.setopt(ret.FOLLOWLOCATION,1)
+</span><span class='line'>    ret.setopt(ret.HEADER,True)
+</span><span class='line'>    ret.perform()
+</span><span class='line'>    html = temp.getvalue()
+</span><span class='line'>    temp.close()
+</span><span class='line'>    ret.close()
+</span><span class='line'>    return html
+</span><span class='line'>
+</span><span class='line'>def get_url():
+</span><span class='line'>    html = get_html()
+</span><span class='line'>    soup = BeautifulSoup(html)
+</span><span class='line'>    urls = soup.find("ul",id="cui_nav_ul")#查找ul id=cui_nav_ul的body内容
+</span><span class='line'>
+</span><span class='line'>    for i in urls.find_all('a'): #查找所有a标签
+</span><span class='line'>        if i.get('id'): #a标签下的id内容
+</span><span class='line'>            if 'c_ph' in i.get('id'): #id的内容含c_ph
+</span><span class='line'>                try:
+</span><span class='line'>                    print i.get('title').strip(),i.get('href').strip()
+</span><span class='line'>                except:
+</span><span class='line'>                    pass
+</span><span class='line'>
+</span><span class='line'>if __name__ == '__main__':
+</span><span class='line'>    get_url()</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1414,107 +1562,6 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/24/fork/">Fork经典问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-24T21:59:00+08:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>经典问题1,会输出多少?</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
-</span><span class='line'>#include&lt;sys/types.h&gt;
-</span><span class='line'>#include&lt;unistd.h&gt;
-</span><span class='line'>
-</span><span class='line'>int main()
-</span><span class='line'>{
-</span><span class='line'>  int i;
-</span><span class='line'>  for(i = 0 ; i &lt; 2 ; i++)
-</span><span class='line'>  {
-</span><span class='line'>      fork();
-</span><span class='line'>      printf("-");
-</span><span class='line'>  }
-</span><span class='line'>  return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>经典问题2，会输出多少?</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include&lt;stdio.h&gt;
-</span><span class='line'>#include&lt;sys/types.h&gt;
-</span><span class='line'>#include&lt;unistd.h&gt;
-</span><span class='line'>
-</span><span class='line'>int main()
-</span><span class='line'>{
-</span><span class='line'>  int i;
-</span><span class='line'>  for(i = 0 ; i &lt; 2 ; i++)
-</span><span class='line'>  {
-</span><span class='line'>      fork();
-</span><span class='line'>      printf("-\n");
-</span><span class='line'>      fflush(stdout);
-</span><span class='line'>  }
-</span><span class='line'>  return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1538,11 +1585,15 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/devops/'>DevOps (3)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (5)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/awk-and-sed/'>awk&sed (2)</a></li><li><a href='/blog/categories/devops/'>DevOps (3)</a></li><li><a href='/blog/categories/linux/'>linux (14)</a></li><li><a href='/blog/categories/python/'>python (6)</a></li><li><a href='/blog/categories/bi-shi-yu-mian-shi/'>笔试与面试 (6)</a></li><li><a href='/blog/categories/bian-cheng-na-xie-shi/'>编程那些事 (10)</a></li><li><a href='/blog/categories/yun-wei-ren-sheng/'>运维人生 (9)</a></li><li><a href='/blog/categories/chang-jing-lu/'>长颈鹿 (7)</a></li></ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/29/python-and-beautiful-soup-to-html/">Python and Beautiful Soup to Html</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/02/06/heartbeat/">Heartbeat</a>
@@ -1558,10 +1609,6 @@ NAT~再接着又装了pps~qq~等等~当然最后还是给你装了双系统~后�
     
       <li class="post">
         <a href="/blog/2014/02/06/2013/">来迟的2013年度总结</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/04/fighting%7E%7E/">Fighting~~</a>
       </li>
     
   </ul>
