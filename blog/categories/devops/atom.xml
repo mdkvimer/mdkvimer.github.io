@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DevOps | 起步于308的小菜菜]]></title>
   <link href="http://mdkvimer.github.io/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://mdkvimer.github.io/"/>
-  <updated>2014-09-14T23:23:35+08:00</updated>
+  <updated>2014-09-14T23:38:35+08:00</updated>
   <id>http://mdkvimer.github.io/</id>
   <author>
     <name><![CDATA[mdkvimer]]></name>
@@ -89,28 +89,6 @@ function_ha_standby
 <p>   fi
 fi
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[zabbix]]></title>
-    <link href="http://mdkvimer.github.io/blog/2014/02/06/zabbix/"/>
-    <updated>2014-02-06T00:57:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2014/02/06/zabbix</id>
-    <content type="html"><![CDATA[<p><code>
-补个坑填上zabbix的学习笔记
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[salt]]></title>
-    <link href="http://mdkvimer.github.io/blog/2014/02/06/salt/"/>
-    <updated>2014-02-06T00:57:00+08:00</updated>
-    <id>http://mdkvimer.github.io/blog/2014/02/06/salt</id>
-    <content type="html"><![CDATA[<p><code>
-补个坑填学习salt的笔记
-</code></p>
 ]]></content>
   </entry>
   
